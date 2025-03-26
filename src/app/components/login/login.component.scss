@@ -1,3 +1,4 @@
+@use '../../../styles.scss' as *;
 // Copy all the relevant CSS from the original CSS file
 // Remove any styles that are specific to signup
 body {
@@ -96,17 +97,22 @@ body {
   .signup-btn {
     width: 91px;
     height: 49px;
-    background-color: #2a3647;
+    background-color: $dark-navy;
     color: white;
     font-size: 16px;
     font-weight: 700;
     border-radius: 16px;
     cursor: pointer;
     border: none;
-  }
-  .signup-btn:hover {
-    background-color: #29abe2;
-    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.3);
+    
+    @include hover-effect(
+      $scale: 1,
+      $shadow-color: rgba(0, 0, 0, 0.3),
+      $shadow-spread: 4px,
+      $transition-duration: 0.2s,
+      $color: white,
+      $background-color: $primary-blue
+    );
   }
   
   .footer-links {
@@ -143,7 +149,7 @@ body {
   .divider {
     display: flex;
     width: 30%;
-    background-color: #29abe2;
+    background-color: $primary-blue;
     height: 3px;
     border-radius: 50px;
     margin-top: 10px;
@@ -199,7 +205,7 @@ body {
   }
   
   .Login-btn {
-    background-color: #2a3647;
+    background-color: $dark-navy;
     color: white;
     font-size: 21px;
     font-weight: 700;
@@ -211,25 +217,24 @@ body {
   }
   .Guest-btn {
     background-color: #ffffff;
-    color: #2a3647;
+    color: $dark-navy;
     font-size: 21px;
     font-weight: 700;
     border-radius: 16px;
     cursor: pointer;
-    border: 1px solid #2A3647;
+    border: 1px solid $dark-navy;
     width: 177px;
     height: 48px;
   }
   .toggle-display {
     display: none;
   }
-  .input-section input:focus {
-    border-color: #29abe2;
-    outline: none; /* Remove default outline */
-  }
-  .input-section-signup input:focus {
-    border-color: #29abe2;
-    outline: none; /* Remove default outline */
+  .input-section,
+  .input-section-signup {
+    input:focus {
+      border-color: $primary-blue;
+      outline: none; /* Remove default outline */
+    }
   }
   input[type="text"],
   input[type="email"],
@@ -367,7 +372,7 @@ body {
   }
   
   .popup-successfully-content {
-    background-color: #2a3647;
+    background-color: $dark-navy;
     color: #ffffff;
     padding: 20px;
     border-radius: 8px;
@@ -422,4 +427,3 @@ body {
     }
   
   }
- 
