@@ -1,429 +1,449 @@
 @use '../../../styles.scss' as *;
-// Copy all the relevant CSS from the original CSS file
-// Remove any styles that are specific to signup
+
 body {
-    margin: 0;
-    font-family: "Inter", sans-serif;
-    background-color: #f6f7f8;
-  }
-  /* .main-section {
-    display: flex;
-    height: 100vh;
-    width: 100%;
-    overflow-y: auto;
-  } */
-  
-  .main-section {
-      width: 100%;
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-  }
-  .logo-sidebar {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 100px;
-    height: 100px;
-    z-index: 1000;
-  }
-  /* *******************************************************************start Logo animation */
-  .logo-image {
-    position: absolute;
-    top: 50vh; /* Start position*/
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  background-color: $background-light;
+}
+
+.main-section {
+  @include flex-center;
+  width: 100%;
+  height: 100vh;
+  flex-direction: column;
+}
+
+.logo-sidebar {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  width: 100px;
+  height: 100px;
+  z-index: 1000;
+}
+
+/* *******************************************************************start Logo animation */
+.logo-image {
+  position: absolute;
+  top: 50vh; /* Start position*/
+  left: 50vw;
+  transform: translate(-50%, -50%) scale(4);
+  animation: LogoAnimate 0.9s forwards ease-in-out; /* Starts the image animation */
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+
+/* Background div behind the logo image */
+.background-overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  background-color: #f6f7f8;
+  transform: translate(-50vw, -50vh) scale(4.9);
+  animation: fadeBackground 0.9s forwards ease-in-out; /* Starts the background animation fade*/
+  z-index: -1;
+}
+
+@keyframes LogoAnimate {
+  0% {
+    top: 50vh; /* Start position */
     left: 50vw;
-    transform: translate(-50%, -50%) scale(4);
-    animation: LogoAnimate 0.9s forwards ease-in-out; /* Starts the image animation */
-    width: 100%;
-    height: auto;
-    z-index: 1;
+    transform: translate(-50%, -50%) scale(4); /* Start: Enlarged */
   }
-  /* Background div behind the logo image */
-  .background-overlay {
-    position: absolute;
-    width: 100vw; 
-    height: 100vh;
-    background-color: #f6f7f8;
-    transform: translate(-50vw, -50vh) scale(4.9);
-    animation: fadeBackground 0.9s forwards ease-in-out; /* Starts the background animation fade*/
-    z-index: -1;
+  100% {
+    top: 20px; /* End position (vertical) */
+    left: 20px;
+    transform: translate(0, 0) scale(1); /* End position: Normal size */
   }
-  
-  @keyframes LogoAnimate {
-    0% {
-      top: 50vh; /* Start position */
-      left: 50vw;
-      transform: translate(-50%, -50%) scale(4); /* Start: Enlarged */
-    }
-    100% {
-      top: 20px; /* End position (vertical) */
-      left: 20px;
-      transform: translate(0, 0) scale(1); /* End position: Normal size */
-      
-    }
+}
+
+@keyframes fadeBackground {
+  0% {
+    width: 50vw; /* Start size of the background */
+    height: 50vh;
+    opacity: 1;
   }
-  
-  
-  @keyframes fadeBackground {
-    0% {
-      width: 50vw; /* Start size of the background */
-      height: 50vh; 
-      opacity: 1;
-    }
-    100% {
-      width: 50vw; /* End size of the background */
-      height: 50vh;
-      opacity: 0;
-      display: none;
-      visibility: hidden;
-    }
+  100% {
+    width: 50vw; /* End size of the background */
+    height: 50vh;
+    opacity: 0;
+    display: none;
+    visibility: hidden;
   }
-  /* *******************************************************************End Logo animation */
-  .content {
-    width: 100%;
+}
+
+/* *******************************************************************End Logo animation */
+.content {
+  width: 100%;
+}
+
+.header-login-content {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+  gap: 35px;
+}
+
+.signup-btn {
+  width: 91px;
+  height: 49px;
+  background-color: $dark-navy;
+  color: $white;
+  font-size: 16px;
+  font-weight: 700;
+  border-radius: 8px;
+  border: none;
+
+  @include hover-effect(
+    $scale: 1,
+    $shadow-color: $box-shadow-hover,
+    $shadow-spread: 4px,
+    $transition-duration: 0.2s,
+    $color: $white,
+    $background-color: $primary-blue
+  );
+}
+
+.footer-links {
+  gap: 30px;
+}
+
+.footer-links a {
+  text-decoration: none;
+  color: #a8a8a8;
+}
+
+/* ************************************************************login section */
+.login-section {
+  width: 50%;
+  max-width: 692px;
+  min-height: 50vh;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 61px;
+  font-weight: 700;
+  height: 89px;
+  flex-direction: column;
+  width: 100%;
+}
+
+.divider {
+  display: flex;
+  width: 30%;
+  background-color: $primary-blue;
+  height: 3px;
+  border-radius: 50px;
+  margin-top: 10px;
+  text-align: center;
+}
+
+.input-section,
+.input-section-signup {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  gap: 20px;
+  margin-top: 40px;
+
+  input {
+    @include input-base;
+    background-position: calc(100% - 12px) center;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    margin-top: 15px;
   }
-  
-  .header-login-content {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    display: flex;
-    align-items: center;
-    gap: 35px;
+}
+
+.icon-email {
+  background-image: url(/assets/icons/mailicon.svg);
+}
+
+.icon-name {
+  background-image: url(/assets/icons/person.svg);
+}
+
+.icon-password {
+  background-image: url(/assets/icons/lock.svg);
+}
+
+.remember-password-section {
+  display: flex;
+  justify-content: flex-start;
+  width: 80%;
+  margin-top: 30px;
+}
+
+.header-login-content-responsive {
+  display: none;
+}
+
+.button-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 70px;
+  margin-bottom: 20px;
+  width: 100%;
+  gap: 35px;
+}
+
+.button-section button {
+  padding: 10px;
+}
+
+%button-base {
+  font-size: 21px;
+  font-weight: 700;
+  border-radius: $border-radius-default;
+  height: 48px;
+  min-width: 110px;
+  padding: 0 20px;
+}
+
+.Login-btn {
+  @extend %button-base;
+  background-color: $dark-navy;
+  color: $white;
+  border: none;
+  width: 110px;
+
+  @include hover-effect(
+    $scale: 1,
+    $shadow-color: $box-shadow-hover,
+    $shadow-spread: 4px,
+    $transition-duration: 0.2s,
+    $color: $white,
+    $background-color: $primary-blue
+  );
+}
+
+.Guest-btn {
+  @extend %button-base;
+  background-color: $white;
+  color: $dark-navy;
+  border: 2px solid $dark-navy;
+  width: 177px;
+
+  &:hover {
+    border-color: $primary-blue;
+    color: $primary-blue;
+    box-shadow: 0 4px 4px $box-shadow-hover;
   }
-  
-  .signup-btn {
-    width: 91px;
-    height: 49px;
-    background-color: $dark-navy;
-    color: white;
-    font-size: 16px;
-    font-weight: 700;
-    border-radius: 16px;
-    cursor: pointer;
-    border: none;
-    
-    @include hover-effect(
-      $scale: 1,
-      $shadow-color: rgba(0, 0, 0, 0.3),
-      $shadow-spread: 4px,
-      $transition-duration: 0.2s,
-      $color: white,
-      $background-color: $primary-blue
-    );
+}
+
+.toggle-display {
+  display: none;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+  border-color: #ccc;
+  outline: none;
+}
+
+input[type="text"].invalid,
+input[type="email"].invalid,
+input[type="password"].invalid {
+  border-color: #ff0000;
+}
+
+.error-validation {
+  &-email,
+  &-password,
+  &-username,
+  &-confirm-password {
+    color: $error-red;
+    margin-bottom: 3px;
   }
-  
-  .footer-links {
-    gap: 30px;
-  }
-  .footer-links a {
-    text-decoration: none;
-    color: #a8a8a8;
-  }
-  /* ************************************************************login section */
+}
+
+/* **************************************************sign up section */
+.signup-section {
+  width: 50%;
+  max-width: 692px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
+  margin: 0 auto;
+  margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.title-section-signup {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 61px;
+  font-weight: 700;
+  height: 89px;
+  width: 100%;
+}
+
+.title-section-left {
+  display: flex;
+  justify-content: flex-start;
+  width: 10%;
+}
+
+.title-section-left img {
+  cursor: pointer;
+}
+
+.title-section-right {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  width: 90%;
+  align-items: center;
+}
+
+.input-section-signup input {
+  border-radius: 8px;
+  height: 48px;
+  background-position: calc(100% - 12px) center;
+  background-repeat: no-repeat;
+  background-size: 20px;
+  margin-top: 15px;
+  border: 1px solid #ccc;
+  font-size: 20px;
+  padding-left: 10px;
+}
+
+input::placeholder {
+  color: #d1d1d1;
+}
+
+.check-policy-section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 50px;
+}
+
+.button-section-signup {
+  display: flex;
+  margin-top: 30px;
+}
+
+.check-policy-section a {
+  text-decoration: none;
+  color: #29abe2;
+}
+
+.footer-links {
+  height: 5vh;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  text-decoration: none;
+  color: white;
+}
+
+.error-message {
+  color: red;
+  font-size: 0.9em;
+  display: none;
+  margin-left: 10px;
+}
+
+input[type="checkbox"]:invalid + span {
+  color: red; /* Highlight the label if the checkbox is not checked */
+}
+
+.signup-hide {
+  display: none !important;
+}
+
+/******************************************************************Start Style for popup Successfully signed up  */
+.popup-successfully {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(131, 131, 131, 0.7);
+  z-index: 2000;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.popup-successfully-content {
+  background-color: $dark-navy;
+  color: #ffffff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+/******************************************************************Login Responsive */
+@media (max-width: 1050px) {
   .login-section {
-    width: 50%;
-    max-width: 692px;
-    min-height: 50vh;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
-    margin: 0 auto;
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    width: 80%;
   }
-  
+}
+
+@media (max-width: 550px) {
   .title-section {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 61px;
-    font-weight: 700;
-    height: 89px;
-    flex-direction: column;
-    width: 100%;
+    font-size: 47px;
   }
-  .divider {
+  .button-section {
     display: flex;
-    width: 30%;
-    background-color: $primary-blue;
-    height: 3px;
-    border-radius: 50px;
-    margin-top: 10px;
-    text-align: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 21px;
+  }
+  .Login-btn {
+    width: 177px;
+  }
+  .login-section {
+    margin-top: 100px;
+  }
+  .header-login-content {
+    display: none !important;
+  }
+  .header-login-content-responsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 32px;
+  }
+  .title-section {
+    font-size: 37px;
   }
   .input-section {
     display: flex;
     flex-direction: column;
     width: 80%;
     gap: 10px;
-    margin-top: 40px;
+    margin-top: 20px;
   }
-  .input-section input {
-    border-radius: 8px;
-    height: 48px;
-    background-position: calc(100% - 12px) center;
-    background-repeat: no-repeat;
-    background-size: 20px;
-    margin-top: 15px;
-    border: 1px solid #ccc;
-    font-size: 20px;
-    padding-left: 10px;
-  }
-  .icon-email {
-    background-image: url(/assets/icons/mailicon.svg);
-  }
-  .icon-name {
-    background-image: url(/assets/icons/person.svg);
-  }
-  .icon-password {
-    background-image: url(/assets/icons/lock.svg);
-  }
-  .remember-password-section {
-    display: flex;
-    justify-content: flex-start;
-    width: 80%;
-    margin-top: 30px;
-  }
-  .header-login-content-responsive{
-    display: none;
-  }
-  .button-section {
-    display: flex;
-   justify-content: center;
-    margin-top: 70px;
-    margin-bottom: 20px;
-    width: 100%;
-    gap: 35px;
-  }
-  
-  .button-section button {
-      padding: 10px;
-  }
-  
-  .Login-btn {
-    background-color: $dark-navy;
-    color: white;
-    font-size: 21px;
-    font-weight: 700;
-    border-radius: 16px;
-    cursor: pointer;
-    border: none;
-    width: 110px;
-    height: 48px;
-  }
-  .Guest-btn {
-    background-color: #ffffff;
-    color: $dark-navy;
-    font-size: 21px;
-    font-weight: 700;
-    border-radius: 16px;
-    cursor: pointer;
-    border: 1px solid $dark-navy;
-    width: 177px;
-    height: 48px;
-  }
-  .toggle-display {
-    display: none;
-  }
-  .input-section,
-  .input-section-signup {
-    input:focus {
-      border-color: $primary-blue;
-      outline: none; /* Remove default outline */
-    }
-  }
-  input[type="text"],
-  input[type="email"],
-  input[type="password"] {
-    border-color: #ccc;
-    outline: none;
-  }
-  input[type="text"].invalid {
-    border-color: #ff0000;
-  }
-  input[type="email"].invalid {
-    border-color: #ff0000;
-  }
-  input[type="password"].invalid {
-    border-color: #ff0000;
-  }
-  .error-validation-email,
-  .error-validation-password,
-  .error-validation-password,
-  .error-username,
-  .error-email,
-  .error-Password,
-  .error-confirm-password {
-    color: #ff8190;
-    margin-bottom: 3px;
-  }
-  /* **************************************************sign up section */
-  .signup-section {
-    width: 50%;
-    max-width: 692px;
-    padding: 20px;
-    border-radius: 20px;
-    box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
-    margin: 0 auto;
-    margin-left: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .title-section-signup {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    font-size: 61px;
-    font-weight: 700;
-    height: 89px;
-    width: 100%;
-  }
-  .title-section-left {
-    display: flex;
-    justify-content: flex-start;
-    width: 10%;
-  }
-  .title-section-left img {
-    cursor: pointer;
-  }
-  .title-section-right {
-    display: flex;
-    text-align: center;
-    flex-direction: column;
-    justify-content: center;
-    width: 90%;
-    align-items: center;
-  }
-  .input-section-signup {
-    display: flex;
-    flex-direction: column;
-    width: 80%;
-    margin-top: 40px;
-  }
-  .input-section-signup input {
-    border-radius: 8px;
-    height: 48px;
-    background-position: calc(100% - 12px) center;
-    background-repeat: no-repeat;
-    background-size: 20px;
-    margin-top: 15px;
-    border: 1px solid #ccc;
-    font-size: 20px;
-    padding-left: 10px;
-  }
-  input::placeholder {
-    color: #d1d1d1;
-  }
-  .check-policy-section {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    margin-top: 50px;
-  }
-  .button-section-signup {
-    display: flex;
-    margin-top: 30px;
-  }
-  .check-policy-section a {
-    text-decoration: none;
-    color: #29abe2;
-  }
-  .footer-links {
-    height: 5vh;
-    display: flex;
-    align-items: flex-end;
-    justify-content: center;
-    text-decoration: none;
-    color: white;
-  }
-  .error-message {
-    color: red;
-    font-size: 0.9em;
-    display: none;
-    margin-left: 10px;
-  }
-  input[type="checkbox"]:invalid + span {
-    color: red; /* Highlight the label if the checkbox is not checked */
-  }
-  
-  .signup-hide{
-    display: none !important;
-  }
-  
-  /******************************************************************Start Style for popup Successfully signed up  */
-  .popup-successfully {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(131, 131, 131, 0.7);
-    z-index: 2000;
-    align-items: center;
-    justify-content: center;
-    transition: opacity 0.5s ease, transform 0.5s ease;
-  }
-  
-  .popup-successfully-content {
-    background-color: $dark-navy;
-    color: #ffffff;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-  }
-  /******************************************************************Login Responsive */
-  
-  @media (max-width: 1050px) {
-    .login-section {
-      width: 80%;
-  }
-  }
-  @media (max-width: 550px) {
-    .title-section {   
-      font-size: 47px;
-     }
-     .button-section {
-      display: flex;
-      flex-direction: column;  
-      align-items: center ;
-      gap:21px ; 
-    }
-    .Login-btn { 
-      width: 177px;  
-    }
-    .login-section {
-      margin-top:100px;
-    }
-    .header-login-content{
-      display: none !important;
-    }
-    .header-login-content-responsive{    
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      margin-top:32px ;
-    } 
-    .title-section {
-      font-size: 37px;
-    }
-    .input-section {
-      display: flex;
-      flex-direction: column;
-      width: 80%;
-      gap: 10px;
-      margin-top: 20px;
-    }
-    .logo-image{
+  .logo-image {
     width: 90px;
     height: 90px;
-    }
-  
   }
+}
+
+
+
+

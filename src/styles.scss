@@ -4,6 +4,16 @@
 
 $primary-blue: #29abe2;
 $dark-navy: #2a3647;
+$background-light: #f6f7f8;
+$border-color: #ccc;
+$error-red: #ff8190;
+$white: #ffffff;
+$box-shadow-light: rgba(0, 0, 0, 0.08);
+$box-shadow-hover: rgba(0, 0, 0, 0.3);
+
+$border-radius-default: 8px;
+$border-radius-large: 16px;
+$border-radius-xl: 20px;
 
 html {
   @include mat.theme((
@@ -16,6 +26,17 @@ html {
     density: 0,
   ));
 }/* You can add global styles to this file, and also import other style files */
+button {
+  cursor: pointer;
+  border-radius: $border-radius-default;
+  font-weight: 700;
+  border: none;
+  transition: all 0.2s ease-in-out;
+
+  &:hover {
+    box-shadow: 0 4px 4px $box-shadow-hover;
+  }
+}
 
 @mixin hover-effect(
   $scale: 1.05,
@@ -38,6 +59,25 @@ html {
     @if $background-color {
       background-color: $background-color;
     }
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin input-base {
+  border-radius: $border-radius-default;
+  height: 48px;
+  font-size: 20px;
+  border: 1px solid $border-color;
+  padding-left: 10px;
+  outline: none;
+  
+  &:focus {
+    border-color: $primary-blue;
   }
 }
 
