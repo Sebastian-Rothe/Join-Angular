@@ -134,11 +134,12 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-direction: column;
   font-size: 61px;
   font-weight: 700;
   height: 89px;
-  flex-direction: column;
   width: 100%;
+  margin-top: 40px;
 }
 
 .divider {
@@ -159,26 +160,57 @@ body {
   gap: 20px;
   margin-top: 40px;
 
+  .input-container {
+    width: 100%;
+    position: relative;
+    margin-bottom: 0;
+    
+    .input-with-icon {
+      @include input-base;
+      width: calc(100% - 20px); // Anpassung für Padding
+    //   padding-right: 45px;
+      margin: 0;
+    }
+
+    .input-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: $dark-navy;
+      font-size: 24px;
+      
+      &.clickable {
+        cursor: pointer;
+      }
+    }
+  }
+
   input {
     @include input-base;
-    background-position: calc(100% - 12px) center;
-    background-repeat: no-repeat;
-    background-size: 20px;
+    width: calc(100% - 50px); // Anpassung für das Icon
     margin-top: 15px;
   }
 }
 
-.icon-email {
-  background-image: url(/assets/icons/mailicon.svg);
-}
-
+// Remove old icon classes
+.icon-email,
+.icon-password,
 .icon-name {
-  background-image: url(/assets/icons/person.svg);
+  background-image: none;
 }
 
-.icon-password {
-  background-image: url(/assets/icons/lock.svg);
-}
+// .icon-email {
+//   background-image: url(/assets/icons/mailicon.svg);
+// }
+
+// .icon-name {
+//   background-image: url(/assets/icons/person.svg);
+// }
+
+// .icon-password {
+//   background-image: url(/assets/icons/lock.svg);
+// }
 
 .remember-password-section {
   display: flex;
@@ -350,8 +382,11 @@ input::placeholder {
 
 .footer-links {
   height: 5vh;
+  position: absolute;
+  bottom: 0;
   display: flex;
-  align-items: flex-end;
+  width:100%;
+  align-items: center;
   justify-content: center;
   text-decoration: none;
   color: white;
@@ -435,8 +470,20 @@ input[type="checkbox"]:invalid + span {
     display: flex;
     flex-direction: column;
     width: 80%;
-    gap: 10px;
-    margin-top: 20px;
+    gap: 0;
+    
+    .input-container {
+      margin-bottom: 10px;
+      
+      .input-with-icon {
+        font-size: 16px;
+        height: 41px;
+      }
+      
+      .input-icon {
+        font-size: 20px;
+      }
+    }
   }
   .logo-image {
     width: 90px;

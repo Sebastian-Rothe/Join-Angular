@@ -17,22 +17,36 @@
       </div>
 
       <div class="input-section">
-        <input
-          type="text"
-          [(ngModel)]="email"
-          placeholder="Email"
-          class="icon-email"
-          id="username" />
+        <div class="input-container">
+          <input
+            type="text"
+            [(ngModel)]="email"
+            placeholder="Email"
+            class="input-with-icon"
+            id="username" />
+          <mat-icon class="input-icon">mail</mat-icon>
+        </div>
         <div class="error-validation-email" [class.toggle-display]="email !== ''">
           This field is required
         </div>
         
-        <input
-          type="password"
-          [(ngModel)]="password"
-          placeholder="Password"
-          class="icon-password"
-          id="password" />
+        <div class="input-container">
+          <input
+            [type]="hidePassword ? 'password' : 'text'"
+            [(ngModel)]="password"
+            placeholder="Password"
+            class="input-with-icon"
+            id="password"
+            (focus)="onPasswordFocus()"
+            (blur)="onPasswordBlur()" />
+          <mat-icon class="input-icon" *ngIf="!isPasswordFocused">lock</mat-icon>
+          <mat-icon 
+            class="input-icon clickable" 
+            *ngIf="isPasswordFocused"
+            (click)="togglePasswordVisibility()">
+            {{hidePassword ? 'visibility_off' : 'visibility'}}
+          </mat-icon>
+        </div>
         <div class="error-validation-password" [class.toggle-display]="password !== ''">
           This field is required
         </div>
