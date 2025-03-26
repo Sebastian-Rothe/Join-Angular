@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,13 +8,13 @@ import { Observable } from 'rxjs';
 export class AuthService {
   user$: Observable<any>;
 
-  constructor(private auth: AngularFireAuth) {
-    this.user$ = this.auth.authState;
+  constructor(private auth: Auth) {
+    this.user$ = user(this.auth);
   }
 
   async login(email: string, password: string) {
     try {
-      return await this.auth.signInWithEmailAndPassword(email, password);
+      return await signInWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       console.error('Error logging in:', error);
       throw error;
@@ -23,7 +23,7 @@ export class AuthService {
 
   async register(email: string, password: string) {
     try {
-      return await this.auth.createUserWithEmailAndPassword(email, password);
+      return await createUserWithEmailAndPassword(this.auth, email, password);
     } catch (error) {
       console.error('Error registering:', error);
       throw error;
@@ -32,7 +32,7 @@ export class AuthService {
 
   async logout() {
     try {
-      await this.auth.signOut();
+      await signOut(this.auth);
     } catch (error) {
       console.error('Error logging out:', error);
       throw error;
