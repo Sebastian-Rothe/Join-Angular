@@ -1,4 +1,4 @@
-@use '../../../styles.scss' as *;
+@use "../../../styles.scss" as *;
 
 body {
   margin: 0;
@@ -15,11 +15,16 @@ body {
 
 .logo-sidebar {
   position: absolute;
-  top: 20px;
-  left: 20px;
+  top: 40px;
+  left: 40px;
   width: 100px;
   height: 100px;
   z-index: 1000;
+
+  img {
+    width: 100%;
+    height: 100%;
+  }
 }
 
 /* *******************************************************************start Logo animation */
@@ -164,11 +169,11 @@ body {
     width: 100%;
     position: relative;
     margin-bottom: 0;
-    
+
     .input-with-icon {
       @include input-base;
       width: calc(100% - 20px); // Anpassung für Padding
-    //   padding-right: 45px;
+      //   padding-right: 45px;
       margin: 0;
     }
 
@@ -179,7 +184,7 @@ body {
       transform: translateY(-50%);
       color: $dark-navy;
       font-size: 24px;
-      
+
       &.clickable {
         cursor: pointer;
       }
@@ -308,7 +313,7 @@ input[type="password"].invalid {
   position: absolute;
   bottom: 0;
   display: flex;
-  width:100%;
+  width: 100%;
   align-items: center;
   justify-content: center;
   text-decoration: none;
@@ -355,9 +360,88 @@ input[type="checkbox"]:invalid + span {
 // }
 
 /******************************************************************Login Responsive */
+@media (max-width: 1200px) {
+  .logo-sidebar {
+    top: 35px;
+    left: 35px;
+    width: 90px;
+    height: 90px;
+  }
+}
+
 @media (max-width: 1050px) {
   .login-section {
     width: 80%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .login-section {
+    width: 80%;
+  }
+}
+
+@media (max-width: 900px) {
+  .logo-sidebar {
+    top: 30px;
+    left: 30px;
+    width: 85px;
+    height: 85px;
+  }
+}
+
+@media (max-width: 600px) {
+  .logo-sidebar {
+    top: 25px;
+    left: 25px;
+    width: 80px;
+    height: 80px;
+  }
+
+  .login-section {
+    width: 90%;
+    margin-top: 80px;
+    padding: 20px 0;
+  }
+
+  .title-section {
+    font-size: 47px;
+    padding: 20px 0;
+    margin-bottom: 20px;
+    height: auto;
+  }
+
+  .input-section {
+    gap: 15px;
+    margin-top: 20px;
+
+    .input-container {
+      margin-bottom: 8px;
+
+      .input-with-icon {
+        font-size: 16px;
+        height: 41px;
+        padding: 0 10px;
+      }
+
+      .input-icon {
+        font-size: 20px;
+      }
+    }
+  }
+
+  .button-section {
+    margin-top: 25px;
+    margin-bottom: 0;
+    flex-direction: column;
+    gap: 15px;
+
+    .Login-btn,
+    .Guest-btn {
+      width: 180px;
+      height: 45px;
+      font-size: 16px;
+    }
   }
 }
 
@@ -395,15 +479,15 @@ input[type="checkbox"]:invalid + span {
     flex-direction: column;
     width: 80%;
     gap: 0;
-    
+
     .input-container {
       margin-bottom: 10px;
-      
+
       .input-with-icon {
         font-size: 16px;
         height: 41px;
       }
-      
+
       .input-icon {
         font-size: 20px;
       }
@@ -415,7 +499,34 @@ input[type="checkbox"]:invalid + span {
   }
 }
 
+@media (max-width: 450px) {
+  .title-section {
+    margin: 0;
+  }
+  .logo-sidebar {
+    top: 4px;
+    left: 4px;
+    width: 70px;
+    height: 70px;
+  }
 
+  .login-section {
+    margin-top: 60px;
+  }
 
+  .title-section {
+    font-size: 41px;
+  }
 
+  .header-login-content {
+    display: none;
+  }
 
+  .header-login-content-responsive {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    margin-top: 25px;
+  }
+}
