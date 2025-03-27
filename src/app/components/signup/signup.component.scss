@@ -9,10 +9,10 @@
 
 .logo-sidebar {
   position: absolute;
-  top: 25px;
-  left: 35px;
-  width: 80px;
-  height: 80px;
+  top: 40px;
+  left: 40px;
+  width: 100px;
+  height: 100px;
   z-index: 1000;
 
   img {
@@ -231,6 +231,15 @@
   }
 }
 
+@media (max-width: 1200px) {
+  .logo-sidebar {
+    top: 35px;
+    left: 35px;
+    width: 90px;
+    height: 90px;
+  }
+}
+
 @media (max-width: 1050px) {
   .title-section-signup { font-size: 51px; }
 }
@@ -241,7 +250,23 @@
   }
 }
 
+@media (max-width: 900px) {
+  .logo-sidebar {
+    top: 30px;
+    left: 30px;
+    width: 85px;
+    height: 85px;
+  }
+}
+
 @media (max-width: 600px) {
+  .logo-sidebar {
+    top: 25px;
+    left: 25px;
+    width: 80px;
+    height: 80px;
+  }
+
   .signup-section {
     width: 90%;
     padding: 24px 0;
@@ -363,6 +388,15 @@
   .check-policy-section span { font-size: 12px; }
   .content { margin-top: 0; }
   .divider { width: 50%; }
+}
+
+@media (max-width: 450px) {
+  .logo-sidebar {
+    top: 4px;
+    left: 4px;
+    width: 70px;
+    height: 70px;
+  }
 }
 
 @media (max-width: 400px) {
