@@ -266,11 +266,11 @@ body {
   @extend %button-base;
   background-color: $white;
   color: $dark-navy;
-  border: 2px solid $dark-navy;
+  border: 1px solid $dark-navy;
   width: 177px;
 
   &:hover {
-    border-color: $primary-blue;
+    border: 2px solid $primary-blue;
     color: $primary-blue;
     box-shadow: 0 4px 4px $box-shadow-hover;
   }
@@ -301,83 +301,6 @@ input[type="password"].invalid {
     color: $error-red;
     margin-bottom: 3px;
   }
-}
-
-/* **************************************************sign up section */
-.signup-section {
-  width: 50%;
-  max-width: 692px;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0px 0px 10px 3px rgba(0, 0, 0, 0.08);
-  margin: 0 auto;
-  margin-left: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.title-section-signup {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  font-size: 61px;
-  font-weight: 700;
-  height: 89px;
-  width: 100%;
-}
-
-.title-section-left {
-  display: flex;
-  justify-content: flex-start;
-  width: 10%;
-}
-
-.title-section-left img {
-  cursor: pointer;
-}
-
-.title-section-right {
-  display: flex;
-  text-align: center;
-  flex-direction: column;
-  justify-content: center;
-  width: 90%;
-  align-items: center;
-}
-
-.input-section-signup input {
-  border-radius: 8px;
-  height: 48px;
-  background-position: calc(100% - 12px) center;
-  background-repeat: no-repeat;
-  background-size: 20px;
-  margin-top: 15px;
-  border: 1px solid #ccc;
-  font-size: 20px;
-  padding-left: 10px;
-}
-
-input::placeholder {
-  color: #d1d1d1;
-}
-
-.check-policy-section {
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  margin-top: 50px;
-}
-
-.button-section-signup {
-  display: flex;
-  margin-top: 30px;
-}
-
-.check-policy-section a {
-  text-decoration: none;
-  color: #29abe2;
 }
 
 .footer-links {

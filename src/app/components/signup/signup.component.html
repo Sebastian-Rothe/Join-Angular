@@ -17,17 +17,45 @@
       </div>
 
       <div class="input-section-signup">
-        <input type="text" [(ngModel)]="username" placeholder="Name" class="icon-name" />
-        <div *ngIf="username === ''" class="error-username">This field is required</div>
+        <div class="input-container">
+          <input
+            type="text"
+            [(ngModel)]="username"
+            placeholder="Name"
+            class="input-with-icon" />
+          <mat-icon class="input-icon">person</mat-icon>
+          <div class="error-username" *ngIf="username === ''">This field is required</div>
+        </div>
 
-        <input type="email" [(ngModel)]="email" placeholder="Email" class="icon-email" />
-        <div *ngIf="email === ''" class="error-email">This field is required</div>
+        <div class="input-container">
+          <input
+            type="email"
+            [(ngModel)]="email"
+            placeholder="Email"
+            class="input-with-icon" />
+          <mat-icon class="input-icon">mail</mat-icon>
+          <div class="error-email" *ngIf="email === ''">This field is required</div>
+        </div>
 
-        <input type="password" [(ngModel)]="password" placeholder="Password" class="icon-password" />
-        <div *ngIf="password === ''" class="error-Password">This field is required</div>
+        <div class="input-container">
+          <input
+            type="password"
+            [(ngModel)]="password"
+            placeholder="Password"
+            class="input-with-icon" />
+          <mat-icon class="input-icon">lock</mat-icon>
+          <div class="error-Password" *ngIf="password === ''">This field is required</div>
+        </div>
 
-        <input type="password" [(ngModel)]="confirmPassword" placeholder="Confirm Password" class="icon-password" />
-        <div *ngIf="confirmPassword === ''" class="error-confirm-password">This field is required</div>
+        <div class="input-container">
+          <input
+            type="password"
+            [(ngModel)]="confirmPassword"
+            placeholder="Confirm Password"
+            class="input-with-icon" />
+          <mat-icon class="input-icon">lock</mat-icon>
+          <div class="error-confirm-password" *ngIf="confirmPassword === ''">This field is required</div>
+        </div>
       </div>
 
       <div class="check-policy-section">
@@ -48,8 +76,4 @@
   </div>
 </div>
 
-<div id="success-popup" class="popup-successfully">
-  <div class="popup-successfully-content">
-    <p>You have successfully signed up!</p>
-  </div>
-</div>
+
