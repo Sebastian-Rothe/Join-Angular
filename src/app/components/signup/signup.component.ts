@@ -20,17 +20,92 @@ export class SignupComponent {
   policyAccepted: boolean = false;
   isLoading: boolean = false;
   errorMessage: string = '';
-  
+  formSubmitted = false;
+  validationErrors = {
+    username: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  };
+
   constructor(
     private authService: AuthService,
     private router: Router
   ) {}
 
+  validateField(field: string): boolean {
+    if (!this.formSubmitted) return true;
+
+    switch (field) {
+      case 'username':
+        if (!this.username.trim()) {
+          this.validationErrors.username = 'Name is required';
+          return false;
+        }
+        this.validationErrors.username = '';
+        return true;
+
+      case 'email':
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!this.email.trim()) {
+          this.validationErrors.email = 'Email is required';
+          return false;
+        }
+        if (!emailRegex.test(this.email)) {
+          this.validationErrors.email = 'Please enter a valid email';
+          return false;
+        }
+        this.validationErrors.email = '';
+        return true;
+
+      case 'password':
+        if (!this.password) {
+          this.validationErrors.password = 'Password is required';
+          return false;
+        }
+        if (this.password.length < 6) {
+          this.validationErrors.password = 'Password must be at least 6 characters';
+          return false;
+        }
+        this.validationErrors.password = '';
+        return true;
+
+      case 'confirmPassword':
+        if (!this.confirmPassword) {
+          this.validationErrors.confirmPassword = 'Please confirm your password';
+          return false;
+        }
+        if (this.password !== this.confirmPassword) {
+          this.validationErrors.confirmPassword = 'Passwords do not match';
+          return false;
+        }
+        this.validationErrors.confirmPassword = '';
+        return true;
+
+      default:
+        return true;
+    }
+  }
+
   async signUp() {
-    if (!this.validateForm()) return;
-    
-    this.isLoading = true;
+    this.formSubmitted = true;
     this.errorMessage = '';
+    
+    const isValid = [
+      this.validateField('username'),
+      this.validateField('email'),
+      this.validateField('password'),
+      this.validateField('confirmPassword')
+    ].every(valid => valid) && this.policyAccepted;
+
+    if (!isValid) {
+      if (!this.policyAccepted) {
+        this.errorMessage = 'Please accept the privacy policy';
+      }
+      return;
+    }
+
+    this.isLoading = true;
     
     try {
       await this.authService.register(this.email, this.password, this.username);
@@ -39,22 +114,10 @@ export class SignupComponent {
         this.router.navigate(['/login']);
       }, 2000);
     } catch (error: any) {
-      console.error('Registration failed:', error);
       this.errorMessage = this.getErrorMessage(error.code);
     } finally {
       this.isLoading = false;
     }
-  }
-
-  private validateForm(): boolean {
-    if (!this.username || this.username.trim() === '') return false;
-    if (!this.email || this.email.trim() === '') return false;
-    if (!this.password || this.password.trim() === '') return false;
-    if (!this.confirmPassword || this.confirmPassword.trim() === '') return false;
-    if (!this.policyAccepted) return false;
-    if (this.password !== this.confirmPassword) return false;
-    
-    return true;
   }
 
   backToLoginPage() {

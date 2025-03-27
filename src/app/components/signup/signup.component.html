@@ -22,9 +22,12 @@
             type="text"
             [(ngModel)]="username"
             placeholder="Name"
-            class="input-with-icon" />
+            class="input-with-icon"
+            [class.error]="validationErrors.username" />
           <mat-icon class="input-icon">person</mat-icon>
-          <div class="error-username" *ngIf="username === ''">This field is required</div>
+          <div class="error-message" *ngIf="validationErrors.username">
+            {{validationErrors.username}}
+          </div>
         </div>
 
         <div class="input-container">
@@ -32,9 +35,12 @@
             type="email"
             [(ngModel)]="email"
             placeholder="Email"
-            class="input-with-icon" />
+            class="input-with-icon"
+            [class.error]="validationErrors.email" />
           <mat-icon class="input-icon">mail</mat-icon>
-          <div class="error-email" *ngIf="email === ''">This field is required</div>
+          <div class="error-message" *ngIf="validationErrors.email">
+            {{validationErrors.email}}
+          </div>
         </div>
 
         <div class="input-container">
@@ -42,9 +48,12 @@
             type="password"
             [(ngModel)]="password"
             placeholder="Password"
-            class="input-with-icon" />
+            class="input-with-icon"
+            [class.error]="validationErrors.password" />
           <mat-icon class="input-icon">lock</mat-icon>
-          <div class="error-Password" *ngIf="password === ''">This field is required</div>
+          <div class="error-message" *ngIf="validationErrors.password">
+            {{validationErrors.password}}
+          </div>
         </div>
 
         <div class="input-container">
@@ -52,9 +61,12 @@
             type="password"
             [(ngModel)]="confirmPassword"
             placeholder="Confirm Password"
-            class="input-with-icon" />
+            class="input-with-icon"
+            [class.error]="validationErrors.confirmPassword" />
           <mat-icon class="input-icon">lock</mat-icon>
-          <div class="error-confirm-password" *ngIf="confirmPassword === ''">This field is required</div>
+          <div class="error-message" *ngIf="validationErrors.confirmPassword">
+            {{validationErrors.confirmPassword}}
+          </div>
         </div>
 
         <div class="error-message" *ngIf="errorMessage">
@@ -65,7 +77,9 @@
       <div class="check-policy-section">
         <input type="checkbox" [(ngModel)]="policyAccepted" id="policy-checkbox" />
         <span>I accept the <a routerLink="/privacy">Privacy policy</a></span>
-        <span id="policy-error" class="error-message" *ngIf="!policyAccepted">Please accept the privacy policy</span>
+        @if(!policyAccepted){
+          <span class="error-message">Please accept the privacy policy</span>
+        }
       </div>
 
       <div class="button-section-signup">
