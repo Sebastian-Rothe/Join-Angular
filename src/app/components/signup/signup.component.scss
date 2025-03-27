@@ -95,6 +95,10 @@
       &:focus {
         border-color: $primary-blue;
       }
+
+      &.error {
+        border-color: $error-red;
+      }
     }
 
     .input-icon {
@@ -110,6 +114,7 @@
       line-height: 1;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
+      transition: top 0.2s ease; // Smooth transition für Icon-Bewegung
       
       &.material-icons {
         font-family: 'Material Icons';
@@ -120,6 +125,26 @@
         word-wrap: normal;
         direction: ltr;
         letter-spacing: normal;
+      }
+
+      // Icon nach oben verschieben wenn Fehler angezeigt wird
+      &.error-active {
+        top: calc(50% - 12px);
+      }
+    }
+
+    // Fehlermeldung mit Animation
+    .error-message {
+      color: $error-red;
+      font-size: 12px;
+      margin-top: 4px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: all 0.2s ease;
+
+      &.show {
+        opacity: 1;
+        transform: translateY(0);
       }
     }
   }

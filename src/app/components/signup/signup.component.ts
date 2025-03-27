@@ -38,8 +38,17 @@ export class SignupComponent {
 
     switch (field) {
       case 'username':
+        const nameRegex = /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
         if (!this.username.trim()) {
           this.validationErrors.username = 'Name is required';
+          return false;
+        }
+        if (this.username.trim().length < 2) {
+          this.validationErrors.username = 'Name must be at least 2 characters';
+          return false;
+        }
+        if (!nameRegex.test(this.username)) {
+          this.validationErrors.username = 'Please enter a valid name';
           return false;
         }
         this.validationErrors.username = '';

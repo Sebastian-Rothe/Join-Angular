@@ -24,8 +24,8 @@
             placeholder="Name"
             class="input-with-icon"
             [class.error]="validationErrors.username" />
-          <mat-icon class="input-icon">person</mat-icon>
-          <div class="error-message" *ngIf="validationErrors.username">
+          <mat-icon class="input-icon" [class.error-active]="validationErrors.username">person</mat-icon>
+          <div class="error-message" [class.show]="validationErrors.username">
             {{validationErrors.username}}
           </div>
         </div>
@@ -37,8 +37,8 @@
             placeholder="Email"
             class="input-with-icon"
             [class.error]="validationErrors.email" />
-          <mat-icon class="input-icon">mail</mat-icon>
-          <div class="error-message" *ngIf="validationErrors.email">
+          <mat-icon class="input-icon" [class.error-active]="validationErrors.email">mail</mat-icon>
+          <div class="error-message" [class.show]="validationErrors.email">
             {{validationErrors.email}}
           </div>
         </div>
@@ -50,8 +50,8 @@
             placeholder="Password"
             class="input-with-icon"
             [class.error]="validationErrors.password" />
-          <mat-icon class="input-icon">lock</mat-icon>
-          <div class="error-message" *ngIf="validationErrors.password">
+          <mat-icon class="input-icon" [class.error-active]="validationErrors.password">lock</mat-icon>
+          <div class="error-message" [class.show]="validationErrors.password">
             {{validationErrors.password}}
           </div>
         </div>
@@ -63,8 +63,8 @@
             placeholder="Confirm Password"
             class="input-with-icon"
             [class.error]="validationErrors.confirmPassword" />
-          <mat-icon class="input-icon">lock</mat-icon>
-          <div class="error-message" *ngIf="validationErrors.confirmPassword">
+          <mat-icon class="input-icon" [class.error-active]="validationErrors.confirmPassword">lock</mat-icon>
+          <div class="error-message" [class.show]="validationErrors.confirmPassword">
             {{validationErrors.confirmPassword}}
           </div>
         </div>
@@ -77,9 +77,6 @@
       <div class="check-policy-section">
         <input type="checkbox" [(ngModel)]="policyAccepted" id="policy-checkbox" />
         <span>I accept the <a routerLink="/privacy">Privacy policy</a></span>
-        @if(!policyAccepted){
-          <span class="error-message">Please accept the privacy policy</span>
-        }
       </div>
 
       <div class="button-section-signup">
