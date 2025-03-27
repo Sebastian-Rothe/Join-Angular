@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
+import { Firestore, doc, setDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 
 @Injectable({
@@ -8,7 +9,10 @@ import { Observable } from 'rxjs';
 export class AuthService {
   user$: Observable<any>;
 
-  constructor(private auth: Auth) {
+  constructor(
+    private auth: Auth,
+    private firestore: Firestore
+  ) {
     this.user$ = user(this.auth);
   }
 
@@ -21,13 +25,26 @@ export class AuthService {
     }
   }
 
-  async register(email: string, password: string) {
+  async register(email: string, password: string, userName: string) {
     try {
-      return await createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      
+      // Create user document in Firestore
+      await this.createUserDocument(userCredential.user.uid, {
+        userName: userName,
+        email: email
+      });
+      
+      return userCredential;
     } catch (error) {
       console.error('Error registering:', error);
       throw error;
     }
+  }
+
+  private async createUserDocument(userId: string, userData: { userName: string, email: string }) {
+    const userRef = doc(this.firestore, 'users', userId);
+    await setDoc(userRef, userData);
   }
 
   async logout() {

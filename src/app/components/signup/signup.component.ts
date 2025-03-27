@@ -18,6 +18,8 @@ export class SignupComponent {
   password: string = '';
   confirmPassword: string = '';
   policyAccepted: boolean = false;
+  isLoading: boolean = false;
+  errorMessage: string = '';
   
   constructor(
     private authService: AuthService,
@@ -27,14 +29,20 @@ export class SignupComponent {
   async signUp() {
     if (!this.validateForm()) return;
     
+    this.isLoading = true;
+    this.errorMessage = '';
+    
     try {
-      await this.authService.register(this.email, this.password);
+      await this.authService.register(this.email, this.password, this.username);
       this.showSuccessPopup();
       setTimeout(() => {
         this.router.navigate(['/login']);
       }, 2000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('Registration failed:', error);
+      this.errorMessage = this.getErrorMessage(error.code);
+    } finally {
+      this.isLoading = false;
     }
   }
 
@@ -60,6 +68,19 @@ export class SignupComponent {
       setTimeout(() => {
         popup.style.display = 'none';
       }, 2000);
+    }
+  }
+
+  private getErrorMessage(errorCode: string): string {
+    switch (errorCode) {
+      case 'auth/email-already-in-use':
+        return 'This email is already registered';
+      case 'auth/invalid-email':
+        return 'Invalid email address';
+      case 'auth/weak-password':
+        return 'Password should be at least 6 characters';
+      default:
+        return 'Registration failed. Please try again.';
     }
   }
 }

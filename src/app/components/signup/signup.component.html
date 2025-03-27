@@ -56,6 +56,10 @@
           <mat-icon class="input-icon">lock</mat-icon>
           <div class="error-confirm-password" *ngIf="confirmPassword === ''">This field is required</div>
         </div>
+
+        <div class="error-message" *ngIf="errorMessage">
+          {{ errorMessage }}
+        </div>
       </div>
 
       <div class="check-policy-section">
@@ -65,7 +69,11 @@
       </div>
 
       <div class="button-section-signup">
-        <button class="Login-btn" (click)="signUp()">Sign Up</button>
+        <button class="Login-btn" 
+                (click)="signUp()" 
+                [disabled]="isLoading">
+          {{ isLoading ? 'Signing up...' : 'Sign Up' }}
+        </button>
       </div>
     </div>
 
