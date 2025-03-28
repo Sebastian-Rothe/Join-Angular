@@ -222,16 +222,20 @@
 .footer-links {
   height: 5vh;
   position: absolute;
-  bottom: 0;
-  width: 100%;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 80px); 
   @include flex-center;
   gap: 30px;
+  margin: 0 auto;
 
   a {
     text-decoration: none;
     color: $border-color;
   }
 }
+
 
 @media (max-width: 1200px) {
   .title-section-signup { font-size: 51px; }

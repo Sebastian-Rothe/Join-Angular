@@ -312,13 +312,18 @@ input[type="password"].invalid {
 .footer-links {
   height: 5vh;
   position: absolute;
-  bottom: 0;
-  display: flex;
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  text-decoration: none;
-  color: white;
+  bottom: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: calc(100% - 80px); 
+  @include flex-center;
+  gap: 30px;
+  margin: 0 auto;
+
+  a {
+    text-decoration: none;
+    color: $border-color;
+  }
 }
 
 .error-message {
