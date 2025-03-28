@@ -15,8 +15,8 @@ body {
 
 .logo-sidebar {
   position: absolute;
-  top: 40px;
-  left: 40px;
+  top: 12px;
+  left: 12px;
   width: 100px;
   height: 100px;
   z-index: 1000;
@@ -57,8 +57,8 @@ body {
     transform: translate(-50%, -50%) scale(4); /* Start: Enlarged */
   }
   100% {
-    top: 20px; /* End position (vertical) */
-    left: 20px;
+    top: 12px; /* End position (vertical) */
+    left: 12px;
     transform: translate(0, 0) scale(1); /* End position: Normal size */
   }
 }
@@ -145,6 +145,7 @@ body {
   height: 89px;
   width: 100%;
   margin-top: 40px;
+  white-space: nowrap; // Verhindert Zeilenumbruch
 }
 
 .divider {
@@ -361,12 +362,12 @@ input[type="checkbox"]:invalid + span {
 
 /******************************************************************Login Responsive */
 @media (max-width: 1200px) {
-  .logo-sidebar {
-    top: 35px;
-    left: 35px;
-    width: 90px;
-    height: 90px;
-  }
+  // .logo-sidebar {
+  //   top: 35px;
+  //   left: 35px;
+  //   width: 90px;
+  //   height: 90px;
+  // }
 }
 
 @media (max-width: 1050px) {
@@ -375,29 +376,16 @@ input[type="checkbox"]:invalid + span {
   }
 }
 
-@media (max-width: 1000px) {
-  .login-section {
-    width: 80%;
-  }
-}
-
 @media (max-width: 900px) {
-  .logo-sidebar {
-    top: 30px;
-    left: 30px;
-    width: 85px;
-    height: 85px;
-  }
+  // .logo-sidebar {
+  //   top: 30px;
+  //   left: 30px;
+  //   width: 85px;
+  //   height: 85px;
+  // }
 }
 
 @media (max-width: 600px) {
-  .logo-sidebar {
-    top: 25px;
-    left: 25px;
-    width: 80px;
-    height: 80px;
-  }
-
   .login-section {
     width: 90%;
     margin-top: 80px;
@@ -434,6 +422,7 @@ input[type="checkbox"]:invalid + span {
     margin-top: 25px;
     margin-bottom: 0;
     flex-direction: column;
+    align-items: center;
     gap: 15px;
 
     .Login-btn,
@@ -443,18 +432,25 @@ input[type="checkbox"]:invalid + span {
       font-size: 16px;
     }
   }
+
+  .logo-sidebar {
+    top: 8px;
+    left: 8px;
+    width: 80px;
+    height: 80px;
+  }
 }
 
 @media (max-width: 550px) {
   .title-section {
     font-size: 47px;
   }
-  .button-section {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 21px;
-  }
+  // .button-section {
+  //   display: flex;
+  //   flex-direction: column;
+    
+  //   gap: 21px;
+  // }
   .Login-btn {
     width: 177px;
   }
@@ -493,21 +489,15 @@ input[type="checkbox"]:invalid + span {
       }
     }
   }
-  .logo-image {
-    width: 90px;
-    height: 90px;
-  }
+  // .logo-image {
+  //   width: 90px;
+  //   height: 90px;
+  // }
 }
 
 @media (max-width: 450px) {
   .title-section {
     margin: 0;
-  }
-  .logo-sidebar {
-    top: 4px;
-    left: 4px;
-    width: 70px;
-    height: 70px;
   }
 
   .login-section {
@@ -528,5 +518,12 @@ input[type="checkbox"]:invalid + span {
     align-items: center;
     gap: 12px;
     margin-top: 25px;
+  }
+
+  .logo-sidebar {
+    top: 4px;
+    left: 4px;
+    width: 70px;
+    height: 70px;
   }
 }
