@@ -176,6 +176,16 @@ body {
       width: calc(100% - 20px); // Anpassung für Padding
       //   padding-right: 45px;
       margin: 0;
+      &::-ms-reveal,
+      &::-ms-clear {
+        display: none;
+      }
+      &::-webkit-contacts-auto-fill-button,
+      &::-webkit-credentials-auto-fill-button,
+      &::-webkit-inner-spin-button {
+        visibility: hidden;
+        display: none !important;
+      }
     }
 
     .input-icon {

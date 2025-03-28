@@ -107,6 +107,17 @@
       &.error {
         border-color: $error-red;
       }
+
+      &::-ms-reveal,
+      &::-ms-clear {
+        display: none;
+      }
+      &::-webkit-contacts-auto-fill-button,
+      &::-webkit-credentials-auto-fill-button,
+      &::-webkit-inner-spin-button {
+        visibility: hidden;
+        display: none !important;
+      }
     }
 
     .input-icon {
@@ -335,6 +346,16 @@
         font-size: 16px;
         height: 41px;
         padding: 0 10px;
+        &::-ms-reveal,
+        &::-ms-clear {
+          display: none;
+        }
+        &::-webkit-contacts-auto-fill-button,
+        &::-webkit-credentials-auto-fill-button,
+        &::-webkit-inner-spin-button {
+          visibility: hidden;
+          display: none !important;
+        }
       }
     }
   }
