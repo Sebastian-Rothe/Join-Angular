@@ -33,7 +33,7 @@ body {
   top: 50vh; /* Start position*/
   left: 50vw;
   transform: translate(-50%, -50%) scale(4);
-  animation: LogoAnimate 0.9s forwards ease-in-out; /* Starts the image animation */
+  animation: LogoAnimate 2.1s forwards ease-out; /* Increased duration and changed timing */
   width: 100%;
   height: auto;
   z-index: 1;
@@ -46,12 +46,12 @@ body {
   height: 100vh;
   background-color: #f6f7f8;
   transform: translate(-50vw, -50vh) scale(4.9);
-  animation: fadeBackground 0.9s forwards ease-in-out; /* Starts the background animation fade*/
+  animation: fadeBackground 2.1s forwards ease-in-out; /* Matched timing with logo */
   z-index: -1;
 }
 
 @keyframes LogoAnimate {
-  0% {
+  0%, 30% { /* Stay at initial position for 30% of the animation */
     top: 50vh; /* Start position */
     left: 50vw;
     transform: translate(-50%, -50%) scale(4); /* Start: Enlarged */
@@ -64,7 +64,7 @@ body {
 }
 
 @keyframes fadeBackground {
-  0% {
+  0%, 30% {
     width: 50vw; /* Start size of the background */
     height: 50vh;
     opacity: 1;
