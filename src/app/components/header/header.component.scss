@@ -1,0 +1,122 @@
+header {
+  width: 100%;
+  height: 96px;
+  position: fixed;
+  z-index: 10;
+  top: 0;
+  display: flex;
+  background-color: white;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  align-items: center;
+  font-weight: 400;
+  font-size: 20px;
+}
+
+.header-left-content {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  padding-right: 20px;
+
+  .logo-small {
+    display: none;
+    width: 44px;
+    height: 58px;
+  }
+}
+
+.header-right-content {
+  display: flex;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: center;
+  padding-right: 40px;
+  gap: 12px;
+  cursor: pointer;
+}
+
+.help-icon {
+  margin-right: 16px;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+  position: relative;
+
+  img {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease;
+  }
+
+  &:hover img {
+    transform: scale(1.2);
+  }
+}
+
+.dropdown-menu-profile-avatar {
+  display: flex;
+  background-color: #2a3647;
+  flex-direction: column;
+  gap: 10px;
+  border-radius: 20px 0 20px 20px;
+  font-size: 16px;
+  position: absolute;
+  right: 45px;
+  top: 100px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+
+  &.d-none {
+    display: none;
+  }
+
+  a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: 5px;
+    
+    &:hover {
+      background-color: #091931;
+      padding: 10px;
+    }
+  }
+}
+
+.profile-avatar {
+  width: 56px;
+  height: 56px;
+  background-color: #ffffff;
+  border: 3px solid #090909;
+  font-size: 24px;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &:hover {
+    background-color: #e1e6ec;
+    border-radius: 50%;
+    border: 11px solid #E1E6EC;
+  }
+
+  a {
+    text-decoration: none;
+    color: #29abe2;
+    
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .header-title {
+    display: none;
+  }
+  .logo-small {
+    display: block !important;
+  }
+}

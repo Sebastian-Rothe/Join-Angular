@@ -1,1 +1,40 @@
-<p>navbar works!</p>
+<aside class="sidebar" id="sidebarMenu">
+    <figure class="logo-container">
+        <img class="logo-image" src="assets/img/Capa 2.png" alt="" /> 
+    </figure>
+
+    <nav class="menu-container">
+        <ul class="menu-items">
+            <li class="menu-item">               
+                <a routerLink="/summary" routerLinkActive="active">        
+                    <img src="assets/icons/summary.svg" alt=""/>
+                    <span>Summary</span>
+                </a>                
+            </li>
+            <li class="menu-item">               
+                <a routerLink="/add-task" routerLinkActive="active">        
+                    <img src="assets/icons/AddTask.svg" alt=""/>
+                    <span>Add Task</span>
+                </a>               
+            </li>
+            <li class="menu-item">                
+                <a routerLink="/board" routerLinkActive="active">     
+                    <img src="assets/icons/Board.svg" alt=""/>
+                    <span>Board</span>
+                </a>                
+            </li>
+            <li class="menu-item">               
+                <a routerLink="/contacts" routerLinkActive="active">        
+                    <img src="assets/icons/contacts.svg" alt=""/>
+                    <span>Contacts</span>
+                </a>                
+            </li>    
+        </ul>
+
+        <div class="footer-container">
+            <a routerLink="/privacy">Privacy Policy</a>
+            <br>
+            <a routerLink="/legal">Legal Notice</a>
+        </div>
+    </nav>
+</aside>
