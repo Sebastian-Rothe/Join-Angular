@@ -55,6 +55,9 @@ export class LoginComponent {
   }
 
   onPasswordBlur() {
-    this.isPasswordFocused = false;
+    setTimeout(() => {
+      this.isPasswordFocused = false;
+      this.hidePassword = true; // Passwort verstecken beim Verlassen des Fokus
+    }, 200);
   }
 }

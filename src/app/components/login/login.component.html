@@ -41,7 +41,8 @@
           <mat-icon 
             class="input-icon clickable" 
             *ngIf="isPasswordFocused"
-            (click)="togglePasswordVisibility()">
+            (click)="togglePasswordVisibility()"
+            (mousedown)="$event.preventDefault()">
             {{hidePassword ? 'visibility_off' : 'visibility'}}
           </mat-icon>
         </div>
