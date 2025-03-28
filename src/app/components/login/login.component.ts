@@ -30,16 +30,14 @@ export class LoginComponent {
     
     try {
       await this.authService.login(this.email, this.password);
-      // Navigate to dashboard or main page after successful login
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/main']); // Änderung von '/dashboard' zu '/main'
     } catch (error) {
       console.error('Login failed:', error);
     }
   }
 
   loginGuest() {
-    // Implement guest login logic
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/main']); // Änderung von '/dashboard' zu '/main'
   }
 
   openSignUpPage() {
