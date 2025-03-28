@@ -27,6 +27,10 @@ export class SignupComponent {
     password: '',
     confirmPassword: ''
   };
+  hidePassword = true;
+  hideConfirmPassword = true;
+  isPasswordFocused = false;
+  isConfirmPasswordFocused = false;
 
   constructor(
     private authService: AuthService,
@@ -153,6 +157,34 @@ export class SignupComponent {
         return 'Password should be at least 6 characters';
       default:
         return 'Registration failed. Please try again.';
+    }
+  }
+
+  togglePasswordVisibility(field: 'password' | 'confirmPassword') {
+    if (field === 'password') {
+      this.hidePassword = !this.hidePassword;
+    } else {
+      this.hideConfirmPassword = !this.hideConfirmPassword;
+    }
+  }
+
+  onPasswordFocus(field: 'password' | 'confirmPassword') {
+    if (field === 'password') {
+      this.isPasswordFocused = true;
+    } else {
+      this.isConfirmPasswordFocused = true;
+    }
+  }
+
+  onPasswordBlur(field: 'password' | 'confirmPassword') {
+    if (field === 'password') {
+      setTimeout(() => {
+        this.isPasswordFocused = false;
+      }, 200);
+    } else {
+      setTimeout(() => {
+        this.isConfirmPasswordFocused = false;
+      }, 200);
     }
   }
 }

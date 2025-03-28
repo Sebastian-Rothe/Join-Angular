@@ -139,6 +139,10 @@
       &.error-active {
         top: calc(50% - 12px);
       }
+
+      &.clickable {
+        cursor: pointer;
+      }
     }
 
     // Fehlermeldung mit Animation
