@@ -177,14 +177,14 @@ export class SignupComponent {
   }
 
   onPasswordBlur(field: 'password' | 'confirmPassword') {
-    if (field === 'password') {
-      setTimeout(() => {
+    setTimeout(() => {
+      if (field === 'password') {
         this.isPasswordFocused = false;
-      }, 200);
-    } else {
-      setTimeout(() => {
+        this.hidePassword = true; // Passwort verstecken beim Verlassen des Fokus
+      } else {
         this.isConfirmPasswordFocused = false;
-      }, 200);
-    }
+        this.hideConfirmPassword = true; // Bestätigungspasswort verstecken beim Verlassen des Fokus
+      }
+    }, 200);
   }
 }
