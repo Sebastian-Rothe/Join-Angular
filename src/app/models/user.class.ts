@@ -2,6 +2,7 @@ export class User {
     uid?: string = '';
     name: string = '';
     email: string = '';
+    phone: string = '';
     profilePicture: string = '';
     initials: string = '';
     iconColor: string = '';
@@ -20,6 +21,7 @@ export class User {
             uid: this.uid,
             name: this.name,
             email: this.email,
+            phone: this.phone,
             profilePicture: this.profilePicture,
             initials: this.initials,
             iconColor: this.iconColor
