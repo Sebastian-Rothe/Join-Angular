@@ -4,13 +4,14 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { User } from '../../models/user.class';  // Add this import
 
 @Component({
   selector: 'app-signup',
   standalone: true,
   imports: [CommonModule, FormsModule, MatIconModule],
   templateUrl: './signup.component.html',
-  styleUrls: ['./signup.component.scss']
+  styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
   username: string = '';
@@ -25,24 +26,22 @@ export class SignupComponent {
     username: '',
     email: '',
     password: '',
-    confirmPassword: ''
+    confirmPassword: '',
   };
   hidePassword = true;
   hideConfirmPassword = true;
   isPasswordFocused = false;
   isConfirmPasswordFocused = false;
-
-  constructor(
-    private authService: AuthService,
-    private router: Router
-  ) {}
+  user = new User(); // User wird beim Start initialisiert
+  constructor(private authService: AuthService, private router: Router) {}
 
   validateField(field: string): boolean {
     if (!this.formSubmitted) return true;
 
     switch (field) {
       case 'username':
-        const nameRegex = /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
+        const nameRegex =
+          /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
         if (!this.username.trim()) {
           this.validationErrors.username = 'Name is required';
           return false;
@@ -77,7 +76,8 @@ export class SignupComponent {
           return false;
         }
         if (this.password.length < 6) {
-          this.validationErrors.password = 'Password must be at least 6 characters';
+          this.validationErrors.password =
+            'Password must be at least 6 characters';
           return false;
         }
         this.validationErrors.password = '';
@@ -85,7 +85,8 @@ export class SignupComponent {
 
       case 'confirmPassword':
         if (!this.confirmPassword) {
-          this.validationErrors.confirmPassword = 'Please confirm your password';
+          this.validationErrors.confirmPassword =
+            'Please confirm your password';
           return false;
         }
         if (this.password !== this.confirmPassword) {
@@ -100,7 +101,7 @@ export class SignupComponent {
     }
   }
 
-  async signUp() {
+  validateForm(): boolean {
     this.formSubmitted = true;
     this.errorMessage = '';
     
@@ -111,21 +112,38 @@ export class SignupComponent {
       this.validateField('confirmPassword')
     ].every(valid => valid) && this.policyAccepted;
 
-    if (!isValid) {
-      if (!this.policyAccepted) {
-        this.errorMessage = 'Please accept the privacy policy';
-      }
-      return;
+    if (!this.policyAccepted) {
+      this.errorMessage = 'Please accept the privacy policy';
+      return false;
     }
 
+    return isValid;
+  }
+
+  async signUp() {
+    if (!this.validateForm()) return;
     this.isLoading = true;
-    
+
     try {
-      await this.authService.register(this.email, this.password, this.username);
-      this.showSuccessPopup();
-      setTimeout(() => {
-        this.router.navigate(['/login']);
-      }, 2000);
+      // Erst Firebase Auth User erstellen
+      const firebaseUser = await this.authService.register(this.email, this.password);
+      
+      if (firebaseUser) {
+        // Dann User-Objekt mit allen Daten erstellen
+        const newUser = new User({
+          uid: firebaseUser.uid,
+          name: this.username,
+          email: this.email
+        });
+
+        // User-Daten in Firestore speichern
+        await this.authService.createUserDocument(firebaseUser.uid, newUser);
+
+        this.showSuccessPopup();
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 2000);
+      }
     } catch (error: any) {
       this.errorMessage = this.getErrorMessage(error.code);
     } finally {

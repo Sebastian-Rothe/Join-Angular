@@ -1,29 +1,29 @@
-export class UserClass {
-    private static readonly COLORS: string[] = [
-        '#FF7A00', // Orange
-        '#FF5EB3', // Pink
-        '#6E52FF', // Purple
-        '#9327FF', // Violet
-        '#00BEE8', // Blue
-        '#1FD7C1', // Turquoise
-        '#FF745E', // Coral
-        '#FFA35E', // Light Orange
-        '#FC71FF', // Magenta
-        '#FFC701', // Yellow
-    ];
+export class User {
+    uid?: string = '';
+    name: string = '';
+    email: string = '';
+    profilePicture: string = '';
+    initials: string = '';
+    iconColor: string = '';
 
-    name: string = 'Guest User';
-    email: string = 'guest@temporary.com';
-    profilePicture: string;
-    initials: string;
-    iconColor: string;
-
-    constructor(obj?: any) {
-        this.name = obj ? obj.name : '';
-        this.email = obj ? obj.email : '';
-        this.profilePicture = obj ? obj.profilePicture : '';
-        this.iconColor = obj ? obj.iconColor : this.generateRandomColor();
+    constructor(obj?: Partial<User>) {
+        if (obj) {
+            Object.assign(this, obj);
+        }
+        // Generate derived values
         this.initials = this.generateInitials(this.name);
+        this.iconColor = this.generateRandomColor();
+    }
+
+    toPlainObject(): Record<string, any> {
+        return {
+            uid: this.uid,
+            name: this.name,
+            email: this.email,
+            profilePicture: this.profilePicture,
+            initials: this.initials,
+            iconColor: this.iconColor
+        };
     }
 
     private generateInitials(name: string): string {
@@ -36,7 +36,11 @@ export class UserClass {
     }
 
     private generateRandomColor(): string {
-        const randomIndex = Math.floor(Math.random() * UserClass.COLORS.length);
-        return UserClass.COLORS[randomIndex];
+        const colors = [
+            '#FF7A00', '#FF5EB3', '#6E52FF', '#9327FF', 
+            '#00BEE8', '#1FD7C1', '#FF745E', '#FFA35E', 
+            '#FC71FF', '#FFC701'
+        ];
+        return colors[Math.floor(Math.random() * colors.length)];
     }
 }
