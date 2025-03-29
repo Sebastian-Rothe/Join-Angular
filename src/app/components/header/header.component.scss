@@ -1,28 +1,33 @@
 header {
-  width: 100%;
-  height: 96px;
-  position: fixed;
-  z-index: 10;
+  height: 89px; // Adjusted to match screenshot
+  position: fixed; // Changed back to fixed
+  z-index: 900; // Lower than navbar's z-index
   top: 0;
   display: flex;
   background-color: white;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   align-items: center;
   font-weight: 400;
   font-size: 20px;
+  right: 0;  // Added to ensure proper alignment
+  left: 232px; // Add this to align with navbar
+  margin: 0;  // Reset any margins
+  padding: 0;  // Reset any padding
+  width: calc(100% - 232px);
 }
 
 .header-left-content {
   display: flex;
   flex: 1;
-  justify-content: center;
+  justify-content: flex-start; // Changed from center
   align-items: center;
   padding-right: 20px;
+  padding-left: 40px; // Reduced to avoid text under navbar
 
   .logo-small {
     display: none;
-    width: 44px;
-    height: 58px;
+    width: 32px;  // Adjusted size
+    height: 32px;
   }
 }
 
@@ -85,26 +90,33 @@ header {
 }
 
 .profile-avatar {
-  width: 56px;
-  height: 56px;
+  min-width: 49px;  // Added min-width
+  width: 49px;
+  height: 49px;
   background-color: #ffffff;
-  border: 3px solid #090909;
+  border: 2px solid #2A3647;  // Adjusted border
   font-size: 24px;
   font-weight: bold;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: all 225ms ease-in-out;  // Added transition
 
   &:hover {
-    background-color: #e1e6ec;
+    background-color: #29ABE2;
+    border: 2px solid #29ABE2;
     border-radius: 50%;
-    border: 11px solid #E1E6EC;
+    
+    a {
+      color: white;  // Text color changes on hover
+    }
   }
 
   a {
     text-decoration: none;
     color: #29abe2;
+    transition: color 225ms ease-in-out;
     
     &:hover {
       text-decoration: none;
@@ -118,5 +130,79 @@ header {
   }
   .logo-small {
     display: block !important;
+  }
+}
+
+@media (max-width: 1030px) {
+  header {
+    width: calc(100% - 120px);
+    left: 120px; // Adjust for smaller navbar
+    margin-left: 0;
+  }
+  
+  .header-left-content {
+    justify-content: start;
+    padding-left: 24px; // Adjusted for smaller width
+  }
+}
+
+@media (max-width: 902px) {
+  .header-left-content {
+    justify-content: start;
+    padding-left: 16px; // Adjusted for mobile
+    
+    .logo-small {
+      display: block;
+    }
+  }
+  
+  .header-title {
+    display: none;
+  }
+}
+
+@media (max-width: 800px) {
+  header {
+    width: 100%;
+    left: 0;
+  }
+
+  .header-left-content {
+    padding-left: 16px;
+    
+    .logo-small {
+      display: block;
+    }
+  }
+
+  .header-title {
+    display: none;
+  }
+}
+
+@media (max-width: 375px) {
+  header {
+    height: 60px;  // Reduced height to match mobile nav
+  }
+
+  .profile-avatar {
+    width: 40px;   // Smaller avatar for mobile
+    height: 40px;
+    min-width: 40px;
+    font-size: 16px;
+  }
+
+  .help-icon {
+    width: 24px;
+    height: 24px;
+  }
+
+  .header-left-content {
+    padding-left: 12px;
+    
+    .logo-small {
+      width: 24px;
+      height: 24px;
+    }
   }
 }

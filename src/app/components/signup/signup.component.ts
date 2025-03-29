@@ -4,7 +4,7 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { User } from '../../models/user.class';  // Add this import
+import { User } from '../../models/user.class';  
 
 @Component({
   selector: 'app-signup',
