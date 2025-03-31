@@ -122,7 +122,7 @@
 
     .input-icon {
       position: absolute;
-      right: 12px; // Gleicher Abstand wie im Login
+      right: 35px; // Changed from 12px to 35px to move icon more to the left
       top: 50%; // Anpassung für vertikale Zentrierung
       transform: translateY(-50%);
       color: $dark-navy;
