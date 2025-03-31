@@ -1,11 +1,13 @@
+@use '../../../styles.scss' as *;
+
 header {
   height: 89px; // Adjusted to match screenshot
   position: absolute; // Changed back to fixed
   z-index: 900; // Lower than navbar's z-index
   top: 0;
   display: flex;
-  background-color: white;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  background-color: $white;
+  box-shadow: 0 4px 4px $box-shadow-light;
   align-items: center;
   font-weight: 400;
   font-size: 20px;
@@ -21,8 +23,7 @@ header {
   flex: 1;
   justify-content: flex-start; // Changed from center
   align-items: center;
-  padding-right: 20px;
-  padding-left: 40px; // Reduced to avoid text under navbar
+  padding: 0 20px 0 40px;
 
   .logo-small {
     display: none;
@@ -47,6 +48,7 @@ header {
   display: inline-block;
   position: relative;
   margin-top: 4px;
+  transition: transform 225ms ease-in-out;
 
   &:hover {
     transform: scale(1.2);
@@ -55,15 +57,15 @@ header {
 
 .dropdown-menu-profile-avatar {
   display: flex;
-  background-color: #2a3647;
+  background-color: $dark-navy;
   flex-direction: column;
   gap: 10px;
-  border-radius: 20px 0 20px 20px;
+  border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
   font-size: 16px;
   position: absolute;
   right: 45px;
   top: 100px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 8px $box-shadow-hover;
   padding: 20px;
 
   &.d-none {
@@ -71,14 +73,13 @@ header {
   }
 
   a {
-    color: white;
+    color: $white;
     text-decoration: none;
     padding: 10px;
-    border-radius: 5px;
+    border-radius: $border-radius-default;
     
     &:hover {
       background-color: #091931;
-      padding: 10px;
     }
   }
 }
@@ -87,34 +88,27 @@ header {
   min-width: 49px;  // Added min-width
   width: 49px;
   height: 49px;
-  background-color: #ffffff;
-  border: 2px solid #2A3647;  // Adjusted border
+  background-color: $white;
+  border: 2px solid $dark-navy;  // Adjusted border
   font-size: 24px;
   font-weight: bold;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   transition: all 225ms ease-in-out;  // Added transition
 
   &:hover {
-    background-color: #29ABE2;
-    border: 2px solid #29ABE2;
-    border-radius: 50%;
+    background-color: $primary-blue;
+    border-color: $primary-blue;
     
     a {
-      color: white;  // Text color changes on hover
+      color: $white;  // Text color changes on hover
     }
   }
 
   a {
     text-decoration: none;
-    color: #29abe2;
+    color: $primary-blue;
     transition: color 225ms ease-in-out;
-    
-    &:hover {
-      text-decoration: none;
-    }
   }
 }
 
