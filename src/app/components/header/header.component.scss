@@ -1,6 +1,6 @@
 header {
   height: 89px; // Adjusted to match screenshot
-  position: fixed; // Changed back to fixed
+  position: absolute; // Changed back to fixed
   z-index: 900; // Lower than navbar's z-index
   top: 0;
   display: flex;
@@ -42,19 +42,13 @@ header {
 }
 
 .help-icon {
-  margin-right: 16px;
   width: 30px;
   height: 30px;
   display: inline-block;
   position: relative;
+  margin-top: 4px;
 
-  img {
-    width: 100%;
-    height: 100%;
-    transition: transform 0.2s ease;
-  }
-
-  &:hover img {
+  &:hover {
     transform: scale(1.2);
   }
 }
