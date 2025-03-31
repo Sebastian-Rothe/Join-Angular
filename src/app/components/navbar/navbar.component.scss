@@ -5,19 +5,14 @@
     background-color: #2a3647;
     height: 100vh;
     width: 232px;
-    left: 0;  // Ensure it starts from left edge
+    left: calc(50% - 960px);  // Half of max-width (1920px/2)
     top: 0;
-    z-index: 10;  // Higher than header
-    padding: 66px 0 0;  // Adjust top padding only
-    margin: 0;  // Reset any margins
+    z-index: 1000;
+    padding: 66px 0 0;
+    margin: 0;
     color: white;
     bottom: 0;
-    z-index: 1000;
-    transition: width 225ms ease-in-out; // Added transition
-    padding-top: 64px;
     transition: all 225ms ease-in-out;
-    transform: translateX(0);  // Add initial transform state
-    transition: transform 225ms ease-in-out, width 225ms ease-in-out;
 }
 
 .logo-container {
@@ -233,5 +228,11 @@
                 font-size: 12px;
             }
         }
+    }
+}
+
+@media (max-width: 1920px) {
+    .sidebar {
+        left: 0;
     }
 }

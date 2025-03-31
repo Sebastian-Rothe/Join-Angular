@@ -1,6 +1,6 @@
 .app-wrapper {
   width: 100%;
-  min-height: 100vh;
+  height: 100vh;
   background-color: #f6f7f8;
   display: flex;
   justify-content: center;
@@ -11,7 +11,10 @@
   position: relative;
   width: 100%;
   max-width: 1920px;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
+  height: 100vh;
+}
+
+router-outlet{
+  max-width: 1920px;
+  margin: 0 auto;
 }
