@@ -18,3 +18,56 @@ router-outlet{
   max-width: 1920px;
   margin: 0 auto;
 }
+
+.rotation-screen {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #2A3647;
+  z-index: 2000;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 32px;
+  padding: 20px;
+  text-align: center;
+
+  mat-icon {
+    font-size: 48px;
+    width: 48px;
+    height: 48px;
+    color: white;
+    animation: rotate 1.5s ease infinite;
+  }
+
+  span {
+    color: white;
+    font-size: 24px;
+    font-weight: 500;
+  }
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(-90deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@media screen and (max-height: 480px) and (orientation: landscape) {
+  .rotation-screen {
+    display: flex;
+  }
+  
+  .app-container {
+    display: none;
+  }
+}
