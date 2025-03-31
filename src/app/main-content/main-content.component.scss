@@ -10,12 +10,13 @@
 .content-container {
   position: fixed;
   top: 89px; // Header height
-  left: 232px; // Sidebar width
-  right: 0;
+  left: calc(50% - 960px + 232px); // Centered with navbar offset
+  right: calc(50% - 960px);
   bottom: 0;
   background-color: #F6F7F8;
   transition: left 225ms ease-in-out;
   width: calc(100% - 232px);
+  max-width: calc(1920px - 232px);
   margin: 0 auto;
 }
 
@@ -25,6 +26,13 @@
   overflow-y: auto;
   max-width: calc(1920px - 232px);
   margin: 0 auto;
+}
+
+@media (max-width: 1920px) {
+  .content-container {
+    left: 232px;
+    right: 0;
+  }
 }
 
 @media (max-width: 1030px) {

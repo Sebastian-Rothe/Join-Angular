@@ -7,13 +7,13 @@
     background-color: $dark-navy;
     height: 100vh;
     width: 232px;
+    left: calc(50% - 960px); // Half of max-width (1920px/2)
     top: 0;
     z-index: 1000;
     margin: 0;
     color: $white;
     bottom: 0;
-    transition: all 225ms ease-in-out;
-    left: 0;
+    transition: transform 225ms ease-in-out, width 225ms ease-in-out;
 }
 
 .logo-container {
@@ -215,5 +215,11 @@
         span {
             font-size: 12px;
         }
+    }
+}
+
+@media (max-width: 1920px) {
+    .sidebar {
+        left: 0;
     }
 }
