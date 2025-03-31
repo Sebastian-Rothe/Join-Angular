@@ -1,14 +1,16 @@
+@use '../../../styles.scss' as *;
+
 .sidebar {
     display: flex;
     flex-direction: column;
     position: fixed;
-    background-color: #2a3647;
+    background-color: $dark-navy;
     height: 100vh;
     width: 232px;
     top: 0;
     z-index: 1000;
     margin: 0;
-    color: white;
+    color: $white;
     bottom: 0;
     transition: all 225ms ease-in-out;
     left: 0;
@@ -57,7 +59,7 @@
         display: flex;
         align-items: center;
         text-decoration: none;
-        color: white;
+        color: $white;
         width: 100%;
         padding: 8px 0;
         
@@ -90,7 +92,7 @@
         &:hover {
             cursor: pointer;
             font-size: 18px;
-            color: #29abe2;
+            color: $primary-blue;
         }
     }
 }
@@ -102,7 +104,7 @@
     left: 0;
     width: 100%;
     height: 80px;
-    background-color: #2A3647;
+    background-color: $dark-navy;
     z-index: 1080;
     padding: 0;
     align-items: center;
@@ -111,9 +113,7 @@
 
 .menu-mobile-display-item {
     flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
 
     a {
         display: flex;
@@ -121,7 +121,7 @@
         align-items: center;
         gap: 4px;
         text-decoration: none;
-        color: white;
+        color: $white;
         padding: 4px 0;
         justify-content: center;
 
@@ -191,7 +191,7 @@
     .menu-mobile-display-container {
         display: flex;
         justify-content: space-evenly;
-        box-shadow: 0 -4px 4px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 -4px 4px $box-shadow-light;
     }
 }
 
