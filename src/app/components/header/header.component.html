@@ -10,7 +10,7 @@
             </a>
         
         <div class="profile-avatar" (click)="openDropdownMenu()">
-            <a id="init-name" href="#">GB</a> 
+            <a id="init-name" href="#">{{ this.user.initials }}</a> 
         </div>
     </div>
     <div class="dropdown-menu-profile-avatar" [class.d-none]="!isDropdownOpen">
