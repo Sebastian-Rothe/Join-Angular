@@ -9,8 +9,10 @@
                 <mat-icon>help_outline</mat-icon>
             </a>
         
-        <div class="profile-avatar" (click)="openDropdownMenu()">
-            <a id="init-name" href="#">{{ this.user.initials }}</a> 
+        <div class="profile-avatar" 
+             (click)="openDropdownMenu()" 
+             [style.background-color]="user.iconColor">
+            <a id="init-name" href="#">{{ user.initials }}</a> 
         </div>
     </div>
     <div class="dropdown-menu-profile-avatar" [class.d-none]="!isDropdownOpen">
