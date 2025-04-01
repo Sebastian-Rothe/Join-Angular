@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -16,28 +16,39 @@ import { MatIconModule } from '@angular/material/icon';
 export class LoginComponent {
   email: string = '';
   password: string = '';
-  rememberMe: boolean = false;
   hidePassword = true;
   isPasswordFocused = false;
+  isLoading = false;
 
   constructor(
     private router: Router,
     private authService: AuthService
   ) {}
 
+  // ngOnInit() {
+  //   this.authService.loginError$.subscribe(error => {
+  //     this.loginError = error;
+  //   });
+  // }
+
   async loginUser() {
     if (!this.email || !this.password) return;
+
+    this.isLoading = true;
     
     try {
       await this.authService.login(this.email, this.password);
-      this.router.navigate(['/main']); // Änderung von '/dashboard' zu '/main'
+      this.router.navigate(['/main']);
     } catch (error) {
       console.error('Login failed:', error);
+    } finally {
+      this.isLoading = false;
     }
+   
   }
 
   loginGuest() {
-    this.router.navigate(['/main']); // Änderung von '/dashboard' zu '/main'
+    this.router.navigate(['/main']);
   }
 
   openSignUpPage() {
@@ -55,7 +66,7 @@ export class LoginComponent {
   onPasswordBlur() {
     setTimeout(() => {
       this.isPasswordFocused = false;
-      this.hidePassword = true; // Passwort verstecken beim Verlassen des Fokus
+      this.hidePassword = true;
     }, 200);
   }
 }

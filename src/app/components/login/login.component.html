@@ -26,7 +26,6 @@
             id="username" />
           <mat-icon class="input-icon">mail</mat-icon>
         </div>
-      
         
         <div class="input-container">
           <input
@@ -46,12 +45,19 @@
             {{hidePassword ? 'visibility_off' : 'visibility'}}
           </mat-icon>
         </div>
-      
       </div>
 
       <div class="button-section">
-        <button class="Login-btn" (click)="loginUser()">Log in</button>
-        <button class="Guest-btn" (click)="loginGuest()">Guest Log in</button>
+        <button class="Login-btn" 
+                (click)="loginUser()" 
+                [disabled]="isLoading">
+          {{ isLoading ? 'Logging in...' : 'Log in' }}
+        </button>
+        <button class="Guest-btn" 
+                (click)="loginGuest()" 
+                [disabled]="isLoading">
+          Guest Log in
+        </button>
       </div>
     </div>
     

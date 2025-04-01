@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
-import { Firestore, doc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 
@@ -19,7 +19,17 @@ export class AuthService {
 
   async login(email: string, password: string) {
     try {
-      return await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      if (userCredential.user) {
+        const userDoc = await getDoc(doc(this.firestore, 'users', userCredential.user.uid));
+        if (userDoc.exists()) {
+          return {
+            user: userCredential.user,
+            userData: userDoc.data()
+          };
+        }
+      }
+      throw new Error('User data not found');
     } catch (error) {
       console.error('Error logging in:', error);
       throw error;
@@ -36,7 +46,6 @@ export class AuthService {
     }
   }
 
-  // Changed from private to public
   async createUserDocument(userId: string, userData: User) {
     const userRef = doc(this.firestore, 'users', userId);
     await setDoc(userRef, userData.toPlainObject());
