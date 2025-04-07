@@ -4,20 +4,22 @@
         <span><img class="logo-small" src="./assets/icons/Capa 2.svg" alt="" /></span>
     </div>
     <div class="header-right-content">
-        
-            <a routerLink="/help" class="help-icon">
-                <mat-icon>help_outline</mat-icon>
-            </a>
+        <a routerLink="/help" class="help-icon">
+            <mat-icon>help_outline</mat-icon>
+        </a>
         
         <div class="profile-avatar" 
-             (click)="openDropdownMenu()" 
-             [style.background-color]="user.iconColor">
-            <a id="init-name" href="#">{{ user.initials }}</a> 
+             [style.background-color]="user.profilePicture ? 'transparent' : user.iconColor"
+             (click)="toggleDropdown()">
+            <img *ngIf="user.profilePicture" [src]="user.profilePicture" alt="Profile picture">
+            <a *ngIf="!user.profilePicture" id="init-name">{{ user.initials }}</a> 
         </div>
-    </div>
-    <div class="dropdown-menu-profile-avatar" [class.d-none]="!isDropdownOpen">
-        <a routerLink="/legal">Legal Notice</a>
-        <a routerLink="/privacy">Privacy Policy</a>
-        <a routerLink="/login" (click)="logoutUser()">Log out</a>
-    </div>         
+        
+        <div class="dropdown-menu" [class.show]="isDropdownOpen">
+            <a routerLink="/">My Account</a>
+            <a routerLink="/legal">Legal Notice</a>
+            <a routerLink="/privacy">Privacy Policy</a>
+            <a routerLink="/login" (click)="logoutUser()">Log out</a>
+        </div>
+    </div>     
 </header>

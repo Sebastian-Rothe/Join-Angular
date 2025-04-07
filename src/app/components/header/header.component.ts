@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../models/user.class';
 import { UserService } from '../../services/user.service';
 
@@ -9,14 +10,22 @@ import { UserService } from '../../services/user.service';
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
-  imports: [MatIconModule, CommonModule, RouterModule],
+  imports: [MatIconModule, CommonModule, RouterModule, MatMenuModule],
   standalone: true
 })
 export class HeaderComponent implements OnInit {
   isDropdownOpen = false;
   user: User = new User();
 
-  constructor(public userService: UserService) {}
+  constructor(public userService: UserService) {
+    // Add click outside listener
+    document.addEventListener('click', (event) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.profile-avatar') && !target.closest('.dropdown-menu')) {
+        this.isDropdownOpen = false;
+      }
+    });
+  }
 
   ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
@@ -28,6 +37,10 @@ export class HeaderComponent implements OnInit {
   }
 
   openDropdownMenu() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 

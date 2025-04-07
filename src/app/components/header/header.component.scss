@@ -55,31 +55,48 @@ header {
   }
 }
 
-.dropdown-menu-profile-avatar {
-  display: flex;
-  background-color: $dark-navy;
-  flex-direction: column;
-  gap: 10px;
-  border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
-  font-size: 16px;
-  position: absolute;
-  right: 45px;
-  top: 100px;
-  box-shadow: 0 2px 8px $box-shadow-hover;
-  padding: 20px;
+// Entfernen des alten dropdown-menu-profile-avatar Styles
 
-  &.d-none {
-    display: none;
+::ng-deep {
+  // Override Material's menu panel
+  .mat-mdc-menu-panel {
+    background: transparent !important;
+    max-width: none !important;
   }
 
-  a {
-    color: $white;
-    text-decoration: none;
-    padding: 10px;
-    border-radius: $border-radius-default;
-    
-    &:hover {
-      background-color: #091931;
+  // Remove default menu styles
+  .mdc-menu-surface {
+    background: none !important;
+    box-shadow: none !important;
+  }
+
+  // Style the menu content
+  .profile-menu {
+    .mat-mdc-menu-content {
+      padding: 0 !important;
+      margin: 0 !important;
+      background: none !important;
+    }
+
+    .menu-content {
+      background-color: $dark-navy;
+      border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
+      padding: 20px;
+      box-shadow: 0 2px 8px $box-shadow-hover;
+      min-width: 200px;
+
+      .mat-mdc-menu-item {
+        color: $white;
+        font-size: 16px;
+        padding: 10px;
+        border-radius: $border-radius-default;
+        min-height: unset;
+        line-height: normal;
+        
+        &:hover {
+          background-color: #091931;
+        }
+      }
     }
   }
 }
@@ -109,6 +126,35 @@ header {
     text-decoration: none;
     color: $primary-blue;
     transition: color 225ms ease-in-out;
+  }
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100px;
+  right: 45px;
+  background-color: $dark-navy;
+  border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
+  padding: 20px;
+  box-shadow: 0 2px 8px $box-shadow-hover;
+
+  &.show {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  a {
+    color: $white;
+    text-decoration: none;
+    padding: 10px;
+    border-radius: $border-radius-default;
+    font-size: 16px;
+    
+    &:hover {
+      background-color: #091931;
+    }
   }
 }
 
