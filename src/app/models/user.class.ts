@@ -11,9 +11,14 @@ export class User {
         if (obj) {
             Object.assign(this, obj);
         }
-        // Generate derived values
-        this.initials = this.generateInitials(this.name);
-        this.iconColor = this.generateRandomColor();
+        // Generate initials if name exists
+        if (this.name) {
+            this.initials = this.generateInitials(this.name);
+        }
+        // Only generate color if not already set
+        if (!this.iconColor) {
+            this.iconColor = this.generateRandomColor();
+        }
     }
 
     toPlainObject(): Record<string, any> {
