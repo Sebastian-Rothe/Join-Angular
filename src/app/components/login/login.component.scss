@@ -41,12 +41,15 @@ body {
 
 /* Background div behind the logo image */
 .background-overlay {
-  position: absolute;
+  position: fixed; // Changed from absolute to fixed
+  top: 0;
+  left: 0;
   width: 100vw;
   height: 100vh;
   background-color: #f6f7f8;
-  transform: translate(-50vw, -50vh) scale(4.9);
-  animation: fadeBackground 2.1s forwards ease-in-out; /* Matched timing with logo */
+  transform-origin: center;
+  transform: scale(1);
+  animation: fadeBackground 2.1s forwards ease-in-out;
   z-index: -1;
 }
 
@@ -65,15 +68,12 @@ body {
 
 @keyframes fadeBackground {
   0%, 30% {
-    width: 50vw; /* Start size of the background */
-    height: 50vh;
     opacity: 1;
+    transform: scale(1);
   }
   100% {
-    width: 50vw; /* End size of the background */
-    height: 50vh;
     opacity: 0;
-    display: none;
+    transform: scale(1);
     visibility: hidden;
   }
 }
