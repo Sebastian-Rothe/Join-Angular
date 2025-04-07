@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../models/user.class';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +18,11 @@ export class HeaderComponent implements OnInit {
   isDropdownOpen = false;
   user: User = new User();
 
-  constructor(public userService: UserService) {
+  constructor(
+    public userService: UserService,
+    private authService: AuthService,
+    private router: Router
+  ) {
     // Add click outside listener
     document.addEventListener('click', (event) => {
       const target = event.target as HTMLElement;
@@ -44,7 +49,12 @@ export class HeaderComponent implements OnInit {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
-  logoutUser() {
-    console.log('User logged out');
+  async logoutUser() {
+    try {
+      await this.authService.logout();
+      this.router.navigate(['/login']);
+    } catch (error) {
+      console.error('Logout failed:', error);
+    }
   }
 }
