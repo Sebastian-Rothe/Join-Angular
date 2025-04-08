@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user } from '@angular/fire/auth';
-import { Firestore, doc, setDoc, getDoc } from '@angular/fire/firestore';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user, signInAnonymously } from '@angular/fire/auth';
+import { Firestore, doc, setDoc, getDoc, deleteDoc } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 
@@ -51,8 +51,42 @@ export class AuthService {
     await setDoc(userRef, userData.toPlainObject());
   }
 
+  async guestLogin(): Promise<any> {
+    try {
+      const userCredential = await signInAnonymously(this.auth);
+      if (userCredential.user) {
+        await this.createGuestDocument(userCredential.user.uid);
+        return userCredential.user;
+      }
+      throw new Error('Guest login failed');
+    } catch (error: any) {
+      if (error.code === 'auth/admin-restricted-operation') {
+        throw new Error('Guest login is not enabled. Please contact administrator.');
+      }
+      console.error('Guest login failed:', error);
+      throw error;
+    }
+  }
+
+  private async createGuestDocument(userId: string) {
+    const guestUser = new User({
+      uid: userId,
+      name: 'Guest User',
+      email: 'guest@temporary.com',
+      phone: '',
+      profilePicture: '',
+      initials: 'GU'
+      // iconColor wird automatisch durch den Constructor generiert
+    });
+    await this.createUserDocument(userId, guestUser);
+  }
+
   async logout() {
     try {
+      const currentUser = this.auth.currentUser;
+      if (currentUser?.isAnonymous) { // Using isAnonymous instead of checking document
+        await deleteDoc(doc(this.firestore, 'users', currentUser.uid));
+      }
       await signOut(this.auth);
     } catch (error) {
       console.error('Error logging out:', error);

@@ -47,8 +47,19 @@ export class LoginComponent {
    
   }
 
-  loginGuest() {
-    this.router.navigate(['/main']);
+  async loginGuest() {
+    this.isLoading = true;
+    
+    try {
+      const guestUser = await this.authService.guestLogin();
+      if (guestUser) {
+        this.router.navigate(['/main']);
+      }
+    } catch (error) {
+      console.error('Guest login failed:', error);
+    } finally {
+      this.isLoading = false;
+    }
   }
 
   openSignUpPage() {
