@@ -18,7 +18,6 @@ export class LoginComponent {
   password: string = '';
   hidePassword = true;
   isPasswordFocused = false;
-  isLoading = false;
 
   constructor(
     private router: Router,
@@ -33,23 +32,16 @@ export class LoginComponent {
 
   async loginUser() {
     if (!this.email || !this.password) return;
-
-    this.isLoading = true;
     
     try {
       await this.authService.login(this.email, this.password);
       this.router.navigate(['/main']);
     } catch (error) {
       console.error('Login failed:', error);
-    } finally {
-      this.isLoading = false;
     }
-   
   }
 
   async loginGuest() {
-    this.isLoading = true;
-    
     try {
       const guestUser = await this.authService.guestLogin();
       if (guestUser) {
@@ -57,8 +49,6 @@ export class LoginComponent {
       }
     } catch (error) {
       console.error('Guest login failed:', error);
-    } finally {
-      this.isLoading = false;
     }
   }
 

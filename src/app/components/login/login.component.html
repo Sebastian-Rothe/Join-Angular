@@ -49,13 +49,11 @@
 
       <div class="button-section">
         <button class="Login-btn" 
-                (click)="loginUser()" 
-                [disabled]="isLoading">
-          {{ isLoading ? 'Logging in...' : 'Log in' }}
+                (click)="loginUser()">
+          Log in
         </button>
         <button class="Guest-btn" 
-                (click)="loginGuest()" 
-                [disabled]="isLoading">
+                (click)="loginGuest()">
           Guest Log in
         </button>
       </div>
