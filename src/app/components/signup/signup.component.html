@@ -25,7 +25,7 @@
             class="input-with-icon"
             [class.error]="validationErrors.username" />
           <mat-icon class="input-icon" [class.error-active]="validationErrors.username">person</mat-icon>
-          <div class="error-message" [class.show]="validationErrors.username">
+          <div class="error-message" [class.show]="currentField === 'username' && validationErrors.username">
             {{validationErrors.username}}
           </div>
         </div>
@@ -38,7 +38,7 @@
             class="input-with-icon"
             [class.error]="validationErrors.email" />
           <mat-icon class="input-icon" [class.error-active]="validationErrors.email">mail</mat-icon>
-          <div class="error-message" [class.show]="validationErrors.email">
+          <div class="error-message" [class.show]="currentField === 'email' && validationErrors.email">
             {{validationErrors.email}}
           </div>
         </div>
@@ -62,7 +62,7 @@
             (mousedown)="$event.preventDefault()">
             {{hidePassword ? 'visibility_off' : 'visibility'}}
           </mat-icon>
-          <div class="error-message" [class.show]="validationErrors.password">
+          <div class="error-message" [class.show]="currentField === 'password' && validationErrors.password">
             {{validationErrors.password}}
           </div>
         </div>
@@ -86,12 +86,12 @@
             (mousedown)="$event.preventDefault()">
             {{hideConfirmPassword ? 'visibility_off' : 'visibility'}}
           </mat-icon>
-          <div class="error-message" [class.show]="validationErrors.confirmPassword">
+          <div class="error-message" [class.show]="currentField === 'confirmPassword' && validationErrors.confirmPassword">
             {{validationErrors.confirmPassword}}
           </div>
         </div>
 
-        <div class="error-message" *ngIf="errorMessage">
+        <div class="error-message" *ngIf="currentField === 'policy' && errorMessage">
           {{ errorMessage }}
         </div>
       </div>

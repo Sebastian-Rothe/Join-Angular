@@ -32,10 +32,12 @@ export class SignupComponent {
   isPasswordFocused = false;
   isConfirmPasswordFocused = false;
   user = new User(); // User wird beim Start initialisiert
+  currentField: 'username' | 'email' | 'password' | 'confirmPassword' | 'policy' | null = null;
   constructor(private authService: AuthService, private router: Router) {}
 
   validateField(field: string): boolean {
-    if (!this.formSubmitted) return true;
+    // Nur validieren wenn es das aktuelle Feld ist oder alle vorherigen valide sind
+    if (!this.shouldValidateField(field)) return true;
 
     switch (field) {
       case 'username':
@@ -104,19 +106,50 @@ export class SignupComponent {
     this.formSubmitted = true;
     this.errorMessage = '';
     
-    const isValid = [
-      this.validateField('username'),
-      this.validateField('email'),
-      this.validateField('password'),
-      this.validateField('confirmPassword')
-    ].every(valid => valid) && this.policyAccepted;
-
+    // Sequenzielle Validierung
+    if (!this.validateField('username')) {
+      this.currentField = 'username';
+      return false;
+    }
+    
+    if (!this.validateField('email')) {
+      this.currentField = 'email';
+      return false;
+    }
+    
+    if (!this.validateField('password')) {
+      this.currentField = 'password';
+      return false;
+    }
+    
+    if (!this.validateField('confirmPassword')) {
+      this.currentField = 'confirmPassword';
+      return false;
+    }
+    
     if (!this.policyAccepted) {
+      this.currentField = 'policy';
       this.errorMessage = 'Please accept the privacy policy';
       return false;
     }
 
-    return isValid;
+    this.currentField = null;
+    return true;
+  }
+
+  private shouldValidateField(field: string): boolean {
+    switch (field) {
+      case 'username':
+        return true;
+      case 'email':
+        return this.validateField('username');
+      case 'password':
+        return this.validateField('email');
+      case 'confirmPassword':
+        return this.validateField('password');
+      default:
+        return false;
+    }
   }
 
   async signUp() {
