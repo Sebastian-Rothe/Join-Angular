@@ -59,25 +59,25 @@ header {
 // Entfernen des alten dropdown-menu-profile-avatar Styles
 
 ::ng-deep {
-  // Override Material's menu panel
-  .mat-mdc-menu-panel {
-    background: transparent !important;
-    max-width: none !important;
-  }
+  // // Override Material's menu panel
+  // .mat-mdc-menu-panel {
+  //   background: transparent !important;
+  //   max-width: none !important;
+  // }
 
-  // Remove default menu styles
-  .mdc-menu-surface {
-    background: none !important;
-    box-shadow: none !important;
-  }
+  // // Remove default menu styles
+  // .mdc-menu-surface {
+  //   background: none !important;
+  //   box-shadow: none !important;
+  // }
 
   // Style the menu content
   .profile-menu {
-    .mat-mdc-menu-content {
-      padding: 0 !important;
-      margin: 0 !important;
-      background: none !important;
-    }
+    // .mat-mdc-menu-content {
+    //   padding: 0 !important;
+    //   margin: 0 !important;
+    //   background: none !important;
+    // }
 
     .menu-content {
       background-color: $dark-navy;
@@ -133,7 +133,7 @@ header {
 .dropdown-menu {
   display: none;
   position: absolute;
-  top: 100px;
+  top: 98px;
   right: 45px;
   background-color: $dark-navy;
   border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
@@ -217,6 +217,10 @@ header {
   .header-right-content {
     padding-right: 16px;
   }
+  .dropdown-menu {
+    top: 91px;
+    right: 16px;
+    }
 }
 
 @media (max-width: 375px) {
@@ -230,6 +234,10 @@ header {
     min-width: 40px;
     font-size: 16px;
   }
+  .dropdown-menu {
+    top: 62px;
+    right: 12px;
+    }
 
   .help-icon {
     width: 24px;
