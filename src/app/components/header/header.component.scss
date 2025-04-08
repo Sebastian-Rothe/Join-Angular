@@ -112,15 +112,11 @@ header {
   font-weight: bold;
   border-radius: 50%;
   @include flex-center;
-  transition: all 225ms ease-in-out;  // Added transition
+  transition: all 225ms ease-in-out;  
 
   &:hover {
-    background-color: $primary-blue;
+    background-color: lightgray;
     border-color: $primary-blue;
-    
-    a {
-      color: $white;  // Text color changes on hover
-    }
   }
 
   a {

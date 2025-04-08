@@ -9,7 +9,6 @@
         </a>
         
         <div class="profile-avatar" 
-             [style.background-color]="user.profilePicture ? 'transparent' : user.iconColor"
              (click)="toggleDropdown()">
             <img *ngIf="user.profilePicture" [src]="user.profilePicture" alt="Profile picture">
             <a *ngIf="!user.profilePicture" id="init-name">{{ user.initials }}</a> 
