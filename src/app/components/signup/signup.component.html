@@ -54,10 +54,12 @@
             (blur)="onPasswordBlur('password')" />
           <mat-icon 
             class="input-icon" 
+            [class.error-active]="validationErrors.password"
             *ngIf="!isPasswordFocused">lock</mat-icon>
           <mat-icon 
             class="input-icon clickable" 
             *ngIf="isPasswordFocused"
+            [class.error-active]="validationErrors.password"
             (click)="togglePasswordVisibility('password')"
             (mousedown)="$event.preventDefault()">
             {{hidePassword ? 'visibility_off' : 'visibility'}}
@@ -78,10 +80,12 @@
             (blur)="onPasswordBlur('confirmPassword')" />
           <mat-icon 
             class="input-icon" 
+            [class.error-active]="validationErrors.confirmPassword"
             *ngIf="!isConfirmPasswordFocused">lock</mat-icon>
           <mat-icon 
             class="input-icon clickable" 
             *ngIf="isConfirmPasswordFocused"
+            [class.error-active]="validationErrors.confirmPassword"
             (click)="togglePasswordVisibility('confirmPassword')"
             (mousedown)="$event.preventDefault()">
             {{hideConfirmPassword ? 'visibility_off' : 'visibility'}}
