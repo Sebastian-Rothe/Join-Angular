@@ -19,7 +19,6 @@ export class SignupComponent {
   password: string = '';
   confirmPassword: string = '';
   policyAccepted: boolean = false;
-  isLoading: boolean = false;
   errorMessage: string = '';
   formSubmitted = false;
   validationErrors = {
@@ -122,7 +121,6 @@ export class SignupComponent {
 
   async signUp() {
     if (!this.validateForm()) return;
-    this.isLoading = true;
 
     try {
       // Erst Firebase Auth User erstellen
@@ -146,8 +144,6 @@ export class SignupComponent {
       }
     } catch (error: any) {
       this.errorMessage = this.getErrorMessage(error.code);
-    } finally {
-      this.isLoading = false;
     }
   }
 
