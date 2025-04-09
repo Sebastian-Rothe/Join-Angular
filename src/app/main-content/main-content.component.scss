@@ -9,7 +9,7 @@
 
 .content-container {
   position: fixed;
-  top: 89px; // Header height
+  top: 96px; // Header height
   left: calc(50% - 960px + 232px); // Centered with navbar offset
   right: calc(50% - 960px);
   bottom: 0;
@@ -49,6 +49,7 @@
 @media (max-width: 800px) {
   .content-container {
     left: 0;
+    top: 89px;
     bottom: 80px; // Space for mobile nav
     width: 100%;
   }
