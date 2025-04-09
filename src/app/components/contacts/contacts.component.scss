@@ -1,4 +1,4 @@
-@use '../../../styles.scss' as *;
+@use "../../../styles.scss" as *;
 
 .contacts-container {
   display: flex;
@@ -16,7 +16,7 @@
   background-color: $white;
   box-shadow: 4px 0px 6px $box-shadow-light;
   overflow-y: auto; // Scrollbar für Kontaktliste
-  
+
   .button-container {
     position: sticky;
     top: 0;
@@ -30,7 +30,7 @@
 
   .new-contact-button {
     display: flex;
-    align-items: center;    
+    align-items: center;
     justify-content: center;
     @extend %button-base;
     width: 100%;
@@ -39,7 +39,7 @@
     background-color: $dark-navy;
     color: $white;
     border: none;
-    
+
     @include hover-effect(
       $scale: 1,
       $shadow-color: $box-shadow-hover,
@@ -54,7 +54,6 @@
       width: 32px;
       height: 32px;
     }
-
   }
 }
 
@@ -75,7 +74,7 @@
       position: relative;
 
       &:after {
-        content: '';
+        content: "";
         position: absolute;
         left: 0; // Gleicher Abstand wie der Content
         right: 0; // Gleicher Abstand wie der Content
@@ -92,10 +91,9 @@
       padding: 15px 24px; // Konsistentes Padding
       position: relative;
       cursor: pointer;
-    
-      
+
       &:before {
-        content: '';
+        content: "";
         position: absolute;
         left: 0; // Gleicher Abstand wie Divider
         right: 0; // Gleicher Abstand wie Divider
@@ -145,11 +143,10 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-      
+
       .contact-name {
         font-size: 16px;
         font-weight: 600;
-      
       }
 
       .contact-email {
@@ -176,7 +173,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
-      width: 100%;
+      // width: 100%;
       gap: 28px;
 
       .contacts-title {
@@ -191,7 +188,7 @@
       gap: 16px;
 
       .divider {
-        background-color: #29ABE2;
+        background-color: #29abe2;
         height: 59px;
         width: 3px;
       }
@@ -205,7 +202,7 @@
   .back-button {
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
-    
+
     mat-icon {
       width: 32px;
       height: 32px;
@@ -233,11 +230,11 @@
   z-index: 1000;
   width: 56px;
   height: 56px;
-  background-color: #2A3647;
+  background-color: #2a3647;
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 225ms ease-in-out;
-  
+
   .mobile-icon {
     width: 100%;
     height: 100%;
@@ -247,9 +244,9 @@
     color: white;
     font-size: 32px;
   }
-  
+
   &:hover {
-    background-color: #29ABE2;
+    background-color: #29abe2;
   }
 }
 
@@ -267,7 +264,6 @@
     }
   }
 }
-
 
 @media (max-width: 850px) {
   .contacts-container {
@@ -324,13 +320,15 @@
         font-size: 32px;
         color: $primary-blue;
       }
-      
     }
 
     .row {
       display: flex;
       align-items: center;
       gap: 16px;
+    }
+    .title-row {
+      width: 100%;
     }
 
     app-contact-details {
@@ -339,23 +337,19 @@
   }
 }
 @media (max-width: 800px) {
-    .mobile-add-button {
-        right: 16px;
-        bottom: 90px; // Anpassung an Mobile-Nav
-      }
+  .mobile-add-button {
+    right: 16px;
+    bottom: 90px; // Anpassung an Mobile-Nav
+  }
 }
 
 @media (max-width: 375px) {
-
-
   .mobile-add-button {
     bottom: 76px;
     right: 16px;
-    
-    
-      width: 46px;
-      height: 46px;
-    
+
+    width: 46px;
+    height: 46px;
   }
 
   .contact-heading {
