@@ -62,20 +62,21 @@
   .contact-group {
     margin-bottom: 24px;
     position: relative;
+    padding: 0;
 
     .letter-divider {
       color: $dark-navy;
       font-size: 21px;
       font-weight: 700;
       margin-bottom: 16px;
-      padding-left: 12px;
+      padding-left: 24px;
       position: relative;
 
       &:after {
         content: '';
         position: absolute;
-        left: 0;
-        right: 0;
+        left: 0; // Gleicher Abstand wie der Content
+        right: 0; // Gleicher Abstand wie der Content
         bottom: -8px;
         height: 1px;
         background-color: $border-color;
@@ -85,24 +86,43 @@
     .contact-item {
       display: flex;
       align-items: center;
-      gap: 16px;
-      padding: 15px 24px;
-      border-radius: $border-radius-default;
+      gap: 24px;
+      padding: 15px 24px; // Konsistentes Padding
+      position: relative;
       cursor: pointer;
-      transition: all 225ms ease-in-out;
-      margin: 0 -24px; // Negative margin zum Ausgleich des Paddings
+    
+      
+      &:before {
+        content: '';
+        position: absolute;
+        left: 0; // Gleicher Abstand wie Divider
+        right: 0; // Gleicher Abstand wie Divider
+        top: 0;
+        bottom: 0;
+        background-color: transparent;
+        border-radius: $border-radius-default;
+        transition: background-color 225ms ease-in-out;
+        pointer-events: none;
+        z-index: 0;
+      }
 
-      &:hover {
+      // Container für den eigentlichen Content
+      .contact-avatar,
+      .contact-info {
+        position: relative;
+        z-index: 1; // Content über dem Hover-Effekt
+      }
+
+      &:hover:before {
         background-color: $background-light;
       }
 
-      &.selected {
+      &.selected:before {
         background-color: $dark-navy;
-        color: $white;
+      }
 
-        .contact-email {
-          color: $white;
-        }
+      &.selected {
+        color: $white;
       }
     }
 
@@ -110,6 +130,7 @@
       width: 42px;
       height: 42px;
       border-radius: 50%;
+      border: 2px solid $white;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -122,15 +143,16 @@
       display: flex;
       flex-direction: column;
       gap: 4px;
-
+      
       .contact-name {
         font-size: 16px;
-        font-weight: 500;
+        font-weight: 600;
+      
       }
 
       .contact-email {
         font-size: 14px;
-        color: $border-color;
+        color: $primary-blue;
       }
     }
   }
