@@ -1,0 +1,37 @@
+<section class="contacts-container">
+  <section class="contact-list-section" [class.mobile-hidden]="isMobileView && isContactDetailsVisible">
+    <div class="button-container">
+      <button class="new-contact-button" (click)="openNewContactDialog()">
+        Add new contact 
+        <img src="assets/icons/person_add.svg" alt="Add person">
+      </button>
+    </div>
+
+    <div class="contacts-list">
+      <!-- Contact list will be populated here -->
+    </div>
+
+    <div class="mobile-add-button" (click)="openNewContactDialog()">
+      <img class="mobile-default-img" src="assets/icons/nContactM1.svg" alt="Add contact">
+      <img class="mobile-hover-img" src="assets/icons/nContactM2.svg" alt="Add contact hover">
+    </div>
+  </section>
+
+  <section class="contact-details-section" [class.mobile-visible]="isMobileView && isContactDetailsVisible">
+    <div class="contact-heading">
+      <div class="row">
+        <span class="contacts-title">Contacts</span>
+        <span *ngIf="isMobileView" class="back-button" (click)="onBackToList()">
+          <img src="assets/img/arrow-left-line.png" alt="Back">
+        </span>
+      </div>
+      <div class="divider"></div>
+      <span>Better with a team</span>
+      <div class="divider-responsive"></div>
+    </div>
+
+    <div class="contact-content" *ngIf="selectedContact">
+      <!-- Contact details will be shown here -->
+    </div>
+  </section>
+</section>

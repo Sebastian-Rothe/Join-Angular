@@ -1,0 +1,232 @@
+@use '../../../styles.scss' as *;
+
+.contacts-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  background-color: $background-light;
+  overflow: hidden; // Verhindert horizontalen Scrollbalken
+}
+
+.contact-list-section {
+  max-width: 456px;
+  width: 30%;
+  min-width: 320px;
+  height: 100%;
+  background-color: $white;
+  box-shadow: 4px 0px 6px $box-shadow-light;
+  overflow-y: auto; // Scrollbar für Kontaktliste
+  
+  .button-container {
+    position: sticky;
+    top: 0;
+    padding: 24px;
+    background-color: $white;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .new-contact-button {
+    display: flex;
+    align-items: center;    
+    justify-content: center;
+    @extend %button-base;
+    width: 100%;
+    height: 56px;
+    gap: 16px;
+    background-color: $dark-navy;
+    color: $white;
+    border: none;
+    
+    @include hover-effect(
+      $scale: 1,
+      $shadow-color: $box-shadow-hover,
+      $shadow-spread: 4px,
+      $transition-duration: 0.2s,
+      $color: $white,
+      $background-color: $primary-blue
+    );
+
+    img {
+      width: 32px;
+      height: 32px;
+    }
+  }
+}
+
+.contact-details-section {
+  flex: 1;
+  padding: 32px;
+  overflow-y: auto; // Scrollbar für Details
+  min-width: 0; // Wichtig für Flex-Verhalten
+
+  .contact-heading {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 32px;
+
+    .contacts-title {
+      font-size: 61px;
+      font-weight: 700;
+    }
+
+    .divider {
+      background-color: $primary-blue;
+      height: 59px;
+      width: 3px;
+    }
+
+    .divider-responsive {
+      display: none;
+    }
+  }
+}
+
+.mobile-add-button {
+  display: none;
+  position: fixed;
+  right: 24px;
+  bottom: 96px;
+  z-index: 1000;
+  
+  img {
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+  }
+  
+  .mobile-hover-img {
+    display: none;
+  }
+  
+  &:hover {
+    .mobile-default-img {
+      display: none;
+    }
+    .mobile-hover-img {
+      display: block;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .contact-heading {
+    .contacts-title {
+      font-size: 47px;
+    }
+  }
+}
+
+@media (max-width: 1030px) {
+//   .contact-list-section {
+//     width: 400px; // Anpassung an schmälere Navbar
+//   }
+}
+
+@media (max-width: 850px) {
+  .contacts-container {
+    flex-direction: column;
+    // height: calc(100vh - 89px); // Anpassung an Header-Höhe
+    // margin-top: 89px; // Abstand zum Header
+  }
+  .mobile-add-button {
+    position: fixed;
+    display: block;
+    right: 16px;
+    bottom: 10px; // Anpassung an Mobile-Nav
+  }
+
+  .contact-list-section {
+    width: 100%;
+    height: 100%;
+    min-width: unset;
+    max-width: unset;
+
+    .button-container {
+      display: none;
+    }
+  }
+
+
+  .contact-details-section {
+    display: none;
+    // position: fixed;
+    // top: 89px; // Abstand zum Header
+    // left: 0;
+    // width: 100%;
+    // height: calc(100% - 89px - 80px); // Anpassung an Header und Mobile-Nav
+    background-color: $background-light;
+    z-index: 1001;
+    transform: translateX(100%);
+    transition: transform 0.3s ease-in-out;
+    padding: 24px;
+
+    &.mobile-visible {
+      transform: translateX(0);
+    }
+
+    .divider {
+      display: none;
+    }
+
+    .divider-responsive {
+      display: block;
+      background-color: $primary-blue;
+      height: 3px;
+      width: 90px;
+    }
+
+    .back-button {
+      cursor: pointer;
+      
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+
+    .row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+  }
+}
+@media (max-width: 800px) {
+    .mobile-add-button {
+        right: 16px;
+        bottom: 90px; // Anpassung an Mobile-Nav
+      }
+}
+
+@media (max-width: 375px) {
+//   .contacts-container {
+//     height: calc(100vh - 60px); // Anpassung an kleineren Header
+//     margin-top: 60px;
+//   }
+
+  .contact-details-section {
+    // top: 60px;
+    // height: calc(100% - 60px - 60px); // Anpassung an kleineren Header und Nav
+    // padding: 16px;
+  }
+
+  .mobile-add-button {
+    bottom: 76px;
+    right: 16px;
+    
+    img {
+      width: 42px;
+      height: 42px;
+    }
+  }
+
+  .contact-heading {
+    .contacts-title {
+      font-size: 33px;
+    }
+  }
+}
