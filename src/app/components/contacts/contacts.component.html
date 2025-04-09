@@ -32,15 +32,16 @@
 
   <section class="contact-details-section" [class.mobile-visible]="isMobileView && isContactDetailsVisible">
     <div class="contact-heading">
-      <div class="row">
+      <div class="title-row">
         <span class="contacts-title">Contacts</span>
         <span *ngIf="isMobileView" class="back-button" (click)="onBackToList()">
           <img src="assets/img/arrow-left-line.png" alt="Back">
         </span>
       </div>
-      <div class="divider"></div>
-      <span>Better with a team</span>
-      <div class="divider-responsive"></div>
+      <div class="subtitle-row">
+        <div class="divider"></div>
+        <span class="better-text">Better with a team</span>
+      </div>
     </div>
 
     <app-contact-details 

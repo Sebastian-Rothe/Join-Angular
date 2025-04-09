@@ -172,19 +172,31 @@
     gap: 28px;
     margin-bottom: 32px;
 
-    .contacts-title {
-      font-size: 61px;
-      font-weight: 700;
+    .title-row {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+
+      .contacts-title {
+        font-size: 61px;
+        font-weight: 700;
+      }
     }
 
-    .divider {
-      background-color: $primary-blue;
-      height: 59px;
-      width: 3px;
-    }
+    .subtitle-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
 
-    .divider-responsive {
-      display: none;
+      .divider {
+        background-color: #29ABE2;
+        height: 59px;
+        width: 3px;
+      }
+
+      .better-text {
+        white-space: nowrap;
+      }
     }
   }
 }
@@ -217,19 +229,21 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .contact-heading {
-    .contacts-title {
-      font-size: 47px;
+@media (max-width: 1080px) {
+  .contact-details-section .contact-heading {
+    margin: 0;
+    gap: 0;
+    flex-direction: column;
+    align-items: flex-start;
+
+    .subtitle-row .divider {
+      height: 3px;
+      width: 90px;
+      margin: 8px 0 8px 24px;
     }
   }
 }
 
-@media (max-width: 1030px) {
-//   .contact-list-section {
-//     width: 400px; // Anpassung an schmälere Navbar
-//   }
-}
 
 @media (max-width: 850px) {
   .contacts-container {
@@ -279,16 +293,6 @@
       transform: translateX(0);
     }
 
-    .divider {
-      display: none;
-    }
-
-    .divider-responsive {
-      display: block;
-      background-color: $primary-blue;
-      height: 3px;
-      width: 90px;
-    }
 
     .back-button {
       cursor: pointer;
@@ -314,16 +318,7 @@
 }
 
 @media (max-width: 375px) {
-//   .contacts-container {
-//     height: calc(100vh - 60px); // Anpassung an kleineren Header
-//     margin-top: 60px;
-//   }
 
-  // .contact-details-section {
-  //   top: 60px;
-  //   height: calc(100% - 60px - 60px); // Anpassung an kleineren Header und Nav
-  //   padding: 16px;
-  // }
 
   .mobile-add-button {
     bottom: 76px;
