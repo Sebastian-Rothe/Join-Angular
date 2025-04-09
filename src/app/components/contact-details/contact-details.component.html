@@ -1,0 +1,32 @@
+<div class="contact-details" *ngIf="contact">
+    <div class="contact-header">
+        <div class="contact-avatar large" [style.background-color]="contact.iconColor">
+            {{ contact.initials }}
+        </div>
+        <div class="contact-name-section">
+            <h2>{{ contact.name }}</h2>
+            <div class="contact-actions">
+                <button class="action-button edit">
+                    <mat-icon>edit</mat-icon>
+                    <span>Edit</span>
+                </button>
+                <button class="action-button delete">
+                    <mat-icon>delete</mat-icon>
+                    <span>Delete</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="contact-information">
+        <h3>Contact Information</h3>
+        <div class="info-group">
+            <h4>Email</h4>
+            <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+        </div>
+        <div class="info-group">
+            <h4>Phone</h4>
+            <a [href]="'tel:' + contact.phone">{{ contact.phone }}</a>
+        </div>
+    </div>
+</div>

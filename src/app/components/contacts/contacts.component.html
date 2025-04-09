@@ -43,8 +43,9 @@
       <div class="divider-responsive"></div>
     </div>
 
-    <div class="contact-content" *ngIf="selectedContact">
-      <!-- Contact details will be shown here -->
-    </div>
+    <app-contact-details 
+      [contact]="selectedContact"
+      [isMobileView]="isMobileView">
+    </app-contact-details>
   </section>
 </section>
