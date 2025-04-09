@@ -56,6 +56,73 @@
   }
 }
 
+.contacts-list {
+  padding: 24px;
+
+  .contact-group {
+    margin-bottom: 24px;
+
+    .letter-divider {
+      color: $primary-blue;
+      font-size: 21px;
+      font-weight: 700;
+      margin-bottom: 16px;
+      padding-left: 12px;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px;
+      border-radius: $border-radius-default;
+      cursor: pointer;
+      transition: all 225ms ease-in-out;
+
+      &:hover {
+        background-color: $background-light;
+      }
+
+      &.selected {
+        background-color: $dark-navy;
+        color: $white;
+
+        .contact-email {
+          color: $white;
+        }
+      }
+    }
+
+    .contact-avatar {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: $white;
+      font-weight: 500;
+      font-size: 16px;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+
+      .contact-name {
+        font-size: 16px;
+        font-weight: 500;
+      }
+
+      .contact-email {
+        font-size: 14px;
+        color: $border-color;
+      }
+    }
+  }
+}
+
 .contact-details-section {
   flex: 1;
   padding: 32px;
