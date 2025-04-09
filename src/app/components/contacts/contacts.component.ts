@@ -18,6 +18,8 @@ export class ContactsComponent implements OnInit {
   contacts: User[] = [];
   groupedContacts: { [key: string]: User[] } = {};
   selectedContact: User | null = null;
+  isSlideIn = false;
+  isSlideOut = false;
 
   constructor(private userService: UserService) {}
 
@@ -48,9 +50,33 @@ export class ContactsComponent implements OnInit {
   }
 
   onContactSelect(contact: User) {
-    this.selectedContact = contact;
-    if (this.isMobileView) {
-      this.isContactDetailsVisible = true;
+    if (this.selectedContact) {
+      // Slide out current contact
+      this.isSlideIn = false;
+      this.isSlideOut = true;
+      
+      setTimeout(() => {
+        this.selectedContact = contact;
+        this.isSlideOut = false;
+        
+        // Trigger slide in animation in next frame
+        requestAnimationFrame(() => {
+          this.isSlideIn = true;
+        });
+        
+        if (this.isMobileView) {
+          this.isContactDetailsVisible = true;
+        }
+      }, 200); // Match sliding-out animation duration
+    } else {
+      // First contact selection
+      this.selectedContact = contact;
+      requestAnimationFrame(() => {
+        this.isSlideIn = true;
+      });
+      if (this.isMobileView) {
+        this.isContactDetailsVisible = true;
+      }
     }
   }
 

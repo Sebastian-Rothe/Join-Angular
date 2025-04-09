@@ -164,6 +164,30 @@
   min-width: 0;
 
   .contact-heading {
+    // Header direkt sichtbar, keine Animation
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  .contact-content {
+    transform: translateX(100%);
+    opacity: 0;
+    transition: none; // Remove transition to allow instant reset
+    
+    &.sliding-in {
+      transform: translateX(0);
+      opacity: 1;
+      transition: all 0.3s ease-in-out;
+    }
+    
+    &.sliding-out {
+      transform: translateX(-100%);
+      opacity: 0;
+      transition: all 0.2s ease-in-out;
+    }
+  }
+
+  .contact-heading {
     display: flex;
     align-items: center;
     gap: 28px;

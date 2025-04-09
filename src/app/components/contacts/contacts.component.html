@@ -30,7 +30,9 @@
     </div>
   </section>
 
-  <section class="contact-details-section" [class.mobile-visible]="isMobileView && isContactDetailsVisible">
+  <section class="contact-details-section" 
+           [class.mobile-visible]="isMobileView && isContactDetailsVisible"
+           [class.slide-in]="selectedContact">
     <div class="contact-heading">
       <div class="title-row">
         <span class="contacts-title">Contacts</span>
@@ -44,9 +46,13 @@
       </div>
     </div>
 
-    <app-contact-details 
-      [contact]="selectedContact"
-      [isMobileView]="isMobileView">
-    </app-contact-details>
+    <div class="contact-content" 
+         [class.sliding-in]="isSlideIn"
+         [class.sliding-out]="isSlideOut">
+      <app-contact-details 
+        [contact]="selectedContact"
+        [isMobileView]="isMobileView">
+      </app-contact-details>
+    </div>
   </section>
 </section>
