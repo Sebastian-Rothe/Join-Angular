@@ -1,8 +1,9 @@
 @use "../../../styles.scss" as *;
 
 .contact-details {
-  //   padding: 32px;
-  height: 100%;
+  position: relative;
+  height: calc(100vh - 96px - 64px - 70px); // Abzüglich Header-Höhe
+  overflow-y: auto;
 
   .contact-header {
     display: flex;
@@ -90,9 +91,9 @@
 }
 
 .mobile-menu-button {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
+  position: absolute;
+  bottom: 4px; // Abstand zur Navbar
+  right: 4px;
   width: 56px;
   height: 56px;
   border-radius: 50%;
@@ -119,9 +120,9 @@
   .mobile-actions-menu {
     border-radius: 20px 20px 0 20px !important;
     padding: 8px;
-    position: fixed !important; // Fixierte Position
-    bottom: 14px !important; // Position direkt über dem Button (16px + 56px + 16px)
-    right: 14px !important; // Gleicher Abstand wie Button
+    position: absolute !important;
+    bottom: 14px !important; // Abstand zum mobile-menu-button + dessen Höhe
+    right: 14px !important;
     box-shadow: 0 4px 4px $box-shadow-hover !important;
 
     .mdc-menu-surface {
@@ -210,20 +211,34 @@
       font-size: 36px !important;
     }
   }
+
+  .contact-details {
+    height: calc(100vh - 233px); // Abzüglich Header + Navbar
+  }
 }
+
 @media (max-width: 800px) {
+  .contact-details {
+    height: calc(100vh - 313px); // Abzüglich Header + Navbar
+  }
+  
+  
   ::ng-deep {
     .mobile-actions-menu {
       bottom: 94px !important;
-      right: 14px !important;
     }
   }
 }
 
 @media (max-width: 375px) {
+  .contact-details {
+    height: calc(100vh - 229px); // Angepasst für kleinere Navbar
+  }
+  
   .mobile-menu-button {
     width: 45px;
     height: 45px;
+   
 
     mat-icon {
       font-size: 24px;
@@ -231,10 +246,11 @@
       height: 24px;
     }
   }
+  
   ::ng-deep {
     .mobile-actions-menu {
-      bottom: 72px !important;
-      right: 14px !important;
+      bottom: 74px !important;
+   
     }
   }
 }
