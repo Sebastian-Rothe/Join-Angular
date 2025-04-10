@@ -4,15 +4,14 @@ import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
-import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
 import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, MatIconModule, ContactDetailsComponent, ActionDialogComponent],
+  imports: [CommonModule, MatIconModule, ContactDetailsComponent],
   templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.scss']
+  styleUrls: ['./contacts.component.scss'],
 })
 export class ContactsComponent implements OnInit {
   isContactDetailsVisible = false;
@@ -45,7 +44,7 @@ export class ContactsComponent implements OnInit {
 
   private groupContacts() {
     this.groupedContacts = {};
-    this.contacts.forEach(contact => {
+    this.contacts.forEach((contact) => {
       const firstLetter = contact.name.charAt(0).toUpperCase();
       if (!this.groupedContacts[firstLetter]) {
         this.groupedContacts[firstLetter] = [];
@@ -59,16 +58,16 @@ export class ContactsComponent implements OnInit {
       // Slide out current contact
       this.isSlideIn = false;
       this.isSlideOut = true;
-      
+
       setTimeout(() => {
         this.selectedContact = contact;
         this.isSlideOut = false;
-        
+
         // Trigger slide in animation in next frame
         requestAnimationFrame(() => {
           this.isSlideIn = true;
         });
-        
+
         if (this.isMobileView) {
           this.isContactDetailsVisible = true;
         }
@@ -91,7 +90,5 @@ export class ContactsComponent implements OnInit {
 
   openNewContactDialog(): void {
     this.dialogService.openDialog('add');
-    console.log('New contact dialog opened');
-    
   }
 }
