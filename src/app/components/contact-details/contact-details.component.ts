@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { User } from '../../models/user.class';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -15,6 +16,8 @@ export class ContactDetailsComponent {
   @Input() contact: User | null = null;
   @Input() isMobileView = false;
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
+
+  constructor(private dialogService: DialogService) {}
 
   ngOnInit() {
     // Listen for click outside to close menu with animation
@@ -39,6 +42,12 @@ export class ContactDetailsComponent {
         this.menuTrigger.closeMenu();
         panel.classList.remove('hiding');
       }, 280);
+    }
+  }
+
+  openEditDialog(): void {
+    if (this.contact) {
+      this.dialogService.openDialog('edit', this.contact);
     }
   }
 }

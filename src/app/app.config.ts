@@ -5,6 +5,9 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
 import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 import { getAuth, provideAuth } from '@angular/fire/auth';
+import { provideHttpClient } from '@angular/common/http';
+import { provideNativeDateAdapter } from '@angular/material/core';
+import { ActionDialogComponent } from './components/action-dialog/action-dialog.component';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAOf_O8vQ6wvsZA2qomoLj6XiVyJNqi7ME",
@@ -19,8 +22,14 @@ export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(routes),
     provideAnimationsAsync(),
+    provideHttpClient(),
+    provideNativeDateAdapter(),
     provideFirebaseApp(() => initializeApp(firebaseConfig)),
     provideAuth(() => getAuth()),
     provideFirestore(() => getFirestore())
   ]
+};
+
+export const appComponents = {
+  bootstrap: [ActionDialogComponent]
 };

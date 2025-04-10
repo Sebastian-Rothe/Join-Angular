@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { User } from '../../models/user.class';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { DialogService } from '../../services/dialog.service';
 
 @Component({
   selector: 'app-header',
@@ -21,7 +22,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     public userService: UserService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private dialogService: DialogService
   ) {
     // Add click outside listener
     document.addEventListener('click', (event) => {
@@ -56,5 +58,9 @@ export class HeaderComponent implements OnInit {
     } catch (error) {
       console.error('Logout failed:', error);
     }
+  }
+
+  openAccountDialog(): void {
+    this.dialogService.openDialog('account');
   }
 }

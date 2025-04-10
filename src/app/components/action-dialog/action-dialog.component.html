@@ -1,0 +1,63 @@
+<div class="new-contact-overlay" [class.aktiv]="isVisible">
+  <div class="popup">
+    <div class="popup-content">
+      <div class="left-side-new-c">
+        <span class="closePopupMobile" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+        </span>
+        <div class="left-pane">
+          <img src="/assets/icons/join-logo-white.svg" alt="Logo" />
+          <h2>{{ getDialogTitle() }}</h2>
+          <p>{{ getDialogSubtitle() }}</p>
+          <div class="blue-box"></div>
+        </div>
+      </div>
+      <div class="right-pane">
+        <span class="closePopup" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+        </span>
+        <div class="align-new-contact-input">
+          <div class="profil-icon">
+            <div class="avatar" *ngIf="config.type === 'edit' || config.type === 'account'">
+              {{ config.contact?.initials }}
+            </div>
+            <mat-icon *ngIf="config.type === 'add'">person</mat-icon>
+          </div>
+          <form class="align-form" (ngSubmit)="onSubmit()" #form="ngForm">
+            <input 
+              [(ngModel)]="formData.name"
+              name="name"
+              class="icon-name" 
+              type="text" 
+              placeholder="Name" 
+              required>
+            <input 
+              [(ngModel)]="formData.email"
+              name="email"
+              class="icon-email" 
+              type="email" 
+              placeholder="Email" 
+              required>
+            <input 
+              [(ngModel)]="formData.phone"
+              name="phone"
+              class="icon-phone" 
+              type="tel" 
+              placeholder="Phone" 
+              required>
+            <div class="align-form-buttons">
+              <button class="cancel-button" type="button" (click)="onClose()">
+                Cancel
+                <mat-icon>close</mat-icon>
+              </button>
+              <button class="submit-button" type="submit">
+                {{ config.type === 'add' ? 'Create contact' : 'Save' }}
+                <mat-icon>check</mat-icon>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -6,7 +6,7 @@
         <div class="contact-name-section">
             <h2>{{ contact.name }}</h2>
             <div class="contact-actions" *ngIf="!isMobileView">
-                <button class="action-button edit">
+                <button class="action-button edit" (click)="openEditDialog()">
                     <mat-icon>edit</mat-icon>
                     <span>Edit</span>
                 </button>
@@ -29,7 +29,7 @@
               [hasBackdrop]="true"
               [overlapTrigger]="false"
               overlayPanelClass="slide-menu-panel">
-        <button mat-menu-item>
+        <button mat-menu-item (click)="openEditDialog()">
             <mat-icon>edit</mat-icon>
             <span>Edit</span>
         </button>

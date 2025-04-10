@@ -2,13 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
-import { User } from '../../models/user.class';
+import { DialogService } from '../../services/dialog.service';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-contacts',
   standalone: true,
-  imports: [CommonModule, MatIconModule, ContactDetailsComponent],
+  imports: [CommonModule, MatIconModule, ContactDetailsComponent, ActionDialogComponent],
   templateUrl: './contacts.component.html',
   styleUrls: ['./contacts.component.scss']
 })
@@ -21,7 +23,10 @@ export class ContactsComponent implements OnInit {
   isSlideIn = false;
   isSlideOut = false;
 
-  constructor(private userService: UserService) {}
+  constructor(
+    private userService: UserService,
+    private dialogService: DialogService
+  ) {}
 
   ngOnInit() {
     this.checkScreenSize();
@@ -84,7 +89,9 @@ export class ContactsComponent implements OnInit {
     this.isContactDetailsVisible = false;
   }
 
-  openNewContactDialog() {
-    // Implement dialog opening logic
+  openNewContactDialog(): void {
+    this.dialogService.openDialog('add');
+    console.log('New contact dialog opened');
+    
   }
 }

@@ -15,7 +15,7 @@
         </div>
         
         <div class="dropdown-menu" [class.show]="isDropdownOpen">
-            <a routerLink="/">My Account</a>
+            <a (click)="openAccountDialog()">My Account</a>
             <a routerLink="/legal">Legal Notice</a>
             <a routerLink="/privacy">Privacy Policy</a>
             <a routerLink="/login" (click)="logoutUser()">Log out</a>
