@@ -173,13 +173,13 @@
     transform: translateX(100%);
     opacity: 0;
     transition: none; // Remove transition to allow instant reset
-    
+
     &.sliding-in {
       transform: translateX(0);
       opacity: 1;
       transition: all 0.3s ease-in-out;
     }
-    
+
     &.sliding-out {
       transform: translateX(-100%);
       opacity: 0;
@@ -369,9 +369,7 @@
 
 @media (max-width: 375px) {
   .contact-details-section {
-
     padding: 10px;
-
   }
   .mobile-add-button {
     bottom: 76px;
@@ -385,5 +383,10 @@
     .contacts-title {
       font-size: 33px;
     }
+  }
+}
+@media (max-width: 340px) {
+  .title-row {
+    gap: 4px !important;
   }
 }
