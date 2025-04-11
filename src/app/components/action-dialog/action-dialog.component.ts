@@ -5,6 +5,8 @@ import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { DialogConfig } from '../../models/dialog.model';
 import { UserService } from '../../services/user.service';
+import { DialogService } from '../../services/dialog.service';
+import { User } from '../../models/user.class';
 
 @Component({
   selector: 'app-action-dialog',
@@ -25,7 +27,8 @@ export class ActionDialogComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public config: DialogConfig,
     public dialogRef: MatDialogRef<ActionDialogComponent>,
-    private userService: UserService
+    private userService: UserService,
+    private dialogService: DialogService
   ) {}
 
   ngOnInit() {
@@ -66,6 +69,17 @@ export class ActionDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.dialogRef.close(this.formData);
+    if (this.config.type === 'account') {
+      this.dialogRef.close();
+      const currentUser = new User({
+        name: this.formData.name,
+        email: this.formData.email,
+        phone: this.formData.phone,
+        initials: this.formData.initials
+      });
+      this.dialogService.openDialog('edit', currentUser);
+    } else {
+      this.dialogRef.close(this.formData);
+    }
   }
 }
