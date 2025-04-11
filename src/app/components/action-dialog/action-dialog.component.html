@@ -47,12 +47,14 @@
               required>
             <div class="align-form-buttons">
               <button class="cancel-button" type="button" (click)="onClose()" [class.mobile-hide]="config.type !== 'account'">
-                Cancel
-                <mat-icon>close</mat-icon>
+                {{ config.type === 'account' ? 'Delete my account' : 
+                   config.type === 'edit' ? 'Delete' : 'Cancel' }}
+                <mat-icon>{{ config.type === 'account' ? 'delete' : 'close' }}</mat-icon>
               </button>
               <button class="submit-button" type="submit">
-                {{ config.type === 'add' ? 'Create contact' : 'Save' }}
-                <mat-icon>check</mat-icon>
+                {{ config.type === 'account' ? 'Edit' : 
+                   config.type === 'edit' ? 'Save' : 'Create contact' }}
+                <mat-icon>{{ config.type === 'account' ? 'edit' : 'check' }}</mat-icon>
               </button>
             </div>
           </form>
