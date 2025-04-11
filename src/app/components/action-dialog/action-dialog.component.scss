@@ -106,7 +106,6 @@ form {
       padding: 12px 24px;
       border-radius: 8px;
       font-size: 16px;
-      cursor: pointer;
 
       &.cancel-button, &.submit-button {
         &:hover { 
@@ -390,6 +389,10 @@ form {
     .align-form-buttons {
       align-items: center;
       justify-content: center;
+      button {
+        padding: 8px 16px; 
+       
+      }
     }
   }
 }
