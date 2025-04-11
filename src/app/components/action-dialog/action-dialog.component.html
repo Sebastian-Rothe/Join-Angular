@@ -46,7 +46,7 @@
               placeholder="Phone" 
               required>
             <div class="align-form-buttons">
-              <button class="cancel-button" type="button" (click)="onClose()">
+              <button class="cancel-button" type="button" (click)="onClose()" [class.mobile-hide]="config.type !== 'account'">
                 Cancel
                 <mat-icon>close</mat-icon>
               </button>

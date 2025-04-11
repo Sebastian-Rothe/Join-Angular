@@ -28,7 +28,7 @@ export class DialogService {
   private getDialogTitle(type: 'account' | 'edit' | 'add'): string {
     switch (type) {
       case 'account':
-        return 'Account Details';
+        return 'My Account';
       case 'edit':
         return 'Edit Contact';
       case 'add':
@@ -41,11 +41,11 @@ export class DialogService {
   private getDialogSubtitle(type: 'account' | 'edit' | 'add'): string {
     switch (type) {
       case 'account':
-        return 'View account details';
+        return '';
       case 'edit':
-        return 'Edit contact information';
+        return '';
       case 'add':
-        return 'Add a new contact';
+        return 'Tasks are better with a Team!';
       default:
         return '';
     }
