@@ -19,7 +19,7 @@
         <div class="align-new-contact-input">
           <div class="profil-icon">
             <div class="avatar" *ngIf="config.type === 'edit' || config.type === 'account'">
-              {{ config.contact?.initials }}
+              {{ config.type === 'account' ? formData.initials : config.contact?.initials }}
             </div>
             <mat-icon *ngIf="config.type === 'add'">person</mat-icon>
           </div>
@@ -29,21 +29,24 @@
               name="name"
               class="icon-name" 
               type="text" 
-              placeholder="Name" 
+              placeholder="Name"
+              [readonly]="config.type === 'account'"
               required>
             <input 
               [(ngModel)]="formData.email"
               name="email"
               class="icon-email" 
               type="email" 
-              placeholder="Email" 
+              placeholder="Email"
+              [readonly]="config.type === 'account'"
               required>
             <input 
               [(ngModel)]="formData.phone"
               name="phone"
               class="icon-phone" 
               type="tel" 
-              placeholder="Phone" 
+              placeholder="Phone"
+              [readonly]="config.type === 'account'"
               required>
             <div class="align-form-buttons">
               <button class="cancel-button" type="button" (click)="onClose()" [class.mobile-hide]="config.type !== 'account'">

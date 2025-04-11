@@ -1,9 +1,10 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
 import { DialogConfig } from '../../models/dialog.model';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-action-dialog',
@@ -12,24 +13,40 @@ import { DialogConfig } from '../../models/dialog.model';
   templateUrl: './action-dialog.component.html',
   styleUrl: './action-dialog.component.scss'
 })
-export class ActionDialogComponent {
+export class ActionDialogComponent implements OnInit {
   isVisible = false;
   formData = {
     name: '',
     email: '',
-    phone: ''
+    phone: '',
+    initials: ''
   };
 
   constructor(
+    @Inject(MAT_DIALOG_DATA) public config: DialogConfig,
     public dialogRef: MatDialogRef<ActionDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public config: DialogConfig
-  ) {
-    // Initialize form data if editing
-    if (config.contact) {
+    private userService: UserService
+  ) {}
+
+  ngOnInit() {
+    if (this.config.type === 'account') {
+      // Laden der User-Daten, wenn es sich um My Account handelt
+      this.userService.currentUser$.subscribe(user => {
+        if (user) {
+          this.formData = {
+            name: user.name,
+            email: user.email,
+            phone: user.phone || '',
+            initials: user.initials
+          };
+        }
+      });
+    } else if (this.config.type === 'edit' && this.config.contact) {
       this.formData = {
-        name: config.contact.name,
-        email: config.contact.email,
-        phone: config.contact.phone
+        name: this.config.contact.name,
+        email: this.config.contact.email,
+        phone: this.config.contact.phone || '',
+        initials: this.config.contact.initials
       };
     }
     setTimeout(() => this.isVisible = true, 50);
