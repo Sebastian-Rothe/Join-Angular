@@ -1,38 +1,3 @@
-// .dialog-overlay {
-//   position: fixed;
-//   top: 0;
-//   left: 0;
-//   width: 100%;
-//   height: 100%;
-//   background: rgba(0, 0, 0, 0.4);
-//   display: flex;
-//   justify-content: center;
-//   align-items: center;
-//   z-index: 1000;
-//   opacity: 0;
-//   visibility: hidden;
-//   transition: all 0.3s ease;
-
-//   &.active {
-//     opacity: 1;
-//     visibility: visible;
-//   }
-// }
-
-// .dialog-popup {
-//   background: white;
-//   border-radius: 30px;
-//   max-width: 1000px;
-//   width: 100%;
-//   margin: 20px;
-//   overflow: hidden;
-// }
-
-// .dialog-content {
-//   display: flex;
-//   height: 100%;
-// }
-
 .left-side {
   background: #2A3647;
   color: white;
@@ -106,21 +71,29 @@
 form {
   display: flex;
   flex-direction: column;
+  width: 100%;
   gap: 20px;
 
   input {
     padding: 12px;
-    border: 1px solid #D1D1D1;
-    border-radius: 8px;
     font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-position: calc(100% - 12px) center;
+    background-repeat: no-repeat;
+    background-size: 20px;
 
     &:focus {
       outline: none;
       border-color: #29ABE2;
     }
+
+    &.icon-name { background-image: url('/assets/icons/person.svg'); }
+    &.icon-email { background-image: url('/assets/icons/mail.svg'); }
+    &.icon-phone { background-image: url('/assets/icons/call.svg'); }
   }
 
-  .button-group {
+  .align-form-buttons {
     display: flex;
     justify-content: flex-end;
     gap: 16px;
@@ -132,14 +105,19 @@ form {
       gap: 8px;
       padding: 12px 24px;
       border-radius: 8px;
-      border: none;
+      font-size: 16px;
       cursor: pointer;
-      font-weight: bold;
 
-      &.cancel-btn {
+      &.cancel-button, &.submit-button {
+        &:hover { 
+          mat-icon { color: inherit; }
+        }
+      }
+
+      &.cancel-button {
         background: white;
-        border: 1px solid #2A3647;
-        color: #2A3647;
+        border: 1px solid #2c3e50;
+        color: #2c3e50;
 
         &:hover {
           border-color: #29ABE2;
@@ -147,13 +125,12 @@ form {
         }
       }
 
-      &.submit-btn {
-        background: #2A3647;
+      &.submit-button {
+        background: #2c3e50;
+        border: none;
         color: white;
 
-        &:hover {
-          background: #29ABE2;
-        }
+        &:hover { background: #29ABE2; }
       }
     }
   }
@@ -306,76 +283,6 @@ form {
   }
 }
 
-form {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  gap: 20px;
-
-  input {
-    padding: 12px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background-position: calc(100% - 12px) center;
-    background-repeat: no-repeat;
-    background-size: 20px;
-
-    &.icon-name {
-      background-image: url('/assets/icons/person.svg');
-    }
-
-    &.icon-email {
-      background-image: url('/assets/icons/mail.svg');
-    }
-
-    &.icon-phone {
-      background-image: url('/assets/icons/call.svg');
-    }
-  }
-
-  .align-form-buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 16px;
-    margin-top: 20px;
-
-    button {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 24px;
-      border-radius: 8px;
-      font-size: 16px;
-      cursor: pointer;
-
-      &.cancel-button {
-        background: white;
-        border: 1px solid #2c3e50;
-        color: #2c3e50;
-
-        &:hover {
-          border-color: #29ABE2;
-          color: #29ABE2;
-          mat-icon {
-            color: #29ABE2;
-          }
-        }
-      }
-
-      &.submit-button {
-        background: #2c3e50;
-        border: none;
-        color: white;
-
-        &:hover {
-          background: #29ABE2;
-        }
-      }
-    }
-  }
-}
-
 @media (max-width: 860px) {
   .popup {
     height: 80%;
@@ -426,6 +333,14 @@ form {
   .closePopup { display: none; }
   .closePopupMobile { display: block; }
   .mobile-hide { display: none !important; }
+
+  form {
+    .align-form-buttons {
+      button {
+        padding: 10px 20px;
+      }
+    }
+  }
 }
 
 @media (max-width: 768px) {
@@ -482,9 +397,7 @@ form {
 @media (max-width: 460px) {
   .popup { height: 90%; }
   .new-contact-overlay {
-
     padding: 12px;
-  
   }
 
   .right-pane {
