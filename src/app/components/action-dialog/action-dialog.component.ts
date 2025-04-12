@@ -110,29 +110,51 @@ export class ActionDialogComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    if (this.formData.profileImage && this.config.type !== 'account') {
-      try {
-        const userId = this.config.type === 'edit' ? this.config.contact?.uid : undefined;
-        if (userId) {
-          await this.userService.updateUserProfilePicture(userId, this.formData.profileImage);
-        }
-      } catch (error) {
-        console.error('Error uploading profile picture:', error);
-      }
+    if (!this.formData.name || !this.formData.email) {
+      return;
     }
 
-    if (this.config.type === 'account') {
-      this.dialogRef.close();
-      const currentUser = new User({
-        name: this.formData.name,
-        email: this.formData.email,
-        phone: this.formData.phone,
-        initials: this.formData.initials,
-        profilePicture: this.formData.profilePicture
-      });
-      this.dialogService.openDialog('edit', currentUser);
-    } else {
-      this.dialogRef.close(this.formData);
+    try {
+      if (this.config.type === 'add') {
+        // Create new user/contact
+        const newUser = await this.userService.createUser({
+          name: this.formData.name,
+          email: this.formData.email,
+          phone: this.formData.phone,
+          profilePicture: this.profileImagePreview || ''
+        });
+
+        // Close dialog and refresh contacts list
+        this.onClose();
+        // Optional: Show success message
+        console.log('Contact created successfully:', newUser);
+      } else if (this.config.type === 'edit') {
+        // Existing edit logic...
+        if (this.formData.profileImage) {
+          try {
+            const userId = this.config.contact?.uid;
+            if (userId) {
+              await this.userService.updateUserProfilePicture(userId, this.formData.profileImage);
+            }
+          } catch (error) {
+            console.error('Error uploading profile picture:', error);
+          }
+        }
+        this.dialogRef.close(this.formData);
+      } else if (this.config.type === 'account') {
+        this.dialogRef.close();
+        const currentUser = new User({
+          name: this.formData.name,
+          email: this.formData.email,
+          phone: this.formData.phone,
+          initials: this.formData.initials,
+          profilePicture: this.formData.profilePicture
+        });
+        this.dialogService.openDialog('edit', currentUser);
+      }
+    } catch (error) {
+      console.error('Error submitting form:', error);
+      // Optional: Show error message to user
     }
   }
 }

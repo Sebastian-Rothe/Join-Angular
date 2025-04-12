@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Firestore, doc, getDoc, collection, getDocs, updateDoc } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, collection, getDocs, updateDoc, setDoc } from '@angular/fire/firestore';
 import { getStorage, ref, uploadString, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
 import { Observable, switchMap, map, of } from 'rxjs';
@@ -71,6 +71,29 @@ export class UserService {
       });
     } catch (error) {
       console.error('Error updating profile picture:', error);
+      throw error;
+    }
+  }
+
+  async createUser(userData: {name: string, email: string, phone: string, profilePicture?: string}): Promise<User> {
+    try {
+      // Get reference to users collection
+      const usersCollectionRef = collection(this.firestore, 'users');
+      // Generate new document reference with auto-ID
+      const newDocRef = doc(usersCollectionRef);
+      
+      // Create new User instance with the generated ID
+      const newUser = new User({
+        uid: newDocRef.id,
+        ...userData
+      });
+
+      // Save to Firestore using the generated reference
+      await setDoc(newDocRef, newUser.toPlainObject());
+      
+      return newUser;
+    } catch (error) {
+      console.error('Error creating user:', error);
       throw error;
     }
   }
