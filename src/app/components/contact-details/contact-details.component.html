@@ -1,7 +1,8 @@
 <div class="contact-details" *ngIf="contact">
     <div class="contact-header">
         <div class="contact-avatar large" [style.background-color]="contact.iconColor">
-            {{ contact.initials }}
+            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" alt="Profile picture">
+            <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
         </div>
         <div class="contact-name-section">
             <h2>{{ contact.name }}</h2>

@@ -15,7 +15,8 @@
              [class.selected]="selectedContact?.uid === contact.uid"
              (click)="onContactSelect(contact)">
           <div class="contact-avatar" [style.background-color]="contact.iconColor">
-            {{ contact.initials }}
+            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" alt="Profile picture">
+            <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
           </div>
           <div class="contact-info">
             <div class="contact-name">{{ contact.name }}</div>
