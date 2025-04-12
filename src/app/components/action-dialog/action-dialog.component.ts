@@ -21,8 +21,11 @@ export class ActionDialogComponent implements OnInit {
     name: '',
     email: '',
     phone: '',
-    initials: ''
+    initials: '',
+    profilePicture: '',
+    profileImage: null as File | null
   };
+  profileImagePreview: string | null = null;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public config: DialogConfig,
@@ -40,7 +43,9 @@ export class ActionDialogComponent implements OnInit {
             name: user.name,
             email: user.email,
             phone: user.phone || '',
-            initials: user.initials
+            initials: user.initials,
+            profilePicture: user.profilePicture || '',
+            profileImage: null
           };
         }
       });
@@ -49,7 +54,9 @@ export class ActionDialogComponent implements OnInit {
         name: this.config.contact.name,
         email: this.config.contact.email,
         phone: this.config.contact.phone || '',
-        initials: this.config.contact.initials
+        initials: this.config.contact.initials,
+        profilePicture: this.config.contact.profilePicture || '',
+        profileImage: null
       };
     }
     setTimeout(() => this.isVisible = true, 50);
@@ -68,14 +75,60 @@ export class ActionDialogComponent implements OnInit {
     setTimeout(() => this.dialogRef.close(), 300);
   }
 
-  onSubmit(): void {
+  async onFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+    const allowedTypes = ['image/jpeg', 'image/png'];
+
+    if (!allowedTypes.includes(file.type)) {
+      alert('Please upload a valid image file (JPG or PNG)');
+      return;
+    }
+
+    const maxSize = 5 * 1024 * 1024; // 5MB
+    if (file.size > maxSize) {
+      alert('Image must be smaller than 5MB');
+      return;
+    }
+
+    try {
+      // We'll store the original file for later upload
+      this.formData.profileImage = file;
+      
+      // Create preview
+      const reader = new FileReader();
+      reader.onload = (e: ProgressEvent<FileReader>) => {
+        this.profileImagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    } catch (error) {
+      console.error('Error processing image:', error);
+      alert('Error processing image. Please try again.');
+    }
+  }
+
+  async onSubmit(): Promise<void> {
+    if (this.formData.profileImage && this.config.type !== 'account') {
+      try {
+        const userId = this.config.type === 'edit' ? this.config.contact?.uid : undefined;
+        if (userId) {
+          await this.userService.updateUserProfilePicture(userId, this.formData.profileImage);
+        }
+      } catch (error) {
+        console.error('Error uploading profile picture:', error);
+      }
+    }
+
     if (this.config.type === 'account') {
       this.dialogRef.close();
       const currentUser = new User({
         name: this.formData.name,
         email: this.formData.email,
         phone: this.formData.phone,
-        initials: this.formData.initials
+        initials: this.formData.initials,
+        profilePicture: this.formData.profilePicture
       });
       this.dialogService.openDialog('edit', currentUser);
     } else {

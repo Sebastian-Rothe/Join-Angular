@@ -19,9 +19,25 @@
         <div class="align-new-contact-input">
           <div class="profil-icon">
             <div class="avatar" *ngIf="config.type === 'edit' || config.type === 'account'">
-              {{ config.type === 'account' ? formData.initials : config.contact?.initials }}
+              <img *ngIf="profileImagePreview || formData.profilePicture" 
+                   [src]="profileImagePreview || formData.profilePicture" 
+                   alt="Profile picture">
+              <span *ngIf="!profileImagePreview && !formData.profilePicture">
+                {{ config.type === 'account' ? formData.initials : config.contact?.initials }}
+              </span>
             </div>
-            <mat-icon *ngIf="config.type === 'add'">person</mat-icon>
+            <mat-icon *ngIf="config.type === 'add' && !profileImagePreview">person</mat-icon>
+            <img *ngIf="config.type === 'add' && profileImagePreview" 
+                 [src]="profileImagePreview" 
+                 class="avatar" 
+                 alt="Profile preview">
+            
+            <label class="upload-button" *ngIf="config.type !== 'account'">
+              <input type="file" 
+                     accept=".jpg,.jpeg,.png" 
+                     (change)="onFileSelected($event)">
+              <mat-icon>add_a_photo</mat-icon>
+            </label>
           </div>
           <form class="align-form" (ngSubmit)="onSubmit()" #form="ngForm">
             <input 

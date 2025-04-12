@@ -244,6 +244,7 @@ form {
     align-items: center;
     margin-top: 50px;
     margin-bottom: 100px;
+    position: relative;
 
     .avatar, mat-icon {
       width: 120px;
@@ -255,12 +256,50 @@ form {
       font-size: 32px;
       background: #d1d1d1;
       color: white;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
     }
 
-    mat-icon {
-      font-size: 60px;
-      width: 120px;
-      height: 120px;
+    .upload-button {
+      position: absolute;
+      bottom: -2px;
+      right: 0;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: white;
+      border: none;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+
+      input[type="file"] {
+        display: none;
+      }
+
+      mat-icon {
+        width: 24px;
+        height: 24px;
+        font-size: 20px;
+        color: #2c3e50;
+        background: transparent;
+      }
+
+      &:hover {
+        background: #29ABE2;
+
+        mat-icon {
+          color: white;
+        }
+      }
     }
   }
 }
