@@ -1,4 +1,4 @@
-import { Component, Input, ViewChild } from '@angular/core';
+import { Component, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -15,6 +15,7 @@ import { DialogService } from '../../services/dialog.service';
 export class ContactDetailsComponent {
   @Input() contact: User | null = null;
   @Input() isMobileView = false;
+  @Output() contactUpdated = new EventEmitter<void>();
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
   constructor(private dialogService: DialogService) {}
@@ -47,7 +48,12 @@ export class ContactDetailsComponent {
 
   openEditDialog(): void {
     if (this.contact) {
-      this.dialogService.openDialog('edit', this.contact);
+      const dialogRef = this.dialogService.openDialog('edit', this.contact);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.contactUpdated.emit();
+        }
+      });
     }
   }
 }

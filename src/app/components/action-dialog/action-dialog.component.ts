@@ -73,7 +73,7 @@ export class ActionDialogComponent implements OnInit {
 
   onClose(): void {
     this.isVisible = false;
-    setTimeout(() => this.dialogRef.close(), 300);
+    setTimeout(() => this.dialogRef.close(false), 300);
   }
 
   async onFileSelected(event: Event): Promise<void> {
@@ -145,10 +145,8 @@ export class ActionDialogComponent implements OnInit {
           profilePicture: this.profileImagePreview || ''
         });
 
-        // Close dialog and refresh contacts list
-        this.onClose();
-        // Optional: Show success message
-        console.log('Contact created successfully:', newUser);
+        // Close dialog with true to indicate success
+        this.dialogRef.close(true);
       }
     } catch (error) {
       console.error('Error submitting form:', error);

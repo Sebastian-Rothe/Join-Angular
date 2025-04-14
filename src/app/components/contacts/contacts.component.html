@@ -52,7 +52,8 @@
          [class.sliding-out]="isSlideOut">
       <app-contact-details 
         [contact]="selectedContact"
-        [isMobileView]="isMobileView">
+        [isMobileView]="isMobileView"
+        (contactUpdated)="loadContacts()">
       </app-contact-details>
     </div>
   </section>

@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDialogRef } from '@angular/material/dialog';
 import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
 import { User } from '../../models/user.class';
 
 @Component({
@@ -37,9 +39,23 @@ export class ContactsComponent implements OnInit {
     this.isMobileView = window.innerWidth <= 850;
   }
 
-  private async loadContacts() {
-    this.contacts = await this.userService.getAllUsers();
-    this.groupContacts();
+  public async loadContacts() {
+    try {
+      this.contacts = await this.userService.getAllUsers();
+      // Sortiere Kontakte alphabetisch nach Namen
+      this.contacts.sort((a, b) => a.name.localeCompare(b.name));
+      this.groupContacts();
+      
+      // Wenn ein Kontakt ausgewählt ist, aktualisiere dessen Daten
+      if (this.selectedContact) {
+        const updatedContact = this.contacts.find(c => c.uid === this.selectedContact?.uid);
+        if (updatedContact) {
+          this.selectedContact = updatedContact;
+        }
+      }
+    } catch (error) {
+      console.error('Error loading contacts:', error);
+    }
   }
 
   private groupContacts() {
@@ -89,6 +105,12 @@ export class ContactsComponent implements OnInit {
   }
 
   openNewContactDialog(): void {
-    this.dialogService.openDialog('add');
+    const dialogRef: MatDialogRef<ActionDialogComponent> = this.dialogService.openDialog('add');
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.loadContacts();
+      }
+    });
   }
+
 }
