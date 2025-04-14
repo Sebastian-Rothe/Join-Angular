@@ -11,7 +11,7 @@
         <div class="profile-avatar" 
              (click)="toggleDropdown()">
             <img *ngIf="user?.profilePicture" [src]="user.profilePicture" alt="Profile picture">
-            <span *ngIf="!user?.profilePicture" class="initials">{{ user?.initials }}</span> 
+            <span *ngIf="!user?.profilePicture" class="initials">{{ user.initials }}</span> 
         </div>
         
         <div class="dropdown-menu" [class.show]="isDropdownOpen">

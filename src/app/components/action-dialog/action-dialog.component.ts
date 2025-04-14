@@ -7,6 +7,7 @@ import { DialogConfig } from '../../models/dialog.model';
 import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
 import { User } from '../../models/user.class';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-action-dialog',
@@ -111,25 +112,10 @@ export class ActionDialogComponent implements OnInit {
   }
 
   async onSubmit(): Promise<void> {
-    if (!this.formData.name || !this.formData.email) {
-      return;
-    }
+    if (!this.formData.name || !this.formData.email) return;
 
     try {
-      if (this.config.type === 'add') {
-        // Create new user/contact
-        const newUser = await this.userService.createUser({
-          name: this.formData.name,
-          email: this.formData.email,
-          phone: this.formData.phone,
-          profilePicture: this.profileImagePreview || ''
-        });
-
-        // Close dialog and refresh contacts list
-        this.onClose();
-        // Optional: Show success message
-        console.log('Contact created successfully:', newUser);
-      } else if (this.config.type === 'edit' && this.config.contact?.uid) {
+      if (this.config.type === 'edit' && this.config.contact?.uid) {
         // Handle profile picture upload if a new one was selected
         if (this.formData.profileImage) {
           try {
@@ -147,21 +133,45 @@ export class ActionDialogComponent implements OnInit {
           profilePicture: this.profileImagePreview || this.formData.profilePicture || ''
         });
 
-        // Close dialog after successful update
+        // Close dialog and refresh data
         this.dialogRef.close(true);
-      } else if (this.config.type === 'account') {
-        this.dialogRef.close();
-        const currentUser = new User({
+        
+      } else if (this.config.type === 'add') {
+        // Create new user/contact
+        const newUser = await this.userService.createUser({
           name: this.formData.name,
           email: this.formData.email,
           phone: this.formData.phone,
-          profilePicture: this.formData.profilePicture
+          profilePicture: this.profileImagePreview || ''
         });
-        this.dialogService.openDialog('edit', currentUser);
+
+        // Close dialog and refresh contacts list
+        this.onClose();
+        // Optional: Show success message
+        console.log('Contact created successfully:', newUser);
       }
     } catch (error) {
       console.error('Error submitting form:', error);
       // Optional: Show error message to user
     }
+  }
+
+  async openEditDialog(): Promise<void> {
+    // Get current user from userService
+    const currentUser = await firstValueFrom(this.userService.currentUser$);
+    if (!currentUser) return;
+
+    // Create user object with all necessary data including the uid
+    const userForEdit = new User({
+      uid: currentUser.uid,
+      name: this.formData.name,
+      email: this.formData.email,
+      phone: this.formData.phone,
+      profilePicture: this.formData.profilePicture,
+      iconColor: currentUser.iconColor
+    });
+
+    this.dialogRef.close();
+    this.dialogService.openDialog('edit', userForEdit);
   }
 }

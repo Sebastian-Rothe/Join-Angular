@@ -70,7 +70,9 @@
                    config.type === 'edit' ? 'Delete' : 'Cancel' }}
                 <mat-icon *ngIf="config.type !== 'account'">{{ config.type === 'edit' ? 'delete' : 'close' }}</mat-icon>
               </button>
-              <button class="submit-button" type="submit">
+              <button class="submit-button" 
+                      [type]="config.type === 'account' ? 'button' : 'submit'"
+                      (click)="config.type === 'account' ? openEditDialog() : null">
                 {{ config.type === 'account' ? 'Edit' : 
                    config.type === 'edit' ? 'Save' : 'Create contact' }}
                 <mat-icon *ngIf="config.type !== 'account'">check</mat-icon>
