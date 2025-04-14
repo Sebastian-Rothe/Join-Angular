@@ -128,26 +128,32 @@ export class ActionDialogComponent implements OnInit {
         this.onClose();
         // Optional: Show success message
         console.log('Contact created successfully:', newUser);
-      } else if (this.config.type === 'edit') {
-        // Existing edit logic...
+      } else if (this.config.type === 'edit' && this.config.contact?.uid) {
+        // Handle profile picture upload if a new one was selected
         if (this.formData.profileImage) {
           try {
-            const userId = this.config.contact?.uid;
-            if (userId) {
-              await this.userService.updateUserProfilePicture(userId, this.formData.profileImage);
-            }
+            await this.userService.updateUserProfilePicture(this.config.contact.uid, this.formData.profileImage);
           } catch (error) {
             console.error('Error uploading profile picture:', error);
           }
         }
-        this.dialogRef.close(this.formData);
+
+        // Update user data
+        await this.userService.updateUser(this.config.contact.uid, {
+          name: this.formData.name,
+          email: this.formData.email,
+          phone: this.formData.phone,
+          profilePicture: this.profileImagePreview || this.formData.profilePicture || ''
+        });
+
+        // Close dialog after successful update
+        this.dialogRef.close(true);
       } else if (this.config.type === 'account') {
         this.dialogRef.close();
         const currentUser = new User({
           name: this.formData.name,
           email: this.formData.email,
           phone: this.formData.phone,
-          initials: this.formData.initials,
           profilePicture: this.formData.profilePicture
         });
         this.dialogService.openDialog('edit', currentUser);

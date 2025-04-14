@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, collection, getDocs, updateDoc, setDoc } from '@angular/fire/firestore';
 import { getStorage, ref, uploadString, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
@@ -10,9 +10,8 @@ import { User } from '../models/user.class';
 })
 export class UserService {
   currentUser$: Observable<User | null>;
-
+  firestore: Firestore = inject(Firestore);
   constructor(
-    private firestore: Firestore,
     private authService: AuthService
   ) {
     // User-Stream erstellen, der sich automatisch bei Auth-Änderungen aktualisiert
@@ -94,6 +93,24 @@ export class UserService {
       return newUser;
     } catch (error) {
       console.error('Error creating user:', error);
+      throw error;
+    }
+  }
+
+  async updateUser(userId: string, userData: {name: string, email: string, phone: string, profilePicture?: string}): Promise<void> {
+    try {
+      const userRef = doc(this.firestore, 'users', userId);
+      
+      // Update the user document
+      await updateDoc(userRef, {
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
+        profilePicture: userData.profilePicture || ''
+      });
+
+    } catch (error) {
+      console.error('Error updating user:', error);
       throw error;
     }
   }
