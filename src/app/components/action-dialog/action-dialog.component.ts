@@ -87,22 +87,23 @@ export class ActionDialogComponent implements OnInit {
       return;
     }
 
-    const maxSize = 5 * 1024 * 1024; // 5MB
-    if (file.size > maxSize) {
-      alert('Image must be smaller than 5MB');
-      return;
-    }
-
     try {
-      // We'll store the original file for later upload
-      this.formData.profileImage = file;
+      // Erst komprimieren, dann Größe prüfen
+      const compressedImageData = await this.userService.compressImage(file);
       
-      // Create preview
-      const reader = new FileReader();
-      reader.onload = (e: ProgressEvent<FileReader>) => {
-        this.profileImagePreview = e.target?.result as string;
-      };
-      reader.readAsDataURL(file);
+      // Konvertiere Base64 string zur Größenberechnung
+      const compressedSize = Math.round((compressedImageData.length * 3) / 4);
+      const maxSize = 1 * 1024 * 1024; // 5MB
+      
+      if (compressedSize > maxSize) {
+        alert('Image is too large even after compression. Please try a smaller image.');
+        return;
+      }
+
+      // Wenn alles okay ist, speichere das komprimierte Bild
+      this.formData.profileImage = file;
+      this.profileImagePreview = compressedImageData;
+      
     } catch (error) {
       console.error('Error processing image:', error);
       alert('Error processing image. Please try again.');

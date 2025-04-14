@@ -115,7 +115,7 @@ export class UserService {
     }
   }
 
-  private compressImage(file: File, maxWidth = 800, maxHeight = 800, quality = 0.8): Promise<string> {
+  public compressImage(file: File, maxWidth = 800, maxHeight = 800, quality = 0.8): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = (event) => {
