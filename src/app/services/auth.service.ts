@@ -1,31 +1,48 @@
-import { Injectable } from '@angular/core';
-import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, user, signInAnonymously } from '@angular/fire/auth';
-import { Firestore, doc, setDoc, getDoc, deleteDoc } from '@angular/fire/firestore';
+import { Injectable, inject } from '@angular/core';
+import {
+  Auth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  user,
+  signInAnonymously,
+} from '@angular/fire/auth';
+import {
+  Firestore,
+  doc,
+  setDoc,
+  getDoc,
+  deleteDoc,
+} from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   user$: Observable<any>;
-
-  constructor(
-    private auth: Auth,
-    private firestore: Firestore
-  ) {
+  firestore: Firestore = inject(Firestore);
+  auth = inject(Auth);
+  constructor() {
     this.user$ = user(this.auth);
   }
 
   async login(email: string, password: string) {
     try {
-      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       if (userCredential.user) {
-        const userDoc = await getDoc(doc(this.firestore, 'users', userCredential.user.uid));
+        const userDoc = await getDoc(
+          doc(this.firestore, 'users', userCredential.user.uid)
+        );
         if (userDoc.exists()) {
           return {
             user: userCredential.user,
-            userData: userDoc.data()
+            userData: userDoc.data(),
           };
         }
       }
@@ -38,7 +55,11 @@ export class AuthService {
 
   async register(email: string, password: string): Promise<any> {
     try {
-      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(
+        this.auth,
+        email,
+        password
+      );
       return userCredential.user;
     } catch (error) {
       console.error('Registration failed:', error);
@@ -61,7 +82,9 @@ export class AuthService {
       throw new Error('Guest login failed');
     } catch (error: any) {
       if (error.code === 'auth/admin-restricted-operation') {
-        throw new Error('Guest login is not enabled. Please contact administrator.');
+        throw new Error(
+          'Guest login is not enabled. Please contact administrator.'
+        );
       }
       console.error('Guest login failed:', error);
       throw error;
@@ -75,7 +98,7 @@ export class AuthService {
       email: 'guest@temporary.com',
       phone: '',
       profilePicture: '',
-      initials: 'GU'
+      initials: 'GU',
       // iconColor wird automatisch durch den Constructor generiert
     });
     await this.createUserDocument(userId, guestUser);
@@ -84,7 +107,8 @@ export class AuthService {
   async logout() {
     try {
       const currentUser = this.auth.currentUser;
-      if (currentUser?.isAnonymous) { // Using isAnonymous instead of checking document
+      if (currentUser?.isAnonymous) {
+        // Using isAnonymous instead of checking document
         await deleteDoc(doc(this.firestore, 'users', currentUser.uid));
       }
       await signOut(this.auth);

@@ -11,8 +11,9 @@ import { User } from '../models/user.class';
 export class UserService {
   currentUser$: Observable<User | null>;
   firestore: Firestore = inject(Firestore);
+  authService = inject(AuthService);
   constructor(
-    private authService: AuthService
+    // private authService: AuthService
   ) {
     // User-Stream erstellen, der sich automatisch bei Auth-Änderungen aktualisiert
     this.currentUser$ = this.authService.user$.pipe(
