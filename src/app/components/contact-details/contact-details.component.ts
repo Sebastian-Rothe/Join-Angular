@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { User } from '../../models/user.class';
 import { DialogService } from '../../services/dialog.service';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -18,7 +19,7 @@ export class ContactDetailsComponent {
   @Output() contactUpdated = new EventEmitter<void>();
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
-  constructor(private dialogService: DialogService) {}
+  constructor(private dialogService: DialogService, private userService: UserService) {}
 
   ngOnInit() {
     // Listen for click outside to close menu with animation
@@ -54,6 +55,17 @@ export class ContactDetailsComponent {
           this.contactUpdated.emit();
         }
       });
+    }
+  }
+
+  async deleteContact(): Promise<void> {
+    if (this.contact?.uid && confirm('Are you sure you want to delete this contact?')) {
+      try {
+        await this.userService.deleteUser(this.contact.uid);
+        this.contactUpdated.emit();
+      } catch (error) {
+        console.error('Error deleting contact:', error);
+      }
     }
   }
 }

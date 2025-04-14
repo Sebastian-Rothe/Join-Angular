@@ -1,5 +1,5 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, doc, getDoc, collection, getDocs, updateDoc, setDoc } from '@angular/fire/firestore';
+import { Firestore, doc, getDoc, collection, getDocs, updateDoc, setDoc, deleteDoc } from '@angular/fire/firestore';
 import { getStorage, ref, uploadString, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
 import { Observable, switchMap, map, of } from 'rxjs';
@@ -112,6 +112,16 @@ export class UserService {
 
     } catch (error) {
       console.error('Error updating user:', error);
+      throw error;
+    }
+  }
+
+  async deleteUser(userId: string): Promise<void> {
+    try {
+      const userRef = doc(this.firestore, 'users', userId);
+      await deleteDoc(userRef);
+    } catch (error) {
+      console.error('Error deleting user:', error);
       throw error;
     }
   }
