@@ -8,6 +8,7 @@ import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
 import { User } from '../../models/user.class';
 import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-action-dialog',
@@ -32,7 +33,8 @@ export class ActionDialogComponent implements OnInit {
     @Inject(MAT_DIALOG_DATA) public config: DialogConfig,
     public dialogRef: MatDialogRef<ActionDialogComponent>,
     private userService: UserService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -171,5 +173,20 @@ export class ActionDialogComponent implements OnInit {
 
     this.dialogRef.close();
     this.dialogService.openDialog('edit', userForEdit);
+  }
+
+  async deleteAccount(): Promise<void> {
+    const currentUser = await firstValueFrom(this.userService.currentUser$);
+    if (!currentUser?.uid) return;
+
+    if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
+      try {
+        await this.userService.deleteUser(currentUser.uid);
+        this.dialogRef.close();
+        await this.router.navigate(['/login']);
+      } catch (error) {
+        console.error('Error deleting account:', error);
+      }
+    }
   }
 }
