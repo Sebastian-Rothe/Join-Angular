@@ -8,6 +8,9 @@ import { getAuth, provideAuth } from '@angular/fire/auth';
 import { provideHttpClient } from '@angular/common/http';
 import { provideNativeDateAdapter } from '@angular/material/core';
 import { ActionDialogComponent } from './components/action-dialog/action-dialog.component';
+import { setLogLevel, LogLevel } from '@angular/fire';
+
+setLogLevel(LogLevel.SILENT);  // oder LogLevel.WARN für weniger verbose Warnungen
 
 const firebaseConfig = {
   apiKey: "AIzaSyAOf_O8vQ6wvsZA2qomoLj6XiVyJNqi7ME",
