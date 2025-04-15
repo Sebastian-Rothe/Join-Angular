@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-add-task',
-  imports: [],
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './add-task.component.html',
-  styleUrl: './add-task.component.scss'
+  styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent {
-
 }

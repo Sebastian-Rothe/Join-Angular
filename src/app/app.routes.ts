@@ -3,6 +3,9 @@ import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
 import { MainContentComponent } from './main-content/main-content.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
+import { SummaryComponent } from './components/summary/summary.component';
+import { BoardComponent } from './components/board/board.component';
+import { AddTaskComponent } from './components/add-task/add-task.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -13,8 +16,10 @@ export const routes: Routes = [
     component: MainContentComponent,
     children: [
       { path: 'contacts', component: ContactsComponent },
-      // Add more child routes here as needed
+      { path: 'summary', component: SummaryComponent },
+      { path: 'board', component: BoardComponent },
+      { path: 'add-task', component: AddTaskComponent }
     ]
   },
-  { path: '**', redirectTo: '/login' } // Wildcard route für nicht-existierende Routen
+  { path: '**', redirectTo: '/login' }
 ];
