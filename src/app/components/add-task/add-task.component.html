@@ -1,1 +1,180 @@
-<p>add-task works!</p>
+<div class="container-main">
+    <div class="left-right-container">
+        <div class="left-side">
+            <div class="title">Add Task</div>    
+            <div class="form-group">
+                <label for="title">Title<span class="required">*</span></label>
+                <input class="input-style" type="text" id="title" name="title" placeholder="Enter a title" [(ngModel)]="task.title">
+                <div class="error-validation" [class.visible]="errors.title">This field is required</div>
+            </div>
+
+            <div class="form-group">
+                <label for="description">Description</label>
+                <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter a Description..." [(ngModel)]="task.description"></textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="dropdown">Assigned to</label>
+                <div class="dropdown">
+                    <button type="button" (click)="toggleDropdown()" class="dropdown-btn">
+                        Select contacts to assign 
+                        <span><img src="assets/icons/arrow_drop_down.svg" alt=""></span>
+                    </button>
+                    <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
+                        <!-- Contacts would be loaded dynamically -->
+                        <div *ngFor="let contact of contacts" class="contact-option">
+                            <input type="checkbox" [id]="'contact_' + contact.id" [checked]="isContactSelected(contact)" (change)="toggleContact(contact)">
+                            <label [for]="'contact_' + contact.id">{{ contact.name }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="selected-badges">
+                    <div *ngFor="let contact of selectedContacts" class="contact-badge">
+                        {{ contact.name }}
+                        <span class="badge-close" (click)="removeContact(contact)">×</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- File upload section -->
+            <div class="form-group">
+                <label>Add File</label>
+                <div class="file-upload-form">
+                    <input class="input-style" type="file" id="upload" #fileInput multiple 
+                           (change)="onFileSelected($event)" 
+                           accept=".pdf, .jpg, .jpeg, .png" style="display: none;">
+                    <button type="button" class="file-upload-btn" (click)="fileInput.click()">
+                        <span class="file-upload-label">Upload Files</span>
+                        <span class="file-upload-btn-plus"><img src="assets/icons/addblack.svg" alt=""></span>
+                    </button>
+                </div>
+                <div class="file-list-container" *ngIf="task.files?.length">
+                    <ul>
+                        <li *ngFor="let file of task.files; let i = index" class="file-item">
+                            {{ file.name }}
+                            <span class="file-close" (click)="removeFile(i)">×</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>  
+                    
+        <div class="divider"></div>
+
+        <div class="right-side">
+            <div class="form-group">
+                <label for="date">Due date<span class="required">*</span></label>
+                <input class="input-style" type="date" id="date" name="due-date" [(ngModel)]="task.dueDate">
+                <div class="error-validation" [class.visible]="errors.dueDate">This field is required</div>
+            </div>
+            
+            <div class="form-group">
+                <label>Prio</label>
+                <div class="priority-buttons">
+                    <button type="button" id="urgent" class="priority-btn" 
+                            [class.active]="task.priority === 'urgent'" 
+                            (click)="selectPriority('urgent')">
+                        Urgent
+                        <img src="assets/icons/PrioUrgent.svg" alt="Urgent Icon">
+                    </button>
+                    <button type="button" id="medium" class="priority-btn" 
+                            [class.active]="task.priority === 'medium'" 
+                            (click)="selectPriority('medium')">
+                        Medium
+                        <img src="assets/icons/PrioMedium.svg" alt="Medium Icon">
+                    </button>
+                    <button type="button" id="low" class="priority-btn" 
+                            [class.active]="task.priority === 'low'" 
+                            (click)="selectPriority('low')">
+                        Low
+                        <img src="assets/icons/PrioLow.svg" alt="Low Icon">
+                    </button>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="category">Category<span class="required">*</span></label>
+                <div class="dropdown-category">
+                    <select id="category" name="category" class="dropdownCategory" [(ngModel)]="task.category">
+                        <option value="" disabled selected>Select task category</option>
+                        <option value="TechnicalTask">Technical Task</option>
+                        <option value="UserStory">User Story</option>
+                    </select>
+                    <img src="assets/icons/arrow_drop_down.svg" alt="Dropdown Icon" class="custom-dropdown-icon">
+                    <div class="error-validation" [class.visible]="errors.category">This field is required</div>
+                </div>
+            </div>
+            
+            <!-- Subtask section -->
+            <div class="form-group">
+                <label>Subtasks</label>
+                <div class="subtask-form">
+                    <input class="input-style" type="text" 
+                           [(ngModel)]="newSubtask" 
+                           (input)="subTaskInput()"
+                           placeholder="Add new subtask">
+                    <div class="subtask-buttons">
+                        <button type="button" class="subtask-btn" *ngIf="!isSubtaskInputActive">
+                            <span class="subtask-btn-plus" (click)="activateSubtaskInput()">
+                                <img src="assets/icons/addblack.svg" alt="">
+                            </span>
+                        </button>
+                        <ng-container *ngIf="isSubtaskInputActive">
+                            <button type="button" class="subtask-btn-checked" (click)="addSubtask()">
+                                <img src="assets/icons/CheckAddTask.svg" alt="">
+                            </button>
+                            <div class="subtask-btn-divider"></div>
+                            <button type="button" class="subtask-btn-cancel" (click)="clearSubtaskInput()">
+                                <img src="assets/icons/CloseAddTask.svg" alt="">
+                            </button>
+                        </ng-container>
+                    </div>
+                </div>
+                
+                <div class="subtask-list-container" *ngIf="task.subtasks?.length">
+                    <ul>
+                        <li *ngFor="let subtask of task.subtasks; let i = index" class="subtask-item">
+                            {{ subtask.title }}
+                            <div class="subtask-actions">
+                                <button type="button" class="edit-subtask" (click)="editSubtask(i)">
+                                    <img src="assets/icons/edit.svg" alt="Edit">
+                                </button>
+                                <button type="button" class="delete-subtask" (click)="deleteSubtask(i)">
+                                    <img src="assets/icons/delete.svg" alt="Delete">
+                                </button>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-add-task">
+        <div class="footer-add-task-left">
+            <span><span class="required">*</span>This field is required</span>
+        </div>
+        <div class="footer-add-task-right">
+            <button type="button" class="clear-btn" (click)="clearForm()">
+                Clear <img src="assets/icons/close.svg" alt="Clear Icon" class="icon">
+            </button>
+            <button type="button" class="create-task-btn" (click)="createTask()">
+                Create Task <img src="assets/icons/check.svg" alt="Create Icon" class="icon">
+            </button>
+        </div>
+    </div>
+    
+    <!-- Success message popup -->
+    <div class="popup-successfully" *ngIf="showSuccessMessage">
+        <div class="popup-successfully-content">
+            <p>Task added successfully!</p>
+        </div>
+    </div>
+    
+    <!-- Error message popup -->
+    <div class="popup-error" *ngIf="showErrorMessage">
+        <div class="popup-error-content">
+            <p>{{ errorMessage }}</p>
+        </div>
+    </div>
+</div>
