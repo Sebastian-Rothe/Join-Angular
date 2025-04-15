@@ -17,6 +17,7 @@ export class ContactDetailsComponent {
   @Input() contact: User | null = null;
   @Input() isMobileView = false;
   @Output() contactUpdated = new EventEmitter<void>();
+  @Output() contactDeleted = new EventEmitter<void>();
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
   constructor(private dialogService: DialogService, private userService: UserService) {}
@@ -62,7 +63,7 @@ export class ContactDetailsComponent {
     if (this.contact?.uid && confirm('Are you sure you want to delete this contact?')) {
       try {
         await this.userService.deleteUser(this.contact.uid);
-        this.contactUpdated.emit();
+        this.contactDeleted.emit();
       } catch (error) {
         console.error('Error deleting contact:', error);
       }

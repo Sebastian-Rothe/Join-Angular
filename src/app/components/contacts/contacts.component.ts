@@ -113,4 +113,10 @@ export class ContactsComponent implements OnInit {
     });
   }
 
+  onContactDeleted() {
+    this.selectedContact = null;
+    this.isContactDetailsVisible = false;
+    this.loadContacts();
+  }
+
 }

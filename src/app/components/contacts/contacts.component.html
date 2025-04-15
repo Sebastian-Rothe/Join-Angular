@@ -53,7 +53,8 @@
       <app-contact-details 
         [contact]="selectedContact"
         [isMobileView]="isMobileView"
-        (contactUpdated)="loadContacts()">
+        (contactUpdated)="loadContacts()"
+        (contactDeleted)="onContactDeleted()">
       </app-contact-details>
     </div>
   </section>
