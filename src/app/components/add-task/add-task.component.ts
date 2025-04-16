@@ -34,6 +34,8 @@ interface Task {
   styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit {
+  categoryOpen: boolean = false;
+  
   task: Task = {
     title: '',
     description: '',

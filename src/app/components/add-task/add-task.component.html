@@ -18,7 +18,7 @@
                 <div class="dropdown">
                     <button type="button" (click)="toggleDropdown()" class="dropdown-btn">
                         Select contacts to assign 
-                        <span><img src="assets/icons/arrow_drop_down.svg" alt=""></span>
+                        <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
                     </button>
                     <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
                         <!-- Contacts would be loaded dynamically -->
@@ -45,7 +45,7 @@
                            accept=".pdf, .jpg, .jpeg, .png" style="display: none;">
                     <button type="button" class="file-upload-btn" (click)="fileInput.click()">
                         <span class="file-upload-label">Upload Files</span>
-                        <span class="file-upload-btn-plus"><img src="assets/icons/addblack.svg" alt=""></span>
+                        <span class="file-upload-btn-plus"><mat-icon>add</mat-icon></span>
                     </button>
                 </div>
                 <div class="file-list-container" *ngIf="task.files?.length">
@@ -95,12 +95,19 @@
             <div class="form-group">
                 <label for="category">Category<span class="required">*</span></label>
                 <div class="dropdown-category">
-                    <select id="category" name="category" class="dropdownCategory" [(ngModel)]="task.category">
-                        <option value="" disabled selected>Select task category</option>
-                        <option value="TechnicalTask">Technical Task</option>
-                        <option value="UserStory">User Story</option>
-                    </select>
-                    <img src="assets/icons/arrow_drop_down.svg" alt="Dropdown Icon" class="custom-dropdown-icon">
+                    <div class="category-wrapper">
+                        <select id="category" name="category" class="dropdownCategory" 
+                                [(ngModel)]="task.category" 
+                                (click)="categoryOpen = !categoryOpen"
+                                (change)="categoryOpen = false">
+                            <option value="" disabled selected>Select task category</option>
+                            <option value="TechnicalTask">Technical Task</option>
+                            <option value="UserStory">User Story</option>
+                        </select>
+                        <span class="icon-wrapper">
+                            <mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon>
+                        </span>
+                    </div>
                     <div class="error-validation" [class.visible]="errors.category">This field is required</div>
                 </div>
             </div>
@@ -116,16 +123,16 @@
                     <div class="subtask-buttons">
                         <button type="button" class="subtask-btn" *ngIf="!isSubtaskInputActive">
                             <span class="subtask-btn-plus" (click)="activateSubtaskInput()">
-                                <img src="assets/icons/addblack.svg" alt="">
+                                <mat-icon>add</mat-icon>
                             </span>
                         </button>
                         <ng-container *ngIf="isSubtaskInputActive">
                             <button type="button" class="subtask-btn-checked" (click)="addSubtask()">
-                                <img src="assets/icons/CheckAddTask.svg" alt="">
+                                <mat-icon>check</mat-icon>
                             </button>
                             <div class="subtask-btn-divider"></div>
                             <button type="button" class="subtask-btn-cancel" (click)="clearSubtaskInput()">
-                                <img src="assets/icons/CloseAddTask.svg" alt="">
+                                <mat-icon>close</mat-icon>
                             </button>
                         </ng-container>
                     </div>
@@ -137,10 +144,10 @@
                             {{ subtask.title }}
                             <div class="subtask-actions">
                                 <button type="button" class="edit-subtask" (click)="editSubtask(i)">
-                                    <img src="assets/icons/edit.svg" alt="Edit">
+                                    <mat-icon>edit</mat-icon>
                                 </button>
                                 <button type="button" class="delete-subtask" (click)="deleteSubtask(i)">
-                                    <img src="assets/icons/delete.svg" alt="Delete">
+                                    <mat-icon>delete</mat-icon>
                                 </button>
                             </div>
                         </li>
@@ -156,10 +163,10 @@
         </div>
         <div class="footer-add-task-right">
             <button type="button" class="clear-btn" (click)="clearForm()">
-                Clear <img src="assets/icons/close.svg" alt="Clear Icon" class="icon">
+                Clear <mat-icon>close</mat-icon>
             </button>
             <button type="button" class="create-task-btn" (click)="createTask()">
-                Create Task <img src="assets/icons/check.svg" alt="Create Icon" class="icon">
+                Create Task <mat-icon>check</mat-icon>
             </button>
         </div>
     </div>

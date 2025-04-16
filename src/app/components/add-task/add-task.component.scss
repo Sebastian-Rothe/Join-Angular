@@ -235,6 +235,13 @@ textarea {
     align-items: center;
     cursor: pointer;
     font-size: 16px;
+
+    mat-icon {
+      transition: transform 0.3s ease;
+      &.rotated {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   .dropdown-content {
@@ -340,14 +347,39 @@ textarea {
   position: relative;
   width: 100%;
 
+  .category-wrapper {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+  }
+
   select.dropdownCategory {
     width: 100%;
     padding: 12px;
+    padding-right: 36px; // Platz für Icon
     border: 1px solid #d1d1d1;
     border-radius: 10px;
     appearance: none;
     background-color: white;
     font-size: 16px;
+  }
+
+  .icon-wrapper {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+
+    mat-icon {
+      transition: transform 0.3s ease;
+      &.rotated {
+        transform: rotate(180deg);
+      }
+    }
   }
 
   .custom-dropdown-icon {
