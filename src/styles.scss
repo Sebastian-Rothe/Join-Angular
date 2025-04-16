@@ -29,6 +29,10 @@ $border-radius-xl: 20px;
   @media (max-width: 500px) {
     --heading-font-size: 44px;
   }
+
+  @media (max-width: 400px) {
+    --heading-font-size: 36px;
+  }
 }
 
 html {
