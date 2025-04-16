@@ -15,6 +15,22 @@ $border-radius-default: 8px;
 $border-radius-large: 16px;
 $border-radius-xl: 20px;
 
+:root {
+  --heading-font-size: 68px;
+  
+  @media (max-width: 1200px) {
+    --heading-font-size: 60px;
+  }
+  
+  @media (max-width: 900px) {
+    --heading-font-size: 52px;
+  }
+  
+  @media (max-width: 500px) {
+    --heading-font-size: 44px;
+  }
+}
+
 html {
   @include mat.theme(
     (
