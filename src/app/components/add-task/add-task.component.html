@@ -12,56 +12,7 @@
                 <label for="description">Description</label>
                 <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter a Description..." [(ngModel)]="task.description"></textarea>
             </div>
-            
-            <div class="form-group">
-                <label for="dropdown">Assigned to</label>
-                <div class="dropdown">
-                    <button type="button" (click)="toggleDropdown()" class="dropdown-btn">
-                        Select contacts to assign 
-                        <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
-                    </button>
-                    <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
-                        <!-- Contacts would be loaded dynamically -->
-                        <div *ngFor="let contact of contacts" class="contact-option">
-                            <input type="checkbox" [id]="'contact_' + contact.id" [checked]="isContactSelected(contact)" (change)="toggleContact(contact)">
-                            <label [for]="'contact_' + contact.id">{{ contact.name }}</label>
-                        </div>
-                    </div>
-                </div>
-                <div class="selected-badges">
-                    <div *ngFor="let contact of selectedContacts" class="contact-badge">
-                        {{ contact.name }}
-                        <span class="badge-close" (click)="removeContact(contact)">×</span>
-                    </div>
-                </div>
-            </div>
 
-            <!-- File upload section -->
-            <div class="form-group">
-                <label>Add File</label>
-                <div class="file-upload-form">
-                    <input class="input-style" type="file" id="upload" #fileInput multiple 
-                           (change)="onFileSelected($event)" 
-                           accept=".pdf, .jpg, .jpeg, .png" style="display: none;">
-                    <button type="button" class="file-upload-btn" (click)="fileInput.click()">
-                        <span class="file-upload-label">Upload Files</span>
-                        <span class="file-upload-btn-plus"><mat-icon>add</mat-icon></span>
-                    </button>
-                </div>
-                <div class="file-list-container" *ngIf="task.files?.length">
-                    <ul>
-                        <li *ngFor="let file of task.files; let i = index" class="file-item">
-                            {{ file.name }}
-                            <span class="file-close" (click)="removeFile(i)">×</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>  
-                    
-        <div class="divider"></div>
-
-        <div class="right-side">
             <div class="form-group">
                 <label for="date">Due date<span class="required">*</span></label>
                 <input class="input-style" type="date" id="date" name="due-date" [(ngModel)]="task.dueDate">
@@ -111,8 +62,32 @@
                     <div class="error-validation" [class.visible]="errors.category">This field is required</div>
                 </div>
             </div>
-            
-            <!-- Subtask section -->
+        </div>  
+                    
+        <div class="divider"></div>
+
+        <div class="right-side">
+            <div class="form-group">
+                <label>Add File</label>
+                <div class="file-upload-form">
+                    <input class="input-style" type="file" id="upload" #fileInput multiple 
+                           (change)="onFileSelected($event)" 
+                           accept=".pdf, .jpg, .jpeg, .png" style="display: none;">
+                    <button type="button" class="file-upload-btn" (click)="fileInput.click()">
+                        <span class="file-upload-label">Upload Files</span>
+                        <span class="file-upload-btn-plus"><mat-icon>add</mat-icon></span>
+                    </button>
+                </div>
+                <div class="file-list-container" *ngIf="task.files?.length">
+                    <ul>
+                        <li *ngFor="let file of task.files; let i = index" class="file-item">
+                            {{ file.name }}
+                            <span class="file-close" (click)="removeFile(i)">×</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
             <div class="form-group">
                 <label>Subtasks</label>
                 <div class="subtask-form">
@@ -154,12 +129,38 @@
                     </ul>
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="dropdown">Assigned to</label>
+                <div class="dropdown">
+                    <button type="button" (click)="toggleDropdown()" class="dropdown-btn">
+                        Select contacts to assign 
+                        <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
+                    </button>
+                    <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
+                        <!-- Contacts would be loaded dynamically -->
+                        <div *ngFor="let contact of contacts" class="contact-option">
+                            <input type="checkbox" [id]="'contact_' + contact.id" [checked]="isContactSelected(contact)" (change)="toggleContact(contact)">
+                            <label [for]="'contact_' + contact.id">{{ contact.name }}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="selected-badges">
+                    <div *ngFor="let contact of selectedContacts" class="contact-badge">
+                        {{ contact.name }}
+                        <span class="badge-close" (click)="removeContact(contact)">×</span>
+                    </div>
+                </div>
+                <div class="required-hint">
+                    <span><span class="required">*</span>This field is required</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <div class="footer-add-task">
-        <div class="footer-add-task-left">
-            <span><span class="required">*</span>This field is required</span>
+        <div class="footer-add-task-left desktop-only">
+            <span class="required-desktop"><span class="required">*</span>This field is required</span>
         </div>
         <div class="footer-add-task-right">
             <button type="button" class="clear-btn" (click)="clearForm()">

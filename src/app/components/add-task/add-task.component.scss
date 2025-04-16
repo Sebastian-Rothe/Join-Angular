@@ -15,7 +15,6 @@ $container-padding-small: 12px;
 .title {
   position: sticky;
   top: 0;
-  margin-top: 24px;
   padding: 54px $container-padding;
   font-size: var(--heading-font-size);
   font-weight: 700;
@@ -24,7 +23,6 @@ $container-padding-small: 12px;
 
   @media (max-width: 1300px) {
     padding: 40px 72px;
-    margin: 0;
   }
 
   @media (max-width: 1180px) {
@@ -101,7 +99,7 @@ $container-padding-small: 12px;
   align-items: center;
   width: 100%;
   padding: 20px $container-padding;
-  height: 200px;
+  height: 170px;
 
   .footer-add-task-left {
     .required {
@@ -139,7 +137,6 @@ $container-padding-small: 12px;
       display: flex;
       align-items: center;
       gap: 8px;
-      cursor: pointer;
       font-size: 16px;
 
       &:hover {
@@ -166,25 +163,26 @@ $container-padding-small: 12px;
   }
 
   @media (max-width: 600px) {
-    flex-direction: column;
+    // flex-direction: column;
     gap: 8px;
-    padding: 20px $container-padding-mobile;
+    padding: 8px $container-padding-mobile;
     height: 96px;
 
     .footer-add-task-right {
       width: 100%;
-      justify-content: space-between;
+      justify-content: flex-end;
     }
   }
 
   @media (max-width: 400px) {
-    padding: 12px $container-padding-small;
+    padding: 0 $container-padding-small;
+    height: 64px;
   }
 }
 
 // ---------- Form Elements ----------
 .form-group {
-  margin-bottom: 24px;
+  margin-bottom: 12px;
   position: relative;
 
   label {
@@ -563,11 +561,28 @@ textarea {
     opacity: 1;
   }
 }
-
+.required-hint {
+  display: none;
+  margin-top: 16px;
+}
 // ---------- Media Queries ----------
 @media (max-width: 600px) {
 
   .priority-buttons {
     flex-direction: column;
+  }
+
+  .required-hint {
+    display: block;
+  }
+}
+
+.required-hint {
+  margin-top: 16px;
+}
+
+.required-desktop {
+  @media (max-width: 600px) {
+    display: none;
   }
 }
