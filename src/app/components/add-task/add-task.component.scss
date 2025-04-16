@@ -1,14 +1,17 @@
+// ---------- Variables ----------
 $container-padding: 84px;
 $container-padding-tablet: 42px;
 $container-padding-mobile: 24px;
 $container-padding-small: 12px;
 
+// ---------- Base Layout ----------
 .container-main {
   display: flex;
   flex-direction: column;
   width: 100%;
 }
 
+// ---------- Title & Main Container ----------
 .title {
   position: sticky;
   top: 0;
@@ -88,6 +91,98 @@ $container-padding-small: 12px;
   }
 }
 
+// ---------- Footer Section ----------
+.footer-add-task {
+  background-color: #F6F7F8;
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 20px $container-padding;
+  height: 200px;
+
+  .footer-add-task-left {
+    .required {
+      color: #ff8190;
+    }
+  }
+
+  .footer-add-task-right {
+    display: flex;
+    gap: 16px;
+
+    .clear-btn {
+      padding: 12px 16px;
+      border: 1px solid #2A3647;
+      border-radius: 10px;
+      background-color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        border-color: #29ABE2;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      }
+    }
+
+    .create-task-btn {
+      padding: 12px 16px;
+      border: none;
+      border-radius: 10px;
+      background-color: #2A3647;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      font-size: 16px;
+
+      &:hover {
+        background-color: #29ABE2;
+        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+      }
+    }
+  }
+
+  // Media Queries für Footer
+  @media (max-width: 1300px) {
+    padding: 20px 72px;
+    height: 160px;
+  }
+
+  @media (max-width: 1180px) {
+    padding: 20px 60px;
+    height: 140px;
+  }
+
+  @media (max-width: 900px) {
+    padding: 20px $container-padding-tablet;
+    height: 120px;
+  }
+
+  @media (max-width: 600px) {
+    flex-direction: column;
+    gap: 8px;
+    padding: 20px $container-padding-mobile;
+    height: 96px;
+
+    .footer-add-task-right {
+      width: 100%;
+      justify-content: space-between;
+    }
+  }
+
+  @media (max-width: 400px) {
+    padding: 12px $container-padding-small;
+  }
+}
+
+// ---------- Form Elements ----------
 .form-group {
   margin-bottom: 24px;
   position: relative;
@@ -124,6 +219,7 @@ textarea {
   box-sizing: border-box;
 }
 
+// ---------- Dropdown & Selection ----------
 .dropdown {
   position: relative;
   width: 100%;
@@ -240,50 +336,6 @@ textarea {
   }
 }
 
-.priority-buttons {
-  display: flex;
-  gap: 10px;
-  width: 100%;
-
-  .priority-btn {
-    flex: 1;
-    padding: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    border: 1px solid #d1d1d1;
-    border-radius: 10px;
-    cursor: pointer;
-    background-color: white;
-    transition: all 0.2s ease;
-
-    img {
-      height: 20px;
-      width: auto;
-    }
-
-    &.active {
-      color: white;
-
-      &:nth-child(1) {
-        background-color: #ff3d00;
-        border-color: #ff3d00;
-      }
-
-      &:nth-child(2) {
-        background-color: #ffa800;
-        border-color: #ffa800;
-      }
-
-      &:nth-child(3) {
-        background-color: #7ae229;
-        border-color: #7ae229;
-      }
-    }
-  }
-}
-
 .dropdown-category {
   position: relative;
   width: 100%;
@@ -307,6 +359,52 @@ textarea {
   }
 }
 
+// ---------- Priority Section ----------
+.priority-buttons {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+
+  .priority-btn {
+    flex: 1;
+    padding: 12px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border: 1px solid #d1d1d1;
+    border-radius: 10px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease;
+
+    img {
+      height: 20px;
+      width: 20px;
+    }
+
+    &.active {
+      color: white;
+
+      &:nth-child(1) {
+        background-color: #ff3d00;
+        border-color: #ff3d00;
+      }
+
+      &:nth-child(2) {
+        background-color: #ffa800;
+        border-color: #ffa800;
+      }
+
+      &:nth-child(3) {
+        background-color: #7ae229;
+        border-color: #7ae229;
+      }
+    }
+  }
+}
+
+// ---------- Subtask Section ----------
 .subtask-form {
   display: flex;
   position: relative;
@@ -328,7 +426,6 @@ textarea {
     button {
       background: none;
       border: none;
-      cursor: pointer;
       padding: 5px;
 
       img {
@@ -385,95 +482,7 @@ textarea {
   }
 }
 
-.footer-add-task {
-  background-color: #F6F7F8;
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px $container-padding;
-  width: 100%;
-  height: 200px;
-
-  @media (max-width: 1300px) {
-    padding: 20px 72px;
-    height: 160px;
-  }
-
-  @media (max-width: 1180px) {
-    padding: 20px 60px;
-    height: 140px;
-  }
-
-  @media (max-width: 900px) {
-    padding: 20px $container-padding-tablet;
-    height: 120px;
-  }
-
-  @media (max-width: 600px) {
-    flex-direction: column;
-    gap: 8px;
-    padding: 20px $container-padding-mobile;
-    height: 96px;
-  }
-
-  @media (max-width: 400px) {
-    padding: 12px $container-padding-small;
-  }
-
-  .footer-add-task-left {
-    .required {
-      color: #ff8190;
-    }
-  }
-
-  .footer-add-task-right {
-    display: flex;
-    gap: 16px;
-
-    @media (max-width: 600px) {
-      width: 100%;
-      justify-content: space-between;
-    }
-
-    .clear-btn {
-      padding: 12px 16px;
-      border: 1px solid #2A3647;
-      border-radius: 10px;
-      background-color: white;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-size: 16px;
-
-      &:hover {
-        border-color: #29ABE2;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-      }
-    }
-
-    .create-task-btn {
-      padding: 12px 16px;
-      border: none;
-      border-radius: 10px;
-      background-color: #2A3647;
-      color: white;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      cursor: pointer;
-      font-size: 16px;
-
-      &:hover {
-        background-color: #29ABE2;
-        box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-      }
-    }
-  }
-}
-
+// ---------- Utils & Animations ----------
 .error-validation {
   color: #ff8190;
   font-size: 12px;
@@ -523,10 +532,8 @@ textarea {
   }
 }
 
+// ---------- Media Queries ----------
 @media (max-width: 600px) {
-  .title {
-    margin: 0;
-  }
 
   .priority-buttons {
     flex-direction: column;
