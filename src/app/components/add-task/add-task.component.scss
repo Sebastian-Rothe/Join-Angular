@@ -1,30 +1,52 @@
+$container-padding: 54px;
+$container-padding-tablet: 32px;
+$container-padding-mobile: 16px;
+
 .container-main {
   display: flex;
   flex-direction: column;
-  padding: 0;
-  padding-top: 20px;
   width: 100%;
-  height: calc(100vh - 96px);
-  overflow-y: auto;
-  box-sizing: border-box;
+}
+
+.title {
+  position: sticky;
+  top: 0;
+  margin-top: 24px;
+  padding: 54px $container-padding;
+  font-size: 61px;
+  font-weight: 700;
+  background-color: #F6F7F8;
+  z-index: 1;
+
+  @media (max-width: 900px) {
+    padding: 40px $container-padding-tablet;
+  }
+
+  @media (max-width: 600px) {
+    padding: 32px $container-padding-mobile;
+  }
 }
 
 .left-right-container {
+  flex: 1;
   display: flex;
+  padding: 0 $container-padding;
   width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
   box-sizing: border-box;
+  overflow-y: auto;
 
   @media (max-width: 900px) {
     flex-direction: column;
+    padding: 0 $container-padding-tablet;
+  }
+
+  @media (max-width: 600px) {
+    padding: 0 $container-padding-mobile;
   }
 }
 
 .left-side, .right-side {
   flex: 1;
-  padding: 20px;
   box-sizing: border-box;
 }
 
@@ -32,21 +54,11 @@
   width: 1px;
   background-color: #d1d1d1;
   margin: 0 20px;
-  
+
   @media (max-width: 900px) {
     width: 100%;
     height: 1px;
     margin: 10px 0;
-  }
-}
-
-.title {
-  font-size: 61px;
-  font-weight: 700;
-  margin-bottom: 30px;
-  
-  @media (max-width: 600px) {
-    font-size: 40px;
   }
 }
 
@@ -59,7 +71,7 @@
     margin-bottom: 8px;
     font-weight: 500;
   }
-  
+
   .required {
     color: #ff8190;
     margin-left: 4px;
@@ -116,20 +128,20 @@ textarea {
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    
+
     &.show {
       display: block;
     }
-    
+
     .contact-option {
       padding: 10px;
       display: flex;
       align-items: center;
-      
+
       &:hover {
         background-color: #f1f1f1;
       }
-      
+
       input {
         margin-right: 10px;
       }
@@ -142,7 +154,7 @@ textarea {
   flex-wrap: wrap;
   gap: 8px;
   margin-top: 8px;
-  
+
   .contact-badge {
     background-color: #2A3647;
     color: white;
@@ -150,7 +162,7 @@ textarea {
     border-radius: 8px;
     display: flex;
     align-items: center;
-    
+
     .badge-close {
       margin-left: 8px;
       cursor: pointer;
@@ -181,18 +193,18 @@ textarea {
 
 .file-list-container {
   margin-top: 8px;
-  
+
   ul {
     padding: 0;
     margin: 0;
   }
-  
+
   .file-item {
     display: flex;
     justify-content: space-between;
     padding: 8px 0;
     border-bottom: 1px solid #f1f1f1;
-    
+
     .file-close {
       cursor: pointer;
       font-weight: bold;
@@ -219,25 +231,25 @@ textarea {
     cursor: pointer;
     background-color: white;
     transition: all 0.2s ease;
-    
+
     img {
       height: 20px;
       width: auto;
     }
-    
+
     &.active {
       color: white;
-      
+
       &:nth-child(1) {
         background-color: #ff3d00;
         border-color: #ff3d00;
       }
-      
+
       &:nth-child(2) {
         background-color: #ffa800;
         border-color: #ffa800;
       }
-      
+
       &:nth-child(3) {
         background-color: #7ae229;
         border-color: #7ae229;
@@ -249,7 +261,7 @@ textarea {
 .dropdown-category {
   position: relative;
   width: 100%;
-  
+
   select.dropdownCategory {
     width: 100%;
     padding: 12px;
@@ -259,7 +271,7 @@ textarea {
     background-color: white;
     font-size: 16px;
   }
-  
+
   .custom-dropdown-icon {
     position: absolute;
     right: 12px;
@@ -273,12 +285,12 @@ textarea {
   display: flex;
   position: relative;
   width: 100%;
-  
+
   input {
     flex: 1;
     padding-right: 50px;
   }
-  
+
   .subtask-buttons {
     position: absolute;
     right: 10px;
@@ -286,19 +298,19 @@ textarea {
     transform: translateY(-50%);
     display: flex;
     align-items: center;
-    
+
     button {
       background: none;
       border: none;
       cursor: pointer;
       padding: 5px;
-      
+
       img {
         width: 16px;
         height: 16px;
       }
     }
-    
+
     .subtask-btn-divider {
       width: 1px;
       height: 24px;
@@ -310,34 +322,34 @@ textarea {
 
 .subtask-list-container {
   margin-top: 16px;
-  
+
   ul {
     padding: 0;
     margin: 0;
   }
-  
+
   .subtask-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
     border-bottom: 1px solid #f1f1f1;
-    
+
     .subtask-actions {
       display: flex;
       gap: 8px;
-      
+
       button {
         background: none;
         border: none;
         cursor: pointer;
         padding: 4px;
-        
+
         img {
           width: 16px;
           height: 16px;
         }
-        
+
         &:hover {
           background-color: #f1f1f1;
           border-radius: 4px;
@@ -348,37 +360,41 @@ textarea {
 }
 
 .footer-add-task {
+  background-color: #F6F7F8;
+  position: sticky;
+  bottom: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  margin-top: 30px;
-  max-width: 1200px;
-  margin-left: auto;
-  margin-right: auto;
+  padding: 20px $container-padding;
   width: 100%;
-  box-sizing: border-box;
-  
+  height: 200px;
+
+  @media (max-width: 900px) {
+    padding: 20px $container-padding-tablet;
+  }
+
   @media (max-width: 600px) {
     flex-direction: column;
     gap: 20px;
+    padding: 20px $container-padding-mobile;
   }
-  
+
   .footer-add-task-left {
     .required {
       color: #ff8190;
     }
   }
-  
+
   .footer-add-task-right {
     display: flex;
     gap: 16px;
-    
+
     @media (max-width: 600px) {
       width: 100%;
       justify-content: space-between;
     }
-    
+
     .clear-btn {
       padding: 12px 16px;
       border: 1px solid #2A3647;
@@ -389,13 +405,13 @@ textarea {
       gap: 8px;
       cursor: pointer;
       font-size: 16px;
-      
+
       &:hover {
         border-color: #29ABE2;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
       }
     }
-    
+
     .create-task-btn {
       padding: 12px 16px;
       border: none;
@@ -407,7 +423,7 @@ textarea {
       gap: 8px;
       cursor: pointer;
       font-size: 16px;
-      
+
       &:hover {
         background-color: #29ABE2;
         box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
@@ -422,7 +438,7 @@ textarea {
   margin-top: 4px;
   opacity: 0;
   transition: opacity 0.3s ease;
-  
+
   &.visible {
     opacity: 1;
   }
@@ -438,7 +454,7 @@ textarea {
   justify-content: center;
   padding-top: 100px;
   animation: slideDown 0.3s ease-in-out;
-  
+
   .popup-successfully-content, .popup-error-content {
     background-color: #2A3647;
     color: white;
@@ -448,7 +464,7 @@ textarea {
     text-align: center;
     font-size: 18px;
   }
-  
+
   .popup-error-content {
     background-color: #ff8190;
   }
@@ -469,7 +485,7 @@ textarea {
   .title {
     margin-bottom: 20px;
   }
-  
+
   .priority-buttons {
     flex-direction: column;
   }
