@@ -138,16 +138,25 @@
                         <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
                     </button>
                     <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
-                        <!-- Contacts would be loaded dynamically -->
-                        <div *ngFor="let contact of contacts" class="contact-option">
-                            <input type="checkbox" [id]="'contact_' + contact.id" [checked]="isContactSelected(contact)" (change)="toggleContact(contact)">
-                            <label [for]="'contact_' + contact.id">{{ contact.name }}</label>
+                        <div *ngFor="let contact of contacts" class="user-option" (click)="toggleContact(contact)">
+                            <div class="user-avatar" [style.background-color]="contact.iconColor">
+                                <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name">
+                                <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
+                            </div>
+                            <div class="user-info">{{ contact.name }}</div>
+                            <input type="checkbox" 
+                                   [id]="'contact_' + contact.uid" 
+                                   [checked]="isContactSelected(contact)"
+                                   (click)="$event.stopPropagation()">
                         </div>
                     </div>
                 </div>
                 <div class="selected-badges">
-                    <div *ngFor="let contact of selectedContacts" class="contact-badge">
-                        {{ contact.name }}
+                    <div *ngFor="let contact of selectedContacts" class="user-badge">
+                        <div class="user-avatar" [style.background-color]="contact.iconColor">
+                            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name">
+                            <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
+                        </div>
                         <span class="badge-close" (click)="removeContact(contact)">×</span>
                     </div>
                 </div>

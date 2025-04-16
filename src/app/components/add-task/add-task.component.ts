@@ -2,11 +2,16 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { UserService } from '../../services/user.service';
+import { User } from '../../models/user.class';
 
 interface Contact {
-  id: number;
+  uid?: string;
   name: string;
   email: string;
+  initials?: string;
+  iconColor?: string;
+  profilePicture?: string;
 }
 
 interface Subtask {
@@ -65,20 +70,27 @@ export class AddTaskComponent implements OnInit {
     category: false
   };
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    // Hier würdest du normalerweise Kontakte von einem Service laden
     this.loadContacts();
   }
 
-  loadContacts(): void {
-    // Beispiel-Kontakte - in der realen App würdest du diese vom Service laden
-    this.contacts = [
-      { id: 1, name: 'Max Mustermann', email: 'max@example.com' },
-      { id: 2, name: 'Erika Musterfrau', email: 'erika@example.com' },
-      { id: 3, name: 'John Doe', email: 'john@example.com' }
-    ];
+  async loadContacts(): Promise<void> {
+    try {
+      const users = await this.userService.getAllUsers();
+      this.contacts = users.map(user => ({
+        uid: user.uid,
+        name: user.name,
+        email: user.email,
+        initials: user.initials,
+        iconColor: user.iconColor,
+        profilePicture: user.profilePicture
+      }));
+    } catch (error) {
+      console.error('Error loading users:', error);
+      this.showError('Failed to load users');
+    }
   }
 
   toggleDropdown(): void {
@@ -86,11 +98,11 @@ export class AddTaskComponent implements OnInit {
   }
 
   isContactSelected(contact: Contact): boolean {
-    return this.selectedContacts.some(c => c.id === contact.id);
+    return this.selectedContacts.some(c => c.uid === contact.uid);
   }
 
   toggleContact(contact: Contact): void {
-    const index = this.selectedContacts.findIndex(c => c.id === contact.id);
+    const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
     
     if (index === -1) {
       this.selectedContacts.push(contact);
@@ -102,7 +114,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   removeContact(contact: Contact): void {
-    const index = this.selectedContacts.findIndex(c => c.id === contact.id);
+    const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
     if (index !== -1) {
       this.selectedContacts.splice(index, 1);
       this.task.assignedTo = [...this.selectedContacts];
