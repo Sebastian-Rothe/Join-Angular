@@ -1,6 +1,6 @@
-$container-padding: 54px;
-$container-padding-tablet: 32px;
-$container-padding-mobile: 16px;
+$container-padding: 84px;
+$container-padding-tablet: 42px;
+$container-padding-mobile: 24px;
 
 .container-main {
   display: flex;
@@ -372,12 +372,14 @@ textarea {
 
   @media (max-width: 900px) {
     padding: 20px $container-padding-tablet;
+    height: 120px;
   }
 
   @media (max-width: 600px) {
     flex-direction: column;
-    gap: 20px;
+    gap: 8px;
     padding: 20px $container-padding-mobile;
+    height: 108px;
   }
 
   .footer-add-task-left {
@@ -483,7 +485,7 @@ textarea {
 
 @media (max-width: 600px) {
   .title {
-    margin-bottom: 20px;
+    margin: 0;
   }
 
   .priority-buttons {
