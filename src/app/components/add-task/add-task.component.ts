@@ -75,6 +75,8 @@ export class AddTaskComponent implements OnInit {
 
   currentUser: User | null = null;
 
+  isDragging = false;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -262,5 +264,35 @@ export class AddTaskComponent implements OnInit {
   selectCategory(value: string): void {
     this.task.category = value;
     this.categoryOpen = false;
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+
+    const files = event.dataTransfer?.files;
+    if (files) {
+      const allowedTypes = ['image/jpeg', 'image/png'];
+      const validFiles = Array.from(files).filter(file => allowedTypes.includes(file.type));
+      
+      if (validFiles.length > 0) {
+        this.task.files = [...(this.task.files || []), ...validFiles];
+      } else {
+        this.showError('Please upload only JPG or PNG files');
+      }
+    }
   }
 }

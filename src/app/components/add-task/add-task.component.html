@@ -76,15 +76,24 @@
 
         <div class="right-side">
             <div class="form-group">
-                <label>Add File</label>
-                <div class="file-upload-form">
-                    <input class="input-style" type="file" id="upload" #fileInput multiple 
-                           (change)="onFileSelected($event)" 
-                           accept=".pdf, .jpg, .jpeg, .png" style="display: none;">
-                    <button type="button" class="file-upload-btn" (click)="fileInput.click()">
-                        <span class="file-upload-label">Upload Files</span>
-                        <span class="file-upload-btn-plus"><mat-icon>add</mat-icon></span>
-                    </button>
+                <label>Attachments</label>
+                <span>Allowed file types are JPEG and PNG</span>
+                <div class="file-upload-zone" 
+                     (dragover)="onDragOver($event)"
+                     (dragleave)="onDragLeave($event)"
+                     (drop)="onDrop($event)"
+                     (click)="fileInput.click()"
+                     [class.dragging]="isDragging">
+                    <input type="file" 
+                           #fileInput
+                           multiple
+                           (change)="onFileSelected($event)"
+                           accept=".jpg,.jpeg,.png"
+                           style="display: none;">
+                    <div class="upload-content">
+                        <span>Drag a file or browse</span>
+                        <mat-icon>add</mat-icon>
+                    </div>
                 </div>
                 <div class="file-list-container" *ngIf="task.files?.length">
                     <ul>
