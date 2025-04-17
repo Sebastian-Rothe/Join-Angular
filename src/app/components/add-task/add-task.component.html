@@ -124,7 +124,7 @@
                 <div class="subtask-list-container" *ngIf="task.subtasks?.length">
                     <ul>
                         <li *ngFor="let subtask of task.subtasks; let i = index" class="subtask-item">
-                            {{ subtask.title }}
+                            <div class="subtask-text">{{ subtask.title }}</div>
                             <div class="subtask-actions">
                                 <button type="button" class="edit-subtask" (click)="editSubtask(i)">
                                     <mat-icon>edit</mat-icon>
