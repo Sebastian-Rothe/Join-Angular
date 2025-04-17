@@ -735,6 +735,7 @@ mat-form-field {
 .subtask-list-container {
   margin-top: 16px;
 
+
   ul {
     padding: 0;
     margin: 0;
@@ -750,6 +751,7 @@ mat-form-field {
     transition: all 0.2s ease;
     cursor: pointer;
     position: relative;
+   
 
     // Bullet point
     &::before {
@@ -764,7 +766,13 @@ mat-form-field {
     .subtask-text {
       flex: 1;
       text-align: left;
-      margin-left: 8px; // Space after bullet point
+      margin-left: 8px;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-height: 60px; // Höhe für 3 Zeilen Text
     }
 
     // Hover effect
