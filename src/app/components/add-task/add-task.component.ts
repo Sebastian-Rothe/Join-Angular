@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { UserService } from '../../services/user.service';
+import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
 
 interface Contact {
@@ -70,10 +71,45 @@ export class AddTaskComponent implements OnInit {
     category: false
   };
 
-  constructor(private userService: UserService) { }
+  currentUser: Contact | null = null;
+
+  constructor(
+    private userService: UserService,
+    private authService: AuthService
+  ) {}
 
   ngOnInit(): void {
+    this.setupCurrentUser();  // Load current user first
     this.loadContacts();
+  }
+
+  private setupCurrentUser(): void {
+    this.authService.user$.subscribe(async (user) => {
+      if (user) {
+        const userDoc = await this.userService.getUserById(user.uid);
+        if (userDoc) {
+          this.currentUser = {
+            uid: userDoc.uid,
+            name: userDoc.name,
+            email: userDoc.email,
+            initials: userDoc.initials,
+            iconColor: userDoc.iconColor,
+            profilePicture: userDoc.profilePicture
+          };
+          this.selectedContacts = [this.currentUser];
+          this.task.assignedTo = [this.currentUser];
+          this.sortContacts(); // Sort contacts after current user is set
+        }
+      }
+    });
+  }
+
+  private sortContacts(): void {
+    this.contacts.sort((a, b) => {
+      if (a.uid === this.currentUser?.uid) return -1;
+      if (b.uid === this.currentUser?.uid) return 1;
+      return a.name.localeCompare(b.name);
+    });
   }
 
   async loadContacts(): Promise<void> {
@@ -87,6 +123,9 @@ export class AddTaskComponent implements OnInit {
         iconColor: user.iconColor,
         profilePicture: user.profilePicture
       }));
+      if (this.currentUser) {
+        this.sortContacts(); // Sort if current user is already loaded
+      }
     } catch (error) {
       console.error('Error loading users:', error);
       this.showError('Failed to load users');
@@ -135,7 +174,6 @@ export class AddTaskComponent implements OnInit {
         }
       }
       
-      // Füge die Dateien zum Task hinzu
       this.task.files = [...(this.task.files || []), ...files];
     }
   }
@@ -193,10 +231,8 @@ export class AddTaskComponent implements OnInit {
 
   createTask(): void {
     if (this.validateForm()) {
-      // Hier würdest du den Task speichern 
       console.log('Saving task:', this.task);
       
-      // Zeige Erfolgsmeldung
       this.showSuccessMessage = true;
       setTimeout(() => {
         this.showSuccessMessage = false;

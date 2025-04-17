@@ -147,7 +147,10 @@
                                 <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name">
                                 <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
                             </div>
-                            <div class="user-info">{{ contact.name }}</div>
+                            <div class="user-info">
+                                {{ contact.name }}
+                                <span *ngIf="contact.uid === currentUser?.uid">(You)</span>
+                            </div>
                             <input type="checkbox" 
                                    [id]="'contact_' + contact.uid" 
                                    [checked]="isContactSelected(contact)"
