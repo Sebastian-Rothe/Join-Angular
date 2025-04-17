@@ -100,6 +100,7 @@ $container-padding-small: 12px;
   width: 100%;
   padding: 20px $container-padding;
   height: 170px;
+  z-index: 5; // Niedriger als das Dropdown
 
   .footer-add-task-left {
     .required {
@@ -465,62 +466,51 @@ textarea {
   .category-wrapper {
     position: relative;
     width: 100%;
-    display: flex;
-    align-items: center;
-  }
 
-  select.dropdownCategory {
-    width: 100%;
-    padding: 12px;
-    padding-right: 36px; // Platz für Icon
-    border: 1px solid #d1d1d1;
-    border-radius: 8px;
-    appearance: none;
-    background-color: white;
-    font-size: 16px;
-   
+    .dropdown-btn {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #d1d1d1;
+      border-radius: 8px;
+      background-color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-size: 16px;
 
-    &:invalid {
-      color: #808080;
-    }
-
-    option[value=""][disabled] {
-      display: none;
-    }
-
-    option {
-      color: #000000;
-      height: 38px;
-    }
-
-    &:required:invalid {
-      color: #686868;
-    }
-  }
-
-  .icon-wrapper {
-    position: absolute;
-    right: 8px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-    display: flex;
-    align-items: center;
-
-    mat-icon {
-      transition: transform 0.3s ease;
-      &.rotated {
-        transform: rotate(180deg);
+      mat-icon {
+        transition: transform 0.3s ease;
+        &.rotated {
+          transform: rotate(180deg);
+        }
       }
     }
-  }
 
-  .custom-dropdown-icon {
-    position: absolute;
-    right: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
+    .dropdown-content {
+      display: none;
+      background: white;
+      border: 1px solid #d1d1d1;
+      border-radius: 8px;
+      margin-top: 4px;
+      z-index: 1000; // Höher als der Footer
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+      &.show {
+        display: block;
+      }
+
+      .category-option {
+        padding: 15px 16px;
+        border-radius: 8px;
+        cursor: pointer;
+
+        &:hover {
+          background-color: #f1f1f1;
+        }
+
+      }
+    }
   }
 }
 

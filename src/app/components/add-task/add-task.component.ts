@@ -40,6 +40,10 @@ interface Task {
   styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit {
+  categories = [
+    { value: 'TechnicalTask', label: 'Technical Task' },
+    { value: 'UserStory', label: 'User Story' }
+  ];
   categoryOpen: boolean = false;
   
   task: Task = {
@@ -263,5 +267,20 @@ export class AddTaskComponent implements OnInit {
     setTimeout(() => {
       this.showErrorMessage = false;
     }, 3000);
+  }
+
+  toggleCategory(): void {
+    this.categoryOpen = !this.categoryOpen;
+    if (this.categoryOpen) {
+      setTimeout(() => {
+        const element = document.querySelector('.category-wrapper');
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
+  }
+
+  selectCategory(value: string): void {
+    this.task.category = value;
+    this.categoryOpen = false;
   }
 }

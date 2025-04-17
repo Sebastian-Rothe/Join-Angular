@@ -47,17 +47,18 @@
                 <label for="category">Category<span class="required">*</span></label>
                 <div class="dropdown-category">
                     <div class="category-wrapper">
-                        <select id="category" name="category" class="dropdownCategory" 
-                                [(ngModel)]="task.category" 
-                                (click)="categoryOpen = !categoryOpen"
-                                (change)="categoryOpen = false">
-                            <option value="" disabled selected>Select task category</option>
-                            <option [ngValue]="'TechnicalTask'">Technical Task</option>
-                            <option [ngValue]="'UserStory'">User Story</option>
-                        </select>
-                        <span class="icon-wrapper">
-                            <mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon>
-                        </span>
+                        <button type="button" (click)="toggleCategory()" class="dropdown-btn">
+                            {{ task.category || 'Select task category' }}
+                            <span><mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon></span>
+                        </button>
+                        <div class="dropdown-content" [class.show]="categoryOpen">
+                            <div *ngFor="let cat of categories" 
+                                 class="category-option" 
+                                 (click)="selectCategory(cat.value)"
+                                 [class.selected]="task.category === cat.value">
+                                {{ cat.label }}
+                            </div>
+                        </div>
                     </div>
                     <div class="error-validation" [class.visible]="errors.category">This field is required</div>
                 </div>
