@@ -15,7 +15,7 @@ $container-padding-small: 12px;
 .title {
   position: sticky;
   top: 0;
-  padding: 54px $container-padding;
+  padding: 48px $container-padding;
   font-size: var(--heading-font-size);
   font-weight: 700;
   background-color: #F6F7F8;
@@ -26,11 +26,11 @@ $container-padding-small: 12px;
   }
 
   @media (max-width: 1180px) {
-    padding: 54px 60px;
+    padding: 38px 60px;
   }
 
   @media (max-width: 900px) {
-    padding: 40px $container-padding-tablet;
+    padding: 36px $container-padding-tablet;
   }
 
   @media (max-width: 600px) {
@@ -99,7 +99,7 @@ $container-padding-small: 12px;
   align-items: center;
   width: 100%;
   padding: 20px $container-padding;
-  height: 170px;
+  height: 160px;
   z-index: 5; // Niedriger als das Dropdown
 
   .footer-add-task-left {
@@ -150,7 +150,7 @@ $container-padding-small: 12px;
   // Media Queries für Footer
   @media (max-width: 1300px) {
     padding: 20px 72px;
-    height: 160px;
+    height: 150px;
   }
 
   @media (max-width: 1180px) {
