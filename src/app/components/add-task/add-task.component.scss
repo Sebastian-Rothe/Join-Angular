@@ -325,6 +325,14 @@ mat-form-field {
       display: none !important;
       height: 0 !important;
     }
+
+    .mat-datepicker-toggle {
+      button {
+        &:hover {
+          box-shadow: none !important;
+        }
+      }
+    }
   }
 }
 
@@ -802,8 +810,7 @@ mat-form-field {
         transition: background-color 0.2s ease;
 
         &:hover {
-          background-color: white;
-          scale: 1.01;
+          scale: 1.15;
           box-shadow: none;
         }
 
