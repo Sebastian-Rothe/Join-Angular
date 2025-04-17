@@ -478,6 +478,24 @@ textarea {
     appearance: none;
     background-color: white;
     font-size: 16px;
+   
+
+    &:invalid {
+      color: #808080;
+    }
+
+    option[value=""][disabled] {
+      display: none;
+    }
+
+    option {
+      color: #000000;
+      height: 38px;
+    }
+
+    &:required:invalid {
+      color: #686868;
+    }
   }
 
   .icon-wrapper {

@@ -52,8 +52,8 @@
                                 (click)="categoryOpen = !categoryOpen"
                                 (change)="categoryOpen = false">
                             <option value="" disabled selected>Select task category</option>
-                            <option value="TechnicalTask">Technical Task</option>
-                            <option value="UserStory">User Story</option>
+                            <option [ngValue]="'TechnicalTask'">Technical Task</option>
+                            <option [ngValue]="'UserStory'">User Story</option>
                         </select>
                         <span class="icon-wrapper">
                             <mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon>
