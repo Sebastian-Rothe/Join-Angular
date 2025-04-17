@@ -9,6 +9,7 @@ import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } f
 import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { TaskService } from '../../services/task.service';
 import { Task, Subtask } from '../../models/task.class';
 import { User } from '../../models/user.class';
 import { CustomDateAdapter } from '../../adapters/custom-date.adapter';
@@ -76,7 +77,8 @@ export class AddTaskComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private authService: AuthService
+    private authService: AuthService,
+    private taskService: TaskService
   ) {
     registerLocaleData(localeDe);
   }
@@ -217,15 +219,19 @@ export class AddTaskComponent implements OnInit {
     return !this.errors.title && !this.errors.dueDate && !this.errors.category;
   }
 
-  createTask(): void {
+  async createTask(): Promise<void> {
     if (this.validateForm()) {
-      console.log('Saving task:', this.task);
-      
-      this.showSuccessMessage = true;
-      setTimeout(() => {
-        this.showSuccessMessage = false;
-        this.clearForm();
-      }, 2000);
+      try {
+        await this.taskService.createTask(this.task);
+        this.showSuccessMessage = true;
+        setTimeout(() => {
+          this.showSuccessMessage = false;
+          this.clearForm();
+        }, 2000);
+      } catch (error) {
+        console.error('Error creating task:', error);
+        this.showError('Failed to create task');
+      }
     }
   }
 
