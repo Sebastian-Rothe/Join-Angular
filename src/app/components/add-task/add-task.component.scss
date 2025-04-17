@@ -315,6 +315,11 @@ textarea {
       .user-info {
         flex-grow: 1;
         font-size: 16px;
+        transition: transform 0.2s ease;
+      }
+
+      &:hover .user-info {
+        transform: scale(1.02);
       }
 
       input[type="checkbox"] {
@@ -327,6 +332,18 @@ textarea {
         appearance: none;
         border-radius: 2px;
         position: relative;
+
+        &:checked ~ .user-info {
+          color: white;
+        }
+
+        &:checked {
+          border-color: white;
+          & + .user-option {
+            background-color: #2A3647;
+            border-radius: 8px;
+          }
+        }
 
         &::after {
           content: '';

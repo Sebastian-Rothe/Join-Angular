@@ -151,7 +151,7 @@
                             <input type="checkbox" 
                                    [id]="'contact_' + contact.uid" 
                                    [checked]="isContactSelected(contact)"
-                                   (click)="$event.stopPropagation()">
+                                   (click)="toggleContact(contact); $event.stopPropagation()">
                         </div>
                     </div>
                 </div>
