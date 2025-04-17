@@ -9,34 +9,9 @@ import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } f
 import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
+import { Task, Subtask } from '../../models/task.class';
 import { User } from '../../models/user.class';
 import { CustomDateAdapter } from '../../adapters/custom-date.adapter';
-
-interface Contact {
-  uid?: string;
-  name: string;
-  email: string;
-  initials?: string;
-  iconColor?: string;
-  profilePicture?: string;
-}
-
-interface Subtask {
-  title: string;
-  completed: boolean;
-}
-
-interface Task {
-  title: string;
-  description: string;
-  assignedTo: Contact[];
-  files: File[];
-  dueDate: string;
-  priority: 'urgent' | 'medium' | 'low';
-  category: string;
-  subtasks: Subtask[];
-  status: string;
-}
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -78,20 +53,10 @@ export class AddTaskComponent implements OnInit {
   ];
   categoryOpen: boolean = false;
   
-  task: Task = {
-    title: '',
-    description: '',
-    assignedTo: [],
-    files: [],
-    dueDate: '',
-    priority: 'medium',
-    category: '',
-    subtasks: [],
-    status: 'todo'
-  };
+  task: Task = new Task();
 
-  contacts: Contact[] = [];
-  selectedContacts: Contact[] = [];
+  contacts: User[] = [];
+  selectedContacts: User[] = [];
   dropdownOpen = false;
   
   newSubtask = '';
@@ -107,7 +72,7 @@ export class AddTaskComponent implements OnInit {
     category: false
   };
 
-  currentUser: Contact | null = null;
+  currentUser: User | null = null;
 
   constructor(
     private userService: UserService,
@@ -126,14 +91,7 @@ export class AddTaskComponent implements OnInit {
       if (user) {
         const userDoc = await this.userService.getUserById(user.uid);
         if (userDoc) {
-          this.currentUser = {
-            uid: userDoc.uid,
-            name: userDoc.name,
-            email: userDoc.email,
-            initials: userDoc.initials,
-            iconColor: userDoc.iconColor,
-            profilePicture: userDoc.profilePicture
-          };
+          this.currentUser = userDoc;
           this.selectedContacts = [this.currentUser];
           this.task.assignedTo = [this.currentUser];
           this.sortContacts(); // Sort contacts after current user is set
@@ -152,15 +110,7 @@ export class AddTaskComponent implements OnInit {
 
   async loadContacts(): Promise<void> {
     try {
-      const users = await this.userService.getAllUsers();
-      this.contacts = users.map(user => ({
-        uid: user.uid,
-        name: user.name,
-        email: user.email,
-        initials: user.initials,
-        iconColor: user.iconColor,
-        profilePicture: user.profilePicture
-      }));
+      this.contacts = await this.userService.getAllUsers();
       if (this.currentUser) {
         this.sortContacts(); // Sort if current user is already loaded
       }
@@ -174,11 +124,11 @@ export class AddTaskComponent implements OnInit {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  isContactSelected(contact: Contact): boolean {
+  isContactSelected(contact: User): boolean {
     return this.selectedContacts.some(c => c.uid === contact.uid);
   }
 
-  toggleContact(contact: Contact): void {
+  toggleContact(contact: User): void {
     const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
     
     if (index === -1) {
@@ -190,7 +140,7 @@ export class AddTaskComponent implements OnInit {
     this.task.assignedTo = [...this.selectedContacts];
   }
 
-  removeContact(contact: Contact): void {
+  removeContact(contact: User): void {
     const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
     if (index !== -1) {
       this.selectedContacts.splice(index, 1);
@@ -280,17 +230,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   clearForm(): void {
-    this.task = {
-      title: '',
-      description: '',
-      assignedTo: [],
-      files: [],
-      dueDate: '',
-      priority: 'medium',
-      category: '',
-      subtasks: [],
-      status: 'todo'
-    };
+    this.task = new Task();
     this.selectedContacts = [];
     this.clearSubtaskInput();
   }
