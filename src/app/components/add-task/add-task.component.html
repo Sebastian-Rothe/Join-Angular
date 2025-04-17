@@ -15,7 +15,14 @@
 
             <div class="form-group">
                 <label for="date">Due date<span class="required">*</span></label>
-                <input class="input-style" type="date" id="date" name="due-date" [(ngModel)]="task.dueDate">
+                <mat-form-field appearance="outline">
+                    <input matInput [matDatepicker]="picker" 
+                           placeholder="dd/mm/yyyy"
+                           [(ngModel)]="task.dueDate" 
+                           name="dueDate">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
                 <div class="error-validation" [class.visible]="errors.dueDate">This field is required</div>
             </div>
             

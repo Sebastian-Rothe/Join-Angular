@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatNativeDateModule } from '@angular/material/core';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
@@ -35,7 +39,15 @@ interface Task {
 @Component({
   selector: 'app-add-task',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    MatIconModule,
+    MatDatepickerModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatNativeDateModule
+  ],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss']
 })

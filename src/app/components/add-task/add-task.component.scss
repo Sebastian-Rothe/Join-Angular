@@ -216,6 +216,112 @@ textarea {
   resize: vertical;
 }
 
+input[type="date"] {
+  position: relative;
+  color: #686868;
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-datetime-edit-text {
+    padding: 0 4px;
+  }
+
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-year-field {
+    padding: 0;
+  }
+
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  &::-webkit-clear-button {
+    display: none;
+  }
+
+  &:not(:valid) {
+    &::-webkit-datetime-edit {
+      content: 'dd/mm/yyyy';
+      color: #686868;
+    }
+  }
+}
+
+mat-form-field {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-form-field-flex {
+      background-color: white !important;
+      border: 1px solid #d1d1d1 !important;
+
+      border-radius: 8px !important;
+    }
+    
+    .mat-mdc-form-field-outline {
+      border: 1px solid #d1d1d1 !important;
+      border-radius: 8px !important;
+    }
+
+    .mat-focused .mat-mdc-form-field-outline,
+    .mat-form-field-outline.mat-form-field-outline-thick,
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+    .mdc-text-field--focused:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+      border: 2px solid #2A3647 !important;
+      border-width: 2px !important;
+      border-radius: 8px !important;
+      opacity: 1 !important;
+    }
+
+    .mdc-text-field--focused {
+      .mat-mdc-form-field-outline {
+        border: 2px solid #2A3647 !important;
+        border-radius: 8px !important;
+      }
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0 !important;
+      background-color: transparent !important;
+      height: 44px !important;
+
+      &.mdc-text-field--focused {
+        outline: 2px solid #2A3647 !important;
+        border-radius: 8px !important;
+      }
+    }
+
+    .mat-mdc-form-field-infix {
+      padding: 8px 12px !important;
+      height: 44px !important;
+      min-height: 44px !important;
+    }
+
+    .mdc-floating-label {
+      display: none !important;
+    }
+
+    .mdc-notched-outline {
+      display: none !important;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border: none !important;
+      outline: none !important;
+    }
+  }
+}
+
 // ---------- Dropdown & Selection ----------
 .dropdown {
   position: relative;
