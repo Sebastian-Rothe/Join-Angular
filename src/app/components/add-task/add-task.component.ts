@@ -1,14 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnInit, LOCALE_ID } from '@angular/core';
+import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule } from '@angular/material/core';
+import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { User } from '../../models/user.class';
+import { CustomDateAdapter } from '../../adapters/custom-date.adapter';
 
 interface Contact {
   uid?: string;
@@ -36,6 +38,18 @@ interface Task {
   status: string;
 }
 
+export const MY_DATE_FORMATS = {
+  parse: {
+    dateInput: 'DD/MM/YYYY',
+  },
+  display: {
+    dateInput: 'DD/MM/YYYY',
+    monthYearLabel: 'MMM YYYY',
+    dateA11yLabel: 'DD/MM/YYYY',
+    monthYearA11yLabel: 'MMMM YYYY',
+  },
+};
+
 @Component({
   selector: 'app-add-task',
   standalone: true,
@@ -47,6 +61,12 @@ interface Task {
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
+    { provide: LOCALE_ID, useValue: 'de-DE' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
+    { provide: DateAdapter, useClass: CustomDateAdapter }
   ],
   templateUrl: './add-task.component.html',
   styleUrls: ['./add-task.component.scss']
@@ -92,7 +112,9 @@ export class AddTaskComponent implements OnInit {
   constructor(
     private userService: UserService,
     private authService: AuthService
-  ) {}
+  ) {
+    registerLocaleData(localeDe);
+  }
 
   ngOnInit(): void {
     this.setupCurrentUser();  // Load current user first
