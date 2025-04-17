@@ -138,7 +138,11 @@
                         <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
                     </button>
                     <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
-                        <div *ngFor="let contact of contacts" class="user-option" (click)="toggleContact(contact)">
+                        <div *ngFor="let contact of contacts" 
+                             class="user-option" 
+                             [class.selected]="isContactSelected(contact)"
+                             (click)="toggleContact(contact)"
+                             style="border-radius: 8px; margin-bottom: 2px;">
                             <div class="user-avatar" [style.background-color]="contact.iconColor">
                                 <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name">
                                 <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
