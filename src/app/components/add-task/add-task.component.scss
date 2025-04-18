@@ -639,7 +639,7 @@ mat-form-field {
 }
 
 .file-list-container {
-  margin-top: 16px;
+  margin-top: 8px; // Reduziert von 16px auf 8px
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -690,8 +690,7 @@ mat-form-field {
   }
 
   .file-preview-item {
-    min-width: 100px;
-    width: 100px;
+    width: 110px;
     
     .file-preview-content {
       position: relative;
