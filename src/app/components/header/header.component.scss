@@ -103,15 +103,16 @@ header {
 }
 
 .profile-avatar {
-  width: 56px;
-  height: 56px;
+  width: 64px;
+  height: 64px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  background-color: #2A3647;
+  background-color: $white;
   overflow: hidden;
+  border: 3px solid $dark-navy;
 
   img {
     width: 100%;
@@ -120,9 +121,12 @@ header {
   }
 
   .initials {
-    color: white;
-    font-size: 20px;
-    font-weight: 500;
+    color: $primary-blue;
+    font-size: 24px;
+    font-weight: 575;
+  }
+  &:hover {
+    background-color: rgb(236, 236, 236);
   }
 }
 
@@ -231,7 +235,6 @@ header {
     font-size: 16px;
 
     .initials {
-      color: white;
       font-size: 16px;
       font-weight: 500;
     }

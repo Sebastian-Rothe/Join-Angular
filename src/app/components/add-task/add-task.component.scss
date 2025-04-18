@@ -690,6 +690,7 @@ mat-form-field {
   }
 
   .file-preview-item {
+    min-width: 110px; // Feste Breite für die Vorschau-Elemente
     width: 110px;
     
     .file-preview-content {
