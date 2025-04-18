@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID } from '@angular/core';
+import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -48,6 +48,12 @@ export const MY_DATE_FORMATS = {
   styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit {
+  @ViewChild('fileGrid') fileGrid!: ElementRef;
+
+  private isDraggingGrid = false;
+  private startX = 0;
+  private scrollLeft = 0;
+
   categories = [
     { value: 'TechnicalTask', label: 'Technical Task' },
     { value: 'UserStory', label: 'User Story' }
@@ -298,6 +304,33 @@ export class AddTaskComponent implements OnInit {
         this.showError('Please upload only JPG or PNG files');
       }
     }
+  }
+
+  onWheel(event: WheelEvent): void {
+    event.preventDefault();
+    if (this.fileGrid) {
+      this.fileGrid.nativeElement.scrollLeft += event.deltaY;
+    }
+  }
+
+  startDragging(event: MouseEvent): void {
+    this.isDraggingGrid = true;
+    this.startX = event.pageX - this.fileGrid.nativeElement.offsetLeft;
+    this.scrollLeft = this.fileGrid.nativeElement.scrollLeft;
+    this.fileGrid.nativeElement.style.cursor = 'grabbing';
+  }
+
+  stopDragging(): void {
+    this.isDraggingGrid = false;
+    this.fileGrid.nativeElement.style.cursor = 'grab';
+  }
+
+  onDrag(event: MouseEvent): void {
+    if (!this.isDraggingGrid) return;
+    event.preventDefault();
+    const x = event.pageX - this.fileGrid.nativeElement.offsetLeft;
+    const walk = (x - this.startX) * 2;
+    this.fileGrid.nativeElement.scrollLeft = this.scrollLeft - walk;
   }
 
   ngOnDestroy(): void {

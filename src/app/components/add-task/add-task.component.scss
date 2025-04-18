@@ -648,8 +648,18 @@ mat-form-field {
     flex-wrap: nowrap; // Verhindert Umbruch
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE and Edge */
+    scroll-behavior: smooth; // Smooth scrolling
     &::-webkit-scrollbar {
       display: none; /* Chrome, Safari, Opera */
+    }
+
+    // Ermöglicht horizontales Scrollen mit dem Mausrad
+    &:hover {
+      cursor: grab;
+    }
+    
+    &:active {
+      cursor: grabbing;
     }
   }
 

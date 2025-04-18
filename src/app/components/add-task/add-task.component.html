@@ -96,7 +96,13 @@
                     </div>
                 </div>
                 <div class="file-list-container" *ngIf="task.files?.length">
-                    <div class="file-grid">
+                    <div class="file-grid" 
+                         #fileGrid
+                         (wheel)="onWheel($event)"
+                         (mousedown)="startDragging($event)"
+                         (mousemove)="onDrag($event)"
+                         (mouseup)="stopDragging()"
+                         (mouseleave)="stopDragging()">
                         <div *ngFor="let file of task.files; let i = index" class="file-preview-item">
                             <div class="file-preview-content">
                                 <img [src]="getFilePreview(file)" alt="File preview">
