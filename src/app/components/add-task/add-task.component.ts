@@ -184,6 +184,10 @@ export class AddTaskComponent implements OnInit {
     this.task.files = this.task.files.filter((_, i) => i !== index);
   }
 
+  removeAllFiles(): void {
+    this.task.files = [];
+  }
+
   selectPriority(priority: 'urgent' | 'medium' | 'low'): void {
     this.task.priority = priority;
   }

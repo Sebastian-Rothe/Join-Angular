@@ -76,8 +76,18 @@
 
         <div class="right-side">
             <div class="form-group">
-                <label>Attachments</label>
-                <span>Allowed file types are JPEG and PNG</span>
+                <div class="attachments-header">
+                    <div class="left-side">
+                        <label>Attachments</label>
+                        <span>Allowed file types are JPEG and PNG</span>
+                    </div>
+                    <div class="delete-all-btn" *ngIf="task.files?.length">
+                        <button (click)="removeAllFiles()">
+                            <mat-icon>delete</mat-icon>
+                            Delete all
+                        </button>
+                    </div>
+                </div>
                 <div class="file-upload-zone" 
                      (dragover)="onDragOver($event)"
                      (dragleave)="onDragLeave($event)"
