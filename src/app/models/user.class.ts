@@ -6,6 +6,7 @@ export class User {
     profilePicture: string = '';
     initials: string = '';
     iconColor: string = '';
+    isGuest: boolean = false;
 
     constructor(obj?: Partial<User>) {
         if (obj) {

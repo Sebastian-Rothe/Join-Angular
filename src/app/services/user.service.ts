@@ -2,7 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { Firestore, doc, getDoc, collection, getDocs, updateDoc, setDoc, deleteDoc } from '@angular/fire/firestore';
 import { getStorage, ref, uploadString, getDownloadURL } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
-import { Observable, switchMap, map, of } from 'rxjs';
+import { Observable, switchMap, map, of, firstValueFrom } from 'rxjs';
 import { User } from '../models/user.class';
 
 @Injectable({
@@ -50,15 +50,24 @@ export class UserService {
 
   async getAllUsers(): Promise<User[]> {
     try {
-      const querySnapshot = await getDocs(collection(this.firestore, 'users'));
-      const users: User[] = [];
-      querySnapshot.forEach((doc) => {
-        users.push(new User(doc.data()));
-      });
-      return users.sort((a, b) => a.name.localeCompare(b.name));
+        const querySnapshot = await getDocs(collection(this.firestore, 'users'));
+        const users: User[] = [];
+        const currentUser = await firstValueFrom(this.currentUser$);
+        
+        for (const doc of querySnapshot.docs) {
+            const userData = doc.data();
+            // Delete old guest users that aren't the current user
+            if (userData['isGuest'] && (!currentUser || doc.id !== currentUser.uid)) {
+                await this.deleteUser(doc.id);
+                continue;
+            }
+            users.push(new User(userData));
+        }
+        
+        return users.sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
-      console.error('Error fetching users:', error);
-      return [];
+        console.error('Error fetching users:', error);
+        return [];
     }
   }
 

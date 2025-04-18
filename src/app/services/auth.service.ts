@@ -99,7 +99,7 @@ export class AuthService {
       phone: '',
       profilePicture: '',
       initials: 'GU',
-      // iconColor wird automatisch durch den Constructor generiert
+      isGuest: true,
     });
     await this.createUserDocument(userId, guestUser);
   }
