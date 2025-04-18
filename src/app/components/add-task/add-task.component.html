@@ -96,12 +96,17 @@
                     </div>
                 </div>
                 <div class="file-list-container" *ngIf="task.files?.length">
-                    <ul>
-                        <li *ngFor="let file of task.files; let i = index" class="file-item">
-                            {{ file.name }}
-                            <span class="file-close" (click)="removeFile(i)">×</span>
-                        </li>
-                    </ul>
+                    <div class="file-grid">
+                        <div *ngFor="let file of task.files; let i = index" class="file-preview-item">
+                            <div class="file-preview-content">
+                                <img [src]="getFilePreview(file)" alt="File preview">
+                                <div class="file-name">{{ file.name }}</div>
+                                <button class="delete-file-btn" (click)="removeFile(i)">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
 

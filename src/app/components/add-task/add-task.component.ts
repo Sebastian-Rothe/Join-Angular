@@ -170,8 +170,12 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
+  getFilePreview(file: File): string {
+    return URL.createObjectURL(file);
+  }
+
   removeFile(index: number): void {
-    this.task.files.splice(index, 1);
+    this.task.files = this.task.files.filter((_, i) => i !== index);
   }
 
   selectPriority(priority: 'urgent' | 'medium' | 'low'): void {
@@ -294,5 +298,11 @@ export class AddTaskComponent implements OnInit {
         this.showError('Please upload only JPG or PNG files');
       }
     }
+  }
+
+  ngOnDestroy(): void {
+    this.task.files?.forEach(file => {
+      URL.revokeObjectURL(this.getFilePreview(file));
+    });
   }
 }
