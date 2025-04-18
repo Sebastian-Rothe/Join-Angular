@@ -6,6 +6,7 @@ import { ContactsComponent } from './components/contacts/contacts.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { BoardComponent } from './components/board/board.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
+import { AuthGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -14,6 +15,7 @@ export const routes: Routes = [
   { 
     path: 'main', 
     component: MainContentComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: 'contacts', component: ContactsComponent },
       { path: 'summary', component: SummaryComponent },
