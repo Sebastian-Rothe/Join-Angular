@@ -615,7 +615,7 @@ mat-form-field {
 .file-list-container {
   margin-top: 16px;
   width: 100%;
-  height: 110px;
+  height: 100%;
   overflow: hidden;
 
   ul {
@@ -642,7 +642,7 @@ mat-form-field {
     display: flex;
     flex-direction: row-reverse;
     gap: 16px;
-    padding: 8px 0;
+    padding: 0;
     overflow-x: auto;
     overflow-y: hidden; // Verhindert vertikales Scrollen
     flex-wrap: nowrap; // Verhindert Umbruch
@@ -676,6 +676,27 @@ mat-form-field {
       background: #f6f7f8;
       border: 1px solid #d1d1d1;
 
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 22px; // Stopp vor dem Namen-Container
+        background: rgba(0, 0, 0, 0);
+        transition: background 0.2s ease;
+        pointer-events: none; // Erlaubt Klicks durch das Overlay
+      }
+
+      &:hover {
+        &::after {
+          background: rgba(0, 0, 0, 0.4);
+        }
+        .delete-file-btn {
+          opacity: 1;
+        }
+      }
+
       img {
         width: 100%;
         height: 100%;
@@ -688,38 +709,37 @@ mat-form-field {
         left: 0;
         right: 0;
         padding: 4px;
-        background: rgba(0, 0, 0, 0.5);
-        color: white;
-        font-size: 10px;
+        background: white;
+        color: #2A3647;
+        font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
+        border-top: 1px solid #d1d1d1;
       }
 
       .delete-file-btn {
         position: absolute;
-        top: 4px;
-        right: 4px;
-        width: 20px;
-        height: 20px;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
         padding: 0;
         border: none;
         border-radius: 50%;
-        background: rgba(0, 0, 0, 0.5);
+        background: transparent;
         color: white;
-        cursor: pointer;
         display: flex;
         align-items: center;
         justify-content: center;
+        opacity: 0;
+        transition: all 0.2s ease;
+        z-index: 1;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.7);
-        }
-
-        mat-icon {
-          font-size: 16px;
-          width: 16px;
-          height: 16px;
+          background-color: #29ABE2;;
+          box-shadow: none;
         }
       }
     }
