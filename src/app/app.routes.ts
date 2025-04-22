@@ -7,21 +7,23 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { BoardComponent } from './components/board/board.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { AuthGuard } from './guards/auth.guard';
+import { HelpComponent } from './components/help/help.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
-  { 
-    path: 'main', 
+  {
+    path: 'main',
     component: MainContentComponent,
     canActivate: [AuthGuard],
     children: [
       { path: 'contacts', component: ContactsComponent },
       { path: 'summary', component: SummaryComponent },
       { path: 'board', component: BoardComponent },
-      { path: 'add-task', component: AddTaskComponent }
-    ]
+      { path: 'add-task', component: AddTaskComponent },
+      { path: 'help', component: HelpComponent },
+    ],
   },
-  { path: '**', redirectTo: '/login' }
+  { path: '**', redirectTo: '/login' },
 ];
