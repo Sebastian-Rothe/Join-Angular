@@ -1,0 +1,386 @@
+.adjust-popup-edit {
+  z-index: 1200 !important;
+  height: 80%;
+  width: 40% !important;
+  max-width: 800px;
+}
+
+.left-right-container-to-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 70vh;
+
+  label {
+    margin-top: 12px;
+  }
+}
+
+.left-side-to-edit {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-side-to-edit {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+.taskTitleDetails {
+  margin: 24px 0;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 50px;
+  word-wrap: break-word;
+  max-height: 150px;
+}
+
+.taskDescriptionDetails {
+  color: black;
+  font-size: 24px;
+  line-height: 19.2px;
+  margin-top: 16px;
+  max-height: 120px;
+  word-wrap: break-word;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+.titleDetails {
+  color: #727272;
+  font-size: 20px;
+}
+
+.dateTxtDetails {
+  font-size: 20px;
+  font-weight: 450;
+  padding: 4px;
+}
+
+.align-priority {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 20px;
+  font-weight: 450;
+  padding-left: 24px;
+}
+
+.priority-icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.low {
+    background-image: url("/assets/icons/PrioLow.svg");
+  }
+
+  &.medium {
+    background-image: url("/assets/icons/PrioMedium.svg");
+  }
+
+  &.urgent {
+    background-image: url("/assets/icons/PrioUrgent.svg");
+  }
+}
+
+.task-assigned {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.style-avatar-overlap {
+  border-radius: 50%;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 400;
+  font-size: 12px;
+  margin-right: -8px;
+  border: 1px solid white;
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+.footer-add-task-to-edit {
+  position: fixed;
+  bottom: 0px;  
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+  width: 100%;
+  height: 100px;
+  background-color: white;
+}
+
+.footer-add-task-right-to-edit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.task-details-dialog {
+  padding: 24px;
+  position: relative;
+  background: white;
+  border-radius: 30px;
+  height: 100%;
+}
+
+.task-category {
+  font-size: 23px;
+  font-weight: 400;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-block;
+  
+  &.technical-task {
+    background-color: #00bfa5;
+  }
+  
+  &.user-story {
+    background-color: #0052cc;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+  }
+}
+
+.task-title {
+  margin: 24px 0;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+.task-description {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.info-section {
+  margin-bottom: 24px;
+  
+  .label {
+    color: #42526E;
+    font-size: 20px;
+    margin-bottom: 8px;
+  }
+  
+  .content {
+    font-size: 20px;
+  }
+}
+
+.task-assigned {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.style-avatar-overlap {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 16px;
+  border: 1px solid white;
+  
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+}
+
+/* Custom Checkbox Styling */
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.custom-checkbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  
+  input[type="checkbox"] {
+    display: none;
+  }
+  
+  .checkbox-custom {
+    width: 24px;
+    height: 24px;
+    border: 2px solid #2A3647;
+    border-radius: 3px;
+    position: relative;
+    
+    &.checked {
+      background: #2A3647;
+      
+      &:after {
+        content: '';
+        position: absolute;
+        left: 8px;
+        top: 4px;
+        width: 5px;
+        height: 10px;
+        border: solid white;
+        border-width: 0 2px 2px 0;
+        transform: rotate(45deg);
+      }
+    }
+  }
+}
+
+.action-buttons {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: #2A3647;
+  font-size: 16px;
+
+  &:hover {
+    color: #29ABE2;
+    transform: scale(1.1);
+    box-shadow: none;
+    
+    mat-icon {
+      color: #29ABE2;
+    }
+  }
+
+  mat-icon {
+    color: #2A3647;
+    transition: all 0.2s ease;
+  }
+}
+
+.button-divider {
+  height: 24px;
+  width: 1px;
+  background-color: #D1D1D1;
+}
+
+@media (max-width: 800px) {
+  .taskTitleDetails {
+    margin: 12px 0;
+    font-size: 44px;
+  }
+  .taskDescriptionDetails {
+    font-size: 20px;
+    margin-top: 8px;
+  }
+  .titleDetails {
+    font-size: 18px;
+  }
+  .dateTxtDetails {
+    font-size: 18px;
+  }
+  .align-priority {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 600px) {
+  .left-right-container-to-edit {
+    height: 75vh;
+  }
+  .taskTitleDetails {
+    margin: 8px 0;
+    font-size: 36px;
+  }
+  .taskDescriptionDetails {
+    font-size: 20px;
+    margin-top: 4px;
+  }
+  .titleDetails {
+    font-size: 16px;
+  }
+  .dateTxtDetails {
+    font-size: 16px;
+  }
+  .align-priority {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 424px) {
+  .left-right-container-to-edit {
+    height: 80vh;
+  }
+  .taskTitleDetails {
+    margin: 2px 0;
+    font-size: 30px;
+  }
+  .taskDescriptionDetails {
+    font-size: 20px;
+    margin-top: 2px;
+  }
+}
+
+@media (max-width: 768px) {
+  .task-title {
+    font-size: 36px;
+  }
+  
+  .task-description {
+    font-size: 16px;
+  }
+  
+  .info-section .label,
+  .info-section .content {
+    font-size: 16px;
+  }
+  
+  .style-avatar-overlap {
+    width: 35px;
+    height: 35px;
+  }
+}

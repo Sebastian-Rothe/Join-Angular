@@ -98,7 +98,7 @@ input, button {
   width: 100%;
   display: flex;
   gap: 16px;
-  padding: 8px;
+//   padding: 8px;
   overflow: hidden;
   min-height: 0; // Wichtig für Flex-Container
 }
@@ -141,53 +141,6 @@ input, button {
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-/* Popup styles adjusted to board-popup */
-.board-popup-overlay {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  z-index: 1100;
-  justify-content: center;
-  align-items: center;
-}
-
-.board-popup-content {
-  height: 80% !important;
-  width: 40% !important;
-  max-width: 800px;
-  background: #fff;
-  padding: 20px;
-  border-radius: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  position: relative;
-  overflow: scroll;
-  z-index: 1200 !important;
-}
-/* code for popup responsive */
-
-.board-popup-content::-webkit-scrollbar {
-  display: none;
-}
-/* .taskDescriptionDetails{
-  overflow: scroll;
-}
-.taskDescriptionDetails::-webkit-scrollbar {
-  display: none;
-} */
-
-/* .board-popup-subtasks{
-  max-height: 30px !important;
-} */
-/* end--------------------------------- */
-
-.board-popup-actions {
-  transform: translateY(0);
 }
 
 /* css for drag and drop */
@@ -377,104 +330,6 @@ h3 {
 .addButton-mobileBoard {
   display: none;
 }
-
-/* CSS for popup Muaz */
-/* #region */
-
-.closeWindowImage {
-  position: absolute;
-  top: 48px;
-  right: 40px;
-}
-.closeWindowImage:hover {
-  cursor: pointer;
-  scale: 1.1;
-}
-
-.taskTitleDetails {
-  margin: 24px 0;
-  font-size: 61px;
-  font-weight: 700;
-  line-height: 50px;
-  word-wrap: break-word;
-  max-height: 150px;
-}
-
-.taskDescriptionDetails {
-  color: black;
-  font-size: 24px;
-  line-height: 19.2px;
-  margin-top: 16px;
-  max-height: 120px;
-  word-wrap: break-word;
-  overflow: scroll;
-}
-.taskDescriptionDetails::-webkit-scrollbar {
-  display: none;
-}
-
-.titleDetails {
-  color: #727272;
-  font-size: 20px;
-}
-
-.dateTxtDetails {
-  font-size: 20px;
-  font-weight: 450;
-  padding: 4px;
-}
-
-.align-priority {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 20px;
-  font-weight: 450;
-  padding-left: 24px;
-}
-.align-priority-inline {
-  display: flex;
-  flex-direction: row;
-}
-
-.subtask-input:hover {
-  cursor: pointer;
-  scale: 1.1;
-}
-
-.deleteDetailsContain:hover,
-.editDetailsContain:hover {
-  cursor: pointer;
-  filter: invert(70%) sepia(74%) saturate(3560%) hue-rotate(165deg)
-    brightness(95%) contrast(85%);
-  font-weight: 700;
-  scale: 1.1;
-}
-
-.editOptionsDetailsContain {
-  display: flex;
-  justify-content: flex-end;
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-}
-
-.deleteDetailsContain,
-.editDetailsContain {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-}
-
-.seperator {
-  height: 20px;
-  width: 1px;
-  background-color: #ccc;
-  margin: 0 10px;
-}
-
-/* end of: popup style */
-/* #endregion */
 
 /* aligning avatar in card */
 /* #region */
@@ -733,27 +588,8 @@ h3 {
     height: 80% !important;
     width: 60% !important;
   }
-  .taskTitleDetails {
-    margin: 12px 0;
-    font-size: 44px;
-  }
-  .taskDescriptionDetails {
-    font-size: 20px;
-    margin-top: 8px;
-  }
-  .titleDetails {
-    font-size: 18px;
-  }
-  .dateTxtDetails {
-    font-size: 18px;
-  }
-  .align-priority {
-    font-size: 18px;
-  }
-
 }
 
-/* Responsive Design Adjustments */
 @media (max-width: 600px) {
   .task-subtasks {
     flex-direction: column;
@@ -808,39 +644,12 @@ h3 {
     height: 85% !important;
     width: 70% !important;
   }
-  .taskTitleDetails {
-    margin: 8px 0;
-    font-size: 36px;
-  }
-  .taskDescriptionDetails {
-    font-size: 20px;
-    margin-top: 4px;
-  }
-  .titleDetails {
-    font-size: 16px;
-  }
-  .dateTxtDetails {
-    font-size: 16px;
-  }
-  .align-priority {
-    font-size: 16px;
-  }
-  .done-div{
-    margin-bottom: 60px;
-  }
 }
+
 @media (max-width: 424px) {
   .board-popup-content {
     height: 90% !important;
     width: 80% !important;
-  }
-  .taskTitleDetails {
-    margin: 2px 0;
-    font-size: 30px;
-  }
-  .taskDescriptionDetails {
-    font-size: 20px;
-    margin-top: 2px;
   }
 }
 /* End of Responsive Design Adjustments */

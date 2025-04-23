@@ -1,0 +1,60 @@
+<div class="task-details-dialog">
+  <img class="close-button" src="assets/icons/close.svg" (click)="close()" alt="Close">
+  
+  <div class="task-category" [ngClass]="task.category.toLowerCase()">
+    {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+  </div>
+  
+  <h1 class="task-title">{{ task.title }}</h1>
+  <p class="task-description">{{ task.description }}</p>
+  
+  <div class="info-section">
+    <div class="label">Due date</div>
+    <div class="content">{{ task.dueDate | date:'dd/MM/yyyy' }}</div>
+  </div>
+  
+  <div class="info-section">
+    <div class="label">Priority</div>
+    <div class="content">
+      {{ task.priority }}
+      <img [src]="'assets/icons/Prio' + (task.priority | titlecase) + '.svg'" alt="Priority">
+    </div>
+  </div>
+  
+  <div class="info-section">
+    <div class="label">Assigned to</div>
+    <div class="task-assigned">
+      <div *ngFor="let user of task.assignedTo" 
+           class="style-avatar-overlap"
+           [style.background-color]="user.iconColor">
+        <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+        <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+      </div>
+    </div>
+  </div>
+  
+  <div class="info-section" *ngIf="task.subtasks?.length">
+    <div class="label">Subtasks</div>
+    <div class="subtask-list">
+      <label *ngFor="let subtask of task.subtasks" class="custom-checkbox">
+        <input type="checkbox" 
+               [checked]="subtask.completed"
+               (change)="toggleSubtask(subtask)">
+        <span class="checkbox-custom" [class.checked]="subtask.completed"></span>
+        {{ subtask.title }}
+      </label>
+    </div>
+  </div>
+  
+  <div class="action-buttons">
+    <button class="action-btn delete" (click)="deleteTask()">
+      <mat-icon>delete</mat-icon>
+      Delete
+    </button>
+    <div class="button-divider"></div>
+    <button class="action-btn edit" (click)="editTask()">
+      <mat-icon>edit</mat-icon>
+      Edit
+    </button>
+  </div>
+</div>

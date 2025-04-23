@@ -39,6 +39,7 @@
              class="task-card" 
              draggable="true"
              (dragstart)="onDragStart($event, task)"
+             (click)="openTaskDetails(task)"
              [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
@@ -84,6 +85,7 @@
              class="task-card" 
              draggable="true"
              (dragstart)="onDragStart($event, task)"
+             (click)="openTaskDetails(task)"
              [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
@@ -129,6 +131,7 @@
              class="task-card" 
              draggable="true"
              (dragstart)="onDragStart($event, task)"
+             (click)="openTaskDetails(task)"
              [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
@@ -173,6 +176,7 @@
              class="task-card" 
              draggable="true"
              (dragstart)="onDragStart($event, task)"
+             (click)="openTaskDetails(task)"
              [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}

@@ -6,6 +6,8 @@ import { RouterModule } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.class';
 import { CompletedSubtasksPipe } from '../../pipes/completed-subtasks.pipe';
+import { MatDialog } from '@angular/material/dialog';
+import { TaskDetailsComponent } from '../task-details/task-details.component';
 
 @Component({
   selector: 'app-board',
@@ -21,7 +23,10 @@ export class BoardComponent implements OnInit {
   isDropdownOpen = false;
   draggedTask: Task | null = null;
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.loadTasks();
@@ -98,5 +103,14 @@ export class BoardComponent implements OnInit {
 
   openPopupAddTask() {
     // Implement popup logic
+  }
+
+  openTaskDetails(task: Task) {
+    this.dialog.open(TaskDetailsComponent, {
+      data: task,
+      width: '40%',
+      height: '80%',
+      maxWidth: '800px'
+    });
   }
 }
