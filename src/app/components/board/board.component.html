@@ -35,7 +35,11 @@
            (drop)="moveTo('todo')"
            (dragleave)="removeHighlight('todoBoard')"
            (dragover)="allowDrop($event); highlight('todoBoard')">
-        <div *ngFor="let task of getTasksByStatus('todo')" class="task-card" draggable="true">
+        <div *ngFor="let task of getTasksByStatus('todo')" 
+             class="task-card" 
+             draggable="true"
+             (dragstart)="onDragStart($event, task)"
+             [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
@@ -76,7 +80,11 @@
            (drop)="moveTo('inProgress')"
            (dragleave)="removeHighlight('inProgressBoard')"
            (dragover)="allowDrop($event); highlight('inProgressBoard')">
-        <div *ngFor="let task of getTasksByStatus('inProgress')" class="task-card" draggable="true">
+        <div *ngFor="let task of getTasksByStatus('inProgress')" 
+             class="task-card" 
+             draggable="true"
+             (dragstart)="onDragStart($event, task)"
+             [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
@@ -117,7 +125,11 @@
            (drop)="moveTo('awaitFeedback')"
            (dragleave)="removeHighlight('awaitFeedbackBoard')"
            (dragover)="allowDrop($event); highlight('awaitFeedbackBoard')">
-        <div *ngFor="let task of getTasksByStatus('awaitFeedback')" class="task-card" draggable="true">
+        <div *ngFor="let task of getTasksByStatus('awaitFeedback')" 
+             class="task-card" 
+             draggable="true"
+             (dragstart)="onDragStart($event, task)"
+             [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
@@ -157,7 +169,11 @@
            (drop)="moveTo('done')"
            (dragleave)="removeHighlight('doneBoard')"
            (dragover)="allowDrop($event); highlight('doneBoard')">
-        <div *ngFor="let task of getTasksByStatus('done')" class="task-card" draggable="true">
+        <div *ngFor="let task of getTasksByStatus('done')" 
+             class="task-card" 
+             draggable="true"
+             (dragstart)="onDragStart($event, task)"
+             [attr.data-task-id]="task.id">
           <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>

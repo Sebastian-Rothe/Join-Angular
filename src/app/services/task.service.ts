@@ -69,4 +69,14 @@ export class TaskService {
       throw error;
     }
   }
+
+  async updateTaskStatus(taskId: string, status: string): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', taskId);
+      await updateDoc(taskRef, { status });
+    } catch (error) {
+      console.error('Error updating task status:', error);
+      throw error;
+    }
+  }
 }

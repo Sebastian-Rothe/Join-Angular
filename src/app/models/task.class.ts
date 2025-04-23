@@ -6,6 +6,7 @@ export interface Subtask {
 }
 
 export class Task {
+    id: string; // Removed optional marker
     title: string;
     description: string;
     assignedTo: User[];
@@ -17,6 +18,7 @@ export class Task {
     status: string;
 
     constructor(obj?: any) {
+        this.id = obj?.id || ''; // Ensure it's never undefined
         this.title = obj?.title || '';
         this.description = obj?.description || '';
         this.assignedTo = obj?.assignedTo || [];

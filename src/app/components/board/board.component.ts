@@ -19,6 +19,7 @@ export class BoardComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   isDropdownOpen = false;
+  draggedTask: Task | null = null;
 
   constructor(private taskService: TaskService) {}
 
@@ -56,6 +57,13 @@ export class BoardComponent implements OnInit {
     event.preventDefault();
   }
 
+  onDragStart(event: DragEvent, task: Task) {
+    this.draggedTask = task;
+    if (event.dataTransfer) {
+      event.dataTransfer.effectAllowed = 'move';
+    }
+  }
+
   highlight(id: string) {
     const element = document.getElementById(id);
     if (element) {
@@ -70,8 +78,22 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  moveTo(status: string) {
-    // Implement move logic
+  async moveTo(status: string) {
+    if (!this.draggedTask || !this.draggedTask.id) return;
+    
+    try {
+      await this.taskService.updateTaskStatus(this.draggedTask.id, status);
+      this.draggedTask.status = status;
+      this.draggedTask = null;
+      await this.loadTasks();
+      
+      // Remove all highlight lines after drop
+      ['todoBoard', 'inProgressBoard', 'awaitFeedbackBoard', 'doneBoard'].forEach(id => {
+        this.removeHighlight(id);
+      });
+    } catch (error) {
+      console.error('Error moving task:', error);
+    }
   }
 
   openPopupAddTask() {
