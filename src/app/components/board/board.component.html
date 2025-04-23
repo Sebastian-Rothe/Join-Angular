@@ -35,6 +35,35 @@
            (drop)="moveTo('todo')"
            (dragleave)="removeHighlight('todoBoard')"
            (dragover)="allowDrop($event); highlight('todoBoard')">
+        <div *ngFor="let task of getTasksByStatus('todo')" class="task-card" draggable="true">
+          <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
+            {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+          </div>
+          <h3 class="task-title">{{ task.title }}</h3>
+          <p class="task-description">{{ task.description }}</p>
+          <div class="task-subtasks" *ngIf="task.subtasks?.length">
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+            </div>
+            <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
+          </div>
+          <div class="task-footer">
+            <div class="task-assigned">
+              <div *ngFor="let user of task.assignedTo.slice(0, 3)" 
+                   class="style-avatar-overlap"
+                   [style.background-color]="user.iconColor"
+                   [style.width.px]="32"
+                   [style.height.px]="32">
+                <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+                <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+              </div>
+              <span class="align-assignedTo-count" *ngIf="task.assignedTo.length > 3">
+                +{{ task.assignedTo.length - 3 }}
+              </span>
+            </div>
+            <div class="priority-icon" [ngClass]="task.priority"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -47,6 +76,35 @@
            (drop)="moveTo('inProgress')"
            (dragleave)="removeHighlight('inProgressBoard')"
            (dragover)="allowDrop($event); highlight('inProgressBoard')">
+        <div *ngFor="let task of getTasksByStatus('inProgress')" class="task-card" draggable="true">
+          <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
+            {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+          </div>
+          <h3 class="task-title">{{ task.title }}</h3>
+          <p class="task-description">{{ task.description }}</p>
+          <div class="task-subtasks" *ngIf="task.subtasks?.length">
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+            </div>
+            <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
+          </div>
+          <div class="task-footer">
+            <div class="task-assigned">
+              <div *ngFor="let user of task.assignedTo.slice(0, 3)" 
+                   class="style-avatar-overlap"
+                   [style.background-color]="user.iconColor"
+                   [style.width.px]="32"
+                   [style.height.px]="32">
+                <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+                <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+              </div>
+              <span class="align-assignedTo-count" *ngIf="task.assignedTo.length > 3">
+                +{{ task.assignedTo.length - 3 }}
+              </span>
+            </div>
+            <div class="priority-icon" [ngClass]="task.priority"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -59,6 +117,35 @@
            (drop)="moveTo('awaitFeedback')"
            (dragleave)="removeHighlight('awaitFeedbackBoard')"
            (dragover)="allowDrop($event); highlight('awaitFeedbackBoard')">
+        <div *ngFor="let task of getTasksByStatus('awaitFeedback')" class="task-card" draggable="true">
+          <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
+            {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+          </div>
+          <h3 class="task-title">{{ task.title }}</h3>
+          <p class="task-description">{{ task.description }}</p>
+          <div class="task-subtasks" *ngIf="task.subtasks?.length">
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+            </div>
+            <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
+          </div>
+          <div class="task-footer">
+            <div class="task-assigned">
+              <div *ngFor="let user of task.assignedTo.slice(0, 3)" 
+                   class="style-avatar-overlap"
+                   [style.background-color]="user.iconColor"
+                   [style.width.px]="32"
+                   [style.height.px]="32">
+                <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+                <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+              </div>
+              <span class="align-assignedTo-count" *ngIf="task.assignedTo.length > 3">
+                +{{ task.assignedTo.length - 3 }}
+              </span>
+            </div>
+            <div class="priority-icon" [ngClass]="task.priority"></div>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -70,6 +157,35 @@
            (drop)="moveTo('done')"
            (dragleave)="removeHighlight('doneBoard')"
            (dragover)="allowDrop($event); highlight('doneBoard')">
+        <div *ngFor="let task of getTasksByStatus('done')" class="task-card" draggable="true">
+          <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
+            {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+          </div>
+          <h3 class="task-title">{{ task.title }}</h3>
+          <p class="task-description">{{ task.description }}</p>
+          <div class="task-subtasks" *ngIf="task.subtasks?.length">
+            <div class="progress-bar">
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+            </div>
+            <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
+          </div>
+          <div class="task-footer">
+            <div class="task-assigned">
+              <div *ngFor="let user of task.assignedTo.slice(0, 3)" 
+                   class="style-avatar-overlap"
+                   [style.background-color]="user.iconColor"
+                   [style.width.px]="32"
+                   [style.height.px]="32">
+                <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+                <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+              </div>
+              <span class="align-assignedTo-count" *ngIf="task.assignedTo.length > 3">
+                +{{ task.assignedTo.length - 3 }}
+              </span>
+            </div>
+            <div class="priority-icon" [ngClass]="task.priority"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>

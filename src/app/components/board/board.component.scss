@@ -481,59 +481,33 @@ h3 {
 
 .task-assigned {
   display: flex;
-  justify-content: center;
   align-items: center;
+  gap: 4px;
 }
-.align-assignedTo-count {
-  margin-left: 20px;
-  font-size: 18px;
-}
+
 .style-avatar-overlap {
   border-radius: 50%;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: bold;
-  margin-right: -22px; /* Sorgt für die Überlappung */
-  z-index: 1;
-  border: 2px solid white; /* Optional: weißer Rand für klare Abgrenzung */
-  font-size: 0.8rem; /* Größe der Initialen */
+  font-weight: 400;
+  font-size: 12px;
+  margin-right: -8px;
+  border: 1px solid white;
+  box-sizing: border-box;
+
+  img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
 }
 
-.style-avatar-overlap:nth-child(1) {
-  z-index: 1;
-}
-.style-avatar-overlap:nth-child(2) {
-  z-index: 2;
-}
-.style-avatar-overlap:nth-child(3) {
-  z-index: 3;
-}
-.style-avatar-overlap:nth-child(4) {
-  z-index: 4;
-}
-.style-avatar-overlap:nth-child(5) {
-  z-index: 5;
-}
-.style-avatar-overlap:nth-child(6) {
-  z-index: 6;
-}
-.style-avatar-overlap:nth-child(7) {
-  z-index: 7;
-}
-.style-avatar-overlap:nth-child(8) {
-  z-index: 8;
-}
-.style-avatar-overlap:nth-child(9) {
-  z-index: 9;
-}
-.style-avatar-overlap:nth-child(10) {
-  z-index: 10;
-}
-
-.assigned-person {
-  margin-bottom: 8px;
+.align-assignedTo-count {
+  color: #29ABE2;
+  font-size: 16px;
   margin-left: 16px;
 }
 
@@ -655,7 +629,7 @@ h3 {
     overflow-y: hidden;
     padding: 4px;
     gap: 12px;
-    height: 300px;
+    // height: 300px;
 
     .task-card {
       flex: 0 0 280px;
