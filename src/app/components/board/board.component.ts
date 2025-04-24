@@ -105,13 +105,19 @@ export class BoardComponent implements OnInit {
     // Implement popup logic
   }
 
-  openTaskDetails(task: Task) {
-    this.dialog.open(TaskDetailsComponent, {
+  openTaskDetails(task: Task): void {
+    const dialogRef = this.dialog.open(TaskDetailsComponent, {
+      width: '80%',
+      maxWidth: '520px',
+      height: '80vh',
       data: task,
-      width: '40%',
-      maxWidth: '480px',
-      height: '80%'
-  
+      panelClass: 'custom-dialog'
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result === 'deleted' || result === 'updated') {
+        await this.loadTasks(); // Aktualisiere die Task-Liste
+      }
     });
   }
 }
