@@ -35,4 +35,11 @@ export class TaskDetailsComponent {
   editTask(): void {
     // Implement edit logic
   }
+
+  getFormattedDate(timestamp: any): Date {
+    if (timestamp && timestamp.seconds) {
+      return new Date(timestamp.seconds * 1000);
+    }
+    return new Date(timestamp);
+  }
 }

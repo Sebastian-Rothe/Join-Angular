@@ -10,7 +10,7 @@
   
   <div class="info-section">
     <div class="label">Due date</div>
-    <div class="content">{{ task.dueDate | date:'dd/MM/yyyy' }}</div>
+    <div class="content">{{ getFormattedDate(task.dueDate) | date:'dd/MM/yyyy' }}</div>
   </div>
   
   <div class="info-section">
