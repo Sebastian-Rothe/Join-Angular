@@ -92,9 +92,14 @@
 }
 
 .task-assigned {
+  margin-left: 12px;
   display: flex;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
+
+  .content {
+    margin-left: -4px; // Kompensiert den negativen Margin der Avatare
+  }
 }
 
 .style-avatar-overlap {
@@ -105,7 +110,7 @@
   justify-content: center;
   font-weight: 400;
   font-size: 12px;
-  margin-right: -8px;
+  margin-right: 0; // Remove negative margin since we're stacking
   border: 1px solid white;
   box-sizing: border-box;
   width: 32px;
@@ -186,27 +191,59 @@
 
 .info-section {
   margin-bottom: 24px;
+
+  &.inline {
+    display: flex;
+    gap: 10px;
+    
+    .label {
+      min-width: 110px;
+    }
+  }
+  
+  &.stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
   
   .label {
-    color: #42526E;
-    font-size: 20px;
-    margin-bottom: 8px;
+    color: #313c4d;
+    font-size: 21px;
+    font-weight: 600;
   }
   
   .content {
-    font-size: 20px;
+    font-size: 21px;
+    color: #2A3647;
   }
 }
 
-.task-assigned {
+.info-section-row {
   display: flex;
-  gap: 8px;
+  gap: 35px;
+  margin-bottom: 24px;
+
+  .info-section {
+    flex: 1;
+  }
+}
+
+.priority-content {
+  display: flex;
   align-items: center;
+  gap: 10px;
+
+  img {
+    width: 17px;
+    height: 17px;
+  }
 }
 
 .style-avatar-overlap {
-  width: 45px;
-  height: 45px;
+  width: 35px;
+  height: 35px;
+  margin-right: -4px;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -228,6 +265,11 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
+  margin-left: 12px;
+}
+
+.files-list {
+  margin-left: 12px;
 }
 
 .custom-checkbox {
@@ -263,6 +305,12 @@
       }
     }
   }
+}
+
+.empty-state {
+  color: #A8A8A8;
+  font-size: 16px;
+  margin-left: 12px;
 }
 
 .action-buttons {

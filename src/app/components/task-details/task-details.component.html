@@ -8,21 +8,21 @@
   <h1 class="task-title">{{ task.title }}</h1>
   <p class="task-description">{{ task.description }}</p>
   
-  <div class="info-section">
-    <div class="label">Due date</div>
+  <div class="info-section inline">
+    <div class="label">Due date:</div>
     <div class="content">{{ getFormattedDate(task.dueDate) | date:'dd/MM/yyyy' }}</div>
   </div>
   
-  <div class="info-section">
-    <div class="label">Priority</div>
+  <div class="info-section inline">
+    <div class="label">Priority:</div>
     <div class="content">
       {{ task.priority }}
       <img [src]="'assets/icons/Prio' + (task.priority | titlecase) + '.svg'" alt="Priority">
     </div>
   </div>
   
-  <div class="info-section">
-    <div class="label">Assigned to</div>
+  <div class="info-section stacked">
+    <div class="label">Assigned to:</div>
     <div class="task-assigned">
       <div *ngFor="let user of task.assignedTo" 
            class="style-avatar-overlap"
@@ -33,9 +33,19 @@
     </div>
   </div>
   
-  <div class="info-section" *ngIf="task.subtasks?.length">
-    <div class="label">Subtasks</div>
-    <div class="subtask-list">
+  <div class="info-section stacked">
+    <div class="label">Attachments:</div>
+    <div class="files-list" *ngIf="task.files?.length; else noFiles">
+      <!-- Files list implementation here -->
+    </div>
+    <ng-template #noFiles>
+      <div class="empty-state">No files attached</div>
+    </ng-template>
+  </div>
+
+  <div class="info-section stacked">
+    <div class="label">Subtasks:</div>
+    <div class="subtask-list" *ngIf="task.subtasks?.length; else noSubtasks">
       <label *ngFor="let subtask of task.subtasks" class="custom-checkbox">
         <input type="checkbox" 
                [checked]="subtask.completed"
@@ -44,8 +54,11 @@
         {{ subtask.title }}
       </label>
     </div>
+    <ng-template #noSubtasks>
+      <div class="empty-state">No subtasks</div>
+    </ng-template>
   </div>
-  
+
   <div class="action-buttons">
     <button class="action-btn delete" (click)="deleteTask()">
       <mat-icon>delete</mat-icon>
