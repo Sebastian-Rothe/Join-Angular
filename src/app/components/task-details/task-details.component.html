@@ -35,8 +35,24 @@
   
   <div class="info-section stacked">
     <div class="label">Attachments:</div>
-    <div class="files-list" *ngIf="task.files?.length; else noFiles">
-      <!-- Files list implementation here -->
+    <div class="file-list-container" *ngIf="task.files?.length; else noFiles">
+      <div class="file-grid" 
+           #fileGrid
+           (wheel)="onWheel($event)"
+           (mousedown)="startDragging($event)"
+           (mousemove)="onDrag($event)"
+           (mouseup)="stopDragging()"
+           (mouseleave)="stopDragging()">
+        <div *ngFor="let file of task.files" class="file-preview-item">
+          <div class="file-preview-content">
+            <img [src]="file.data" [alt]="file.name">
+            <div class="file-name">{{ file.name }}</div>
+            <div class="file-preview-overlay" (click)="downloadFile(file)">
+              <mat-icon>cloud_download</mat-icon>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <ng-template #noFiles>
       <div class="empty-state">No files attached</div>

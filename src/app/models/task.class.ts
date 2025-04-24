@@ -5,12 +5,19 @@ export interface Subtask {
     completed: boolean;
 }
 
+export interface TaskFile {
+    data: string;  // base64 string
+    name: string;
+    type: string;
+}
+
 export class Task {
     id: string; // Removed optional marker
     title: string;
     description: string;
     assignedTo: User[];
-    files: File[];
+    files: TaskFile[] = []; // Updated to use TaskFile interface
+    fileNames: string[] = []; // Store file names separately
     dueDate: string;
     priority: 'urgent' | 'medium' | 'low';
     category: string;
@@ -22,7 +29,8 @@ export class Task {
         this.title = obj?.title || '';
         this.description = obj?.description || '';
         this.assignedTo = obj?.assignedTo || [];
-        this.files = obj?.files || [];
+        this.files = obj?.files || []; // Updated to use TaskFile interface
+        this.fileNames = obj?.fileNames || [];
         this.dueDate = obj?.dueDate || '';
         this.priority = obj?.priority || 'medium';
         this.category = obj?.category || '';

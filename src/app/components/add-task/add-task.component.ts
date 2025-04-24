@@ -10,7 +10,7 @@ import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
-import { Task, Subtask } from '../../models/task.class';
+import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { User } from '../../models/user.class';
 import { CustomDateAdapter } from '../../adapters/custom-date.adapter';
 
@@ -160,7 +160,21 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  onFileSelected(event: Event): void {
+  private async fileToTaskFile(file: File): Promise<TaskFile> {
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve({
+          data: e.target?.result as string,
+          name: file.name,
+          type: file.type
+        });
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async onFileSelected(event: Event): Promise<void> {
     const input = event.target as HTMLInputElement;
     if (input.files) {
       const allowedTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
@@ -174,19 +188,17 @@ export class AddTaskComponent implements OnInit {
         }
       }
       
-      this.task.files = [...(this.task.files || []), ...files];
+      const taskFiles = await Promise.all(files.map(file => this.fileToTaskFile(file)));
+      this.task.files = [...this.task.files, ...taskFiles];
     }
   }
 
-  getFilePreview(file: File): string {
-    if (!this.filePreviews.has(file)) {
-      this.filePreviews.set(file, URL.createObjectURL(file));
-    }
-    return this.filePreviews.get(file) || '';
+  getFilePreview(file: TaskFile): string {
+    return file.data;
   }
 
   removeFile(index: number): void {
-    this.task.files = this.task.files.filter((_, i) => i !== index);
+    this.task.files.splice(index, 1);
   }
 
   removeAllFiles(): void {
@@ -285,19 +297,7 @@ export class AddTaskComponent implements OnInit {
     this.categoryOpen = false;
   }
 
-  onDragOver(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragging = true;
-  }
-
-  onDragLeave(event: DragEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragging = false;
-  }
-
-  onDrop(event: DragEvent): void {
+  async onDrop(event: DragEvent): Promise<void> {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
@@ -308,11 +308,24 @@ export class AddTaskComponent implements OnInit {
       const validFiles = Array.from(files).filter(file => allowedTypes.includes(file.type));
       
       if (validFiles.length > 0) {
-        this.task.files = [...(this.task.files || []), ...validFiles];
+        const taskFiles = await Promise.all(validFiles.map(file => this.fileToTaskFile(file)));
+        this.task.files = [...this.task.files, ...taskFiles];
       } else {
         this.showError('Please upload only JPG or PNG files');
       }
     }
+  }
+
+  onDragOver(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
   }
 
   onWheel(event: WheelEvent): void {

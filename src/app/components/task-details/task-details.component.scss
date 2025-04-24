@@ -198,9 +198,9 @@
     display: flex;
     gap: 10px;
     
-    .label {
-      min-width: 110px;
-    }
+    // .label {
+    //   min-width: 110px;
+    // }
   }
   
   &.stacked {
@@ -356,6 +356,133 @@
   height: 24px;
   width: 1px;
   background-color: #D1D1D1;
+}
+
+.file-list-container {
+  margin-top: 8px;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+
+  .file-grid {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    scroll-behavior: smooth;
+    
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    &:hover {
+      cursor: grab;
+    }
+    
+    &:active {
+      cursor: grabbing;
+    }
+  }
+
+  .file-preview-item {
+    min-width: 110px;
+    width: 110px;
+    
+    .file-preview-content {
+      position: relative;
+      width: 100%;
+      height: 86px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #f6f7f8;
+      border: 1px solid #d1d1d1;
+
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 22px;
+        background: rgba(0, 0, 0, 0);
+        transition: background 0.2s ease;
+        pointer-events: none;
+      }
+
+      &:hover {
+        &::after {
+          background: rgba(0, 0, 0, 0.4);
+        }
+        .file-preview-overlay {
+          opacity: 1;
+        }
+      }
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .file-name {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        height: 22px;
+        padding: 4px;
+        background: white;
+        color: #2A3647;
+        font-size: 12px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border-top: 1px solid #d1d1d1;
+      }
+
+      .file-preview-overlay {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 32px;
+        height: 32px;
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: transparent;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        opacity: 0;
+        transition: all 0.2s ease;
+        z-index: 1;
+        cursor: pointer;
+
+        mat-icon {
+          width: 24px;
+          height: 24px;
+          color: white;
+          transition: all 0.2s ease;
+        }
+
+        &:hover {
+          background-color: #29ABE2;
+          
+          mat-icon {
+            color: white;
+            scale: .9;
+          }
+        }
+      }
+    }
+  }
 }
 
 @media (max-width: 800px) {

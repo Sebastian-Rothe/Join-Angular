@@ -1,6 +1,6 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, query, where, getDocs } from '@angular/fire/firestore';
-import { Task } from '../models/task.class';
+import { Task, TaskFile } from '../models/task.class';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -11,12 +11,7 @@ export class TaskService {
 
   constructor(private userService: UserService) {}
 
-  private async prepareTaskForFirebase(task: Task): Promise<any> {
-    // Komprimiere alle Files zu Base64
-    const compressedFiles = task.files?.length ? 
-      await Promise.all(task.files.map(file => this.userService.compressImage(file))) : 
-      [];
-
+  private prepareTaskForFirebase(task: Task): any {
     return {
       title: task.title,
       description: task.description,
@@ -27,14 +22,14 @@ export class TaskService {
       subtasks: task.subtasks,
       status: task.status,
       createdAt: new Date().getTime(),
-      files: compressedFiles
+      files: task.files || [] // TaskFile objects can be stored directly
     };
   }
 
   async createTask(task: Task): Promise<string> {
     try {
       const tasksCollection = collection(this.firestore, 'tasks');
-      const preparedTask = await this.prepareTaskForFirebase(task);
+      const preparedTask = this.prepareTaskForFirebase(task);
       const docRef = await addDoc(tasksCollection, preparedTask);
       return docRef.id;
     } catch (error) {
@@ -63,6 +58,7 @@ export class TaskService {
           category: taskData['category'],
           subtasks: taskData['subtasks'] || [],
           status: taskData['status'],
+          files: taskData['files'] || [], // TaskFile objects are retrieved directly
           id: doc.id,
           assignedTo: assignedUsers.filter(user => user !== null)
         });
