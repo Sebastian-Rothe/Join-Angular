@@ -278,35 +278,33 @@
   cursor: pointer;
   display: flex;
   align-items: center;
-  gap: 16px;
-  
+  gap: 8px;
+  margin-bottom: 8px;
+
   input[type="checkbox"] {
     display: none;
   }
-  
-  .checkbox-custom {
-    width: 24px;
-    height: 24px;
-    border: 2px solid #2A3647;
-    border-radius: 3px;
-    position: relative;
+
+  svg {
+    min-width: 19px;
     
-    &.checked {
-      background: #2A3647;
-      
-      &:after {
-        content: '';
-        position: absolute;
-        left: 8px;
-        top: 4px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
+    .checked {
+      display: none;
     }
   }
+
+  input[type="checkbox"]:checked + svg {
+    .unchecked {
+      display: none;
+    }
+    .checked {
+      display: block;
+    }
+  }
+}
+
+.align-checkbox-subtasks {
+  margin: 8px 0 4px 16px;
 }
 
 .empty-state {

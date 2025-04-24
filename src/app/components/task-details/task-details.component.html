@@ -62,11 +62,15 @@
   <div class="info-section stacked">
     <div class="label">Subtasks:</div>
     <div class="subtask-list" *ngIf="task.subtasks?.length; else noSubtasks">
-      <label *ngFor="let subtask of task.subtasks" class="custom-checkbox">
+      <label *ngFor="let subtask of task.subtasks" class="custom-checkbox align-checkbox-subtasks">
         <input type="checkbox" 
                [checked]="subtask.completed"
                (change)="toggleSubtask(subtask)">
-        <span class="checkbox-custom" [class.checked]="subtask.completed"></span>
+        <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
+          <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
+          <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
         {{ subtask.title }}
       </label>
     </div>
