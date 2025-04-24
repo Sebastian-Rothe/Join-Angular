@@ -147,22 +147,24 @@
   background: white;
   border-radius: 30px;
   height: 100%;
+
 }
 
 .task-category {
   font-size: 23px;
   font-weight: 400;
+  margin-top: 12px;
   padding: 8px 16px;
   border-radius: 8px;
   color: #fff;
   display: inline-block;
   
-  &.technical-task {
-    background-color: #00bfa5;
-  }
-  
   &.user-story {
     background-color: #0052cc;
+  }
+  
+  &.technical-task {
+    background-color: #00bfa5;
   }
 }
 
@@ -177,7 +179,7 @@
 }
 
 .task-title {
-  margin: 24px 0;
+  margin: 16px 0;
   font-size: 61px;
   font-weight: 700;
   line-height: 120%;

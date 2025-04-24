@@ -1,11 +1,11 @@
 <div class="task-details-dialog">
   <img class="close-button" src="assets/icons/close.svg" (click)="close()" alt="Close">
   
-  <div class="task-category" [ngClass]="task.category.toLowerCase()">
+  <div class="task-category" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
     {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
   </div>
   
-  <h1 class="task-title">{{ task.title }}</h1>
+  <h2 class="task-title">{{ task.title }}</h2>
   <p class="task-description">{{ task.description || 'Task without a description' }}</p>
   
   <div class="info-section inline">

@@ -109,8 +109,9 @@ export class BoardComponent implements OnInit {
     this.dialog.open(TaskDetailsComponent, {
       data: task,
       width: '40%',
-      height: '80%',
-      maxWidth: '800px'
+      maxWidth: '480px',
+      height: '80%'
+  
     });
   }
 }
