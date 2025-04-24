@@ -54,6 +54,8 @@ export class AddTaskComponent implements OnInit {
   private startX = 0;
   private scrollLeft = 0;
 
+  private filePreviews = new Map<File, string>();
+
   categories = [
     { value: 'TechnicalTask', label: 'Technical Task' },
     { value: 'UserStory', label: 'User Story' }
@@ -177,7 +179,10 @@ export class AddTaskComponent implements OnInit {
   }
 
   getFilePreview(file: File): string {
-    return URL.createObjectURL(file);
+    if (!this.filePreviews.has(file)) {
+      this.filePreviews.set(file, URL.createObjectURL(file));
+    }
+    return this.filePreviews.get(file) || '';
   }
 
   removeFile(index: number): void {
@@ -338,8 +343,7 @@ export class AddTaskComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    this.task.files?.forEach(file => {
-      URL.revokeObjectURL(this.getFilePreview(file));
-    });
+    this.filePreviews.forEach((url) => URL.revokeObjectURL(url));
+    this.filePreviews.clear();
   }
 }

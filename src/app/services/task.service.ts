@@ -11,30 +11,36 @@ export class TaskService {
 
   constructor(private userService: UserService) {}
 
-  async createTask(task: Task): Promise<string> {
-    try {
-      const tasksCollection = collection(this.firestore, 'tasks');
-      const docRef = await addDoc(tasksCollection, this.prepareTaskForFirebase(task));
-      return docRef.id;
-    } catch (error) {
-      console.error('Error creating task:', error);
-      throw error;
-    }
-  }
+  private async prepareTaskForFirebase(task: Task): Promise<any> {
+    // Komprimiere alle Files zu Base64
+    const compressedFiles = task.files?.length ? 
+      await Promise.all(task.files.map(file => this.userService.compressImage(file))) : 
+      [];
 
-  private prepareTaskForFirebase(task: Task): any {
     return {
       title: task.title,
       description: task.description,
-      assignedTo: task.assignedTo.map(user => user.uid), // Nur IDs speichern
+      assignedTo: task.assignedTo.map(user => user.uid),
       dueDate: task.dueDate,
       priority: task.priority,
       category: task.category,
       subtasks: task.subtasks,
       status: task.status,
       createdAt: new Date().getTime(),
-      // files müssen separat im Storage gespeichert werden
+      files: compressedFiles
     };
+  }
+
+  async createTask(task: Task): Promise<string> {
+    try {
+      const tasksCollection = collection(this.firestore, 'tasks');
+      const preparedTask = await this.prepareTaskForFirebase(task);
+      const docRef = await addDoc(tasksCollection, preparedTask);
+      return docRef.id;
+    } catch (error) {
+      console.error('Error creating task:', error);
+      throw error;
+    }
   }
 
   async getAllTasks(): Promise<Task[]> {
