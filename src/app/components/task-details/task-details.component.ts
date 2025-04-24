@@ -35,7 +35,14 @@ export class TaskDetailsComponent {
   }
 
   async deleteTask(): Promise<void> {
-    // Implement delete logic
+    if (confirm('Are you sure you want to delete this task?')) {
+      try {
+        await this.taskService.deleteTask(this.task.id);
+        this.dialogRef.close('deleted');
+      } catch (error) {
+        console.error('Error deleting task:', error);
+      }
+    }
   }
 
   editTask(): void {

@@ -81,4 +81,14 @@ export class TaskService {
       throw error;
     }
   }
+
+  async deleteTask(taskId: string): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', taskId);
+      await deleteDoc(taskRef);
+    } catch (error) {
+      console.error('Error deleting task:', error);
+      throw error;
+    }
+  }
 }
