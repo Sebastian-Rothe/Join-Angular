@@ -275,11 +275,14 @@
 }
 
 .custom-checkbox {
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  display: block;
   margin-bottom: 8px;
+
+  .subtask-content {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
 
   input[type="checkbox"] {
     display: none;
@@ -287,6 +290,7 @@
 
   svg {
     min-width: 19px;
+    cursor: pointer;
     
     .checked, .unchecked {
       stroke: #2A3647;
@@ -294,6 +298,10 @@
 
     .checked {
       display: none;
+    }
+    &:hover{
+      scale: 1.1;
+      transition: all 0.2s ease;
     }
   }
 
@@ -304,6 +312,10 @@
     .checked {
       display: block;
     }
+  }
+
+  .subtask-text {
+    cursor: default;
   }
 }
 
