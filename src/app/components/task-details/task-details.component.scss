@@ -288,6 +288,10 @@
   svg {
     min-width: 19px;
     
+    .checked, .unchecked {
+      stroke: #2A3647;
+    }
+
     .checked {
       display: none;
     }
@@ -299,7 +303,15 @@
     }
     .checked {
       display: block;
+      stroke: white;
     }
+
+    rect, path {
+      stroke: white;
+    }
+
+    background-color: #2A3647;
+    border-radius: 3px;
   }
 }
 
