@@ -45,7 +45,7 @@
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
           <h3 class="task-title">{{ task.title }}</h3>
-          <p class="task-description">{{ task.description }}</p>
+          <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
               <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
@@ -91,7 +91,7 @@
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
           <h3 class="task-title">{{ task.title }}</h3>
-          <p class="task-description">{{ task.description }}</p>
+          <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
               <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
@@ -137,7 +137,7 @@
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
           <h3 class="task-title">{{ task.title }}</h3>
-          <p class="task-description">{{ task.description }}</p>
+          <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
               <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
@@ -182,7 +182,7 @@
             {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
           </div>
           <h3 class="task-title">{{ task.title }}</h3>
-          <p class="task-description">{{ task.description }}</p>
+          <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
               <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
