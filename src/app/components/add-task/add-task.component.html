@@ -54,7 +54,7 @@
                 <label for="category">Category<span class="required">*</span></label>
                 <div class="dropdown-category">
                     <div class="category-wrapper">
-                        <button type="button" (click)="toggleCategory()" class="dropdown-btn">
+                        <button type="button" (click)="toggleCategory($event)" class="dropdown-btn">
                             {{ task.category || 'Select task category' }}
                             <span><mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon></span>
                         </button>
@@ -171,7 +171,7 @@
             <div class="form-group">
                 <label for="dropdown">Assigned to</label>
                 <div class="dropdown">
-                    <button type="button" (click)="toggleDropdown()" class="dropdown-btn">
+                    <button type="button" (click)="toggleDropdown($event)" class="dropdown-btn">
                         Select contacts to assign 
                         <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
                     </button>

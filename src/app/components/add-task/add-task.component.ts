@@ -1,4 +1,4 @@
-import { Component, OnInit, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -132,8 +132,37 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  toggleDropdown(): void {
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    // Handle contacts dropdown
+    const contactsDropdown = document.querySelector('.dropdown');
+    if (this.dropdownOpen && !contactsDropdown?.contains(event.target as Node)) {
+      this.dropdownOpen = false;
+    }
+
+    // Handle category dropdown
+    const categoryDropdown = document.querySelector('.dropdown-category');
+    if (this.categoryOpen && !categoryDropdown?.contains(event.target as Node)) {
+      this.categoryOpen = false;
+    }
+  }
+
+  toggleDropdown(event?: MouseEvent): void {
+    if (event) {
+      event.stopPropagation();
+    }
     this.dropdownOpen = !this.dropdownOpen;
+  }
+
+  toggleCategory(event: MouseEvent): void {
+    event.stopPropagation();
+    this.categoryOpen = !this.categoryOpen;
+    if (this.categoryOpen) {
+      setTimeout(() => {
+        const element = document.querySelector('.category-wrapper');
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
   }
 
   isContactSelected(contact: User): boolean {
@@ -280,16 +309,6 @@ export class AddTaskComponent implements OnInit {
     setTimeout(() => {
       this.showErrorMessage = false;
     }, 3000);
-  }
-
-  toggleCategory(): void {
-    this.categoryOpen = !this.categoryOpen;
-    if (this.categoryOpen) {
-      setTimeout(() => {
-        const element = document.querySelector('.category-wrapper');
-        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-      }, 100);
-    }
   }
 
   selectCategory(value: string): void {
