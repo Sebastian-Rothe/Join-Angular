@@ -1,144 +1,16 @@
+// ---------- Variables ----------
+$color-primary: #2A3647;
+$color-secondary: #29ABE2;
+$color-text: #313c4d;
+$color-border: #d1d1d1;
+$color-background: #f6f7f8;
+
+// ---------- Dialog & Container Layout ----------
 .adjust-popup-edit {
   z-index: 1200 !important;
   height: 80%;
   width: 40% !important;
   max-width: 800px;
-}
-
-.left-right-container-to-edit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 70vh;
-
-  label {
-    margin-top: 12px;
-  }
-}
-
-.left-side-to-edit {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-
-.right-side-to-edit {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-
-.taskTitleDetails {
-  margin: 24px 0;
-  font-size: 61px;
-  font-weight: 700;
-  line-height: 50px;
-  word-wrap: break-word;
-  max-height: 150px;
-}
-
-.taskDescriptionDetails {
-  color: black;
-  font-size: 24px;
-  line-height: 19.2px;
-  margin-top: 16px;
-  max-height: 120px;
-  word-wrap: break-word;
-  overflow: scroll;
-  &::-webkit-scrollbar {
-    display: none;
-  }
-}
-
-.titleDetails {
-  color: #727272;
-  font-size: 20px;
-}
-
-.dateTxtDetails {
-  font-size: 20px;
-  font-weight: 450;
-  padding: 4px;
-}
-
-.align-priority {
-  display: flex;
-  align-items: center;
-  gap: 5px;
-  font-size: 20px;
-  font-weight: 450;
-  padding-left: 24px;
-}
-
-.priority-icon {
-  width: 20px;
-  height: 20px;
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-
-  &.low {
-    background-image: url("/assets/icons/PrioLow.svg");
-  }
-
-  &.medium {
-    background-image: url("/assets/icons/PrioMedium.svg");
-  }
-
-  &.urgent {
-    background-image: url("/assets/icons/PrioUrgent.svg");
-  }
-}
-
-.task-assigned {
-  margin-left: 12px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-
-  .content {
-    margin-left: -4px; // Kompensiert den negativen Margin der Avatare
-  }
-}
-
-.style-avatar-overlap {
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  font-size: 12px;
-  margin-right: 0; // Remove negative margin since we're stacking
-  border: 1px solid white;
-  box-sizing: border-box;
-  width: 32px;
-  height: 32px;
-
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-}
-
-.footer-add-task-to-edit {
-  position: fixed;
-  bottom: 0px;  
-  display: flex !important;
-  justify-content: center !important;
-  align-items: center !important;
-  width: 100%;
-  height: 100px;
-  background-color: white;
-}
-
-.footer-add-task-right-to-edit {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .task-details-dialog {
@@ -150,6 +22,7 @@
   overflow: hidden;
 }
 
+// ---------- Header, Content, Footer Structure ----------
 .task-details-header {
   position: sticky;
   top: 0;
@@ -187,6 +60,86 @@
   background: white;
 }
 
+// ---------- Task Category & Title Elements ----------
+.task-category {
+  font-size: 23px;
+  font-weight: 400;
+  margin-top: 12px;
+  padding: 8px 16px;
+  border-radius: 8px;
+  color: #fff;
+  display: inline-block;
+  
+  &.user-story {
+    background-color: #0052cc;
+  }
+  
+  &.technical-task {
+    background-color: #00bfa5;
+  }
+}
+
+.task-title {
+  margin: 16px 0;
+  font-size: 61px;
+  font-weight: 700;
+  line-height: 120%;
+}
+
+.task-description {
+  color: black;
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+// ---------- Info Sections ----------
+.info-section {
+  margin-bottom: 24px;
+
+  &.inline {
+    display: flex;
+    gap: 10px;
+  }
+  
+  &.stacked {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+  }
+  
+  .label {
+    color: $color-text;
+    font-size: 21px;
+    font-weight: 600;
+  }
+  
+  .content {
+    font-size: 21px;
+    color: $color-primary;
+  }
+}
+
+// ---------- Priority Styling ----------
+.priority-icon {
+  width: 20px;
+  height: 20px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  &.low {
+    background-image: url("/assets/icons/PrioLow.svg");
+  }
+
+  &.medium {
+    background-image: url("/assets/icons/PrioMedium.svg");
+  }
+
+  &.urgent {
+    background-image: url("/assets/icons/PrioUrgent.svg");
+  }
+}
+
 .priority-content {
   display: flex;
   align-items: center;
@@ -198,18 +151,21 @@
   }
 }
 
+// ---------- Avatar & User Elements ----------
 .style-avatar-overlap {
-  width: 35px;
-  height: 35px;
-  margin-right: -4px;
   border-radius: 50%;
+  color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: white;
-  font-size: 16px;
+  font-weight: 400;
+  font-size: 12px;
+  margin-right: 0; // Remove negative margin since we're stacking
   border: 1px solid white;
-  
+  box-sizing: border-box;
+  width: 32px;
+  height: 32px;
+
   img {
     width: 100%;
     height: 100%;
@@ -218,18 +174,18 @@
   }
 }
 
-/* Custom Checkbox Styling */
-.subtask-list {
+.task-assigned {
+  margin-left: 12px;
   display: flex;
-  flex-direction: column;
+  align-items: center;
   gap: 8px;
-  margin-left: 12px;
+
+  .content {
+    margin-left: -4px; // Kompensiert den negativen Margin der Avatare
+  }
 }
 
-.files-list {
-  margin-left: 12px;
-}
-
+// ---------- Checkbox & Subtask Styling ----------
 .custom-checkbox {
   display: block;
   margin-bottom: 8px;
@@ -249,7 +205,7 @@
     cursor: pointer;
     
     .checked, .unchecked {
-      stroke: #2A3647;
+      stroke: $color-primary;
     }
 
     .checked {
@@ -275,59 +231,14 @@
   }
 }
 
-.align-checkbox-subtasks {
-  margin: 8px 0 4px 16px;
-}
-
-.empty-state {
-  color: #A8A8A8;
-  font-size: 16px;
+.subtask-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
   margin-left: 12px;
 }
 
-.action-buttons {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-
-.action-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 8px;
-  background: transparent;
-  border: none;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  color: #2A3647;
-  font-size: 16px;
-
-  &:hover {
-    color: #29ABE2;
-    transform: scale(1.1);
-    box-shadow: none;
-    
-    mat-icon {
-      color: #29ABE2;
-    }
-  }
-
-  mat-icon {
-    color: #2A3647;
-    transition: all 0.2s ease;
-  }
-}
-
-.button-divider {
-  height: 24px;
-  width: 1px;
-  background-color: #D1D1D1;
-}
-
+// ---------- File List & Preview ----------
 .file-list-container {
   margin-top: 8px;
   width: 100%;
@@ -370,8 +281,8 @@
       height: 86px;
       border-radius: 8px;
       overflow: hidden;
-      background: #f6f7f8;
-      border: 1px solid #d1d1d1;
+      background: $color-background;
+      border: 1px solid $color-border;
 
       &::after {
         content: '';
@@ -408,12 +319,12 @@
         height: 22px;
         padding: 4px;
         background: white;
-        color: #2A3647;
+        color: $color-primary;
         font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        border-top: 1px solid #d1d1d1;
+        border-top: 1px solid $color-border;
       }
 
       .file-preview-overlay {
@@ -443,7 +354,7 @@
         }
 
         &:hover {
-          background-color: #29ABE2;
+          background-color: $color-secondary;
           
           mat-icon {
             color: white;
@@ -455,248 +366,177 @@
   }
 }
 
-// Add media queries for responsive padding
-@media (max-width: 768px) {
-  .task-details-header {
-    padding: 20px 20px 6px;
-  }
-  
-  .task-details-content {
-    padding: 0 20px;
-  }
-  
-  .task-details-footer {
-    padding: 6px 20px 20px;
-  }
-}
-
-@media (max-width: 600px) {
-  .task-details-header {
-    padding: 16px 16px 4px;
-  }
-  
-  .task-details-content {
-    padding: 0 16px;
-  }
-  
-  .task-details-footer {
-    padding: 4px 16px 16px;
-  }
-}
-
-@media (max-width: 400px) {
-  .task-details-header {
-    padding: 12px 12px 4px;
-  }
-  
-  .task-details-content {
-    padding: 0 12px;
-  }
-  
-  .task-details-footer {
-    padding: 4px 12px 12px;
-  }
-}
-
-.task-category {
-  font-size: 23px;
-  font-weight: 400;
-  margin-top: 12px;
-  padding: 8px 16px;
-  border-radius: 8px;
-  color: #fff;
-  display: inline-block;
-  
-  &.user-story {
-    background-color: #0052cc;
-  }
-  
-  &.technical-task {
-    background-color: #00bfa5;
-  }
-}
-
-.close-button {
+// ---------- Action Buttons ----------
+.action-buttons {
   position: absolute;
-  top: 24px;
+  bottom: 24px;
   right: 24px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: transparent;
+  border: none;
   cursor: pointer;
+  transition: all 0.2s ease;
+  color: $color-primary;
+  font-size: 16px;
+
   &:hover {
+    color: $color-secondary;
     transform: scale(1.1);
-  }
-}
-
-.task-title {
-  margin: 16px 0;
-  font-size: 61px;
-  font-weight: 700;
-  line-height: 120%;
-}
-
-.task-description {
-  color: black;
-  font-size: 20px;
-  margin-bottom: 24px;
-}
-
-.info-section {
-  margin-bottom: 24px;
-
-  &.inline {
-    display: flex;
-    gap: 10px;
-  }
-  
-  &.stacked {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-  }
-  
-  .label {
-    color: #313c4d;
-    font-size: 21px;
-    font-weight: 600;
-  }
-  
-  .content {
-    font-size: 21px;
-    color: #2A3647;
-  }
-}
-
-@media (max-width: 768px) {
-  .info-section {
-    margin-bottom: 20px;
+    box-shadow: none;
     
-    &.stacked {
-      gap: 12px;
+    mat-icon {
+      color: $color-secondary;
     }
   }
-  
-  .task-title {
-    margin: 14px 0;
-  }
-  
-  .task-description {
-    margin-bottom: 20px;
+
+  mat-icon {
+    color: $color-primary;
+    transition: all 0.2s ease;
   }
 }
 
-@media (max-width: 600px) {
-  .info-section {
-    margin-bottom: 16px;
-    
-    &.stacked {
-      gap: 10px;
-    }
-  }
-  
-  .task-title {
-    margin: 12px 0;
-  }
-  
-  .task-description {
-    margin-bottom: 16px;
-  }
-  .subtask-list{
-    gap: 6px;
+.button-divider {
+  height: 24px;
+  width: 1px;
+  background-color: $color-border;
+}
 
+// ---------- Edit Mode Elements ----------
+.left-right-container-to-edit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 70vh;
+
+  label {
+    margin-top: 12px;
   }
 }
 
-@media (max-width: 400px) {
-  .info-section {
-    margin-bottom: 8px;
-    
-    &.stacked {
-      gap: 8px;
-    }
-  }
-  
-  .task-title {
-    margin: 8px 0;
-  }
-  
-  .task-description {
-    margin: 8px 0;
-  }
+.left-side-to-edit {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
 }
 
+.right-side-to-edit {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+}
+
+// ---------- Media Queries ----------
 @media (max-width: 800px) {
-  .taskTitleDetails {
-    margin: 12px 0;
+  .task-title {
     font-size: 44px;
+    margin: 12px 0;
   }
-  .taskDescriptionDetails {
+  
+  .task-description {
     font-size: 20px;
     margin-top: 8px;
-  }
-  .titleDetails {
-    font-size: 18px;
-  }
-  .dateTxtDetails {
-    font-size: 18px;
-  }
-  .align-priority {
-    font-size: 18px;
-  }
-}
-
-
-
-
-@media (max-width: 768px) {
-  .task-title {
-    font-size: 36px;
-  }
-  
-  .task-description {
-    font-size: 16px;
   }
   
   .info-section .label,
   .info-section .content {
     font-size: 16px;
   }
+}
+
+@media (max-width: 768px) {
+  // Padding adjustments
+  .task-details-header {
+    padding: 20px 20px 6px;
+  }
+  .task-details-content {
+    padding: 0 20px;
+  }
+  .task-details-footer {
+    padding: 6px 20px 20px;
+  }
   
-  .style-avatar-overlap {
-    width: 35px;
-    height: 35px;
+  // Font size adjustments
+  .info-section {
+    margin-bottom: 20px;
+    &.stacked { gap: 12px; }
   }
-}
-@media (max-width: 600px) {
-  .left-right-container-to-edit {
-    height: 75vh;
-  }
-  .taskTitleDetails {
-    margin: 8px 0;
+  
+  .task-title {
     font-size: 36px;
+    margin: 10px 0;
   }
-  .taskDescriptionDetails {
-    font-size: 20px;
-    margin-top: 4px;
-  }
-  .titleDetails {
-    font-size: 16px;
-  }
-  .dateTxtDetails {
-    font-size: 16px;
-  }
-  .align-priority {
-    font-size: 16px;
+  
+  .task-description {
+    font-size: 18px;
+    margin-bottom: 20px;
   }
 }
-@media (max-width: 424px) {
-  .left-right-container-to-edit {
-    height: 80vh;
+
+@media (max-width: 600px) {
+  // Padding adjustments
+  .task-details-header {
+    padding: 16px 16px 4px;
   }
-  .taskTitleDetails {
-    margin: 2px 0;
-    font-size: 30px;
+  .task-details-content {
+    padding: 0 16px;
   }
-  .taskDescriptionDetails {
-    font-size: 20px;
-    margin-top: 2px;
+  .task-details-footer {
+    padding: 4px 16px 16px;
+  }
+  
+  // Element adjustments
+  .info-section {
+    margin-bottom: 16px;
+    &.stacked { gap: 10px; }
+  }
+  
+  .task-title {
+    font-size: 32px;
+    margin: 8px 0;
+  }
+  
+  .task-description {
+    font-size: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .subtask-list { gap: 6px; }
+}
+
+@media (max-width: 400px) {
+  // Padding adjustments
+  .task-details-header {
+    padding: 12px 12px 4px;
+  }
+  .task-details-content {
+    padding: 0 12px;
+  }
+  .task-details-footer {
+    padding: 4px 12px 12px;
+  }
+  
+  // Element adjustments
+  .info-section {
+    margin-bottom: 8px;
+    &.stacked { gap: 8px; }
+  }
+  
+  .task-title {
+    font-size: 28px;
+    margin: 6px 0;
+  }
+  
+  .task-description {
+    margin: 8px 0;
   }
 }
