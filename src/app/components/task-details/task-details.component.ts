@@ -15,15 +15,37 @@ import { TaskService } from '../../services/task.service';
 export class TaskDetailsComponent {
   @ViewChild('fileGrid') fileGrid!: ElementRef;
   
+  // Add missing properties
   private isDraggingGrid = false;
   private startX = 0;
   private scrollLeft = 0;
+  isDescriptionLong = false;
+  isCollapsed = true;
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public task: Task,
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
     private taskService: TaskService
-  ) {}
+  ) {
+    // Check if description is long enough to be collapsible
+    if (this.task.description) {
+      const tempElement = document.createElement('p');
+      tempElement.style.cssText = 'font-size: 20px; width: 100%; position: absolute; visibility: hidden;';
+      tempElement.textContent = this.task.description;
+      document.body.appendChild(tempElement);
+      const height = tempElement.offsetHeight;
+      document.body.removeChild(tempElement);
+      
+      // Assuming ~24px per line (20px font + line-height), check if more than 3 lines
+      this.isDescriptionLong = height > 72;
+    }
+  }
+
+  toggleDescription(): void {
+    if (this.isDescriptionLong) {
+      this.isCollapsed = !this.isCollapsed;
+    }
+  }
 
   close(): void {
     this.dialogRef.close();

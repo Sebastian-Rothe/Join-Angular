@@ -8,7 +8,11 @@
 
   <div class="task-details-content">
     <h2 class="task-title">{{ task.title }}</h2>
-    <p class="task-description">{{ task.description || 'Task without a description' }}</p>
+    <p class="task-description" 
+       [class.collapsible]="isDescriptionLong"
+       [class.collapsed]="isCollapsed"
+       [title]="isDescriptionLong ? (isCollapsed ? 'click to expand' : 'click to collapse') : ''"
+       (click)="toggleDescription()">{{ task.description || 'Task without a description' }}</p>
 
     <div class="info-section inline">
       <div class="label">Due date:</div>
