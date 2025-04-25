@@ -50,12 +50,12 @@
              (mousemove)="onDrag($event)"
              (mouseup)="stopDragging()"
              (mouseleave)="stopDragging()">
-          <div *ngFor="let file of task.files" class="file-preview-item">
+          <div *ngFor="let file of task.files; let i = index" class="file-preview-item">
             <div class="file-preview-content">
-              <img [src]="file.data" [alt]="file.name">
+              <img [src]="file.data" [alt]="file.name" (click)="openImageViewer(i)">
               <div class="file-name">{{ file.name }}</div>
-              <div class="file-preview-overlay" (click)="downloadFile(file)">
-                <mat-icon>cloud_download</mat-icon>
+              <div class="file-preview-overlay">
+                <mat-icon (click)="downloadFile(file); $event.stopPropagation()">cloud_download</mat-icon>
               </div>
             </div>
           </div>
@@ -103,3 +103,11 @@
     </button>
   </div>
 </div>
+
+<app-image-viewer
+  *ngIf="showImageViewer"
+  [images]="images"
+  [currentIndex]="currentImageIndex"
+  (indexChange)="onCurrentIndexChange($event)"
+  (close)="showImageViewer = false"
+></app-image-viewer>

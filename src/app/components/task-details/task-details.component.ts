@@ -1,18 +1,19 @@
-import { Component, Inject, ViewChild, ElementRef } from '@angular/core';
+import { Component, Inject, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { TaskService } from '../../services/task.service';
+import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
 
 @Component({
   selector: 'app-task-details',
   standalone: true,
-  imports: [CommonModule, MatIconModule],
+  imports: [CommonModule, MatIconModule, ImageViewerComponent],
   templateUrl: './task-details.component.html',
   styleUrls: ['./task-details.component.scss']
 })
-export class TaskDetailsComponent {
+export class TaskDetailsComponent implements OnInit {
   @ViewChild('fileGrid') fileGrid!: ElementRef;
   
   // Add missing properties
@@ -21,6 +22,9 @@ export class TaskDetailsComponent {
   private scrollLeft = 0;
   isDescriptionLong = false;
   isCollapsed = true;
+  showImageViewer = false;
+  currentImageIndex = 0;
+  images: string[] = [];
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public task: Task,
@@ -38,6 +42,12 @@ export class TaskDetailsComponent {
       
       // Assuming ~24px per line (20px font + line-height), check if more than 3 lines
       this.isDescriptionLong = height > 72;
+    }
+  }
+
+  ngOnInit() {
+    if (this.task.files) {
+      this.images = this.task.files.map(file => file.data);
     }
   }
 
@@ -146,5 +156,16 @@ export class TaskDetailsComponent {
 
   ngOnDestroy(): void {
     // Keine Cleanup nötig da wir Base64 statt Blob URLs verwenden
+  }
+
+  openImageViewer(index: number): void {
+    if (this.task.files[index]?.data) {
+      this.currentImageIndex = index;
+      this.showImageViewer = true;
+    }
+  }
+
+  onCurrentIndexChange(index: number): void {
+    this.currentImageIndex = index;
   }
 }
