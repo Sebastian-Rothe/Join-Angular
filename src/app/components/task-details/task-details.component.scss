@@ -1,3 +1,5 @@
+@use '../../../styles.scss' as *;
+
 // ---------- Variables ----------
 $color-primary: #2a3647;
 $color-secondary: #29abe2;
@@ -441,25 +443,26 @@ $color-background: #f6f7f8;
   &[data-tooltip] {
     position: relative;
 
-    &:hover::before {
+    // Tooltip nur anzeigen wenn die Beschreibung auch collapsible ist
+    &.collapsible:hover::before {
       content: attr(data-tooltip);
       position: fixed;
       transform: translateX(-50%);
       left: 50%;
       bottom: 20%;
-      background: rgba($dark-navy, 0.9); 
+      background: rgba($dark-navy, 0.9);
       color: $white;
-      padding: 8px 16px; 
+      padding: 8px 16px;
       border-radius: 12px;
-      font-size: 14px; 
+      font-size: 14px;
       font-weight: 500;
       letter-spacing: 0.2px;
       white-space: nowrap;
-      z-index: 9999; 
-      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25); 
+      z-index: 9999;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.25);
       animation: tooltipFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
       backdrop-filter: blur(4px);
-      pointer-events: none; 
+      pointer-events: none;
     }
   }
 }
