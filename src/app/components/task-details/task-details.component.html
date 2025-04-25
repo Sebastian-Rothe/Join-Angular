@@ -1,89 +1,92 @@
 <div class="task-details-dialog">
-  <img class="close-button" src="assets/icons/close.svg" (click)="close()" alt="Close">
-  
-  <div class="task-category" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
-    {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
-  </div>
-  
-  <h2 class="task-title">{{ task.title }}</h2>
-  <p class="task-description">{{ task.description || 'Task without a description' }}</p>
-  
-  <div class="info-section inline">
-    <div class="label">Due date:</div>
-    <div class="content">{{ getFormattedDate(task.dueDate) | date:'dd/MM/yyyy' }}</div>
-  </div>
-  
-  <div class="info-section inline">
-    <div class="label">Priority:</div>
-    <div class="content">
-      {{ task.priority }}
-      <img [src]="'assets/icons/Prio' + (task.priority | titlecase) + '.svg'" alt="Priority">
+  <div class="task-details-header">
+    <div class="task-category" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
+      {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
     </div>
+    <img class="close-button" src="assets/icons/close.svg" (click)="close()" alt="Close">
   </div>
-  
-  <div class="info-section stacked">
-    <div class="label">Assigned to:</div>
-    <div class="task-assigned">
-      <div *ngFor="let user of task.assignedTo" 
-           class="style-avatar-overlap"
-           [style.background-color]="user.iconColor">
-        <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
-        <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+
+  <div class="task-details-content">
+    <h2 class="task-title">{{ task.title }}</h2>
+    <p class="task-description">{{ task.description || 'Task without a description' }}</p>
+
+    <div class="info-section inline">
+      <div class="label">Due date:</div>
+      <div class="content">{{ getFormattedDate(task.dueDate) | date:'dd/MM/yyyy' }}</div>
+    </div>
+
+    <div class="info-section inline">
+      <div class="label">Priority:</div>
+      <div class="content">
+        {{ task.priority }}
+        <img [src]="'assets/icons/Prio' + (task.priority | titlecase) + '.svg'" alt="Priority">
       </div>
     </div>
-  </div>
-  
-  <div class="info-section stacked">
-    <div class="label">Attachments:</div>
-    <div class="file-list-container" *ngIf="task.files?.length; else noFiles">
-      <div class="file-grid" 
-           #fileGrid
-           (wheel)="onWheel($event)"
-           (mousedown)="startDragging($event)"
-           (mousemove)="onDrag($event)"
-           (mouseup)="stopDragging()"
-           (mouseleave)="stopDragging()">
-        <div *ngFor="let file of task.files" class="file-preview-item">
-          <div class="file-preview-content">
-            <img [src]="file.data" [alt]="file.name">
-            <div class="file-name">{{ file.name }}</div>
-            <div class="file-preview-overlay" (click)="downloadFile(file)">
-              <mat-icon>cloud_download</mat-icon>
+
+    <div class="info-section stacked">
+      <div class="label">Assigned to:</div>
+      <div class="task-assigned">
+        <div *ngFor="let user of task.assignedTo" 
+             class="style-avatar-overlap"
+             [style.background-color]="user.iconColor">
+          <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+          <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="info-section stacked">
+      <div class="label">Attachments:</div>
+      <div class="file-list-container" *ngIf="task.files?.length; else noFiles">
+        <div class="file-grid" 
+             #fileGrid
+             (wheel)="onWheel($event)"
+             (mousedown)="startDragging($event)"
+             (mousemove)="onDrag($event)"
+             (mouseup)="stopDragging()"
+             (mouseleave)="stopDragging()">
+          <div *ngFor="let file of task.files" class="file-preview-item">
+            <div class="file-preview-content">
+              <img [src]="file.data" [alt]="file.name">
+              <div class="file-name">{{ file.name }}</div>
+              <div class="file-preview-overlay" (click)="downloadFile(file)">
+                <mat-icon>cloud_download</mat-icon>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <ng-template #noFiles>
+        <div class="empty-state">No files attached</div>
+      </ng-template>
     </div>
-    <ng-template #noFiles>
-      <div class="empty-state">No files attached</div>
-    </ng-template>
-  </div>
 
-  <div class="info-section stacked">
-    <div class="label">Subtasks:</div>
-    <div class="subtask-list" *ngIf="task.subtasks?.length; else noSubtasks">
-      <div *ngFor="let subtask of task.subtasks" class="custom-checkbox">
-        <div class="subtask-content">
-          <input type="checkbox" 
-                 [checked]="subtask.completed"
-                 (change)="toggleSubtask(subtask)">
-          <svg (click)="toggleSubtask(subtask); $event.stopPropagation()" 
-               width="19" height="18" viewBox="0 0 19 18" fill="none" 
-               xmlns="http://www.w3.org/2000/svg">
-            <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
-            <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
-            <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-          </svg>
-          <span class="subtask-text">{{ subtask.title }}</span>
+    <div class="info-section stacked">
+      <div class="label">Subtasks:</div>
+      <div class="subtask-list" *ngIf="task.subtasks?.length; else noSubtasks">
+        <div *ngFor="let subtask of task.subtasks" class="custom-checkbox">
+          <div class="subtask-content">
+            <input type="checkbox" 
+                   [checked]="subtask.completed"
+                   (change)="toggleSubtask(subtask)">
+            <svg (click)="toggleSubtask(subtask); $event.stopPropagation()" 
+                 width="19" height="18" viewBox="0 0 19 18" fill="none" 
+                 xmlns="http://www.w3.org/2000/svg">
+              <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
+              <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
+              <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+            </svg>
+            <span class="subtask-text">{{ subtask.title }}</span>
+          </div>
         </div>
       </div>
+      <ng-template #noSubtasks>
+        <div class="empty-state">No subtasks</div>
+      </ng-template>
     </div>
-    <ng-template #noSubtasks>
-      <div class="empty-state">No subtasks</div>
-    </ng-template>
   </div>
 
-  <div class="action-buttons">
+  <div class="task-details-footer">
     <button class="action-btn delete" (click)="deleteTask()">
       <mat-icon>delete</mat-icon>
       Delete

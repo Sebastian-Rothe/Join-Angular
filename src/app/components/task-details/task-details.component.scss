@@ -142,12 +142,92 @@
 }
 
 .task-details-dialog {
-  padding: 24px;
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background: white;
   border-radius: 30px;
-  height: 100%;
+  overflow: hidden;
+}
 
+.task-details-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 24px 8px;
+  background: white;
+  z-index: 2;
+}
+
+.task-details-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0 24px;
+  
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(42, 54, 71, 0.4);
+    border-radius: 4px;
+  }
+}
+
+.task-details-footer {
+  position: sticky;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 8px 24px 24px;
+  background: white;
+}
+
+// Add media queries for responsive padding
+@media (max-width: 768px) {
+  .task-details-header {
+    padding: 20px 20px 6px;
+  }
+  
+  .task-details-content {
+    padding: 0 20px;
+  }
+  
+  .task-details-footer {
+    padding: 6px 20px 20px;
+  }
+}
+
+@media (max-width: 600px) {
+  .task-details-header {
+    padding: 16px 16px 4px;
+  }
+  
+  .task-details-content {
+    padding: 0 16px;
+  }
+  
+  .task-details-footer {
+    padding: 4px 16px 16px;
+  }
+}
+
+@media (max-width: 400px) {
+  .task-details-header {
+    padding: 12px 12px 4px;
+  }
+  
+  .task-details-content {
+    padding: 0 12px;
+  }
+  
+  .task-details-footer {
+    padding: 4px 12px 12px;
+  }
 }
 
 .task-category {
