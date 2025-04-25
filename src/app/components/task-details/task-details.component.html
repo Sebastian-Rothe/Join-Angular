@@ -11,7 +11,7 @@
     <p class="task-description" 
        [class.collapsible]="isDescriptionLong"
        [class.collapsed]="isCollapsed"
-       [title]="isDescriptionLong ? (isCollapsed ? 'click to expand' : 'click to collapse') : ''"
+       [attr.data-tooltip]="isDescriptionLong ? (isCollapsed ? 'Click to expand description' : 'Click to collapse description') : ''"
        (click)="toggleDescription()">{{ task.description || 'Task without a description' }}</p>
 
     <div class="info-section inline">
