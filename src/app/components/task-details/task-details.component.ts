@@ -53,7 +53,12 @@ export class TaskDetailsComponent {
 
   async toggleSubtask(subtask: Subtask): Promise<void> {
     subtask.completed = !subtask.completed;
-    // Implement update logic
+    try {
+      await this.taskService.updateSubtaskStatus(this.task.id, this.task.subtasks);
+    } catch (error) {
+      console.error('Error updating subtask:', error);
+      subtask.completed = !subtask.completed; // Revert on error
+    }
   }
 
   async deleteTask(): Promise<void> {

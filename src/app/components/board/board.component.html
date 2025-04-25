@@ -48,7 +48,7 @@
           <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) / task.subtasks.length * 100"></div>
             </div>
             <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
           </div>
@@ -94,7 +94,7 @@
           <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) / task.subtasks.length * 100"></div>
             </div>
             <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
           </div>
@@ -140,7 +140,7 @@
           <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) / task.subtasks.length * 100"></div>
             </div>
             <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
           </div>
@@ -185,7 +185,7 @@
           <p class="task-description">{{ task.description || 'Task without a description' }}</p>
           <div class="task-subtasks" *ngIf="task.subtasks?.length">
             <div class="progress-bar">
-              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) * 100"></div>
+              <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) / task.subtasks.length * 100"></div>
             </div>
             <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
           </div>

@@ -1,12 +1,16 @@
 import { Injectable, inject } from '@angular/core';
 import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, query, where, getDocs } from '@angular/fire/firestore';
-import { Task, TaskFile } from '../models/task.class';
+import { Task, TaskFile, Subtask } from '../models/task.class';
 import { UserService } from './user.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TaskService {
+  private taskSubject = new BehaviorSubject<Task[]>([]);
+  tasks$ = this.taskSubject.asObservable();
+
   private firestore: Firestore = inject(Firestore);
 
   constructor(private userService: UserService) {}
@@ -38,6 +42,24 @@ export class TaskService {
     }
   }
 
+  async updateSubtaskStatus(taskId: string, updatedSubtasks: Subtask[]): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', taskId);
+      await updateDoc(taskRef, { subtasks: updatedSubtasks });
+      
+      // Update local tasks
+      const currentTasks = this.taskSubject.value;
+      const updatedTasks = currentTasks.map(task => 
+        task.id === taskId ? { ...task, subtasks: updatedSubtasks } : task
+      );
+      this.taskSubject.next(updatedTasks);
+    } catch (error) {
+      console.error('Error updating subtask status:', error);
+      throw error;
+    }
+  }
+
+  // Modify getAllTasks to use BehaviorSubject
   async getAllTasks(): Promise<Task[]> {
     try {
       const tasksCollection = collection(this.firestore, 'tasks');
@@ -64,7 +86,7 @@ export class TaskService {
         });
         tasks.push(task);
       }
-      
+      this.taskSubject.next(tasks);
       return tasks;
     } catch (error) {
       console.error('Error loading tasks:', error);

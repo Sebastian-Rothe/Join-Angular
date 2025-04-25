@@ -30,6 +30,12 @@ export class BoardComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTasks();
+    this.taskService.tasks$.subscribe(tasks => {
+      if (tasks.length > 0) {
+        this.tasks = tasks;
+        this.filteredTasks = [...tasks];
+      }
+    });
   }
 
   async loadTasks() {
