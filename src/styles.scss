@@ -17,15 +17,15 @@ $border-radius-xl: 20px;
 
 :root {
   --heading-font-size: 68px;
-  
+
   @media (max-width: 1200px) {
     --heading-font-size: 60px;
   }
-  
+
   @media (max-width: 900px) {
     --heading-font-size: 52px;
   }
-  
+
   @media (max-width: 500px) {
     --heading-font-size: 44px;
   }
@@ -140,10 +140,62 @@ body {
 body {
   margin: 0;
   padding: 0;
-  font-family: 'Inter', sans-serif;
+  font-family: "Inter", sans-serif;
   overflow: hidden;
 }
 
 * {
   box-sizing: border-box;
+}
+
+@keyframes tooltipFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 10px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+// Custom tooltip for assigned users
+.style-avatar-overlap {
+  &[data-tooltip] {
+    position: relative;
+
+    &:hover::before {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 15px);
+      border-radius: 12px;
+
+      left: 50%;
+      transform: translateX(-50%);
+      background: $dark-navy;
+      color: $white;
+      padding: 6px 12px;
+
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+      z-index: 1000;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+      animation: tooltipFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      backdrop-filter: blur(4px);
+    }
+
+    &:hover::after {
+      content: "";
+      position: absolute;
+      bottom: calc(100% + 4px);
+      left: 50%;
+      transform: translateX(-50%);
+      border: 6px solid transparent;
+      border-top: 6px solid $dark-navy;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+      animation: tooltipFadeIn 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+  }
 }
