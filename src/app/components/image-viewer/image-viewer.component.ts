@@ -142,12 +142,15 @@ interface ImageInfo {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 20px;
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
     }
 
     .image-container {
-      height: 100%;
+      position: relative;
       width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -172,6 +175,11 @@ interface ImageInfo {
       opacity: 0;
       transition: opacity 0.3s ease;
       z-index: 2;
+      width: 64px; // Added fixed width
+      height: 64px; // Added fixed height
+      display: flex; // Added for centering icon
+      align-items: center;
+      justify-content: center;
 
       &:hover {
         background: rgba(0, 0, 0, 0.8);
@@ -182,8 +190,14 @@ interface ImageInfo {
         font-size: 36px;
       }
 
-      &.prev { left: 0; border-radius: 0 4px 4px 0; }
-      &.next { right: 0; border-radius: 4px 0 0 4px; }
+      &.prev { 
+        left: 20px; 
+        border-radius: 50%;  // Changed to circle
+      }
+      &.next { 
+        right: 20px; 
+        border-radius: 50%;  // Changed to circle
+      }
     }
 
     .viewer-container:hover {
