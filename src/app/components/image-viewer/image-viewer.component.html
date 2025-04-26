@@ -1,0 +1,38 @@
+<div class="image-viewer" (click)="close.emit()">
+  <div class="viewer-container" (click)="$event.stopPropagation()">
+    <div class="header-bar">
+      <div class="file-info">
+        <span class="filename">{{ currentImageInfo?.name }}</span>
+        <span class="filesize">{{ formatFileSize(currentImageInfo?.size) }}</span>
+      </div>
+      <div class="zoom-controls">
+        <button (click)="zoomOut()"><mat-icon>zoom_out</mat-icon></button>
+        <button (click)="zoomIn()"><mat-icon>zoom_in</mat-icon></button>
+      </div>
+      <div class="action-controls">
+        <button (click)="downloadImage()"><mat-icon>cloud_download</mat-icon></button>
+        <button (click)="close.emit()"><mat-icon>close</mat-icon></button>
+      </div>
+    </div>
+    
+    <div class="content-area">
+      <button class="nav-btn prev" (click)="prev()" *ngIf="hasMultipleImages">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      
+      <div class="image-container" 
+           [style.transform]="'scale(' + zoom + ') translate(' + position.x + 'px, ' + position.y + 'px)'"
+           (mousedown)="startPan($event)"
+           (mousemove)="onPan($event)"
+           (mouseup)="stopPan()"
+           (mouseleave)="stopPan()"
+           (wheel)="onWheel($event)">
+        <img [src]="currentImage" [alt]="'Image ' + (currentIndex + 1)" draggable="false">
+      </div>
+
+      <button class="nav-btn next" (click)="next()" *ngIf="hasMultipleImages">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

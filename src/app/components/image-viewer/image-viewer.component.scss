@@ -1,0 +1,213 @@
+@use '../../../styles.scss' as *;
+    
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.viewer-container {
+  position: relative;
+  width: min(90vw, 1200px);
+  height: min(90vh, 800px);
+  background: black;
+  border-radius: 12px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 20px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 2;
+
+  .file-info {
+    color: white;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    max-width: 45%;
+    margin-right: 20px;
+
+    .filename {
+      font-weight: 500;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      max-width: 300px;
+    }
+
+    .filesize {
+      color: rgba(255, 255, 255, 0.7);
+      font-size: 14px;
+      white-space: nowrap;
+    }
+  }
+
+  .zoom-controls {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+  }
+
+  .action-controls {
+    display: flex;
+    gap: 8px;
+
+    button {
+      background: none;
+      border: none;
+      color: white;
+      padding: 8px;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+     
+
+      &:hover {
+        background: $primary-blue;
+        color: white;
+      }
+
+    
+
+      mat-icon {
+        font-size: 24px;
+        width: 24px;
+        height: 24px;
+        transition: all 0.2s ease;
+        &:first-child:hover { // Download button
+        transform: scale(.8);
+      }
+      }
+    }
+  }
+
+  button {
+    background: none;
+    border: none;
+    color: white;
+    padding: 8px;
+
+    &:hover {
+      color: $primary-blue;
+      transform: scale(1.1);
+    }
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+}
+
+.content-area {
+  flex: 1;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.1s ease;
+  cursor: grab;
+  
+  &:active {
+    cursor: grabbing;
+    transition: none;
+  }
+  
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    user-select: none;
+  }
+}
+
+.desktop {
+  @media (max-width: 800px) {
+    display: none !important;
+  }
+}
+
+.mobile {
+  display: none !important;
+  @media (max-width: 800px) {
+    display: flex !important;
+  }
+}
+
+.nav-btn {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: white;
+  border: none;
+  cursor: pointer;
+  opacity: 0; // Zurück zu opacity: 0
+  transition: all 0.3s ease;
+  z-index: 3;
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+
+  &:hover {
+    transform: translateY(-50%) scale(1.1);
+  }
+
+  mat-icon {
+    font-size: 40px;
+    width: 40px;
+    height: 40px;
+    color: $primary-blue;
+  }
+
+  &.prev { left: 20px; }
+  &.next { right: 20px; }
+}
+
+// Hover-Effekt wiederherstellen
+.viewer-container:hover {
+  .header-bar, .nav-btn {
+    opacity: 1;
+  }
+}
