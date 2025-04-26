@@ -98,14 +98,21 @@ interface ImageInfo {
         display: flex;
         align-items: center;
         gap: 8px;
+        max-width: 45%;
+        margin-right: 20px;
 
         .filename {
           font-weight: 500;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          max-width: 300px;
         }
 
         .filesize {
           color: rgba(255, 255, 255, 0.7);
           font-size: 14px;
+          white-space: nowrap;
         }
       }
 
