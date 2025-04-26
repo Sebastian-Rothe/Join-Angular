@@ -2,6 +2,12 @@ import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 
+interface ImageInfo {
+  url: string;
+  name: string;
+  size: number;
+}
+
 @Component({
   selector: 'app-image-viewer',
   standalone: true,
@@ -10,7 +16,10 @@ import { MatIconModule } from '@angular/material/icon';
     <div class="image-viewer" (click)="close.emit()">
       <div class="viewer-container" (click)="$event.stopPropagation()">
         <div class="header-bar">
-          <div class="file-info">{{ images[currentIndex].split('/').pop() }}</div>
+          <div class="file-info">
+            <span class="filename">{{ currentImageInfo?.name }}</span>
+            <span class="filesize">{{ formatFileSize(currentImageInfo?.size) }}</span>
+          </div>
           <div class="zoom-controls">
             <button (click)="zoomOut()"><mat-icon>zoom_out</mat-icon></button>
             <button (click)="zoomIn()"><mat-icon>zoom_in</mat-icon></button>
@@ -80,7 +89,18 @@ import { MatIconModule } from '@angular/material/icon';
       .file-info {
         color: white;
         font-size: 16px;
-        // flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        .filename {
+          font-weight: 500;
+        }
+
+        .filesize {
+          color: rgba(255, 255, 255, 0.7);
+          font-size: 14px;
+        }
       }
 
       .zoom-controls {
@@ -101,7 +121,6 @@ import { MatIconModule } from '@angular/material/icon';
         background: none;
         border: none;
         color: white;
-        cursor: pointer;
         padding: 8px;
 
         &:hover {
@@ -175,7 +194,7 @@ import { MatIconModule } from '@angular/material/icon';
   `]
 })
 export class ImageViewerComponent {
-  @Input() images: string[] = [];
+  @Input() images: ImageInfo[] = [];
   @Input() currentIndex = 0;
   @Output() close = new EventEmitter<void>();
   @Output() indexChange = new EventEmitter<number>();
@@ -186,8 +205,12 @@ export class ImageViewerComponent {
     return this.images.length > 1;
   }
 
+  get currentImageInfo(): ImageInfo | undefined {
+    return this.images[this.currentIndex];
+  }
+
   get currentImage(): string {
-    return this.images[this.currentIndex] || '';
+    return this.currentImageInfo?.url || '';
   }
 
   next(): void {
@@ -208,10 +231,24 @@ export class ImageViewerComponent {
     if (this.zoom > 0.5) this.zoom -= 0.5;
   }
 
+  formatFileSize(bytes: number | undefined): string {
+    if (!bytes) return '';
+    const units = ['B', 'KB', 'MB', 'GB'];
+    let size = bytes;
+    let unitIndex = 0;
+    
+    while (size >= 1024 && unitIndex < units.length - 1) {
+      size /= 1024;
+      unitIndex++;
+    }
+    
+    return `${size.toFixed(1)} ${units[unitIndex]}`;
+  }
+
   downloadImage(): void {
     const link = document.createElement('a');
     link.href = this.currentImage;
-    link.download = this.images[this.currentIndex].split('/').pop() || 'image';
+    link.download = this.currentImageInfo?.name || 'image';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

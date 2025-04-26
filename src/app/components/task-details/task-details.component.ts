@@ -6,6 +6,12 @@ import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { TaskService } from '../../services/task.service';
 import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
 
+interface ImageInfo {
+  url: string;
+  name: string;
+  size: number;
+}
+
 @Component({
   selector: 'app-task-details',
   standalone: true,
@@ -24,8 +30,8 @@ export class TaskDetailsComponent implements OnInit {
   isCollapsed = true;
   showImageViewer = false;
   currentImageIndex = 0;
-  images: string[] = [];
-
+  images: ImageInfo[] = [];
+  
   constructor(
     @Inject(MAT_DIALOG_DATA) public task: Task,
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
@@ -47,8 +53,17 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.task.files) {
-      this.images = this.task.files.map(file => file.data);
+      this.images = this.task.files.map(file => ({
+        url: file.data,
+        name: file.name,
+        size: this.getBase64Size(file.data)
+      }));
     }
+  }
+
+  private getBase64Size(base64String: string): number {
+    const padding = base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0;
+    return (base64String.length * 0.75) - padding;
   }
 
   toggleDescription(): void {
