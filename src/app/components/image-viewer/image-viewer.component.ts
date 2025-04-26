@@ -35,8 +35,14 @@ interface ImageInfo {
             <mat-icon>arrow_back</mat-icon>
           </button>
           
-          <div class="image-container" [style.transform]="'scale(' + zoom + ')'">
-            <img [src]="currentImage" [alt]="'Image ' + (currentIndex + 1)">
+          <div class="image-container" 
+               [style.transform]="'scale(' + zoom + ') translate(' + position.x + 'px, ' + position.y + 'px)'"
+               (mousedown)="startPan($event)"
+               (mousemove)="onPan($event)"
+               (mouseup)="stopPan()"
+               (mouseleave)="stopPan()"
+               (wheel)="onWheel($event)">
+            <img [src]="currentImage" [alt]="'Image ' + (currentIndex + 1)" draggable="false">
           </div>
 
           <button class="nav-btn next" (click)="next(); $event.stopPropagation()" *ngIf="hasMultipleImages">
@@ -185,12 +191,19 @@ interface ImageInfo {
       display: flex;
       align-items: center;
       justify-content: center;
-      transition: transform 0.3s ease;
+      transition: transform 0.1s ease;
+      cursor: grab;
+      
+      &:active {
+        cursor: grabbing;
+        transition: none;
+      }
       
       img {
         max-width: 100%;
         max-height: 100%;
         object-fit: contain;
+        user-select: none;
       }
     }
 
@@ -241,6 +254,10 @@ export class ImageViewerComponent {
   @Output() indexChange = new EventEmitter<number>();
 
   zoom = 1;
+  position = { x: 0, y: 0 };
+  private isPanning = false;
+  private startPoint = { x: 0, y: 0 };
+  private startPosition = { x: 0, y: 0 };
 
   get hasMultipleImages(): boolean {
     return this.images.length > 1;
@@ -264,12 +281,44 @@ export class ImageViewerComponent {
     this.indexChange.emit(this.currentIndex);
   }
 
+  startPan(event: MouseEvent): void {
+    if (this.zoom <= 1) return;
+    
+    this.isPanning = true;
+    this.startPoint = { x: event.clientX, y: event.clientY };
+    this.startPosition = { ...this.position };
+    event.preventDefault();
+  }
+
+  onPan(event: MouseEvent): void {
+    if (!this.isPanning) return;
+    
+    const dx = event.clientX - this.startPoint.x;
+    const dy = event.clientY - this.startPoint.y;
+    
+    this.position = {
+      x: this.startPosition.x + dx / this.zoom,
+      y: this.startPosition.y + dy / this.zoom
+    };
+    
+    event.preventDefault();
+  }
+
+  stopPan(): void {
+    this.isPanning = false;
+  }
+
   zoomIn(): void {
     if (this.zoom < 3) this.zoom += 0.5;
   }
 
   zoomOut(): void {
-    if (this.zoom > 0.5) this.zoom -= 0.5;
+    if (this.zoom > 0.5) {
+      this.zoom -= 0.5;
+      if (this.zoom === 1) {
+        this.position = { x: 0, y: 0 }; // Reset position when zooming out to normal
+      }
+    }
   }
 
   formatFileSize(bytes: number | undefined): string {
@@ -293,5 +342,18 @@ export class ImageViewerComponent {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+  }
+
+  onWheel(event: WheelEvent): void {
+    event.preventDefault();
+    const delta = event.deltaY > 0 ? -0.25 : 0.25;
+    const newZoom = Math.min(Math.max(this.zoom + delta, 0.5), 3);
+    
+    if (newZoom !== this.zoom) {
+      this.zoom = newZoom;
+      if (this.zoom === 1) {
+        this.position = { x: 0, y: 0 };
+      }
+    }
   }
 }
