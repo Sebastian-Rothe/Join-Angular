@@ -8,22 +8,38 @@ import { MatIconModule } from '@angular/material/icon';
   imports: [CommonModule, MatIconModule],
   template: `
     <div class="image-viewer" (click)="close.emit()">
-      <button class="close-btn" (click)="close.emit()">
-        <mat-icon>close</mat-icon>
-      </button>
-      <button class="nav-btn prev" (click)="prev(); $event.stopPropagation()" *ngIf="hasMultipleImages">
-        <mat-icon>chevron_left</mat-icon>
-      </button>
-      <div class="image-container" (click)="$event.stopPropagation()">
-        <img [src]="currentImage" [alt]="'Image ' + (currentIndex + 1)">
+      <div class="viewer-container" (click)="$event.stopPropagation()">
+        <div class="header-bar">
+          <div class="file-info">{{ images[currentIndex].split('/').pop() }}</div>
+          <div class="zoom-controls">
+            <button (click)="zoomOut()"><mat-icon>zoom_out</mat-icon></button>
+            <button (click)="zoomIn()"><mat-icon>zoom_in</mat-icon></button>
+          </div>
+          <div class="action-controls">
+            <button (click)="downloadImage()"><mat-icon>cloud_download</mat-icon></button>
+            <button (click)="close.emit()"><mat-icon>close</mat-icon></button>
+          </div>
+        </div>
+        
+        <div class="content-area">
+          <button class="nav-btn prev" (click)="prev(); $event.stopPropagation()" *ngIf="hasMultipleImages">
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+          
+          <div class="image-container" [style.transform]="'scale(' + zoom + ')'">
+            <img [src]="currentImage" [alt]="'Image ' + (currentIndex + 1)">
+          </div>
+
+          <button class="nav-btn next" (click)="next(); $event.stopPropagation()" *ngIf="hasMultipleImages">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
       </div>
-      <button class="nav-btn next" (click)="next(); $event.stopPropagation()" *ngIf="hasMultipleImages">
-        <mat-icon>chevron_right</mat-icon>
-      </button>
     </div>
   `,
   styles: [`
-  @use '../../../styles.scss' as *;
+    @use '../../../styles.scss' as *;
+    
     .image-viewer {
       position: fixed;
       inset: 0;
@@ -34,65 +50,126 @@ import { MatIconModule } from '@angular/material/icon';
       align-items: center;
       justify-content: center;
     }
-    .image-container {
+
+    .viewer-container {
       position: relative;
-      max-width: 90%;
-      max-height: 90vh;
+      width: min(90vw, 1200px);
+      height: min(90vh, 800px);
+      background: black;
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .header-bar {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 60px;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+
+      .file-info {
+        color: white;
+        font-size: 16px;
+        // flex: 1;
+      }
+
+      .zoom-controls {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+      }
+
+      .action-controls {
+        display: flex;
+        gap: 8px;
+      }
+
+      button {
+        background: none;
+        border: none;
+        color: white;
+        cursor: pointer;
+        padding: 8px;
+
+        &:hover {
+          color: $primary-blue;
+          transform: scale(1.1);
+        }
+
+        mat-icon {
+          font-size: 24px;
+          width: 24px;
+          height: 24px;
+        }
+      }
+    }
+
+    .content-area {
+      flex: 1;
+      position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
+      padding: 20px;
     }
-    img {
-      max-width: 100%;
-      max-height: 100%;
-      object-fit: contain;
-    }
-    .close-btn {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background: none;
-      border: none;
-      color: white;
-      cursor: pointer;
-      padding: 12px;
-      
-      mat-icon {
-        font-size: 32px;
-        width: 32px;
-        height: 32px;
-      }
 
-      &:hover {
-        color: $primary-blue;
-        transform: scale(1.2);
-        transition: all 125ms ease-in-out;
-        box-shadow: none;
+    .image-container {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+      
+      img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
       }
     }
-    
+
     .nav-btn {
       position: absolute;
-      background: none;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.5);
       border: none;
       color: white;
       cursor: pointer;
-      padding: 24px;
-      
-      mat-icon {
-        font-size: 48px;
-        width: 48px;
-        height: 48px;
-      }
-      
-      &.prev { left: 0; }
-      &.next { right: 0; }
-      
+      padding: 16px 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      z-index: 2;
+
       &:hover {
+        background: rgba(0, 0, 0, 0.8);
         color: $primary-blue;
-        transform: scale(1.2);
-        transition: all 125ms ease-in-out;
-        box-shadow: none;
+      }
+
+      mat-icon {
+        font-size: 36px;
+      }
+
+      &.prev { left: 0; border-radius: 0 4px 4px 0; }
+      &.next { right: 0; border-radius: 4px 0 0 4px; }
+    }
+
+    .viewer-container:hover {
+      .header-bar, .nav-btn {
+        opacity: 1;
       }
     }
   `]
@@ -102,6 +179,8 @@ export class ImageViewerComponent {
   @Input() currentIndex = 0;
   @Output() close = new EventEmitter<void>();
   @Output() indexChange = new EventEmitter<number>();
+
+  zoom = 1;
 
   get hasMultipleImages(): boolean {
     return this.images.length > 1;
@@ -119,5 +198,22 @@ export class ImageViewerComponent {
   prev(): void {
     this.currentIndex = (this.currentIndex - 1 + this.images.length) % this.images.length;
     this.indexChange.emit(this.currentIndex);
+  }
+
+  zoomIn(): void {
+    if (this.zoom < 3) this.zoom += 0.5;
+  }
+
+  zoomOut(): void {
+    if (this.zoom > 0.5) this.zoom -= 0.5;
+  }
+
+  downloadImage(): void {
+    const link = document.createElement('a');
+    link.href = this.currentImage;
+    link.download = this.images[this.currentIndex].split('/').pop() || 'image';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
