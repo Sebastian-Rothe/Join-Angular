@@ -32,7 +32,7 @@ interface ImageInfo {
         
         <div class="content-area">
           <button class="nav-btn prev" (click)="prev(); $event.stopPropagation()" *ngIf="hasMultipleImages">
-            <mat-icon>chevron_left</mat-icon>
+            <mat-icon>arrow_back</mat-icon>
           </button>
           
           <div class="image-container" [style.transform]="'scale(' + zoom + ')'">
@@ -40,7 +40,7 @@ interface ImageInfo {
           </div>
 
           <button class="nav-btn next" (click)="next(); $event.stopPropagation()" *ngIf="hasMultipleImages">
-            <mat-icon>chevron_right</mat-icon>
+            <mat-icon>arrow_forward</mat-icon>
           </button>
         </div>
       </div>
@@ -115,6 +115,37 @@ interface ImageInfo {
       .action-controls {
         display: flex;
         gap: 8px;
+
+        button {
+          background: none;
+          border: none;
+          color: white;
+          padding: 8px;
+          border-radius: 50%;
+          width: 40px;
+          height: 40px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+         
+
+          &:hover {
+            background: $primary-blue;
+            color: white;
+          }
+
+        
+
+          mat-icon {
+            font-size: 24px;
+            width: 24px;
+            height: 24px;
+            transition: all 0.2s ease;
+            &:first-child:hover { // Download button
+            transform: scale(.8);
+          }
+          }
+        }
       }
 
       button {
@@ -167,37 +198,33 @@ interface ImageInfo {
       position: absolute;
       top: 50%;
       transform: translateY(-50%);
-      background: rgba(0, 0, 0, 0.5);
+      background: white;
       border: none;
-      color: white;
       cursor: pointer;
-      padding: 16px 12px;
       opacity: 0;
-      transition: opacity 0.3s ease;
+      transition: all 0.3s ease;
       z-index: 2;
-      width: 64px; // Added fixed width
-      height: 64px; // Added fixed height
-      display: flex; // Added for centering icon
+      width: 48px;
+      height: 48px;
+      display: flex;
       align-items: center;
       justify-content: center;
+      border-radius: 50%;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
       &:hover {
-        background: rgba(0, 0, 0, 0.8);
-        color: $primary-blue;
+        transform: translateY(-50%) scale(1.1);
       }
 
       mat-icon {
-        font-size: 36px;
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+        color: $primary-blue;
       }
 
-      &.prev { 
-        left: 20px; 
-        border-radius: 50%;  // Changed to circle
-      }
-      &.next { 
-        right: 20px; 
-        border-radius: 50%;  // Changed to circle
-      }
+      &.prev { left: 20px; }
+      &.next { right: 20px; }
     }
 
     .viewer-container:hover {
