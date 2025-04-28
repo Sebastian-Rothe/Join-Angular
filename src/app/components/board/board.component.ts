@@ -8,11 +8,19 @@ import { Task } from '../../models/task.class';
 import { CompletedSubtasksPipe } from '../../pipes/completed-subtasks.pipe';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
+import { TaskCardComponent } from '../task-card/task-card.component';
 
 @Component({
   selector: 'app-board',
   standalone: true,
-  imports: [CommonModule, FormsModule, MatIconModule, RouterModule, CompletedSubtasksPipe],
+  imports: [
+    CommonModule, 
+    FormsModule, 
+    MatIconModule, 
+    RouterModule, 
+    CompletedSubtasksPipe,
+    TaskCardComponent
+  ],
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })

@@ -161,7 +161,7 @@ button {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #a8a8a8;
+    background: #A8A8A8;
     border-radius: 10px;
   }
 }
@@ -364,37 +364,37 @@ h3 {
 /* aligning avatar in card */
 /* #region */
 
-.task-assigned {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-}
+// .task-assigned {
+//   display: flex;
+//   align-items: center;
+//   gap: 4px;
+// }
 
-.style-avatar-overlap {
-  border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 400;
-  font-size: 12px;
-  margin-right: -8px;
-  border: 1px solid white;
-  box-sizing: border-box;
+// .style-avatar-overlap {
+//   border-radius: 50%;
+//   color: white;
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
+//   font-weight: 400;
+//   font-size: 12px;
+//   margin-right: -8px;
+//   border: 1px solid white;
+//   box-sizing: border-box;
 
-  img {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-}
+//   img {
+//     width: 100%;
+//     height: 100%;
+//     border-radius: 50%;
+//     object-fit: cover;
+//   }
+// }
 
-.align-assignedTo-count {
-  color: #29abe2;
-  font-size: 16px;
-  margin-left: 16px;
-}
+// .align-assignedTo-count {
+//   color: #29abe2;
+//   font-size: 16px;
+//   margin-left: 16px;
+// }
 
 /* css for checkbox in subtasks*/
 .custom-checkbox {
@@ -429,169 +429,169 @@ h3 {
   margin: 8px 0 4px 16px;
 }
 
-.task-menu {
-  position: absolute;
-  top: 16%; /* Positioniert das Menü direkt unter dem Button */
-  right: 4px; /* Verschiebt das Menü nach links (anpassen je nach Bedarf) */
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 12px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  width: 120px;
-  display: none; /* Menü wird standardmäßig ausgeblendet */
-}
+// .task-menu {
+//   position: absolute;
+//   top: 16%; /* Positioniert das Menü direkt unter dem Button */
+//   right: 4px; /* Verschiebt das Menü nach links (anpassen je nach Bedarf) */
+//   background-color: white;
+//   border: 1px solid #ccc;
+//   border-radius: 12px;
+//   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+//   z-index: 1000;
+//   width: 120px;
+//   display: none; /* Menü wird standardmäßig ausgeblendet */
+// }
 
-/* Menü-Inhalte */
-.task-menu .menu-content div {
-  padding: 8px;
-  cursor: pointer;
-  font-size: 14px;
-  border-radius: 8px;
-  transition: background-color 0.2s;
-}
+// /* Menü-Inhalte */
+// .task-menu .menu-content div {
+//   padding: 8px;
+//   cursor: pointer;
+//   font-size: 14px;
+//   border-radius: 8px;
+//   transition: background-color 0.2s;
+// }
 
 /* Hover-Effekt für Menü-Elemente */
-.task-menu .menu-content div:hover {
-  background-color: #f0f0f0;
-}
+// .task-menu .menu-content div:hover {
+//   background-color: #f0f0f0;
+// }
 
-.popup-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  z-index: 999;
-}
+// .popup-overlay {
+//   position: fixed;
+//   top: 0;
+//   left: 0;
+//   width: 100%;
+//   height: 100%;
+//   background-color: rgba(0, 0, 0, 0.5);
+//   z-index: 999;
+// }
 
-.popup {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-  z-index: 1000;
-  width: 400px;
-  padding: 20px;
-}
+// .popup {
+//   position: fixed;
+//   top: 50%;
+//   left: 50%;
+//   transform: translate(-50%, -50%);
+//   background-color: white;
+//   border-radius: 8px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+//   z-index: 1000;
+//   width: 400px;
+//   padding: 20px;
+// }
 
-.popup-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+// .popup-header {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+// }
 
-.popup-title {
-  margin: 0;
-}
+// .popup-title {
+//   margin: 0;
+// }
 
-.popup-body {
-  margin-top: 10px;
-}
+// .popup-body {
+//   margin-top: 10px;
+// }
 
-.form-group {
-  margin-bottom: 15px;
-}
+// .form-group {
+//   margin-bottom: 15px;
+// }
 
-.subtask-container {
-  margin: 15px 0;
-}
+// .subtask-container {
+//   margin: 15px 0;
+// }
 
-.subtask-list {
-  margin: 10px 0;
-}
+// .subtask-list {
+//   margin: 10px 0;
+// }
 
-.file-box {
-  display: inline-block;
-  margin: 10px;
-  text-align: center;
-}
+// .file-box {
+//   display: inline-block;
+//   margin: 10px;
+//   text-align: center;
+// }
 
-.file-image {
-  width: 64px;
-  height: 64px;
-  object-fit: cover;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  cursor: pointer;
-}
+// .file-image {
+//   width: 64px;
+//   height: 64px;
+//   object-fit: cover;
+//   border: 1px solid #ccc;
+//   border-radius: 8px;
+//   cursor: pointer;
+// }
 
-.file-image:hover {
-  filter: brightness(1.2);
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
-}
+// .file-image:hover {
+//   filter: brightness(1.2);
+//   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.2);
+// }
 
-.file-list {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
+// .file-list {
+//   list-style-type: none;
+//   padding: 0;
+//   margin: 0;
+// }
 
-.file-item {
-  display: flex;
-  align-items: center;
-  margin: 5px 0;
-  cursor: pointer;
-}
+// .file-item {
+//   display: flex;
+//   align-items: center;
+//   margin: 5px 0;
+//   cursor: pointer;
+// }
 
-.file-icon {
-  width: 20px;
-  height: 20px;
-  margin-right: 4px;
-}
+// .file-icon {
+//   width: 20px;
+//   height: 20px;
+//   margin-right: 4px;
+// }
 
-.file-link {
-  color: #007bff;
-  text-decoration: none;
-}
+// .file-link {
+//   color: #007bff;
+//   text-decoration: none;
+// }
 
-.file-link:hover {
-  text-decoration: underline;
-}
+// .file-link:hover {
+//   text-decoration: underline;
+// }
 
-.pdf-popup {
-  display: none;
-  position: fixed;
-  z-index: 4000;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgba(0, 0, 0, 0.8);
-}
+// .pdf-popup {
+//   display: none;
+//   position: fixed;
+//   z-index: 4000;
+//   left: 0;
+//   top: 0;
+//   width: 100%;
+//   height: 100%;
+//   overflow: auto;
+//   background-color: rgba(0, 0, 0, 0.8);
+// }
 
-.pdf-content {
-  background-color: #fefefe;
-  margin: 5% auto;
-  /* padding: 20px; */
-  border: 1px solid #888;
-  width: 90%;
-  height: 80%;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
+// .pdf-content {
+//   background-color: #fefefe;
+//   margin: 5% auto;
+//   /* padding: 20px; */
+//   border: 1px solid #888;
+//   width: 90%;
+//   height: 80%;
+//   border-radius: 10px;
+//   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+// }
 
-.close-pdf {
-  position: fixed;
-  top: 16px;
-  right: 24px;
-  color: #aaa;
-  float: right;
-  font-size: 48px;
-  font-weight: bold;
-  cursor: pointer;
-}
+// .close-pdf {
+//   position: fixed;
+//   top: 16px;
+//   right: 24px;
+//   color: #aaa;
+//   float: right;
+//   font-size: 48px;
+//   font-weight: bold;
+//   cursor: pointer;
+// }
 
-.close-pdf:hover,
-.close-pdf:focus {
-  color: white;
-  text-decoration: none;
-}
+// .close-pdf:hover,
+// .close-pdf:focus {
+//   color: white;
+//   text-decoration: none;
+// }
 
 
 
@@ -605,24 +605,24 @@ h3 {
     gap: 12px;
   }
 
-  .task-label {
-    margin-bottom: 0;
-  }
+  // .task-label {
+  //   margin-bottom: 0;
+  // }
 
-  .task-title {
-    margin: 8px 0;
-    -webkit-line-clamp: 2;
-  }
+  // .task-title {
+  //   margin: 8px 0;
+  //   -webkit-line-clamp: 2;
+  // }
 
-  .task-description {
-    font-size: 13px;
-    margin: 8px 0;
-    -webkit-line-clamp: 2;
-  }
+  // .task-description {
+  //   font-size: 13px;
+  //   margin: 8px 0;
+  //   -webkit-line-clamp: 2;
+  // }
 
-  .task-subtasks {
-    margin-bottom: 8px;
-  }
+  // .task-subtasks {
+  //   margin-bottom: 8px;
+  // }
 }
 
 @media (max-width: 1120px) {
@@ -675,10 +675,10 @@ h3 {
       display: none;
     }
 
-    .task-card {
-      flex: 0 0 280px;
-      margin: 0;
-    }
+    // .task-card {
+    //   flex: 0 0 280px;
+    //   margin: 0;
+    // }
   }
 
   .drag-area {
@@ -723,11 +723,11 @@ h3 {
     width: 100%;
   }
 
-  .task-card {
-    min-width: 200px;
-    max-width: 250px;
-    margin-right: 4px;
-  }
+  // .task-card {
+  //   min-width: 200px;
+  //   max-width: 250px;
+  //   margin-right: 4px;
+  // }
 
   .board-popup-content {
     height: 80% !important;
@@ -780,43 +780,43 @@ h3 {
     }
   }
 
-  .task-head-menu-background {
-    display: flex;
-  }
+  // .task-head-menu-background {
+  //   display: flex;
+  // }
 
-  .task-subtasks {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  // .task-subtasks {
+  //   flex-direction: column;
+  //   align-items: flex-start;
+  // }
 
-  .progress-bar {
-    margin-right: 0;
-    margin-bottom: 4px;
-    width: 100%;
-  }
+  // .progress-bar {
+  //   margin-right: 0;
+  //   margin-bottom: 4px;
+  //   width: 100%;
+  // }
 
-  .subtask-info {
-    margin-top: 4px;
-  }
+  // .subtask-info {
+  //   margin-top: 4px;
+  // }
 
   .board-popup-content {
     height: 85% !important;
     width: 70% !important;
   }
-  .task-subtasks {
-    flex-direction: column;
-    align-items: flex-start;
-  }
+  // .task-subtasks {
+  //   flex-direction: column;
+  //   align-items: flex-start;
+  // }
 
-  .progress-bar {
-    margin-right: 0;
-    margin-bottom: 4px;
-    width: 100%;
-  }
+  // .progress-bar {
+  //   margin-right: 0;
+  //   margin-bottom: 4px;
+  //   width: 100%;
+  // }
 
-  .subtask-info {
-    margin-top: 4px;
-  }
+  // .subtask-info {
+  //   margin-top: 4px;
+  // }
   .search-button {
     display: none;
   }
@@ -836,17 +836,17 @@ h3 {
     width: 100%;
   }
 
-  .task-head-menu-background {
-    display: flex;
-  }
+  // .task-head-menu-background {
+  //   display: flex;
+  // }
 }
 
-@media (max-width: 424px) {
-  .board-popup-content {
-    height: 90% !important;
-    width: 80% !important;
-  }
-}
+// @media (max-width: 424px) {
+//   .board-popup-content {
+//     height: 90% !important;
+//     width: 80% !important;
+//   }
+// }
 
 @media (max-width: 400px) {
   .main-board {
@@ -866,12 +866,12 @@ h3 {
 
 
 
-@media (max-width: 424px) {
-  .board-popup-content {
-    height: 90% !important;
-    width: 80% !important;
-  }
-}
+// @media (max-width: 424px) {
+//   .board-popup-content {
+//     height: 90% !important;
+//     width: 80% !important;
+//   }
+// }
 /* End of Responsive Design Adjustments */
 
 /* ----------------- */
