@@ -5,7 +5,7 @@
         <span class="filename">{{ currentImageInfo?.name }}</span>
         <span class="filesize">{{ formatFileSize(currentImageInfo?.size) }}</span>
       </div>
-      <div class="zoom-controls">
+      <div class="zoom-controls d-none-on-mobile">
         <button (click)="zoomOut()"><mat-icon>zoom_out</mat-icon></button>
         <button (click)="zoomIn()"><mat-icon>zoom_in</mat-icon></button>
       </div>
@@ -16,7 +16,7 @@
     </div>
     
     <div class="content-area">
-      <button class="nav-btn prev" (click)="prev()" *ngIf="hasMultipleImages">
+      <button class="nav-btn prev d-none-on-mobile" (click)="prev()" *ngIf="hasMultipleImages">
         <mat-icon>arrow_back</mat-icon>
       </button>
       
@@ -30,9 +30,24 @@
         <img [src]="currentImage" [alt]="'Image ' + (currentIndex + 1)" draggable="false">
       </div>
 
+      <button class="nav-btn next d-none-on-mobile" (click)="next()" *ngIf="hasMultipleImages">
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+
+    <div class="footer-bar">
+      <button class="nav-btn prev" (click)="prev()" *ngIf="hasMultipleImages">
+        <mat-icon>arrow_back</mat-icon>
+      </button>
+      <div class="zoom-controls-mobile">
+        <button (click)="zoomOut()"><mat-icon>zoom_out</mat-icon></button>
+        <button (click)="zoomIn()"><mat-icon>zoom_in</mat-icon></button>
+      </div>
+
       <button class="nav-btn next" (click)="next()" *ngIf="hasMultipleImages">
         <mat-icon>arrow_forward</mat-icon>
       </button>
+
     </div>
   </div>
 </div>
