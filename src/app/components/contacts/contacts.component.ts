@@ -104,8 +104,8 @@ export class ContactsComponent implements OnInit {
     this.isContactDetailsVisible = false;
   }
 
-  openNewContactDialog(): void {
-    const dialogRef: MatDialogRef<ActionDialogComponent> = this.dialogService.openDialog('add');
+  async openNewContactDialog(): Promise<void> {
+    const dialogRef = await this.dialogService.openDialog('add');
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         this.loadContacts();

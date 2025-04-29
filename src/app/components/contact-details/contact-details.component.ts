@@ -48,9 +48,9 @@ export class ContactDetailsComponent {
     }
   }
 
-  openEditDialog(): void {
+  async openEditDialog(): Promise<void> {
     if (this.contact) {
-      const dialogRef = this.dialogService.openDialog('edit', this.contact);
+      const dialogRef = await this.dialogService.openDialog('edit', this.contact);
       dialogRef.afterClosed().subscribe(result => {
         if (result) {
           this.contactUpdated.emit();

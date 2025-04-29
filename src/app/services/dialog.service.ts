@@ -3,19 +3,25 @@ import { MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { ActionDialogComponent } from '../components/action-dialog/action-dialog.component';
 import { DialogConfig } from '../models/dialog.model';
 import { User } from '../models/user.class';
+import { AuthService } from './auth.service';
+import { firstValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DialogService {
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private auth: AuthService) {}
 
-  openDialog(type: 'account' | 'edit' | 'add', contact?: User): MatDialogRef<ActionDialogComponent> {
+  async openDialog(type: 'account' | 'edit' | 'add', contact?: User): Promise<MatDialogRef<ActionDialogComponent>> {
+    const currentUser = await firstValueFrom(this.auth.user$);
+    const isCurrentUser = currentUser?.uid === contact?.uid;
+    
     const config: DialogConfig = {
       type,
-      title: this.getDialogTitle(type),
+      title: this.getDialogTitle(type, isCurrentUser),
       subtitle: this.getDialogSubtitle(type),
-      contact
+      contact,
+      isCurrentUser
     };
     
     return this.dialog.open(ActionDialogComponent, {
@@ -27,12 +33,12 @@ export class DialogService {
     });
   }
 
-  private getDialogTitle(type: 'account' | 'edit' | 'add'): string {
+  private getDialogTitle(type: 'account' | 'edit' | 'add', isCurrentUser: boolean): string {
     switch (type) {
       case 'account':
         return 'My Account';
       case 'edit':
-        return 'Edit Contact';
+        return isCurrentUser ? 'Edit Account' : 'Edit Contact';
       case 'add':
         return 'Add Contact';
       default:
