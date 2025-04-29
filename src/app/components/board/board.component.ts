@@ -18,7 +18,7 @@ import { TaskCardComponent } from '../task-card/task-card.component';
     FormsModule, 
     MatIconModule, 
     RouterModule, 
-    CompletedSubtasksPipe,
+    // CompletedSubtasksPipe,
     TaskCardComponent
   ],
   templateUrl: './board.component.html',

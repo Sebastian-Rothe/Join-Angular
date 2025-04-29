@@ -172,10 +172,13 @@
   .task-card {
     flex: 0 0 280px;
     margin: 0;
-    min-width: 200px;
-    max-width: 250px;
+    min-width: 180px;
+    max-width: 200px;
     margin-right: 4px;
   }
+}
+@media (max-width: 800px) {
+
 }
 
 
