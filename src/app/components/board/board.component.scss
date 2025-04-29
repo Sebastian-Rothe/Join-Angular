@@ -161,6 +161,20 @@ h3 {
   display: none;
 }
 
+.empty-section-note {
+  background-color: #eceaea;
+  color: #a8a8a8;
+  height: 48px;
+  width: 100%;
+  border-radius: 8px;
+  border: 2px dashed #cccccc;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 8px 0;
+  font-size: 16px;
+}
+
 /* Responsive Design */
 @media (max-width: 1200px) {
   .main-board {
