@@ -101,7 +101,14 @@ export class ContactsComponent implements OnInit {
   }
 
   onBackToList() {
-    this.isContactDetailsVisible = false;
+    this.isSlideIn = false;
+    this.isSlideOut = true;
+    
+    setTimeout(() => {
+      this.isContactDetailsVisible = false;
+      this.selectedContact = null;
+      this.isSlideOut = false;
+    }, 200); // Match animation duration
   }
 
   async openNewContactDialog(): Promise<void> {
