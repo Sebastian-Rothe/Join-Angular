@@ -7,6 +7,7 @@ import { DialogService } from '../../services/dialog.service';
 import { ContactDetailsComponent } from '../contact-details/contact-details.component';
 import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
 import { User } from '../../models/user.class';
+import { firstValueFrom } from 'rxjs';
 
 @Component({
   selector: 'app-contacts',
@@ -23,6 +24,7 @@ export class ContactsComponent implements OnInit {
   selectedContact: User | null = null;
   isSlideIn = false;
   isSlideOut = false;
+  currentUser: User | null = null;
 
   constructor(
     private userService: UserService,
@@ -30,19 +32,23 @@ export class ContactsComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.getCurrentUser();
     this.checkScreenSize();
     window.addEventListener('resize', () => this.checkScreenSize());
     this.loadContacts();
   }
 
-  private checkScreenSize() {
-    this.isMobileView = window.innerWidth <= 850;
+  private async getCurrentUser() {
+    this.currentUser = await firstValueFrom(this.userService.currentUser$);
   }
 
   public async loadContacts() {
     try {
-      this.contacts = await this.userService.getAllUsers();
-      // Sortiere Kontakte alphabetisch nach Namen
+      let allUsers = await this.userService.getAllUsers();
+      
+      // Filter out current user from contacts list
+      this.contacts = allUsers.filter(user => user.uid !== this.currentUser?.uid);
+      
       this.contacts.sort((a, b) => a.name.localeCompare(b.name));
       this.groupContacts();
       
@@ -126,4 +132,7 @@ export class ContactsComponent implements OnInit {
     this.loadContacts();
   }
 
+  private checkScreenSize() {
+    this.isMobileView = window.innerWidth <= 850;
+  }
 }
