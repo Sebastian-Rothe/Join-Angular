@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.class';
-import { CompletedSubtasksPipe } from '../../pipes/completed-subtasks.pipe';
+
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
@@ -18,7 +18,6 @@ import { TaskCardComponent } from '../task-card/task-card.component';
     FormsModule, 
     MatIconModule, 
     RouterModule, 
-    // CompletedSubtasksPipe,
     TaskCardComponent
   ],
   templateUrl: './board.component.html',

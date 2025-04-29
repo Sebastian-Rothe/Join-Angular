@@ -1,5 +1,5 @@
-<div class="image-viewer" (click)="close.emit()">
-  <div class="viewer-container" (click)="$event.stopPropagation()">
+<div class="image-viewer" (click)="closeViewer()">
+  <div class="viewer-container" [class.slide-in]="!isClosing" [class.slide-out]="isClosing" (click)="$event.stopPropagation()">
     <div class="header-bar">
       <div class="file-info">
         <span class="filename">{{ currentImageInfo?.name }}</span>
@@ -11,7 +11,7 @@
       </div>
       <div class="action-controls">
         <button (click)="downloadImage()"><mat-icon>cloud_download</mat-icon></button>
-        <button (click)="close.emit()"><mat-icon>close</mat-icon></button>
+        <button (click)="closeViewer()"><mat-icon>close</mat-icon></button>
       </div>
     </div>
     

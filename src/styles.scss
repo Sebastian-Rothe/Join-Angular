@@ -200,3 +200,67 @@ body {
   }
 }
 
+// Slide animations
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideOutDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+}
+
+// Animation utility classes
+.slide-in {
+  animation: slideInRight 0.3s ease forwards;
+}
+
+.slide-out {
+  animation: slideOutRight 0.3s ease forwards;
+}
+
+@media (max-width: 768px) {
+  .slide-in {
+    animation: slideInUp 0.3s ease forwards;
+  }
+  
+  .slide-out {
+    animation: slideOutDown 0.3s ease forwards;
+  }
+}
+

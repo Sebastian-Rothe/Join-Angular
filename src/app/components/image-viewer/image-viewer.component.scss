@@ -20,6 +20,8 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  will-change: transform;
+  transform-origin: center center;
 }
 
 .header-bar {

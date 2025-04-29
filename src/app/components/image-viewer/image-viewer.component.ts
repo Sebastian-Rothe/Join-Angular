@@ -14,7 +14,6 @@ interface ImageInfo {
   templateUrl: './image-viewer.component.html',
   styleUrls: ['./image-viewer.component.scss'],
   imports: [CommonModule, MatIconModule],
-
 })
 export class ImageViewerComponent {
   @Input() images: ImageInfo[] = [];
@@ -27,6 +26,7 @@ export class ImageViewerComponent {
   private isPanning = false;
   private startPoint = { x: 0, y: 0 };
   private startPosition = { x: 0, y: 0 };
+  isClosing = false;
 
   get hasMultipleImages(): boolean {
     return this.images.length > 1;
@@ -124,5 +124,12 @@ export class ImageViewerComponent {
         this.position = { x: 0, y: 0 };
       }
     }
+  }
+
+  closeViewer(): void {
+    this.isClosing = true;
+    setTimeout(() => {
+      this.close.emit();
+    }, 300); // Match animation duration
   }
 }
