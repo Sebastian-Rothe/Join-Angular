@@ -49,6 +49,7 @@ export const MY_DATE_FORMATS = {
 })
 export class AddTaskComponent implements OnInit {
   @ViewChild('fileGrid') fileGrid!: ElementRef;
+  minDate: Date = new Date(); 
 
   private isDraggingGrid = false;
   private startX = 0;

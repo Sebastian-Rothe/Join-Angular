@@ -17,6 +17,7 @@
                 <label for="date">Due date<span class="required">*</span></label>
                 <mat-form-field appearance="outline">
                     <input matInput [matDatepicker]="picker" 
+                           [min]="minDate"
                            [placeholder]="'dd/mm/yyyy'"
                            [(ngModel)]="task.dueDate" 
                            name="dueDate">
