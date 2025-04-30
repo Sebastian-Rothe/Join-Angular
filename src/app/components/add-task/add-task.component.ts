@@ -49,7 +49,7 @@ export const MY_DATE_FORMATS = {
 })
 export class AddTaskComponent implements OnInit {
   @ViewChild('fileGrid') fileGrid!: ElementRef;
-  minDate: Date = new Date(); 
+  minDate = new Date(); // Heutiges Datum als Minimum
 
   private isDraggingGrid = false;
   private startX = 0;
@@ -273,13 +273,20 @@ export class AddTaskComponent implements OnInit {
   }
 
   validateForm(): boolean {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const selectedDate = this.task.dueDate ? new Date(this.task.dueDate) : null;
+    if (selectedDate) selectedDate.setHours(0, 0, 0, 0);
+
+    const isDueDateValid = this.task.dueDate && (!selectedDate || selectedDate >= today);
+
     this.errors = {
       title: !this.task.title.trim(),
-      dueDate: !this.task.dueDate,
+      dueDate: !isDueDateValid,
       category: !this.task.category
     };
     
-    return !this.errors.title && !this.errors.dueDate && !this.errors.category;
+    return Boolean(this.task.title.trim() && isDueDateValid && this.task.category);
   }
 
   async createTask(): Promise<void> {
