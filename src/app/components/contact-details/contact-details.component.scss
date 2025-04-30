@@ -35,7 +35,7 @@
     .contact-name-section {
       h2 {
         font-size: 47px;
-        margin-bottom: 16px;
+        margin: 0 !important;
       }
 
       .contact-actions {
@@ -228,11 +228,52 @@
   .contact-details {
     height: calc(100vh - 313px); // Abzüglich Header + Navbar
   }
-  
-  
+
   ::ng-deep {
     .mobile-actions-menu {
       bottom: 94px !important;
+    }
+  }
+}
+@media (max-width: 650px) {
+  .contact-details {
+   
+    .contact-header {
+      gap: 16px;
+      margin: 16px 0 0 0;
+
+      .contact-name-section h2 {
+        font-size: 28px !important;
+        margin-bottom: 8px;
+      }
+
+      .contact-avatar.large {
+        width: 86px !important;
+        height: 86px !important;
+        min-width: 86px !important;
+        min-height: 86px !important;
+        font-size: 24px !important;
+      }
+    }
+  }
+  .contact-information{
+    margin: 24px 0 0 24px !important;
+    .info-group {
+      margin: 0 8px !important;
+    }
+    h4{
+      margin: 8px 0 6px 0 !important;
+    }
+  }
+}
+@media (max-width: 450px) {
+  .contact-information{
+    margin: 24px 0 0 24px !important;
+    .info-group {
+      margin: 0 8px !important;
+    }
+    h4{
+      margin: 6px 0 4px 0 !important;
     }
   }
 }
@@ -241,11 +282,10 @@
   .contact-details {
     height: calc(100vh - 229px); // Angepasst für kleinere Navbar
   }
-  
+
   .mobile-menu-button {
     width: 45px;
     height: 45px;
-   
 
     mat-icon {
       font-size: 24px;
@@ -253,11 +293,10 @@
       height: 24px;
     }
   }
-  
+
   ::ng-deep {
     .mobile-actions-menu {
       bottom: 74px !important;
-   
     }
   }
 }
