@@ -58,7 +58,7 @@
 }
 
 .contacts-list {
-  padding: 24px;
+  padding: 0 24px;
 
   .contact-group {
     margin-bottom: 24px;
@@ -338,6 +338,9 @@
     .button-container {
       display: none;
     }
+    .contacts-list{
+      padding: 24px;
+    }
 
     .contact-group {
       .contact-item {
@@ -391,6 +394,36 @@
   .mobile-add-button {
     right: 16px;
     bottom: 90px; // Anpassung an Mobile-Nav
+  }
+}
+@media (max-width: 650px) {
+  .contacts-list {
+    padding: 12px;
+    .contact-group {
+      margin-bottom: 12px;
+      .letter-divider {
+        padding-left: 12px;
+        margin-bottom: 12px;
+      }
+      .contact-item {
+        margin-left: 16px;
+        padding: 12px;
+        gap: 16px;
+      }
+    }
+  }
+}
+@media (max-width: 400px) {
+  .contacts-list {
+    padding: 8px;
+    .contact-group {
+      margin-bottom: 8px;
+ 
+      .contact-item {
+        padding: 4px;
+        gap: 12px;
+      }
+    }
   }
 }
 
