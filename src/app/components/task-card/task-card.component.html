@@ -1,11 +1,20 @@
 <div class="task-card" 
      draggable="true"
      (dragstart)="onDragStart($event)"
-     (click)="onClick()"
-     [attr.data-task-id]="task.id">
-  <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
-    {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+     (click)="onClick()">
+     
+  <div class="task-header">
+    <div class="task-label" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
+      {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
+    </div>
+    <button
+            class="menu-button" 
+            [matMenuTriggerFor]="menu" 
+            (click)="$event.stopPropagation()">
+      <mat-icon>more_vert</mat-icon>
+    </button>
   </div>
+
   <h3 class="task-title">{{ task.title }}</h3>
   <p class="task-description">{{ task.description || 'Task without a description' }}</p>
   <div class="task-subtasks" *ngIf="task.subtasks?.length">
@@ -31,3 +40,11 @@
     <div class="priority-icon" [ngClass]="task.priority"></div>
   </div>
 </div>
+
+<mat-menu #menu="matMenu" class="task-status-menu">
+  <button mat-menu-item 
+          *ngFor="let status of getFilteredStatuses()"
+          (click)="moveToStatus(status.value)">
+    {{ status.label }}
+  </button>
+</mat-menu>

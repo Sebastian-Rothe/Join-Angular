@@ -40,7 +40,8 @@
             *ngFor="let task of getTasksByStatus('todo')"
             [task]="task"
             (dragStarted)="onDragStart($event, task)"
-            (clicked)="openTaskDetails(task)">
+            (clicked)="openTaskDetails(task)"
+            (statusChanged)="loadTasks()">
           </app-task-card>
         </ng-container>
         <ng-template #emptyTodo>
