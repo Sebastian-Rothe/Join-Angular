@@ -2,7 +2,7 @@
   <div id="head-board" class="head-board">
     <div class="align-board-headline">
       <h2>Board</h2>
-      <button class="addButton-mobileBoard" (click)="openPopupAddTask()">
+      <button class="addButton-mobileBoard" (click)="openPopupAddTask('todo')">
         <img src="assets/icons/add.svg" alt="">
       </button>
     </div>
@@ -18,7 +18,7 @@
           class="search-input" />
         <img class="search-input-img" src="assets/icons/Property 1=search.svg" alt="">
       </div>
-      <button class="search-button" (click)="openPopupAddTask()">
+      <button class="search-button" (click)="openPopupAddTask('todo')">
         Add task
         <img src="assets/icons/add.svg" alt="" />
       </button>
@@ -29,7 +29,7 @@
     <div id="to-do-div" class="to-do-div align-all-4">
       <div id="to-do-head" class="all4-style">
         <span>To do</span>
-        <img class="hover-to-blue" src="assets/icons/add-button-board.svg" alt="" (click)="openPopupAddTask()"/>
+        <img class="hover-to-blue" src="assets/icons/add-button-board.svg" alt="" (click)="openPopupAddTask('todo')"/>
       </div>
       <div id="todoBoard" class="task-section drag-area"
            (drop)="moveTo('todo')"
@@ -53,7 +53,7 @@
     <div id="in-progress-div" class="in-progress-div align-all-4">
       <div id="in-progress-head" class="all4-style">
         <span>In progress</span>
-        <img class="hover-to-blue" src="assets/icons/add-button-board.svg" alt="" (click)="openPopupAddTask()"/>
+        <img class="hover-to-blue" src="assets/icons/add-button-board.svg" alt="" (click)="openPopupAddTask('inProgress')"/>
       </div>
       <div id="inProgressBoard" class="task-section drag-area"
            (drop)="moveTo('inProgress')"
@@ -76,7 +76,7 @@
     <div id="await-feedback-div" class="await-feedback-div align-all-4">
       <div id="await-feedback-head" class="all4-style">
         <span>Await feedback</span>
-        <img class="hover-to-blue" src="assets/icons/add-button-board.svg" alt="" (click)="openPopupAddTask()"/>
+        <img class="hover-to-blue" src="assets/icons/add-button-board.svg" alt="" (click)="openPopupAddTask('awaitFeedback')"/>
       </div>
       <div id="awaitFeedbackBoard" class="task-section drag-area"
            (drop)="moveTo('awaitFeedback')"

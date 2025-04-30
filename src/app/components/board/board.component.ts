@@ -115,14 +115,15 @@ export class BoardComponent implements OnInit {
     }
   }
 
-  openPopupAddTask() {
+  openPopupAddTask(initialStatus: string = 'todo') {
     const dialogRef = this.dialog.open(AddTaskComponent, {
       width: '90%',
       maxWidth: '1000px',
       height: '90vh',
       panelClass: 'add-task-dialog',
       enterAnimationDuration: '225ms',
-      exitAnimationDuration: '195ms'
+      exitAnimationDuration: '195ms',
+      data: { initialStatus }
     });
 
     dialogRef.afterClosed().subscribe(async result => {

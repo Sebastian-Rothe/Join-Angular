@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef, Optional } from '@angular/core';
+import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef, Optional, Inject } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,7 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
@@ -93,10 +93,17 @@ export class AddTaskComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private taskService: TaskService,
-    @Optional() private dialogRef: MatDialogRef<AddTaskComponent>
+    @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
+    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: { initialStatus: string }
   ) {
     registerLocaleData(localeDe);
-    this.isDialog = !!dialogRef;  // Set based on dialogRef existence
+    this.isDialog = !!dialogRef;
+    // Set initial status if provided
+    if (dialogData?.initialStatus) {
+      this.task.status = dialogData.initialStatus;
+    } else {
+      this.task.status = 'todo'; // Default status
+    }
   }
 
   ngOnInit(): void {
