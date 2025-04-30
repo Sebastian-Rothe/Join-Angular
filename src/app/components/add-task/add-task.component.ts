@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef, Optional } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
@@ -6,6 +6,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
@@ -86,12 +87,16 @@ export class AddTaskComponent implements OnInit {
 
   isDragging = false;
 
+  isDialog = false;  // Add this property
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
-    private taskService: TaskService
+    private taskService: TaskService,
+    @Optional() private dialogRef: MatDialogRef<AddTaskComponent>
   ) {
     registerLocaleData(localeDe);
+    this.isDialog = !!dialogRef;  // Set based on dialogRef existence
   }
 
   ngOnInit(): void {
@@ -296,6 +301,9 @@ export class AddTaskComponent implements OnInit {
         this.showSuccessMessage = true;
         setTimeout(() => {
           this.showSuccessMessage = false;
+          if (this.dialogRef) {
+            this.dialogRef.close('taskAdded');
+          }
           this.clearForm();
         }, 2000);
       } catch (error) {
@@ -380,6 +388,12 @@ export class AddTaskComponent implements OnInit {
     const x = event.pageX - this.fileGrid.nativeElement.offsetLeft;
     const walk = (x - this.startX) * 2;
     this.fileGrid.nativeElement.scrollLeft = this.scrollLeft - walk;
+  }
+
+  closeDialog(): void {
+    if (this.dialogRef) {
+      this.dialogRef.close();
+    }
   }
 
   ngOnDestroy(): void {

@@ -1,5 +1,11 @@
-<div class="container-main">
-    <div class="title">Add Task</div>
+<div class="container-main" [class.dialog-mode]="isDialog">
+    <div class="title-container" *ngIf="isDialog">
+        <div class="title">Add Task</div>
+        <button class="close-button" (click)="closeDialog()">
+            <mat-icon>close</mat-icon>
+        </button>
+    </div>
+    <div class="title" *ngIf="!isDialog">Add Task</div>
     <div class="left-right-container">
         <div class="left-side">
             <div class="form-group">

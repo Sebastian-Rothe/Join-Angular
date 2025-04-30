@@ -9,6 +9,7 @@ import { Task } from '../../models/task.class';
 import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
+import { AddTaskComponent } from '../add-task/add-task.component';
 
 @Component({
   selector: 'app-board',
@@ -115,7 +116,20 @@ export class BoardComponent implements OnInit {
   }
 
   openPopupAddTask() {
-    // Implement popup logic
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      width: '90%',
+      maxWidth: '1000px',
+      height: '90vh',
+      panelClass: 'add-task-dialog',
+      enterAnimationDuration: '225ms',
+      exitAnimationDuration: '195ms'
+    });
+
+    dialogRef.afterClosed().subscribe(async result => {
+      if (result === 'taskAdded') {
+        await this.loadTasks();
+      }
+    });
   }
 
   openTaskDetails(task: Task): void {
