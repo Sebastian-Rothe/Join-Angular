@@ -397,10 +397,19 @@
   }
 }
 @media (max-width: 650px) {
-  .contact-details-section .contact-heading {
- 
-    .title-row .contacts-title{
-      font-size: 47px;
+  .contact-details-section {
+    height: calc(100vh - 89px);
+    padding: 16px;
+
+    .contact-heading {
+      .title-row .contacts-title {
+        font-size: 47px;
+      }
+    }
+
+    app-contact-details {
+      height: calc(100vh - 200px);
+      
     }
   }
   .contacts-list {
@@ -419,7 +428,15 @@
     }
   }
 }
+
 @media (max-width: 400px) {
+  .contact-details-section {
+    height: calc(100vh - 80px);
+    
+    app-contact-details {
+      height: calc(100vh - 180px);
+    }
+  }
   .contacts-list {
     padding: 8px;
     .contact-group {
@@ -435,7 +452,12 @@
 
 @media (max-width: 375px) {
   .contact-details-section {
+    height: calc(100vh - 76px);
     padding: 10px;
+    
+    app-contact-details {
+      height: calc(100vh - 160px);
+    }
   }
   .mobile-add-button {
     bottom: 76px;

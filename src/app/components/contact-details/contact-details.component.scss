@@ -226,7 +226,7 @@
 
 @media (max-width: 800px) {
   .contact-details {
-    height: calc(100vh - 313px); // Abzüglich Header + Navbar
+    height: calc(100vh - 305px); // Abzüglich Header + Navbar
   }
 
   ::ng-deep {
@@ -236,6 +236,9 @@
   }
 }
 @media (max-width: 650px) {
+  .contact-details {
+    height: calc(100vh - 280px); // Abzüglich Header + Navbar
+  }
   .contact-details {
    
     .contact-header {
@@ -280,7 +283,7 @@
 
 @media (max-width: 375px) {
   .contact-details {
-    height: calc(100vh - 229px); // Angepasst für kleinere Navbar
+    height: calc(100vh - 216px); // Angepasst für kleinere Navbar
   }
 
   .mobile-menu-button {
