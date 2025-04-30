@@ -24,7 +24,6 @@ export class TaskCardComponent {
   @Input() task!: Task;
   @Output() clicked = new EventEmitter<void>();
   @Output() dragStarted = new EventEmitter<DragEvent>();
-  @Output() statusChanged = new EventEmitter<void>();
 
   availableStatuses = [
     { value: 'todo', label: 'To Do' },
@@ -45,8 +44,15 @@ export class TaskCardComponent {
 
   async moveToStatus(newStatus: string) {
     if (this.task.status !== newStatus) {
-      await this.taskService.updateTaskStatus(this.task.id, newStatus);
-      this.statusChanged.emit();
+      const oldStatus = this.task.status;
+      this.task.status = newStatus;
+      
+      try {
+        await this.taskService.updateTaskStatus(this.task.id, newStatus);
+      } catch (error) {
+        this.task.status = oldStatus;
+        console.error('Error updating task status:', error);
+      }
     }
   }
 
