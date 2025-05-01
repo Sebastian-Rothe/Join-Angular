@@ -88,18 +88,26 @@ export class AddTaskComponent implements OnInit {
   isDragging = false;
 
   isDialog = false;  // Add this property
+  isEditMode = false;
 
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private taskService: TaskService,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: { initialStatus: string }
+    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: { 
+      initialStatus?: string,
+      isEditMode?: boolean,
+      taskToEdit?: Task
+    }
   ) {
     registerLocaleData(localeDe);
     this.isDialog = !!dialogRef;
-    // Set initial status if provided
-    if (dialogData?.initialStatus) {
+    
+    if (dialogData?.isEditMode && dialogData?.taskToEdit) {
+      this.isEditMode = true;
+      this.task = new Task(dialogData.taskToEdit);
+    } else if (dialogData?.initialStatus) {
       this.task.status = dialogData.initialStatus;
     } else {
       this.task.status = 'todo'; // Default status
@@ -304,18 +312,29 @@ export class AddTaskComponent implements OnInit {
   async createTask(): Promise<void> {
     if (this.validateForm()) {
       try {
-        await this.taskService.createTask(this.task);
-        this.showSuccessMessage = true;
-        setTimeout(() => {
-          this.showSuccessMessage = false;
-          if (this.dialogRef) {
-            this.dialogRef.close('taskAdded');
-          }
-          this.clearForm();
-        }, 2000);
+        if (this.isEditMode) {
+          await this.taskService.updateTask(this.task);
+          this.showSuccessMessage = true;
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+            if (this.dialogRef) {
+              this.dialogRef.close('taskUpdated');
+            }
+          }, 2000);
+        } else {
+          await this.taskService.createTask(this.task);
+          this.showSuccessMessage = true;
+          setTimeout(() => {
+            this.showSuccessMessage = false;
+            if (this.dialogRef) {
+              this.dialogRef.close('taskAdded');
+            }
+            this.clearForm();
+          }, 2000);
+        }
       } catch (error) {
-        console.error('Error creating task:', error);
-        this.showError('Failed to create task');
+        console.error('Error handling task:', error);
+        this.showError(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
       }
     }
   }

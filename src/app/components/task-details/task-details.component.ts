@@ -5,6 +5,7 @@ import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dial
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { TaskService } from '../../services/task.service';
 import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
+import { AddTaskComponent } from '../add-task/add-task.component';
 
 interface ImageInfo {
   url: string;
@@ -35,7 +36,8 @@ export class TaskDetailsComponent implements OnInit {
   constructor(
     @Inject(MAT_DIALOG_DATA) public task: Task,
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
-    private taskService: TaskService
+    private taskService: TaskService,
+    private dialog: MatDialog
   ) {
     // Check if description is long enough to be collapsible
     if (this.task.description) {
@@ -98,7 +100,21 @@ export class TaskDetailsComponent implements OnInit {
   }
 
   editTask(): void {
-    // Implement edit logic
+    const dialogRef = this.dialog.open(AddTaskComponent, {
+      width: '90%',
+      maxWidth: '1000px',
+      height: '90vh',
+      data: {
+        isEditMode: true,
+        taskToEdit: this.task
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result === 'taskUpdated') {
+        this.dialogRef.close('updated');
+      }
+    });
   }
 
   getFormattedDate(timestamp: any): Date {

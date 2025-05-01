@@ -1,11 +1,11 @@
 <div class="container-main" [class.dialog-mode]="isDialog">
     <div class="title-container" *ngIf="isDialog">
-        <div class="title">Add Task</div>
+        <div class="title">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
         <button class="close-button" (click)="closeDialog()">
             <mat-icon>close</mat-icon>
         </button>
     </div>
-    <div class="title" *ngIf="!isDialog">Add Task</div>
+    <div class="title" *ngIf="!isDialog">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
     <div class="left-right-container">
         <div class="left-side">
             <div class="form-group">
@@ -234,7 +234,7 @@
                 Clear <mat-icon>close</mat-icon>
             </button>
             <button type="button" class="create-task-btn" (click)="createTask()">
-                Create Task <mat-icon>check</mat-icon>
+                {{ isEditMode ? 'Save Task' : 'Create Task' }} <mat-icon>check</mat-icon>
             </button>
         </div>
     </div>

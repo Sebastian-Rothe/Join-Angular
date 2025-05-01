@@ -104,6 +104,17 @@ export class TaskService {
     }
   }
 
+  async updateTask(task: Task): Promise<void> {
+    try {
+      const taskRef = doc(this.firestore, 'tasks', task.id);
+      const preparedTask = this.prepareTaskForFirebase(task);
+      await updateDoc(taskRef, preparedTask);
+    } catch (error) {
+      console.error('Error updating task:', error);
+      throw error;
+    }
+  }
+
   async deleteTask(taskId: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
