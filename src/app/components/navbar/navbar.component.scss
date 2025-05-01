@@ -124,6 +124,22 @@
         color: $white;
         padding: 4px 0;
         justify-content: center;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #091931;
+            border-radius: 8px;
+            width: 68px;
+            height: 68px;
+            padding: 8px;
+            color: white;
+            transform: scale(1.05);
+            @media (max-width: 375px) {
+                width: 56px;
+                height: 56px;
+                
+            }
+        }
 
         img {
             width: 24px;
