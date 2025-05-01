@@ -3,7 +3,7 @@
     <div class="task-category" [ngClass]="task.category === 'UserStory' ? 'user-story' : 'technical-task'">
       {{ task.category === 'UserStory' ? 'User Story' : 'Technical Task' }}
     </div>
-    <img class="close-button" src="assets/icons/close.svg" (click)="close()" alt="Close">
+    <mat-icon class="close-button" (click)="close()">close</mat-icon>
   </div>
 
   <div class="task-details-content">

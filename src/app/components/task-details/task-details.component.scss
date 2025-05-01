@@ -496,6 +496,19 @@ $color-background: #f6f7f8;
   flex-direction: column;
 }
 
+// ---------- Close Button ----------
+.close-button {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    color: $color-secondary;
+  }
+}
+
 // ---------- Media Queries ----------
 @media (max-width: 800px) {
   .task-title {
