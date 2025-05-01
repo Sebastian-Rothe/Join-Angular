@@ -111,12 +111,11 @@ export class AddTaskComponent implements OnInit {
       this.isEditMode = true;
       this.task = new Task(dialogData.taskToEdit);
       this.selectedContacts = [...this.task.assignedTo];
-      // Convert timestamp to Date for datepicker
       this.dateValue = this.task.dueDate ? new Date(this.task.dueDate) : null;
     } else if (dialogData?.initialStatus) {
       this.task.status = dialogData.initialStatus;
     } else {
-      this.task.status = 'todo'; // Default status
+      this.task.status = 'todo';
     }
   }
 
@@ -131,8 +130,10 @@ export class AddTaskComponent implements OnInit {
         const userDoc = await this.userService.getUserById(user.uid);
         if (userDoc) {
           this.currentUser = userDoc;
-          this.selectedContacts = [this.currentUser];
-          this.task.assignedTo = [this.currentUser];
+          if (!this.isEditMode) {
+            this.selectedContacts = [this.currentUser];
+            this.task.assignedTo = [this.currentUser];
+          }
           this.sortContacts(); // Sort contacts after current user is set
         }
       }
