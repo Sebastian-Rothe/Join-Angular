@@ -102,12 +102,28 @@ form {
     margin-top: 20px;
 
     button {
-     
       gap: 8px;
       padding: 12px 24px;
       font-size: 16px;
-
     }
+
+    // Spezielle Styles für Action Dialog Buttons
+    .primary-btn,
+    .secondary-btn {
+      
+      height: 45px;
+      padding: 12px 24px;
+      font-size: 16px;
+
+      mat-icon {
+        margin-left: 4px;
+        font-size: 18px;
+        width: 18px;
+        height: 18px;
+      }
+    }
+
+   
   }
 }
 
@@ -424,6 +440,9 @@ form {
       padding: 8px;
       font-size: 14px;
     }
+  }
+  .align-form-buttons{
+    flex-direction: column;
   }
 }
 
