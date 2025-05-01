@@ -11,6 +11,7 @@ import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
+import { ImageService } from '../../services/image.service';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { User } from '../../models/user.class';
 import { CustomDateAdapter } from '../../adapters/custom-date.adapter';
@@ -97,6 +98,7 @@ export class AddTaskComponent implements OnInit {
     private userService: UserService,
     private authService: AuthService,
     private taskService: TaskService,
+    private imageService: ImageService,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: { 
       initialStatus?: string,
@@ -218,17 +220,17 @@ export class AddTaskComponent implements OnInit {
   }
 
   private async fileToTaskFile(file: File): Promise<TaskFile> {
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        resolve({
-          data: e.target?.result as string,
-          name: file.name,
-          type: file.type
-        });
+    try {
+      const compressedImageData = await this.imageService.compressImage(file);
+      return {
+        data: compressedImageData,
+        name: file.name,
+        type: file.type
       };
-      reader.readAsDataURL(file);
-    });
+    } catch (error) {
+      console.error('Error compressing image:', error);
+      throw error;
+    }
   }
 
   async onFileSelected(event: Event): Promise<void> {

@@ -9,6 +9,7 @@ import { DialogService } from '../../services/dialog.service';
 import { User } from '../../models/user.class';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-action-dialog',
@@ -34,6 +35,7 @@ export class ActionDialogComponent implements OnInit {
     public dialogRef: MatDialogRef<ActionDialogComponent>,
     private userService: UserService,
     private dialogService: DialogService,
+    private imageService: ImageService,
     private router: Router
   ) {}
 
@@ -92,7 +94,7 @@ export class ActionDialogComponent implements OnInit {
 
     try {
       // Erst komprimieren, dann Größe prüfen
-      const compressedImageData = await this.userService.compressImage(file);
+      const compressedImageData = await this.imageService.compressImage(file);
       
       // Konvertiere Base64 string zur Größenberechnung
       const compressedSize = Math.round((compressedImageData.length * 3) / 4);
