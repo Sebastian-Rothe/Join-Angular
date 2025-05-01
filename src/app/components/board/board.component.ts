@@ -117,14 +117,13 @@ export class BoardComponent implements OnInit {
 
   openPopupAddTask(initialStatus: string = 'todo') {
     const dialogRef = this.dialog.open(AddTaskComponent, {
-      width: '90%',
+      width: window.innerWidth <= 375 ? '95%' : '90%',
       maxWidth: '1000px',
       height: '90vh',
       panelClass: ['add-task-dialog', 'slide-in'],
       data: { initialStatus }
     });
 
-    // Animation beim Schließen
     const backdropElement = document.querySelector('.add-task-dialog .mdc-dialog__surface') as HTMLElement;
     dialogRef.beforeClosed().subscribe(() => {
       if (backdropElement) {
