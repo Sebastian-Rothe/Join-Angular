@@ -271,7 +271,11 @@ input[type="password"].invalid {
 
   a {
     text-decoration: none;
-    color: $border-color;
+    color: #a8a8a8;
+    &:hover{
+      color: $primary-blue;
+      scale: 1.05;
+    }
   }
 }
 
