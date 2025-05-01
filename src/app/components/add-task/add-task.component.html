@@ -141,6 +141,7 @@
                     <input class="input-style" type="text" 
                            [(ngModel)]="newSubtask" 
                            (input)="subTaskInput()"
+                           (keyup.enter)="addSubtask()"
                            placeholder="Add new subtask">
                     <div class="subtask-buttons">
                         <button type="button" class="subtask-btn" *ngIf="!isSubtaskInputActive">
