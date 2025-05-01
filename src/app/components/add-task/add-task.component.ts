@@ -90,6 +90,9 @@ export class AddTaskComponent implements OnInit {
   isDialog = false;  // Add this property
   isEditMode = false;
 
+  // Helper method to convert timestamp to Date object for the datepicker
+  dateValue: Date | null = null;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
@@ -107,6 +110,9 @@ export class AddTaskComponent implements OnInit {
     if (dialogData?.isEditMode && dialogData?.taskToEdit) {
       this.isEditMode = true;
       this.task = new Task(dialogData.taskToEdit);
+      this.selectedContacts = [...this.task.assignedTo];
+      // Convert timestamp to Date for datepicker
+      this.dateValue = this.task.dueDate ? new Date(this.task.dueDate) : null;
     } else if (dialogData?.initialStatus) {
       this.task.status = dialogData.initialStatus;
     } else {
@@ -295,10 +301,8 @@ export class AddTaskComponent implements OnInit {
   validateForm(): boolean {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    const selectedDate = this.task.dueDate ? new Date(this.task.dueDate) : null;
-    if (selectedDate) selectedDate.setHours(0, 0, 0, 0);
-
-    const isDueDateValid = this.task.dueDate && (!selectedDate || selectedDate >= today);
+    
+    const isDueDateValid = this.task.dueDate > 0;
 
     this.errors = {
       title: !this.task.title.trim(),
@@ -419,6 +423,16 @@ export class AddTaskComponent implements OnInit {
   closeDialog(): void {
     if (this.dialogRef) {
       this.dialogRef.close();
+    }
+  }
+
+  onDateSelected(event: any): void {
+    if (event.value instanceof Date) {
+      this.dateValue = event.value;
+      this.task.dueDate = event.value.getTime();
+    } else {
+      this.dateValue = null;
+      this.task.dueDate = 0;
     }
   }
 

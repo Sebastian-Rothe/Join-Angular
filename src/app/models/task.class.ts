@@ -18,7 +18,7 @@ export class Task {
     assignedTo: User[];
     files: TaskFile[] = []; // Updated to use TaskFile interface
     fileNames: string[] = []; // Store file names separately
-    dueDate: string;
+    dueDate: number; // Updated to store dueDate as a timestamp
     priority: 'urgent' | 'medium' | 'low';
     category: string;
     subtasks: Subtask[];
@@ -31,7 +31,7 @@ export class Task {
         this.assignedTo = obj?.assignedTo || [];
         this.files = obj?.files || []; // Updated to use TaskFile interface
         this.fileNames = obj?.fileNames || [];
-        this.dueDate = obj?.dueDate || '';
+        this.dueDate = obj?.dueDate ? new Date(obj.dueDate).getTime() : 0; // Convert dueDate to timestamp
         this.priority = obj?.priority || 'medium';
         this.category = obj?.category || '';
         this.subtasks = obj?.subtasks || [];
