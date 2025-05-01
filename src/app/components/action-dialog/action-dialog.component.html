@@ -65,16 +65,14 @@
               [readonly]="config.type === 'account'"
               required>
             <div class="align-form-buttons">
-              <button class="cancel-button" type="button" (click)="config.type === 'account' ? deleteAccount() : onClose()" [class.mobile-hide]="config.type !== 'account'">
-                {{ config.type === 'account' ? 'Delete my account' : 
-                   config.type === 'edit' ? 'Delete' : 'Cancel' }}
-                <mat-icon *ngIf="config.type !== 'account'">{{ config.type === 'edit' ? 'delete' : 'close' }}</mat-icon>
+              <button class="secondary-btn" type="button" (click)="config.type === 'account' ? deleteAccount() : onClose()">
+                {{ config.type === 'account' ? 'Delete my account' : 'Cancel' }}
+                <mat-icon *ngIf="config.type !== 'account'">close</mat-icon>
               </button>
-              <button class="submit-button" 
+              <button class="primary-btn" 
                       [type]="config.type === 'account' ? 'button' : 'submit'"
                       (click)="config.type === 'account' ? openEditDialog() : null">
-                {{ config.type === 'account' ? 'Edit' : 
-                   config.type === 'edit' ? 'Save' : 'Create contact' }}
+                {{ config.type === 'account' ? 'Edit' : 'Create contact' }}
                 <mat-icon *ngIf="config.type !== 'account'">check</mat-icon>
               </button>
             </div>

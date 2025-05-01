@@ -70,6 +70,70 @@ button {
   padding: 0 20px;
 }
 
+// Global Button Styles
+.primary-btn {
+  @extend %button-base;
+  background-color: $dark-navy;
+  color: $white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &:hover {
+    background-color: $primary-blue;
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px $box-shadow-hover;
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}
+
+.secondary-btn {
+  @extend %button-base;
+  background-color: $white;
+  color: $dark-navy;
+  border: 1px solid $dark-navy;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+
+  &:hover {
+    border-color: $primary-blue;
+    color: $primary-blue;
+    transform: scale(1.01);
+    box-shadow: 0 4px 8px $box-shadow-light;
+
+    mat-icon {
+      color: $primary-blue;
+    }
+  }
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    color: $dark-navy;
+  }
+}
+
+// Responsive styles for buttons
+@media (max-width: 768px) {
+  .primary-btn,
+  .secondary-btn {
+    height: 40px;
+    font-size: 18px;
+    min-width: 90px;
+    padding: 0 16px;
+  }
+}
+
 @mixin hover-effect(
   $scale: 1.05,
   $shadow-color: rgba(0, 0, 0, 0.2),
