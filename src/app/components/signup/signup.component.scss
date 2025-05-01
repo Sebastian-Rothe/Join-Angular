@@ -212,27 +212,6 @@
   margin-top: 4px;
 }
 
-.button-section-signup {
-  margin-top: 16px;
-
-  .Login-btn {
-    @extend %button-base !optional;
-    background-color: $dark-navy;
-    color: $white;
-    width: 145px;
-    height: 51px;
-    font-size: 18px;
-    
-    @include hover-effect(
-      $scale: 1,
-      $shadow-color: $box-shadow-hover,
-      $shadow-spread: 4px,
-      $transition-duration: 0.2s,
-      $color: $white,
-      $background-color: $primary-blue
-    );
-  }
-}
 
 .footer-links {
   height: 5vh;
@@ -298,9 +277,7 @@
     font-size: 14px;
   }
 
-  .button-section-signup .Login-btn {
-    width: 180px;
-  }
+ 
 
   .logo-sidebar {
     top: 8px;
@@ -369,15 +346,7 @@
     }
   }
 
-  .button-section-signup {
-    margin-top: 25px;
 
-    .Login-btn {
-      width: 180px;
-      height: 45px;
-      font-size: 16px;
-    }
-  }
 
   .title-section-signup { font-size: 41px; }
   .input-section-signup { 

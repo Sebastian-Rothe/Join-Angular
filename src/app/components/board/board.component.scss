@@ -78,22 +78,13 @@ button {
   cursor: pointer;
 }
 
-.search-button {
-  background-color: #091931;
-  color: white;
-  border-radius: 8px;
-  width: 220px;
-  height: 50px;
-  font-size: 1.5rem;
-  font-weight: bold;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
+.addButton {
+  min-width: 160px!important;
+ width: 160px!important;
+  height: 48px!important;
+
 }
-.search-button:hover {
-  background-color: #29abe2;
-}
+
 
 .board-main-div {
   flex: 1;
@@ -274,9 +265,9 @@ h3 {
     line-height: 1;
   }
 
-  .search-button {
-    display: none;
-  }
+  // .search-button {
+  //   display: none;
+  // }
 
   .search-container,
   .input-div,
@@ -308,7 +299,7 @@ h3 {
     }
   }
 
-  .search-button {
+  .addButton {
     display: none;
   }
   .search-container {

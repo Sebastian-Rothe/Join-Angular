@@ -102,37 +102,11 @@ form {
     margin-top: 20px;
 
     button {
-      display: flex;
-      align-items: center;
+     
       gap: 8px;
       padding: 12px 24px;
-      border-radius: 8px;
       font-size: 16px;
 
-      &.cancel-button, &.submit-button {
-        &:hover { 
-          mat-icon { color: inherit; }
-        }
-      }
-
-      &.cancel-button {
-        background: white;
-        border: 1px solid #2c3e50;
-        color: #2c3e50;
-
-        &:hover {
-          border-color: #29ABE2;
-          color: #29ABE2;
-        }
-      }
-
-      &.submit-button {
-        background: #2c3e50;
-        border: none;
-        color: white;
-
-        &:hover { background: #29ABE2; }
-      }
     }
   }
 }
