@@ -51,7 +51,7 @@ export const MY_DATE_FORMATS = {
 })
 export class AddTaskComponent implements OnInit {
   @ViewChild('fileGrid') fileGrid!: ElementRef;
-  minDate = new Date(); // Heutiges Datum als Minimum
+  minDate: Date;
 
   private isDraggingGrid = false;
   private startX = 0;
@@ -108,6 +108,8 @@ export class AddTaskComponent implements OnInit {
   ) {
     registerLocaleData(localeDe);
     this.isDialog = !!dialogRef;
+    this.minDate = new Date();
+    this.minDate.setHours(0, 0, 0, 0); // Setze Zeit auf Mitternacht
     
     if (dialogData?.isEditMode && dialogData?.taskToEdit) {
       this.isEditMode = true;
@@ -443,12 +445,22 @@ export class AddTaskComponent implements OnInit {
   }
 
   onDateSelected(event: any): void {
-    if (event.value instanceof Date) {
-      this.dateValue = event.value;
-      this.task.dueDate = event.value.getTime();
-    } else {
-      this.dateValue = null;
-      this.task.dueDate = 0;
+    const selectedDate = event.value;
+    
+    if (selectedDate) {
+      const dateToCheck = new Date(selectedDate);
+      dateToCheck.setHours(0, 0, 0, 0);
+      
+      if (dateToCheck < this.minDate) {
+        this.dateValue = null;
+        this.task.dueDate = 0;
+        this.errors.dueDate = true;
+        this.showError('Please select a date in the future');
+      } else {
+        this.dateValue = selectedDate;
+        this.task.dueDate = selectedDate.getTime();
+        this.errors.dueDate = false;
+      }
     }
   }
 
