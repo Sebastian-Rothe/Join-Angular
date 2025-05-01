@@ -120,10 +120,17 @@ export class BoardComponent implements OnInit {
       width: '90%',
       maxWidth: '1000px',
       height: '90vh',
-      panelClass: 'add-task-dialog',
-      enterAnimationDuration: '225ms',
-      exitAnimationDuration: '195ms',
+      panelClass: ['add-task-dialog', 'slide-in'],
       data: { initialStatus }
+    });
+
+    // Animation beim Schließen
+    const backdropElement = document.querySelector('.add-task-dialog .mdc-dialog__surface') as HTMLElement;
+    dialogRef.beforeClosed().subscribe(() => {
+      if (backdropElement) {
+        backdropElement.classList.remove('slide-in');
+        backdropElement.classList.add('slide-out');
+      }
     });
 
     dialogRef.afterClosed().subscribe(async result => {

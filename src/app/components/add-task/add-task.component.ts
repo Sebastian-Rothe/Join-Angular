@@ -325,7 +325,8 @@ export class AddTaskComponent implements OnInit {
           setTimeout(() => {
             this.showSuccessMessage = false;
             if (this.dialogRef) {
-              this.dialogRef.close('taskUpdated');
+              this.closeDialog();
+              // this.dialogRef.close('taskUpdated');
             }
           }, 2000);
         } else {
@@ -334,7 +335,8 @@ export class AddTaskComponent implements OnInit {
           setTimeout(() => {
             this.showSuccessMessage = false;
             if (this.dialogRef) {
-              this.dialogRef.close('taskAdded');
+              this.closeDialog();
+              // this.dialogRef.close('taskAdded');
             }
             this.clearForm();
           }, 2000);
@@ -425,7 +427,18 @@ export class AddTaskComponent implements OnInit {
 
   closeDialog(): void {
     if (this.dialogRef) {
-      this.dialogRef.close();
+      const dialogContainer = document.querySelector('.add-task-dialog .mdc-dialog__surface');
+      if (dialogContainer) {
+        dialogContainer.classList.remove('slide-in');
+        dialogContainer.classList.add('slide-out');
+        
+        // Warte auf das Ende der Animation
+        setTimeout(() => {
+          this.dialogRef?.close();
+        }, 300); // Entspricht der Animations-Dauer
+      } else {
+        this.dialogRef.close();
+      }
     }
   }
 

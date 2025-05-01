@@ -264,3 +264,28 @@ body {
   }
 }
 
+// Dialog Animations
+.add-task-dialog {
+  .mdc-dialog__surface {
+    &.slide-in {
+      animation: slideInRight 0.3s ease forwards;
+    }
+    
+    &.slide-out {
+      animation: slideOutRight 0.3s ease forwards;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .add-task-dialog .mdc-dialog__surface {
+    &.slide-in {
+      animation: slideInUp 0.3s ease forwards;
+    }
+    
+    &.slide-out {
+      animation: slideOutDown 0.3s ease forwards;
+    }
+  }
+}
+
