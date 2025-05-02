@@ -124,4 +124,59 @@ export class TaskService {
       throw error;
     }
   }
+
+  async getTaskMetrics() {
+    try {
+      const tasks = await this.getAllTasks();
+      console.log('All tasks:', tasks); // Debug log
+
+      const metrics = {
+        todo: 0,
+        done: 0,
+        urgent: 0,
+        upcomingDeadline: null as Date | null,
+        tasksInBoard: tasks.length,
+        tasksInProgress: 0,
+        awaitingFeedback: 0
+      };
+
+      let earliestUrgentDeadline: Date | null = null;
+
+      tasks.forEach(task => {
+        console.log('Task status:', task.status);
+        
+        switch (task.status) { // Remove normalization since we know the exact values
+          case 'todo':
+            metrics.todo++;
+            break;
+          case 'done':
+            metrics.done++;
+            break;
+          case 'inProgress': // Matches exactly what's in Firebase
+            metrics.tasksInProgress++;
+            break;
+          case 'awaitFeedback': // Matches exactly what's in Firebase
+            metrics.awaitingFeedback++;
+            break;
+        }
+
+        if (task.priority === 'urgent') {
+          metrics.urgent++;
+          if (task.dueDate) {
+            const dueDate = new Date(task.dueDate);
+            if (!earliestUrgentDeadline || dueDate < earliestUrgentDeadline) {
+              earliestUrgentDeadline = dueDate;
+            }
+          }
+        }
+      });
+
+      console.log('Final metrics:', metrics); // Debug log
+      metrics.upcomingDeadline = earliestUrgentDeadline;
+      return metrics;
+    } catch (error) {
+      console.error('Error calculating metrics:', error);
+      throw error;
+    }
+  }
 }
