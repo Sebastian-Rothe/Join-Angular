@@ -6,6 +6,7 @@
 
 .summary-header {
   display: flex;
+  flex-direction: row;
   align-items: center;
   gap: 30px;
   margin-bottom: 42px;
@@ -32,6 +33,7 @@
     border-radius: 2px;
   }
 }
+
 
 .metrics-grid {
   display: flex;
@@ -84,7 +86,7 @@
 .metric-card-content {
   display: flex;
   align-items: center;
-  gap: 18px;
+  gap: 16px;
 }
 
 .icon-circle {
@@ -108,6 +110,7 @@
 .metric-content {
   h2 {
     // @include flex-center;
+    text-align: center;
     font-size: 64px;
     margin: 0;
     font-weight: 600;
@@ -229,11 +232,175 @@
   }
 }
 
-// @media (max-width: 960px) {
-//   .metrics-row,
-//   .urgent-card,
-//   .tasks-overview,
-//   .metric-card {
-//     height: 110px;
-//   }
-// }
+@media (max-width: 1000px) {
+  .summary-container {
+    padding: 40px 32px;
+  }
+
+  .summary-header {
+    margin-bottom: 40px;
+    
+    h1 {
+      font-size: 47px;
+    }
+    
+    .key-metrics {
+      font-size: 21px;
+    }
+    
+    .header-divider {
+      height: 40px;
+    }
+  }
+
+  .metrics-grid {
+    gap: 24px;
+  }
+}
+
+@media (max-width: 768px) {
+  .metrics-row {
+    height: 110px;
+    gap: 24px;
+
+    .metric-card {
+      height: 110px;
+    }
+  }
+
+  .icon-circle {
+    width: 40px;
+    height: 40px;
+
+    mat-icon {
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
+    }
+  }
+
+  .metric-content {
+    h2 {
+      font-size: 47px;
+    }
+
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .urgent-card {
+    padding: 16px 24px;
+    height: 110px;
+  }
+
+  .urgent-section {
+    .icon-circle {
+      width: 40px;
+      height: 40px;
+
+      img {
+        width: 24px;
+        height: 24px;
+      }
+    }
+  }
+
+  .vertical-divider {
+    height: 68px;
+    margin: 0 24px;
+  }
+
+  .deadline-section {
+    h3 {
+      font-size: 16px;
+    }
+    
+    span {
+      font-size: 14px;
+    }
+  }
+
+  .tasks-overview {
+    height: 110px;
+    gap: 24px;
+
+    .metric-card {
+      height: 110px;
+    }
+  }
+}
+@media (max-width: 650px) {
+    .summary-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 4px;
+      margin-bottom: 20px;
+  
+      h1 {
+        order: 0;
+      }
+  
+      .key-metrics {
+        order: 1;
+      }
+    
+      .header-divider {
+        order: 2;
+        width: 90px;
+        height: 3px;
+        margin-top: 8px;
+      }
+    }
+  }
+  
+@media (max-width: 480px) {
+  .summary-container {
+    padding: 20px 12px;
+  }
+
+  .metrics-grid {
+    gap: 16px;
+  }
+
+  .metrics-row {
+    gap: 16px;
+  }
+
+  .tasks-overview {
+    gap: 16px;
+  }
+
+  .urgent-card {
+    padding: 12px 16px;
+  }
+
+  .vertical-divider {
+    margin: 0 16px;
+  }
+}
+
+@media (max-width: 320px) {
+  .summary-container {
+    padding: 16px 12px;
+  }
+
+  .metrics-row,
+  .tasks-overview {
+    gap: 12px;
+  }
+
+  .metric-content {
+    h2 {
+      font-size: 40px;
+    }
+  }
+
+  .urgent-card {
+    padding: 12px;
+  }
+
+  .vertical-divider {
+    margin: 0 12px;
+  }
+}
