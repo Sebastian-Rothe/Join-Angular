@@ -18,8 +18,9 @@ export const routes: Routes = [
     component: MainContentComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: 'contacts', component: ContactsComponent },
+      { path: '', redirectTo: 'summary', pathMatch: 'full' },
       { path: 'summary', component: SummaryComponent },
+      { path: 'contacts', component: ContactsComponent },
       { path: 'board', component: BoardComponent },
       { path: 'add-task', component: AddTaskComponent },
       { path: 'help', component: HelpComponent },

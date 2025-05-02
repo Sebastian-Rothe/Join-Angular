@@ -230,6 +230,8 @@
     font-size: 47px;
     font-weight: 500;
     margin: 0;
+    word-break: break-word;
+    hyphens: auto;
   }
 
   h2:nth-child(2) {
