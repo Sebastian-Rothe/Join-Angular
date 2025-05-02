@@ -1,0 +1,64 @@
+.greeting-overlay {
+  position: fixed;
+  top: 96px; // Height of header
+  left: 232px; // Width of navbar
+  right: 0;
+  bottom: 0;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 998;
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+
+  &.fade-out {
+    opacity: 0;
+  }
+}
+
+.greeting-content {
+  text-align: center;
+  margin-bottom: 50px;
+
+  h2 {
+    font-size: 47px;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  h1 {
+    color: #29ABE2;
+    font-size: 64px;
+    font-weight: 700;
+    margin: 0;
+  }
+}
+
+// For screens < 1030px (navbar becomes smaller)
+@media (max-width: 1030px) {
+  .greeting-overlay {
+    left: 120px;
+  }
+}
+
+// For screens < 800px (mobile view)
+@media (max-width: 800px) {
+  .greeting-overlay {
+    left: 0;
+    bottom: 80px; // Height of mobile menu
+  }
+}
+
+// For small mobile screens
+@media (max-width: 375px) {
+  .greeting-overlay {
+    bottom: 60px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .greeting-overlay {
+    display: none;
+  }
+}

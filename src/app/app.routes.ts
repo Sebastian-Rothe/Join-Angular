@@ -8,6 +8,7 @@ import { BoardComponent } from './components/board/board.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HelpComponent } from './components/help/help.component';
+import { GreetingOverlayComponent } from './components/greeting-overlay/greeting-overlay.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -18,7 +19,8 @@ export const routes: Routes = [
     component: MainContentComponent,
     canActivate: [AuthGuard],
     children: [
-      { path: '', redirectTo: 'summary', pathMatch: 'full' },
+      { path: '', redirectTo: 'greeting', pathMatch: 'full' },
+      { path: 'greeting', component: GreetingOverlayComponent },
       { path: 'summary', component: SummaryComponent },
       { path: 'contacts', component: ContactsComponent },
       { path: 'board', component: BoardComponent },
