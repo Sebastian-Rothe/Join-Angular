@@ -47,7 +47,7 @@ export class ContactsComponent implements OnInit {
       let allUsers = await this.userService.getAllUsers();
       
       // Filter out current user from contacts list
-      this.contacts = allUsers.filter(user => user.uid !== this.currentUser?.uid);
+      this.contacts = allUsers.filter(user => user.uid !== this.currentUser?.uid && user.email !== 'guest@temporary.com');
       
       this.contacts.sort((a, b) => a.name.localeCompare(b.name));
       this.groupContacts();
