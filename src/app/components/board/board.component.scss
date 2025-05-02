@@ -79,12 +79,15 @@ button {
 }
 
 .addButton {
-  min-width: 160px!important;
- width: 160px!important;
-  height: 48px!important;
-
+  min-width: 160px !important;
+  width: 160px !important;
+  height: 48px !important;
+  // mat-icon {
+  //   width: 32px!important;
+  //   height: 32px!important;
+  //   height: 32px;
+  // }
 }
-
 
 .board-main-div {
   flex: 1;
@@ -186,10 +189,10 @@ h3 {
 
   .search-container {
     width: 100%;
-    .input-div{
+    .input-div {
       width: 100%;
     }
-    .search-input{
+    .search-input {
       width: 100%;
     }
   }
