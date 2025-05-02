@@ -125,6 +125,14 @@
     color: white;
     transform: scale(1.01);
 
+    .icon-circle {
+      background: white;
+
+      img {
+        filter: brightness(0) saturate(100%) invert(37%) sepia(74%) saturate(7471%) hue-rotate(356deg) brightness(101%) contrast(101%);
+      }
+    }
+
     .vertical-divider {
       background: white;
     }
@@ -141,9 +149,20 @@
   align-items: center;
   gap: 18px;
 
-  img {
+  .icon-circle {
     width: 60px;
     height: 60px;
+    background: #FF3D00;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      width: 32px;
+      height: 32px;
+      filter: brightness(0) invert(1);
+    }
   }
 }
 
