@@ -9,18 +9,22 @@
     <!-- Todo & Done -->
     <div class="metrics-row">
       <div class="metric-card" routerLink="/main/board">
-        <mat-icon>edit</mat-icon>
-        <div class="metric-content">
-          <h2>{{metrics.todo}}</h2>
-          <span>To-do</span>
+        <div class="metric-card-content">
+          <mat-icon>edit</mat-icon>
+          <div class="metric-content">
+            <h2>{{ metrics.todo }}</h2>
+            <span>To-do</span>
+          </div>
         </div>
       </div>
 
       <div class="metric-card" routerLink="/main/board">
-        <mat-icon>check_circle</mat-icon>
-        <div class="metric-content">
-          <h2>{{metrics.done}}</h2>
-          <span>Done</span>
+        <div class="metric-card-content">
+          <mat-icon>check_circle</mat-icon>
+          <div class="metric-content">
+            <h2>{{ metrics.done }}</h2>
+            <span>Done</span>
+          </div>
         </div>
       </div>
     </div>
@@ -28,15 +32,15 @@
     <!-- Urgent Section -->
     <div class="urgent-card" routerLink="/main/board">
       <div class="urgent-section">
-        <mat-icon>priority_high</mat-icon>
+        <img src="/assets/icons/PrioUrgent.svg" alt="PrioUrgent">
         <div class="metric-content">
-          <h2>{{metrics.urgent}}</h2>
+          <h2>{{ metrics.urgent }}</h2>
           <span>Urgent</span>
         </div>
       </div>
       <div class="divider"></div>
       <div class="deadline-section">
-        <h3>{{metrics.upcomingDeadline | date}}</h3>
+        <h3>{{ metrics.upcomingDeadline | date }}</h3>
         <span>Upcoming Deadline</span>
       </div>
     </div>
@@ -45,21 +49,21 @@
     <div class="tasks-row">
       <div class="metric-card" routerLink="/main/board">
         <div class="metric-content">
-          <h2>{{metrics.tasksInBoard}}</h2>
+          <h2>{{ metrics.tasksInBoard }}</h2>
           <span>Tasks in Board</span>
         </div>
       </div>
 
       <div class="metric-card" routerLink="/main/board">
         <div class="metric-content">
-          <h2>{{metrics.tasksInProgress}}</h2>
+          <h2>{{ metrics.tasksInProgress }}</h2>
           <span>Tasks In Progress</span>
         </div>
       </div>
 
       <div class="metric-card" routerLink="/main/board">
         <div class="metric-content">
-          <h2>{{metrics.awaitingFeedback}}</h2>
+          <h2>{{ metrics.awaitingFeedback }}</h2>
           <span>Awaiting Feedback</span>
         </div>
       </div>
@@ -67,7 +71,7 @@
   </div>
 
   <div class="greeting">
-    <h2>{{greeting}},</h2>
-    <h1>{{userName}}</h1>
+    <h2>{{ greeting }},</h2>
+    <h1>{{ userName }}</h1>
   </div>
 </div>
