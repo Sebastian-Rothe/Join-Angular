@@ -128,7 +128,6 @@ export class TaskService {
   async getTaskMetrics() {
     try {
       const tasks = await this.getAllTasks();
-      console.log('All tasks:', tasks); // Debug log
 
       const metrics = {
         todo: 0,
