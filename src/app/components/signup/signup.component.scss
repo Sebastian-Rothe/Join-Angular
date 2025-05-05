@@ -21,9 +21,17 @@
   }
 }
 
-.arrow-left{
-  width: 48px !important;
-  height: 48px !important;
+.arrow-left {
+  width: 48px;
+  height: 48px;
+  font-size: 38px;
+  color: #29ABE2;
+  cursor: pointer;
+  transition: all 0.2s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 }
 
 .content {
