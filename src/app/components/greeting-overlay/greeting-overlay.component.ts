@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { UserService } from '../../services/user.service';
+import { TaskService } from '../../services/task.service';
 
 @Component({
   selector: 'app-greeting-overlay',
@@ -24,18 +25,28 @@ export class GreetingOverlayComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private userService: UserService
+    private userService: UserService,
+    private taskService: TaskService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+    if (window.innerWidth >= 1200) {
+      await this.taskService.getAllTasks();
+      this.router.navigate(['/main/summary']);
+      return;
+    }
+
     this.setGreeting();
     this.loadUserData();
+    const dataLoadingPromise = this.taskService.getAllTasks();
+    
     setTimeout(() => {
       this.isClosing = true;
-      setTimeout(() => {
-        this.closeOverlay();
+      setTimeout(async () => {
+        await dataLoadingPromise;
+        this.router.navigate(['/main/summary']);
       }, 1000);
-    }, 2000);
+    }, 1500);
   }
 
   private setGreeting() {
@@ -51,9 +62,5 @@ export class GreetingOverlayComponent implements OnInit {
         this.userName = user.name;
       }
     });
-  }
-
-  private closeOverlay() {
-    this.router.navigate(['/main/summary']);
   }
 }
