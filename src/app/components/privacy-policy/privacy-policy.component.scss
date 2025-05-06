@@ -1,1 +1,26 @@
 @use '../../shared/styles/legal-privacy-help.scss';
+h2{
+    margin: 12px 0;
+}
+.title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin: 24px 0;
+  @media (max-width: 450px) {
+    font-size: 2rem;
+    
+  }
+  @media (max-width: 375px) {
+    font-size: 1.6rem;
+    
+  }
+}
+
+h3{
+ 
+  margin: 10px 0;
+}
+
+h4{
+    margin: 8px 0;
+}
