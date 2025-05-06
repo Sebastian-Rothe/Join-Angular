@@ -37,11 +37,14 @@ mat-icon {
   margin-bottom: 0!important;
 }
 
-@media (max-width: 1030px) {
-  //   .all {
-  //     margin-left: 150px;
-  //   }
+.link{
+  text-decoration: none!important;
+  color: #29abe2;
+  &:hover {
+    text-decoration: underline;
+  }
 }
+
 @media (max-width: 901px) {
   .all {
     text-align: justify;
