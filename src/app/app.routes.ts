@@ -9,6 +9,7 @@ import { AddTaskComponent } from './components/add-task/add-task.component';
 import { AuthGuard } from './guards/auth.guard';
 import { HelpComponent } from './components/help/help.component';
 import { GreetingOverlayComponent } from './components/greeting-overlay/greeting-overlay.component';
+import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -26,6 +27,7 @@ export const routes: Routes = [
       { path: 'board', component: BoardComponent },
       { path: 'add-task', component: AddTaskComponent },
       { path: 'help', component: HelpComponent },
+      { path: 'legal', component: LegalNoticeComponent },
     ],
   },
   { path: '**', redirectTo: '/login' },
