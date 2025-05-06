@@ -39,6 +39,7 @@ export class User {
         return name
             .split(' ')
             .map(part => part.charAt(0))
+            .slice(0, 3) 
             .join('')
             .toUpperCase();
     }
