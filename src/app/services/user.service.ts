@@ -64,26 +64,38 @@ export class UserService {
     }
   }
 
+  async cleanupGuestUsers(): Promise<void> {
+    try {
+      const currentUser = await firstValueFrom(this.currentUser$);
+      if (!currentUser) return;
+
+      const usersSnapshot = await getDocs(collection(this.firestore, 'users'));
+      const deletePromises = usersSnapshot.docs
+        .filter(doc => {
+          const userData = doc.data();
+          return userData['isGuest'] && doc.id !== currentUser.uid;
+        })
+        .map(doc => this.deleteUser(doc.id));
+
+      await Promise.all(deletePromises);
+    } catch (error) {
+      console.error('Error during guest users cleanup:', error);
+    }
+  }
+
   async getAllUsers(): Promise<User[]> {
     try {
+      await this.cleanupGuestUsers();
       const querySnapshot = await getDocs(collection(this.firestore, 'users'));
-      const users: User[] = [];
       const currentUser = await firstValueFrom(this.currentUser$);
 
-      for (const doc of querySnapshot.docs) {
-        const userData = doc.data();
-        // Delete old guest users that aren't the current user
-        if (
-          userData['isGuest'] &&
-          (!currentUser || doc.id !== currentUser.uid)
-        ) {
-          await this.deleteUser(doc.id);
-          continue;
-        }
-        users.push(new User(userData));
-      }
-
-      return users.sort((a, b) => a.name.localeCompare(b.name));
+      return querySnapshot.docs
+        .map(doc => new User({ ...doc.data(), uid: doc.id }))
+        .filter(user => {
+          return (!user.isGuest && !user.email.includes('guest@temporary.com')) || 
+                 (currentUser && user.uid === currentUser.uid);
+        })
+        .sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
       console.error('Error fetching users:', error);
       return [];
