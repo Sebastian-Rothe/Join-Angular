@@ -10,11 +10,14 @@ import { AuthGuard } from './guards/auth.guard';
 import { HelpComponent } from './components/help/help.component';
 import { GreetingOverlayComponent } from './components/greeting-overlay/greeting-overlay.component';
 import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';
+import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
+  { path: 'legal', component: LegalNoticeComponent },
+  {path: 'privacy', component: PrivacyPolicyComponent}, 
   {
     path: 'main',
     component: MainContentComponent,
@@ -28,6 +31,7 @@ export const routes: Routes = [
       { path: 'add-task', component: AddTaskComponent },
       { path: 'help', component: HelpComponent },
       { path: 'legal', component: LegalNoticeComponent },
+      {path: 'privacy', component: PrivacyPolicyComponent}, 
     ],
   },
   { path: '**', redirectTo: '/login' },
