@@ -14,7 +14,7 @@ import { TaskService } from '../../services/task.service';
 import { ImageService } from '../../services/image.service';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { User } from '../../models/user.class';
-import { CustomDateAdapter } from '../../adapters/custom-date.adapter';
+import { CustomDateAdapter } from '../../shared/adapters/custom-date.adapter';
 
 export const MY_DATE_FORMATS = {
   parse: {

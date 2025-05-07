@@ -6,7 +6,7 @@ import { ContactsComponent } from './components/contacts/contacts.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { BoardComponent } from './components/board/board.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
-import { AuthGuard } from './guards/auth.guard';
+import { AuthGuard } from './shared/guards/auth.guard';
 import { HelpComponent } from './components/help/help.component';
 import { GreetingOverlayComponent } from './components/greeting-overlay/greeting-overlay.component';
 import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';

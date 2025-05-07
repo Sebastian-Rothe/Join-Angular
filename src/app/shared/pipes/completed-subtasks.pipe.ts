@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Subtask } from '../models/task.class';
+import { Subtask } from '../../models/task.class';
 
 @Pipe({
   name: 'completedSubtasks',
