@@ -7,10 +7,10 @@ import { SummaryComponent } from './components/summary/summary.component';
 import { BoardComponent } from './components/board/board.component';
 import { AddTaskComponent } from './components/add-task/add-task.component';
 import { AuthGuard } from './shared/guards/auth.guard';
-import { HelpComponent } from './components/help/help.component';
-import { GreetingOverlayComponent } from './components/greeting-overlay/greeting-overlay.component';
-import { LegalNoticeComponent } from './components/legal-notice/legal-notice.component';
-import { PrivacyPolicyComponent } from './components/privacy-policy/privacy-policy.component';
+import { HelpComponent } from './shared/components/help/help.component';
+import { GreetingOverlayComponent } from './shared/components/greeting-overlay/greeting-overlay.component';
+import { LegalNoticeComponent } from './shared/components/legal-notice/legal-notice.component';
+import { PrivacyPolicyComponent } from './shared/components/privacy-policy/privacy-policy.component';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },

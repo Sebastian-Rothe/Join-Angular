@@ -3,10 +3,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { MatMenuModule } from '@angular/material/menu';
-import { User } from '../../models/user.class';
-import { UserService } from '../../services/user.service';
-import { AuthService } from '../../services/auth.service';
-import { DialogService } from '../../services/dialog.service';
+import { User } from '../../../models/user.class';
+import { UserService } from '../../../services/user.service';
+import { AuthService } from '../../../services/auth.service';
+import { DialogService } from '../../../services/dialog.service';
 
 @Component({
   selector: 'app-header',

@@ -4,7 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { TaskService } from '../../services/task.service';
-import { ImageViewerComponent } from '../image-viewer/image-viewer.component';
+import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
 
 interface ImageInfo {
