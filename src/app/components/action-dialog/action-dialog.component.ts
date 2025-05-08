@@ -10,6 +10,7 @@ import { User } from '../../models/user.class';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
 import { ImageService } from '../../services/image.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-action-dialog',
@@ -36,7 +37,8 @@ export class ActionDialogComponent implements OnInit {
     private userService: UserService,
     private dialogService: DialogService,
     private imageService: ImageService,
-    private router: Router
+    private router: Router,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -88,7 +90,7 @@ export class ActionDialogComponent implements OnInit {
     const allowedTypes = ['image/jpeg', 'image/png'];
 
     if (!allowedTypes.includes(file.type)) {
-      alert('Please upload a valid image file (JPG or PNG)');
+      this.snackbarService.error('Please upload a valid image file (JPG or PNG)');
       return;
     }
 
@@ -101,7 +103,7 @@ export class ActionDialogComponent implements OnInit {
       const maxSize = 1 * 1024 * 1024; // 5MB
       
       if (compressedSize > maxSize) {
-        alert('Image is too large even after compression. Please try a smaller image.');
+        this.snackbarService.error('Image is too large even after compression. Please try a smaller image.');
         return;
       }
 
@@ -111,7 +113,7 @@ export class ActionDialogComponent implements OnInit {
       
     } catch (error) {
       console.error('Error processing image:', error);
-      alert('Error processing image. Please try again.');
+      this.snackbarService.error('Error processing image. Please try again.');
     }
   }
 
@@ -179,16 +181,23 @@ export class ActionDialogComponent implements OnInit {
 
   async deleteAccount(): Promise<void> {
     const currentUser = await firstValueFrom(this.userService.currentUser$);
-    if (!currentUser?.uid) return;
+    const uid = currentUser?.uid;
+    if (!uid) return;
 
-    if (confirm('Are you sure you want to delete your account? This cannot be undone.')) {
-      try {
-        await this.userService.deleteUser(currentUser.uid);
-        this.dialogRef.close();
-        await this.router.navigate(['/login']);
-      } catch (error) {
-        console.error('Error deleting account:', error);
+    this.snackbarService.confirm({
+      message: 'Are you sure you want to delete your account? This cannot be undone.'
+    }).subscribe(async (confirmed) => {
+      if (confirmed) {
+        try {
+          await this.userService.deleteUser(uid);  // Now uid is definitely string
+          this.dialogRef.close();
+          await this.router.navigate(['/login']);
+          this.snackbarService.success('Account successfully deleted');
+        } catch (error) {
+          console.error('Error deleting account:', error);
+          this.snackbarService.error('Could not delete account');
+        }
       }
-    }
+    });
   }
 }
