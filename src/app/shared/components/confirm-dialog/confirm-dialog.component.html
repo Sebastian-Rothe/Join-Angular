@@ -1,4 +1,7 @@
 <div class="confirm-dialog">
+  <div class="warning-icon-container">
+    <mat-icon class="warning-icon">error</mat-icon>
+  </div>
   <h1 mat-dialog-title class="dialog-title">{{ data.message }}</h1>
   <div mat-dialog-actions class="dialog-actions">
     <button mat-button (click)="onNoClick()" class=" cancel-btn secondary-btn">{{ data.cancelButton }}</button>

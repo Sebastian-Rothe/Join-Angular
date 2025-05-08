@@ -21,6 +21,23 @@
     }
   
   }
+
+  .warning-icon-container {
+    display: flex;
+    justify-content: center;
+
+    .warning-icon {
+      background-color: white;
+      color: #FF3D00;  // Changed color to red
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      font-size: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
 }
 
 @media (max-width: 775px) {
