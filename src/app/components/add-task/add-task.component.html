@@ -10,7 +10,13 @@
         <div class="left-side">
             <div class="form-group">
                 <label for="title">Title<span class="required">*</span></label>
-                <input class="input-style" type="text" id="title" name="title" placeholder="Enter a title" [(ngModel)]="task.title">
+                <input class="input-style" 
+                       [class.error]="errors.title"
+                       type="text" 
+                       id="title" 
+                       name="title" 
+                       placeholder="Enter a title" 
+                       [(ngModel)]="task.title">
                 <div class="error-validation" [class.visible]="errors.title">This field is required</div>
             </div>
 
@@ -21,7 +27,7 @@
 
             <div class="form-group">
                 <label for="date">Due date<span class="required">*</span></label>
-                <mat-form-field appearance="outline">
+                <mat-form-field appearance="outline" [class.error]="errors.dueDate">
                     <input matInput [matDatepicker]="picker" 
                            [min]="minDate"
                            [placeholder]="'dd/mm/yyyy'"
@@ -63,7 +69,10 @@
                 <label for="category">Category<span class="required">*</span></label>
                 <div class="dropdown-category">
                     <div class="category-wrapper">
-                        <button type="button" (click)="toggleCategory($event)" class="dropdown-btn">
+                        <button type="button" 
+                                (click)="toggleCategory($event)" 
+                                class="dropdown-btn"
+                                [class.error]="errors.category">
                             {{ task.category || 'Select task category' }}
                             <span><mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon></span>
                         </button>
