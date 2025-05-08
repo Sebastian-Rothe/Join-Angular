@@ -5,6 +5,7 @@ import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
 import { User } from '../../models/user.class';
 import { DialogService } from '../../services/dialog.service';
 import { UserService } from '../../services/user.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-contact-details',
@@ -20,7 +21,11 @@ export class ContactDetailsComponent {
   @Output() contactDeleted = new EventEmitter<void>();
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
 
-  constructor(private dialogService: DialogService, private userService: UserService) {}
+  constructor(
+    private dialogService: DialogService, 
+    private userService: UserService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit() {
     // Listen for click outside to close menu with animation
@@ -60,13 +65,22 @@ export class ContactDetailsComponent {
   }
 
   async deleteContact(): Promise<void> {
-    if (this.contact?.uid && confirm('Are you sure you want to delete this contact?')) {
-      try {
-        await this.userService.deleteUser(this.contact.uid);
-        this.contactDeleted.emit();
-      } catch (error) {
-        console.error('Error deleting contact:', error);
-      }
+    const uid = this.contact?.uid;
+    if (uid) {
+      this.snackbarService.confirm({
+        message: 'Are you sure you want to delete this contact?'
+      }).subscribe(async (confirmed) => {
+        if (confirmed) {
+          try {
+            await this.userService.deleteUser(uid);
+            this.snackbarService.success('Contact successfully deleted');
+            this.contactDeleted.emit();
+          } catch (error) {
+            this.snackbarService.error('Could not delete contact');
+            console.error('Error deleting contact:', error);
+          }
+        }
+      });
     }
   }
 }

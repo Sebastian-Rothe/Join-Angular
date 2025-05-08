@@ -353,3 +353,18 @@ body {
   }
 }
 
+// Snackbar styles
+.success-snackbar {
+  background: #2A3647;
+  color: white;
+}
+
+.error-snackbar {
+  background: #FF3D00;
+  color: white;
+}
+
+.mat-simple-snackbar-action {
+  color: white;
+}
+

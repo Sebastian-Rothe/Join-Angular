@@ -1,0 +1,35 @@
+.confirm-dialog {
+  padding: 24px;
+  
+  .dialog-title {
+    color: #2A3647;
+    font-size: 1.5rem;
+    margin-bottom: 24px;
+    text-align: center;
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    padding: 0;
+
+    .confirm-btn{
+        &:hover{
+            background: red;
+        }
+    }
+  
+  }
+}
+
+@media (max-width: 775px) {
+  .confirm-dialog {
+    padding: 16px;
+    
+    .dialog-title {
+      font-size: 1.25rem;
+    }
+  }
+    
+}
