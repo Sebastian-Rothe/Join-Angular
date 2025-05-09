@@ -327,7 +327,7 @@ export class AddTaskComponent implements OnInit {
           }
         } else {
           await this.taskService.createTask(this.task);
-          this.snackbarService.success('Task successfully created');
+          this.snackbarService.success('Task added to board');
           if (this.dialogRef) {
             this.closeDialog();
           }
@@ -365,7 +365,10 @@ export class AddTaskComponent implements OnInit {
         const taskFiles = await Promise.all(validFiles.map(file => this.fileToTaskFile(file)));
         this.task.files = [...this.task.files, ...taskFiles];
       } else {
-        this.snackbarService.error('Please upload only JPG or PNG files');
+        this.snackbarService.error({
+          message: 'This file format is not allowed!',
+          secondLine: 'You can only upload JPEG and PNG.'
+        });
       }
     }
   }

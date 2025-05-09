@@ -1,50 +1,46 @@
 import { Injectable } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material/snack-bar';
 import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
+import { MessageDialogComponent } from '../shared/components/message-dialog/message-dialog.component';
+
 interface ConfirmDialogData {
   message: string;
+}
+
+interface MessageData {
+  message: string;
+  secondLine?: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 export class SnackbarService {
-  constructor(
-    private snackBar: MatSnackBar,
-    private dialog: MatDialog
-  ) { }
+  constructor(private dialog: MatDialog) {}
 
-  /**
-   * Shows a success message
-   */
-  success(message: string, duration: number = 3000) {
-    const config: MatSnackBarConfig = {
-      duration: duration,
-      panelClass: ['success-snackbar'],
-      horizontalPosition: 'center',
-      verticalPosition: 'top'
-    };
-    this.snackBar.open(message, 'Close', config);
+  success(message: string): void {
+    this.dialog.open(MessageDialogComponent, {
+      width: '400px',
+      data: { type: 'success', message }
+    });
   }
 
-  /**
-   * Shows an error message
-   */
-  error(message: string, duration: number = 3000) {
-    const config: MatSnackBarConfig = {
-      duration: duration,
-      panelClass: ['error-snackbar'],
-      horizontalPosition: 'center',
-      verticalPosition: 'top'
-    };
-    this.snackBar.open(message, 'Close', config);
+  error(data: string | MessageData): void {
+    const message = typeof data === 'string' ? data : data.message;
+    const secondLine = typeof data === 'string' ? undefined : data.secondLine;
+    
+    this.dialog.open(MessageDialogComponent, {
+      width: 'auto',
+      panelClass: 'error-dialog',
+      data: { 
+        type: 'error',
+        message,
+        secondLine
+      }
+    });
   }
 
-  /**
-   * Shows a confirmation dialog
-   */
   confirm(data: ConfirmDialogData): Observable<boolean> {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
       width: '400px',
