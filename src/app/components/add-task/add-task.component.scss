@@ -1039,6 +1039,17 @@ mat-form-field {
   margin-top: 16px;
 }
 
+.error-validation {
+  color: #FF3D00;
+  font-size: 12px;
+  margin-top: 4px;
+  display: none;
+
+  &.visible {
+    display: block;
+  }
+}
+
 // ---------- Media Queries ----------
 @media (max-width: 600px) {
   .priority-buttons {
