@@ -12,6 +12,7 @@ import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
 import { ImageService } from '../../services/image.service';
+import { SnackbarService } from '../../services/snackbar.service';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { User } from '../../models/user.class';
 import { CustomDateAdapter } from '../../shared/adapters/custom-date.adapter';
@@ -74,10 +75,6 @@ export class AddTaskComponent implements OnInit {
   newSubtask = '';
   isSubtaskInputActive = false;
   
-  showSuccessMessage = false;
-  showErrorMessage = false;
-  errorMessage = '';
-  
   errors = {
     title: false,
     dueDate: false,
@@ -99,6 +96,7 @@ export class AddTaskComponent implements OnInit {
     private authService: AuthService,
     private taskService: TaskService,
     private imageService: ImageService,
+    private snackbarService: SnackbarService,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: { 
       initialStatus?: string,
@@ -160,7 +158,7 @@ export class AddTaskComponent implements OnInit {
       }
     } catch (error) {
       console.error('Error loading users:', error);
-      this.showError('Failed to load users');
+      this.snackbarService.error('Failed to load users');
     }
   }
 
@@ -244,7 +242,7 @@ export class AddTaskComponent implements OnInit {
       for (const file of files) {
         const extension = '.' + file.name.split('.').pop()?.toLowerCase();
         if (!allowedTypes.includes(extension)) {
-          this.showError(`File "${file.name}" has invalid type. Only jpg, jpeg, png, and pdf files are allowed.`);
+          this.snackbarService.error(`File "${file.name}" has invalid type. Only jpg, jpeg, png, and pdf files are allowed.`);
           return;
         }
       }
@@ -323,29 +321,21 @@ export class AddTaskComponent implements OnInit {
       try {
         if (this.isEditMode) {
           await this.taskService.updateTask(this.task);
-          this.showSuccessMessage = true;
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-            if (this.dialogRef) {
-              this.closeDialog();
-              // this.dialogRef.close('taskUpdated');
-            }
-          }, 2000);
+          this.snackbarService.success('Task successfully updated');
+          if (this.dialogRef) {
+            this.closeDialog();
+          }
         } else {
           await this.taskService.createTask(this.task);
-          this.showSuccessMessage = true;
-          setTimeout(() => {
-            this.showSuccessMessage = false;
-            if (this.dialogRef) {
-              this.closeDialog();
-              // this.dialogRef.close('taskAdded');
-            }
-            this.clearForm();
-          }, 2000);
+          this.snackbarService.success('Task successfully created');
+          if (this.dialogRef) {
+            this.closeDialog();
+          }
+          this.clearForm();
         }
       } catch (error) {
         console.error('Error handling task:', error);
-        this.showError(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
+        this.snackbarService.error(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
       }
     }
   }
@@ -354,14 +344,6 @@ export class AddTaskComponent implements OnInit {
     this.task = new Task();
     this.selectedContacts = [];
     this.clearSubtaskInput();
-  }
-
-  showError(message: string): void {
-    this.errorMessage = message;
-    this.showErrorMessage = true;
-    setTimeout(() => {
-      this.showErrorMessage = false;
-    }, 3000);
   }
 
   selectCategory(value: string): void {
@@ -383,7 +365,7 @@ export class AddTaskComponent implements OnInit {
         const taskFiles = await Promise.all(validFiles.map(file => this.fileToTaskFile(file)));
         this.task.files = [...this.task.files, ...taskFiles];
       } else {
-        this.showError('Please upload only JPG or PNG files');
+        this.snackbarService.error('Please upload only JPG or PNG files');
       }
     }
   }
@@ -455,7 +437,7 @@ export class AddTaskComponent implements OnInit {
         this.dateValue = null;
         this.task.dueDate = 0;
         this.errors.dueDate = true;
-        this.showError('Please select a date in the future');
+        this.snackbarService.error('Please select a date in the future');
       } else {
         this.dateValue = selectedDate;
         this.task.dueDate = selectedDate.getTime();

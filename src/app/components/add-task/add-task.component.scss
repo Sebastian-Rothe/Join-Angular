@@ -1034,56 +1034,6 @@ mat-form-field {
 }
 
 // ---------- Utils & Animations ----------
-.error-validation {
-  color: #ff8190;
-  font-size: 12px;
-  margin-top: 4px;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-
-  &.visible {
-    opacity: 1;
-  }
-}
-
-.popup-successfully,
-.popup-error {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  display: flex;
-  justify-content: center;
-  padding-top: 100px;
-  animation: slideDown 0.3s ease-in-out;
-
-  .popup-successfully-content,
-  .popup-error-content {
-    background-color: #2a3647;
-    color: white;
-    padding: 16px 24px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    font-size: 18px;
-  }
-
-  .popup-error-content {
-    background-color: #ff8190;
-  }
-}
-
-@keyframes slideDown {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
 .required-hint {
   display: none;
   margin-top: 16px;
