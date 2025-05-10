@@ -321,13 +321,13 @@ export class AddTaskComponent implements OnInit {
       try {
         if (this.isEditMode) {
           await this.taskService.updateTask(this.task);
-          this.snackbarService.success('Task successfully updated');
+          this.snackbarService.success('Task successfully updated', true);
           if (this.dialogRef) {
             this.closeDialog();
           }
         } else {
           await this.taskService.createTask(this.task);
-          this.snackbarService.success('Task added to board');
+          this.snackbarService.success('Task added to board', true);
           if (this.dialogRef) {
             this.closeDialog();
           }

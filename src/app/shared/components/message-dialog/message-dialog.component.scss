@@ -1,35 +1,36 @@
+@use "../../../../styles.scss" as *;
 :host {
   display: block;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 .message-dialog {
   text-align: center;
   min-height: 80px;
   display: flex;
-  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-size: 1.4rem;
 
   &.success {
-    padding: 32px;
+    padding: 18px;
     min-width: 300px;
+    background: $dark-navy;
+    border-radius: 8px;
+    font-size: 20px;
+    gap: 24px;
 
     .icon-container {
-      margin-bottom: 24px;
-
-      mat-icon {
-        width: 64px;
-        height: 64px;
-        font-size: 64px;
-        color: #2a3647;
+      img {
+        width: 32px;
+        height: 32px;
       }
     }
 
     .message {
       font-size: 16px;
       line-height: 1.5;
-      color: #2a3647;
+      color: white;
 
       .second-line {
         margin-top: 4px;

@@ -11,6 +11,7 @@ export interface MessageDialogData {
   type: 'success' | 'error';
   message: string;
   secondLine?: string;
+  showBoardIcon?: boolean;
 }
 
 @Component({
@@ -20,17 +21,17 @@ export interface MessageDialogData {
   styleUrls: ['./message-dialog.component.scss'],
   template: `
     <div class="message-dialog {{ data.type }}">
-      <div class="icon-container">
-        @if(data.type === 'success'){
-          <mat-icon>task_alt</mat-icon>
-        }
-      </div>
-      <div class="message">
-        {{ data.message }}
-        @if(data.secondLine) {
-          <div class="second-line">{{ data.secondLine }}</div>
-        }
-      </div>
+        <div class="message">
+            {{ data.message }}
+            @if(data.secondLine) {
+                <div class="second-line">{{ data.secondLine }}</div>
+            }
+        </div>
+        <div class="icon-container">
+          @if(data.type === 'success' && data.showBoardIcon) {
+            <img src="/assets/icons/Board.svg" alt="Board Icon">
+          }
+        </div>
     </div>
   `,
 })

@@ -19,10 +19,15 @@ interface MessageData {
 export class SnackbarService {
   constructor(private dialog: MatDialog) {}
 
-  success(message: string): void {
+  success(message: string, showBoardIcon: boolean = false): void {
     this.dialog.open(MessageDialogComponent, {
-      width: '400px',
-      data: { type: 'success', message }
+      width: 'auto',
+      panelClass: 'success-dialog',
+      data: { 
+        type: 'success',
+        message,
+        showBoardIcon
+      }
     });
   }
 
