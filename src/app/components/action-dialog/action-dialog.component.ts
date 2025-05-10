@@ -144,7 +144,9 @@ export class ActionDialogComponent implements OnInit {
       return;
     }
 
-    if (!this.formData.name || !this.formData.email) return;
+    if (this.config.type === 'edit' && !this.validateContactForm()) {
+      return;
+    }
 
     try {
       if (this.config.type === 'edit' && this.config.contact?.uid) {
@@ -160,30 +162,22 @@ export class ActionDialogComponent implements OnInit {
           }
         }
 
+        const cleanedPhone = this.formData.phone
+          .replace(/\s/g, '')
+          .replace(/^(?!\+)/, '+');
+
         // Update user data
         await this.userService.updateUser(this.config.contact.uid, {
           name: this.formData.name,
           email: this.formData.email,
-          phone: this.formData.phone,
+          phone: cleanedPhone,
           profilePicture:
             this.profileImagePreview || this.formData.profilePicture || '',
         });
 
-        // Close dialog and refresh data
+        this.snackbarService.success('Contact successfully updated');
         this.dialogRef.close(true);
       }
-      //  else if (this.config.type === 'add') {
-      //   // Create new user/contact
-      //   const newUser = await this.userService.createUser({
-      //     name: this.formData.name,
-      //     email: this.formData.email,
-      //     phone: this.formData.phone,
-      //     profilePicture: this.profileImagePreview || ''
-      //   });
-
-      //   // Close dialog with true to indicate success
-      //   this.dialogRef.close(true);
-      // }
     } catch (error) {
       console.error('Error submitting form:', error);
       this.snackbarService.error('Error saving changes');
