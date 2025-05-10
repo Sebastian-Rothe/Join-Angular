@@ -2,7 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogModule } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialogModule,
+} from '@angular/material/dialog';
 import { DialogConfig } from '../../models/dialog.model';
 import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
@@ -17,7 +21,7 @@ import { SnackbarService } from '../../services/snackbar.service';
   standalone: true,
   imports: [CommonModule, MatIconModule, FormsModule, MatDialogModule],
   templateUrl: './action-dialog.component.html',
-  styleUrl: './action-dialog.component.scss'
+  styleUrl: './action-dialog.component.scss',
 })
 export class ActionDialogComponent implements OnInit {
   isVisible = false;
@@ -27,9 +31,22 @@ export class ActionDialogComponent implements OnInit {
     phone: '',
     initials: '',
     profilePicture: '',
-    profileImage: null as File | null
+    profileImage: null as File | null,
   };
   profileImagePreview: string | null = null;
+
+  newContact = {
+    name: '',
+    email: '',
+    phone: '',
+    profilePicture: '',
+  };
+
+  contactErrors = {
+    name: false,
+    email: false,
+    phone: false,
+  };
 
   constructor(
     @Inject(MAT_DIALOG_DATA) public config: DialogConfig,
@@ -44,7 +61,7 @@ export class ActionDialogComponent implements OnInit {
   ngOnInit() {
     if (this.config.type === 'account') {
       // Laden der User-Daten, wenn es sich um My Account handelt
-      this.userService.currentUser$.subscribe(user => {
+      this.userService.currentUser$.subscribe((user) => {
         if (user) {
           this.formData = {
             name: user.name,
@@ -52,7 +69,7 @@ export class ActionDialogComponent implements OnInit {
             phone: user.phone || '',
             initials: user.initials,
             profilePicture: user.profilePicture || '',
-            profileImage: null
+            profileImage: null,
           };
         }
       });
@@ -63,10 +80,10 @@ export class ActionDialogComponent implements OnInit {
         phone: this.config.contact.phone || '',
         initials: this.config.contact.initials,
         profilePicture: this.config.contact.profilePicture || '',
-        profileImage: null
+        profileImage: null,
       };
     }
-    setTimeout(() => this.isVisible = true, 50);
+    setTimeout(() => (this.isVisible = true), 50);
   }
 
   getDialogTitle(): string {
@@ -90,34 +107,43 @@ export class ActionDialogComponent implements OnInit {
     const allowedTypes = ['image/jpeg', 'image/png'];
 
     if (!allowedTypes.includes(file.type)) {
-      this.snackbarService.error('Please upload a valid image file (JPG or PNG)');
+      this.snackbarService.error(
+        'Please upload a valid image file (JPG or PNG)'
+      );
       return;
     }
 
     try {
       // Erst komprimieren, dann Größe prüfen
       const compressedImageData = await this.imageService.compressImage(file);
-      
+
       // Konvertiere Base64 string zur Größenberechnung
       const compressedSize = Math.round((compressedImageData.length * 3) / 4);
       const maxSize = 1 * 1024 * 1024; // 5MB
-      
+
       if (compressedSize > maxSize) {
-        this.snackbarService.error('Image is too large even after compression. Please try a smaller image.');
+        this.snackbarService.error(
+          'Image is too large even after compression. Please try a smaller image.'
+        );
         return;
       }
 
       // Wenn alles okay ist, speichere das komprimierte Bild
       this.formData.profileImage = file;
       this.profileImagePreview = compressedImageData;
-      
     } catch (error) {
-      console.error('Error processing image:', error);
       this.snackbarService.error('Error processing image. Please try again.');
     }
   }
 
   async onSubmit(): Promise<void> {
+    if (this.config.type === 'add') {
+      if (this.validateContactForm()) {
+        await this.createNewContact();
+      }
+      return;
+    }
+
     if (!this.formData.name || !this.formData.email) return;
 
     try {
@@ -125,7 +151,10 @@ export class ActionDialogComponent implements OnInit {
         // Handle profile picture upload if a new one was selected
         if (this.formData.profileImage) {
           try {
-            await this.userService.updateUserProfilePicture(this.config.contact.uid, this.formData.profileImage);
+            await this.userService.updateUserProfilePicture(
+              this.config.contact.uid,
+              this.formData.profileImage
+            );
           } catch (error) {
             console.error('Error uploading profile picture:', error);
           }
@@ -136,27 +165,28 @@ export class ActionDialogComponent implements OnInit {
           name: this.formData.name,
           email: this.formData.email,
           phone: this.formData.phone,
-          profilePicture: this.profileImagePreview || this.formData.profilePicture || ''
+          profilePicture:
+            this.profileImagePreview || this.formData.profilePicture || '',
         });
 
         // Close dialog and refresh data
         this.dialogRef.close(true);
-        
-      } else if (this.config.type === 'add') {
-        // Create new user/contact
-        const newUser = await this.userService.createUser({
-          name: this.formData.name,
-          email: this.formData.email,
-          phone: this.formData.phone,
-          profilePicture: this.profileImagePreview || ''
-        });
-
-        // Close dialog with true to indicate success
-        this.dialogRef.close(true);
       }
+      //  else if (this.config.type === 'add') {
+      //   // Create new user/contact
+      //   const newUser = await this.userService.createUser({
+      //     name: this.formData.name,
+      //     email: this.formData.email,
+      //     phone: this.formData.phone,
+      //     profilePicture: this.profileImagePreview || ''
+      //   });
+
+      //   // Close dialog with true to indicate success
+      //   this.dialogRef.close(true);
+      // }
     } catch (error) {
       console.error('Error submitting form:', error);
-      // Optional: Show error message to user
+      this.snackbarService.error('Error saving changes');
     }
   }
 
@@ -172,7 +202,7 @@ export class ActionDialogComponent implements OnInit {
       email: this.formData.email,
       phone: this.formData.phone,
       profilePicture: this.formData.profilePicture,
-      iconColor: currentUser.iconColor
+      iconColor: currentUser.iconColor,
     });
 
     this.dialogRef.close();
@@ -184,20 +214,68 @@ export class ActionDialogComponent implements OnInit {
     const uid = currentUser?.uid;
     if (!uid) return;
 
-    this.snackbarService.confirm({
-      message: 'Are you sure you want to delete your account? This cannot be undone.'
-    }).subscribe(async (confirmed) => {
-      if (confirmed) {
-        try {
-          await this.userService.deleteUser(uid);  // Now uid is definitely string
-          this.dialogRef.close();
-          await this.router.navigate(['/login']);
-          this.snackbarService.success('Account successfully deleted');
-        } catch (error) {
-          console.error('Error deleting account:', error);
-          this.snackbarService.error('Could not delete account');
+    this.snackbarService
+      .confirm({
+        message:
+          'Are you sure you want to delete your account? This cannot be undone.',
+      })
+      .subscribe(async (confirmed) => {
+        if (confirmed) {
+          try {
+            await this.userService.deleteUser(uid); // Now uid is definitely string
+            this.dialogRef.close();
+            await this.router.navigate(['/login']);
+            this.snackbarService.success('Account successfully deleted');
+          } catch (error) {
+            this.snackbarService.error('Could not delete account');
+          }
         }
+      });
+  }
+
+  validateContactForm(): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\+?[0-9\s]{6,}$/; // erlaubt optionales + am Anfang, mind. 6 Ziffern
+
+    this.contactErrors = {
+      name: this.formData.name.trim().length < 2,
+      email: !emailRegex.test(this.formData.email),
+      phone: this.formData.phone ? !phoneRegex.test(this.formData.phone) : false,
+    };
+
+    // Zeige nur die erste aufgetretene Fehlermeldung
+    if (this.contactErrors.name) {
+      this.snackbarService.error('Name must be at least 2 characters');
+      return false;
+    }
+    if (this.contactErrors.email) {
+      this.snackbarService.error('Please enter a valid email address');
+      return false;
+    }
+    if (this.contactErrors.phone) {
+      this.snackbarService.error('Please enter a valid phone number');
+      return false;
+    }
+
+    return true;
+  }
+
+  async createNewContact(): Promise<void> {
+    try {
+      if (this.validateContactForm()) {
+        const cleanedPhone = this.formData.phone
+          .replace(/\s/g, '') // Entferne Leerzeichen
+          .replace(/^(?!\+)/, '+'); // Füge + hinzu falls nicht vorhanden
+
+        await this.userService.createUser({
+          ...this.formData,
+          phone: cleanedPhone,
+        });
+        this.snackbarService.success('Contact successfully created');
+        this.dialogRef.close(true);
       }
-    });
+    } catch (error) {
+      this.snackbarService.error('Failed to create contact');
+    }
   }
 }

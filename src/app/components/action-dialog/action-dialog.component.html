@@ -47,6 +47,7 @@
               type="text" 
               placeholder="Name"
               [readonly]="config.type === 'account'"
+              [class.error]="contactErrors.name"
               required>
             <input 
               [(ngModel)]="formData.email"
@@ -55,14 +56,17 @@
               type="email" 
               placeholder="Email"
               [readonly]="config.type === 'account'"
+              [class.error]="contactErrors.email"
               required>
             <input 
               [(ngModel)]="formData.phone"
               name="phone"
               class="icon-phone" 
-              type="tel" 
+              type="tel"
+              pattern="[0-9]*"
               placeholder="Phone"
               [readonly]="config.type === 'account'"
+              [class.error]="contactErrors.phone"
               required>
             <div class="align-form-buttons">
               <button class="secondary-btn" type="button" (click)="config.type === 'account' ? deleteAccount() : onClose()">

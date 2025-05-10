@@ -102,6 +102,10 @@ form {
     }
   }
 
+  input.error {
+    border-color: red;
+  }
+
   .align-form-buttons {
     display: flex;
     justify-content: flex-start;
