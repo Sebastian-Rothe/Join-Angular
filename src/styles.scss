@@ -178,25 +178,6 @@ button {
   }
 }
 
-/* Usage examples:
-
-.button {
-  @include hover-effect(
-    $scale: 1.1,
-    $shadow-color: rgba(0, 0, 0, 0.3),
-    $color: #ffffff,
-    $background-color: #007bff
-  );
-}
-
-.card {
-  @include hover-effect(
-    $scale: 1.02,
-    $shadow-spread: 15px
-  );
-}
-*/
-
 html,
 body {
   height: 100%;
@@ -352,19 +333,4 @@ body {
     }
   }
 }
-
-// // Snackbar styles
-// .success-snackbar {
-//   background: #2A3647;
-//   color: white;
-// }
-
-// .error-snackbar {
-//   background: #FF3D00!important;
-//   color: white;
-// }
-
-// .mat-simple-snackbar-action {
-//   color: white;
-// }
 

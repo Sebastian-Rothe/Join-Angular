@@ -3,8 +3,24 @@
   display: block;
   overflow-x: hidden;
   width: 100%;
+  
 }
+// Override Material Dialog styles
+::ng-deep {
+  .success-dialog {
+    .mdc-dialog__surface {
+      border-radius: 20px !important;
+    }
+  }
 
+  .error-dialog {
+    .mdc-dialog__surface {
+      border-radius: 20px !important;
+      background: transparent !important;
+      box-shadow: none !important;
+    }
+  }
+}
 .message-dialog {
   text-align: center;
   min-height: 80px;
@@ -16,7 +32,6 @@
     padding: 18px;
     min-width: 300px;
     background: $dark-navy;
-    border-radius: 8px;
     font-size: 20px;
     gap: 24px;
 
@@ -43,7 +58,6 @@
   &.error {
     background: #ff3d00;
     padding: 16px 24px;
-    // border-radius: 8px;
     min-width: 300px;
 
     .icon-container {

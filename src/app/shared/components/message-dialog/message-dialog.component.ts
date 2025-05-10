@@ -40,6 +40,6 @@ export class MessageDialogComponent {
     public dialogRef: MatDialogRef<MessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MessageDialogData
   ) {
-    setTimeout(() => this.dialogRef.close(), 250000);
+    setTimeout(() => this.dialogRef.close(), 2500);
   }
 }
