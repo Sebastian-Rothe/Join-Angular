@@ -47,7 +47,7 @@ export class UserService {
           }
           return null;
         } catch (error) {
-          this.snackbar.error('Error fetching user data. Please try again.');
+          this.snackbarService.error('Error fetching user data. Please try again.');
           return null;
         }
       })
@@ -62,7 +62,7 @@ export class UserService {
       }
       return null;
     } catch (error) {
-      this.snackbar.error('Error fetching user data. Please try again.');
+      this.snackbarService.error('Error fetching user data. Please try again.');
       return null;
     }
   }
@@ -82,7 +82,7 @@ export class UserService {
 
       await Promise.all(deletePromises);
     } catch (error) {
-      this.snackbar.error(
+      this.snackbarService.error(
         'Error during guest users cleanup. Please try again.'
       );
     }
@@ -104,7 +104,7 @@ export class UserService {
         })
         .sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
-      this.snackbar.error('Error fetching users. Please try again.');
+      this.snackbarService.error('Error fetching users. Please try again.');
       return [];
     }
   }
@@ -120,7 +120,7 @@ export class UserService {
         profilePicture: compressedImage,
       });
     } catch (error) {
-      this.snackbar.error('Error updating profile picture. Please try again.');
+      this.snackbarService.error('Error updating profile picture. Please try again.');
       throw error;
     }
   }
@@ -148,7 +148,7 @@ export class UserService {
 
       return newUser;
     } catch (error) {
-      this.snackbar.error('Error creating user. Please try again.');
+      this.snackbarService.error('Error creating user. Please try again.');
       throw error;
     }
   }
@@ -173,7 +173,7 @@ export class UserService {
         profilePicture: userData.profilePicture || '',
       });
     } catch (error) {
-      this.snackbar.error('Error updating user. Please try again.');
+      this.snackbarService.error('Error updating user. Please try again.');
       throw error;
     }
   }
@@ -183,7 +183,7 @@ export class UserService {
       const userRef = doc(this.firestore, 'users', userId);
       await deleteDoc(userRef);
     } catch (error) {
-      this.snackbar.error('Error deleting user. Please try again.');
+      this.snackbarService.error('Error deleting user. Please try again.');
       throw error;
     }
   }

@@ -48,7 +48,7 @@ export class AuthService {
       }
       throw new Error('User data not found');
     } catch (error) {
-      this.snackbar.error('Error logging in. Please check your credentials.');
+      this.snackbarService.error('Error logging in. Please check your credentials.');
       throw error;
     }
   }
@@ -61,7 +61,7 @@ export class AuthService {
       );
       return userCredential.user;
     } catch (error) {
-      this.snackbar.error('Registration failed. Please try again.');
+      this.snackbarService.error('Registration failed. Please try again.');
       throw error;
     }
   }
@@ -80,10 +80,10 @@ export class AuthService {
       }      throw new Error('Guest login failed');
     } catch (error: any) {
       if (error.code === 'auth/admin-restricted-operation') {
-        this.snackbar.error('Guest login is not enabled. Please contact administrator.');
+        this.snackbarService.error('Guest login is not enabled. Please contact administrator.');
         throw error;
       }
-      this.snackbar.error('Guest login failed. Please try again.');
+      this.snackbarService.error('Guest login failed. Please try again.');
       throw error;
     }
   }
@@ -110,7 +110,7 @@ export class AuthService {
       }
       await signOut(this.auth);
     } catch (error) {
-      this.snackbar.error('Error logging out. Please try again.');
+      this.snackbarService.error('Error logging out. Please try again.');
       throw error;
     }
   }

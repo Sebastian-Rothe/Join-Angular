@@ -24,7 +24,10 @@ export class TaskService {
 
   private firestore: Firestore = inject(Firestore);
 
-  constructor(private userService: UserService, private snackbar: SnackbarService) {}
+  constructor(
+    private userService: UserService,
+    private snackbarService: SnackbarService
+  ) {}
 
   private prepareTaskForFirebase(task: Task): any {
     return {
@@ -37,7 +40,7 @@ export class TaskService {
       subtasks: task.subtasks,
       status: task.status,
       createdAt: new Date().getTime(),
-      files: task.files || [], 
+      files: task.files || [],
     };
   }
 
@@ -46,8 +49,9 @@ export class TaskService {
       const tasksCollection = collection(this.firestore, 'tasks');
       const preparedTask = this.prepareTaskForFirebase(task);
       const docRef = await addDoc(tasksCollection, preparedTask);
-      return docRef.id;    } catch (error) {
-      this.snackbar.error('Error creating task. Please try again.');
+      return docRef.id;
+    } catch (error) {
+      this.snackbarService.error('Error creating task. Please try again.');
       throw error;
     }
   }
@@ -65,8 +69,9 @@ export class TaskService {
       const updatedTasks = currentTasks.map((task) =>
         task.id === taskId ? { ...task, subtasks: updatedSubtasks } : task
       );
-      this.taskSubject.next(updatedTasks);    } catch (error) {
-      this.snackbar.error('Error updating subtask status. Please try again.');
+      this.taskSubject.next(updatedTasks);
+    } catch (error) {
+      this.snackbarService.error('Error updating subtask status. Please try again.');
       throw error;
     }
   }
@@ -101,8 +106,9 @@ export class TaskService {
         tasks.push(task);
       }
       this.taskSubject.next(tasks);
-      return tasks;    } catch (error) {
-      this.snackbar.error('Error loading tasks. Please try again.');
+      return tasks;
+    } catch (error) {
+      this.snackbarService.error('Error loading tasks. Please try again.');
       throw error;
     }
   }
@@ -111,15 +117,15 @@ export class TaskService {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await updateDoc(taskRef, { status });
-      
+
       // Update local tasks
       const currentTasks = this.taskSubject.value;
-      const updatedTasks = currentTasks.map(task => 
+      const updatedTasks = currentTasks.map((task) =>
         task.id === taskId ? { ...task, status } : task
       );
       this.taskSubject.next(updatedTasks);
     } catch (error) {
-      this.snackbar.error('Error updating task status. Please try again.');
+      this.snackbarService.error('Error updating task status. Please try again.');
       throw error;
     }
   }
@@ -129,15 +135,16 @@ export class TaskService {
       const taskRef = doc(this.firestore, 'tasks', task.id);
       const preparedTask = this.prepareTaskForFirebase(task);
       await updateDoc(taskRef, preparedTask);
-      
+
       // Update local tasks
       const currentTasks = this.taskSubject.value;
-      const updatedTasks = currentTasks.map(t => 
+      const updatedTasks = currentTasks.map((t) =>
         t.id === task.id ? task : t
       );
       this.taskSubject.next(updatedTasks);
+      this.snackbarService.success('task successfully updated');
     } catch (error) {
-      this.snackbar.error('Error updating task. Please try again.');
+      this.snackbarService.error('Error updating task. Please try again.');
       throw error;
     }
   }
@@ -145,8 +152,10 @@ export class TaskService {
   async deleteTask(taskId: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
-      await deleteDoc(taskRef);    } catch (error) {
-      this.snackbar.error('Error deleting task. Please try again.');
+      await deleteDoc(taskRef);
+      this.snackbarService.success('Task successfully deleted');
+    } catch (error) {
+      this.snackbarService.error('Error deleting task. Please try again.');
       throw error;
     }
   }
@@ -196,8 +205,9 @@ export class TaskService {
         }
       });
       metrics.upcomingDeadline = earliestUrgentDeadline;
-      return metrics;    } catch (error) {
-      this.snackbar.error('Error calculating metrics. Please try again.');
+      return metrics;
+    } catch (error) {
+      this.snackbarService.error('Error calculating metrics. Please try again.');
       throw error;
     }
   }

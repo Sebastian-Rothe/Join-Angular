@@ -49,7 +49,7 @@ export class TaskDetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
     private taskService: TaskService,
     private dialog: MatDialog,
-    private snackbar: SnackbarService
+    private snackbarService: SnackbarService
   ) {
     // Check if description is long enough to be collapsible
     if (this.task.description) {
@@ -103,13 +103,13 @@ export class TaskDetailsComponent implements OnInit {
         this.task.subtasks
       );
     } catch (error) {
-      this.snackbar.error('Failed to update subtask status.');
+      this.snackbarService.error('Failed to update subtask status.');
       subtask.completed = !subtask.completed; // Revert on error
     }
   }
 
   async deleteTask(): Promise<void> {
-    this.snackbar
+    this.snackbarService
       .confirm({ message: 'Are you sure you want to delete this task?' })
       .subscribe(async (confirmed) => {
         if (confirmed) {
@@ -117,7 +117,7 @@ export class TaskDetailsComponent implements OnInit {
             await this.taskService.deleteTask(this.task.id);
             this.dialogRef.close('deleted');
           } catch (error) {
-            this.snackbar.error('Failed to delete task.');
+            this.snackbarService.error('Failed to delete task.');
           }
         }
       });
@@ -194,7 +194,7 @@ export class TaskDetailsComponent implements OnInit {
 
       return 'Image';
     } catch (error) {
-      this.snackbar.error('Error extracting filename.');
+      this.snackbarService.error('Error extracting filename.');
       return 'Image';
     }
   }
@@ -208,7 +208,7 @@ export class TaskDetailsComponent implements OnInit {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      this.snackbar.error('Failed to download file.');
+      this.snackbarService.error('Failed to download file.');
     }
   }
 

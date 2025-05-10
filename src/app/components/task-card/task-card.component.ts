@@ -55,7 +55,7 @@ export class TaskCardComponent {
         await this.taskService.updateTaskStatus(this.task.id, newStatus);
       } catch (error) {
         this.task.status = oldStatus;
-        this.snackbar.error('Failed to update task status. Please try again.');
+        this.snackbarService.error('Failed to update task status. Please try again.');
       }
     }
   }

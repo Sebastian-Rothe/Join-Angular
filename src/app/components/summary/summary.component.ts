@@ -43,7 +43,7 @@ export class SummaryComponent implements OnInit {
     try {
       this.metrics = await this.taskService.getTaskMetrics();
     } catch (error) {
-      this.snackbar.error('Failed to load metrics. Please try again later.');
+      this.snackbarService.error('Failed to load metrics. Please try again later.');
     }
   }
 

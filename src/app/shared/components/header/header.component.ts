@@ -55,7 +55,7 @@ export class HeaderComponent implements OnInit {
       await this.authService.logout();
       this.router.navigate(['/login']);
     } catch (error) {
-      this.snackbar.error('Logout failed. Please try again.');
+      this.snackbarService.error('Logout failed. Please try again.');
     }
   }
 

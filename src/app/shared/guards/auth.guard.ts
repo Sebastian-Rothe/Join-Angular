@@ -11,7 +11,7 @@ export class AuthGuard {
   constructor(
     private router: Router,
     private userService: UserService,
-    private snackbar: SnackbarService
+    private snackbarService: SnackbarService
   ) {}
 
   async canActivate(): Promise<boolean> {
@@ -22,7 +22,7 @@ export class AuthGuard {
         return false;
       }
       return true;    } catch (error) {
-      this.snackbar.error('Authentication failed. Please login again.');
+      this.snackbarService.error('Authentication failed. Please login again.');
       this.router.navigate(['/login']);
       return false;
     }
