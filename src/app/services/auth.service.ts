@@ -16,6 +16,7 @@ import {
 } from '@angular/fire/firestore';
 import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -24,12 +25,11 @@ export class AuthService {
   user$: Observable<any>;
   firestore: Firestore = inject(Firestore);
   auth = inject(Auth);
-  constructor() {
+  constructor(private snackbar: SnackbarService) {
     this.user$ = user(this.auth);
   }
 
-  async login(email: string, password: string) {
-    try {
+  async login(email: string, password: string) {    try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
@@ -48,13 +48,12 @@ export class AuthService {
       }
       throw new Error('User data not found');
     } catch (error) {
-      console.error('Error logging in:', error);
+      this.snackbar.error('Error logging in. Please check your credentials.');
       throw error;
     }
   }
 
-  async register(email: string, password: string): Promise<any> {
-    try {
+  async register(email: string, password: string): Promise<any> {    try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         email,
@@ -62,7 +61,7 @@ export class AuthService {
       );
       return userCredential.user;
     } catch (error) {
-      console.error('Registration failed:', error);
+      this.snackbar.error('Registration failed. Please try again.');
       throw error;
     }
   }
@@ -78,15 +77,13 @@ export class AuthService {
       if (userCredential.user) {
         await this.createGuestDocument(userCredential.user.uid);
         return userCredential.user;
-      }
-      throw new Error('Guest login failed');
+      }      throw new Error('Guest login failed');
     } catch (error: any) {
       if (error.code === 'auth/admin-restricted-operation') {
-        throw new Error(
-          'Guest login is not enabled. Please contact administrator.'
-        );
+        this.snackbar.error('Guest login is not enabled. Please contact administrator.');
+        throw error;
       }
-      console.error('Guest login failed:', error);
+      this.snackbar.error('Guest login failed. Please try again.');
       throw error;
     }
   }
@@ -113,7 +110,7 @@ export class AuthService {
       }
       await signOut(this.auth);
     } catch (error) {
-      console.error('Error logging out:', error);
+      this.snackbar.error('Error logging out. Please try again.');
       throw error;
     }
   }
