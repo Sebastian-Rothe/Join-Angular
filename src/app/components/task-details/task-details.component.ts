@@ -115,6 +115,7 @@ export class TaskDetailsComponent implements OnInit {
         this.dialogRef.close('updated');
       }
     });
+    this.close();
   }
 
   getFormattedDate(timestamp: any): Date {
@@ -185,9 +186,6 @@ export class TaskDetailsComponent implements OnInit {
     }
   }
 
-  ngOnDestroy(): void {
-    // Keine Cleanup nötig da wir Base64 statt Blob URLs verwenden
-  }
 
   openImageViewer(index: number): void {
     if (this.task.files[index]?.data) {
