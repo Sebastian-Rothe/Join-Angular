@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import{ SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -21,7 +22,8 @@ export class LoginComponent {
 
   constructor(
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private snackbarService: SnackbarService
   ) {}
 
   // ngOnInit() {
@@ -37,7 +39,7 @@ export class LoginComponent {
       await this.authService.login(this.email, this.password);
       this.router.navigate(['/main']);
     } catch (error) {
-      console.error('Login failed:', error);
+      this.snackbarService.error('Login failed. Please check your credentials.')
     }
   }
 
@@ -48,7 +50,7 @@ export class LoginComponent {
         this.router.navigate(['/main']);
       }
     } catch (error) {
-      console.error('Guest login failed:', error);
+      this.snackbarService.error('Guest login failed. Please try again.');
     }
   }
 
