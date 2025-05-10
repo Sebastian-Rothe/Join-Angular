@@ -321,7 +321,7 @@ export class AddTaskComponent implements OnInit {
       try {
         if (this.isEditMode) {
           await this.taskService.updateTask(this.task);
-          this.snackbarService.success('Task successfully updated', true);
+          this.snackbarService.success('Task successfully updated', false);
           if (this.dialogRef) {
             this.closeDialog();
           }

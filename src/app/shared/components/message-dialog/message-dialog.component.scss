@@ -22,7 +22,7 @@
   }
 }
 .message-dialog {
-  text-align: center;
+  // text-align: center;
   min-height: 80px;
   display: flex;
   justify-content: center;
@@ -33,7 +33,11 @@
     min-width: 300px;
     background: $dark-navy;
     font-size: 20px;
-    gap: 24px;
+    justify-content: center;
+
+    &:has(.icon-container:not(:empty)) {
+      gap: 20px;
+    }
 
     .icon-container {
       img {
@@ -46,6 +50,7 @@
       font-size: 16px;
       line-height: 1.5;
       color: white;
+      text-align: left;
 
       .second-line {
         margin-top: 4px;
