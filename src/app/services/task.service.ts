@@ -1,11 +1,22 @@
 import { Injectable, inject } from '@angular/core';
-import { Firestore, collection, addDoc, doc, updateDoc, deleteDoc, query, where, getDocs } from '@angular/fire/firestore';
+import {
+  Firestore,
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  query,
+  where,
+  getDocs,
+} from '@angular/fire/firestore';
 import { Task, TaskFile, Subtask } from '../models/task.class';
 import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TaskService {
   private taskSubject = new BehaviorSubject<Task[]>([]);
@@ -13,20 +24,20 @@ export class TaskService {
 
   private firestore: Firestore = inject(Firestore);
 
-  constructor(private userService: UserService) {}
+  constructor(private userService: UserService, private snackbar: SnackbarService) {}
 
   private prepareTaskForFirebase(task: Task): any {
     return {
       title: task.title,
       description: task.description,
-      assignedTo: task.assignedTo.map(user => user.uid),
+      assignedTo: task.assignedTo.map((user) => user.uid),
       dueDate: task.dueDate,
       priority: task.priority,
       category: task.category,
       subtasks: task.subtasks,
       status: task.status,
       createdAt: new Date().getTime(),
-      files: task.files || [] // TaskFile objects can be stored directly
+      files: task.files || [], 
     };
   }
 
@@ -35,26 +46,27 @@ export class TaskService {
       const tasksCollection = collection(this.firestore, 'tasks');
       const preparedTask = this.prepareTaskForFirebase(task);
       const docRef = await addDoc(tasksCollection, preparedTask);
-      return docRef.id;
-    } catch (error) {
-      console.error('Error creating task:', error);
+      return docRef.id;    } catch (error) {
+      this.snackbar.error('Error creating task. Please try again.');
       throw error;
     }
   }
 
-  async updateSubtaskStatus(taskId: string, updatedSubtasks: Subtask[]): Promise<void> {
+  async updateSubtaskStatus(
+    taskId: string,
+    updatedSubtasks: Subtask[]
+  ): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await updateDoc(taskRef, { subtasks: updatedSubtasks });
-      
+
       // Update local tasks
       const currentTasks = this.taskSubject.value;
-      const updatedTasks = currentTasks.map(task => 
+      const updatedTasks = currentTasks.map((task) =>
         task.id === taskId ? { ...task, subtasks: updatedSubtasks } : task
       );
-      this.taskSubject.next(updatedTasks);
-    } catch (error) {
-      console.error('Error updating subtask status:', error);
+      this.taskSubject.next(updatedTasks);    } catch (error) {
+      this.snackbar.error('Error updating subtask status. Please try again.');
       throw error;
     }
   }
@@ -65,13 +77,15 @@ export class TaskService {
       const tasksCollection = collection(this.firestore, 'tasks');
       const querySnapshot = await getDocs(tasksCollection);
       const tasks: Task[] = [];
-      
+
       for (const doc of querySnapshot.docs) {
         const taskData = doc.data() as { [key: string]: any };
         const assignedUsers = await Promise.all(
-          taskData['assignedTo']?.map((uid: string) => this.userService.getUserById(uid)) || []
+          taskData['assignedTo']?.map((uid: string) =>
+            this.userService.getUserById(uid)
+          ) || []
         );
-        
+
         const task = new Task({
           title: taskData['title'],
           description: taskData['description'],
@@ -82,14 +96,13 @@ export class TaskService {
           status: taskData['status'],
           files: taskData['files'] || [], // TaskFile objects are retrieved directly
           id: doc.id,
-          assignedTo: assignedUsers.filter(user => user !== null)
+          assignedTo: assignedUsers.filter((user) => user !== null),
         });
         tasks.push(task);
       }
       this.taskSubject.next(tasks);
-      return tasks;
-    } catch (error) {
-      console.error('Error loading tasks:', error);
+      return tasks;    } catch (error) {
+      this.snackbar.error('Error loading tasks. Please try again.');
       throw error;
     }
   }
@@ -97,9 +110,8 @@ export class TaskService {
   async updateTaskStatus(taskId: string, status: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
-      await updateDoc(taskRef, { status });
-    } catch (error) {
-      console.error('Error updating task status:', error);
+      await updateDoc(taskRef, { status });    } catch (error) {
+      this.snackbar.error('Error updating task status. Please try again.');
       throw error;
     }
   }
@@ -108,9 +120,8 @@ export class TaskService {
     try {
       const taskRef = doc(this.firestore, 'tasks', task.id);
       const preparedTask = this.prepareTaskForFirebase(task);
-      await updateDoc(taskRef, preparedTask);
-    } catch (error) {
-      console.error('Error updating task:', error);
+      await updateDoc(taskRef, preparedTask);    } catch (error) {
+      this.snackbar.error('Error updating task. Please try again.');
       throw error;
     }
   }
@@ -118,9 +129,8 @@ export class TaskService {
   async deleteTask(taskId: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
-      await deleteDoc(taskRef);
-    } catch (error) {
-      console.error('Error deleting task:', error);
+      await deleteDoc(taskRef);    } catch (error) {
+      this.snackbar.error('Error deleting task. Please try again.');
       throw error;
     }
   }
@@ -136,15 +146,15 @@ export class TaskService {
         upcomingDeadline: null as Date | null,
         tasksInBoard: tasks.length,
         tasksInProgress: 0,
-        awaitingFeedback: 0
+        awaitingFeedback: 0,
       };
 
       let earliestUrgentDeadline: Date | null = null;
 
-      tasks.forEach(task => {
-        console.log('Task status:', task.status);
-        
-        switch (task.status) { // Remove normalization since we know the exact values
+      tasks.forEach((task) => {
+        switch (
+          task.status // Remove normalization since we know the exact values
+        ) {
           case 'todo':
             metrics.todo++;
             break;
@@ -169,12 +179,9 @@ export class TaskService {
           }
         }
       });
-
-      console.log('Final metrics:', metrics); // Debug log
       metrics.upcomingDeadline = earliestUrgentDeadline;
-      return metrics;
-    } catch (error) {
-      console.error('Error calculating metrics:', error);
+      return metrics;    } catch (error) {
+      this.snackbar.error('Error calculating metrics. Please try again.');
       throw error;
     }
   }
