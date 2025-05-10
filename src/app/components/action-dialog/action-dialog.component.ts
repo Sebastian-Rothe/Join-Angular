@@ -94,6 +94,26 @@ export class ActionDialogComponent implements OnInit {
     return this.config.subtitle;
   }
 
+  getPrimaryButtonText(): string {
+    if (this.config.type === 'account') {
+      return 'Delete my account';
+    }
+    return 'Cancel';
+  }
+
+  getSecondaryButtonText(): string {
+    switch (this.config.type) {
+      case 'add':
+        return 'Create contact';
+      case 'edit':
+        return 'Save';
+      case 'account':
+        return 'Edit';
+      default:
+        return '';
+    }
+  }
+
   onClose(): void {
     this.isVisible = false;
     setTimeout(() => this.dialogRef.close(false), 300);

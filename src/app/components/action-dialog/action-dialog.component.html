@@ -69,14 +69,15 @@
               [class.error]="contactErrors.phone"
               required>
             <div class="align-form-buttons">
-              <button class="secondary-btn" type="button" (click)="config.type === 'account' ? deleteAccount() : onClose()">
-                {{ config.type === 'account' ? 'Delete my account' : 'Cancel' }}
+              <button class="secondary-btn" type="button" 
+                      (click)="config.type === 'account' ? deleteAccount() : onClose()">
+                {{ getPrimaryButtonText() }}
                 <mat-icon *ngIf="config.type !== 'account'">close</mat-icon>
               </button>
               <button class="primary-btn" 
                       [type]="config.type === 'account' ? 'button' : 'submit'"
                       (click)="config.type === 'account' ? openEditDialog() : null">
-                {{ config.type === 'account' ? 'Edit' : 'Create contact' }}
+                {{ getSecondaryButtonText() }}
                 <mat-icon *ngIf="config.type !== 'account'">check</mat-icon>
               </button>
             </div>
