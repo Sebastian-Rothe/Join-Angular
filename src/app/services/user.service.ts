@@ -29,7 +29,7 @@ export class UserService {
   firestore: Firestore = inject(Firestore);
   authService = inject(AuthService);
   imageService = inject(ImageService);
-  private snackbar = inject(SnackbarService);
+  private snackbarService = inject(SnackbarService);
 
   constructor() {
     // User-Stream erstellen, der sich automatisch bei Auth-Änderungen aktualisiert

@@ -25,7 +25,7 @@ export class AuthService {
   user$: Observable<any>;
   firestore: Firestore = inject(Firestore);
   auth = inject(Auth);
-  constructor(private snackbar: SnackbarService) {
+  constructor(private snackbarService: SnackbarService) {
     this.user$ = user(this.auth);
   }
 

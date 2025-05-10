@@ -35,7 +35,7 @@ export class TaskCardComponent {
 
   constructor(
     private taskService: TaskService,
-    private snackbar: SnackbarService
+    private snackbarService: SnackbarService
   ) {}
 
   onDragStart(event: DragEvent) {

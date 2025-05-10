@@ -30,7 +30,7 @@ export class SummaryComponent implements OnInit {
   constructor(
     private taskService: TaskService,
     private userService: UserService,
-    private snackbar: SnackbarService
+    private snackbarService: SnackbarService
   ) {}
 
   async ngOnInit() {

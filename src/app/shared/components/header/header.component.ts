@@ -24,7 +24,7 @@ export class HeaderComponent implements OnInit {
     private authService: AuthService,
     private router: Router,
     private dialogService: DialogService,
-    private snackbar: SnackbarService
+    private snackbarService: SnackbarService
   ) {
     // Add click outside listener
     document.addEventListener('click', (event) => {
