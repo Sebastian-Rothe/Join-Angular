@@ -182,9 +182,7 @@ export class ActionDialogComponent implements OnInit {
           }
         }
 
-        const cleanedPhone = this.formData.phone
-          .replace(/\s/g, '')
-          .replace(/^(?!\+)/, '+');
+        const cleanedPhone = this.formData.phone.replace(/\s/g, ''); // Nur Leerzeichen entfernen
 
         // Update user data
         await this.userService.updateUser(this.config.contact.uid, {
@@ -277,9 +275,7 @@ export class ActionDialogComponent implements OnInit {
   async createNewContact(): Promise<void> {
     try {
       if (this.validateContactForm()) {
-        const cleanedPhone = this.formData.phone
-          .replace(/\s/g, '') // Entferne Leerzeichen
-          .replace(/^(?!\+)/, '+'); // Füge + hinzu falls nicht vorhanden
+        const cleanedPhone = this.formData.phone.replace(/\s/g, ''); // Nur Leerzeichen entfernen
 
         // Erstelle das User-Objekt mit allen notwendigen Daten
         await this.userService.createUser({
