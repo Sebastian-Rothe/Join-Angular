@@ -4,6 +4,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
 import { TaskService } from '../../services/task.service';
 import { UserService } from '../../services/user.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-summary',
@@ -28,7 +29,8 @@ export class SummaryComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private userService: UserService
+    private userService: UserService,
+    private snackbar: SnackbarService
   ) {}
 
   async ngOnInit() {
@@ -41,7 +43,7 @@ export class SummaryComponent implements OnInit {
     try {
       this.metrics = await this.taskService.getTaskMetrics();
     } catch (error) {
-      console.error('Error loading metrics:', error);
+      this.snackbar.error('Failed to load metrics. Please try again later.');
     }
   }
 
