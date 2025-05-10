@@ -281,14 +281,20 @@ export class ActionDialogComponent implements OnInit {
           .replace(/\s/g, '') // Entferne Leerzeichen
           .replace(/^(?!\+)/, '+'); // Füge + hinzu falls nicht vorhanden
 
+        // Erstelle das User-Objekt mit allen notwendigen Daten
         await this.userService.createUser({
-          ...this.formData,
+          name: this.formData.name,
+          email: this.formData.email,
           phone: cleanedPhone,
+          // Füge das komprimierte Profilbild hinzu
+          profilePicture: this.profileImagePreview || '',
         });
+        
         this.snackbarService.success('Contact successfully created');
         this.dialogRef.close(true);
       }
     } catch (error) {
+      console.error('Error creating contact:', error);
       this.snackbarService.error('Failed to create contact');
     }
   }
