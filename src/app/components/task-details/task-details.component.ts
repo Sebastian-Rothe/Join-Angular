@@ -1,11 +1,22 @@
-import { Component, Inject, ViewChild, ElementRef, OnInit } from '@angular/core';
+import {
+  Component,
+  Inject,
+  ViewChild,
+  ElementRef,
+  OnInit,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialog } from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogRef,
+  MatDialog,
+} from '@angular/material/dialog';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { TaskService } from '../../services/task.service';
 import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { SnackbarService } from '../../services/snackbar.service';
 
 interface ImageInfo {
   url: string;
@@ -18,11 +29,11 @@ interface ImageInfo {
   standalone: true,
   imports: [CommonModule, MatIconModule, ImageViewerComponent],
   templateUrl: './task-details.component.html',
-  styleUrls: ['./task-details.component.scss']
+  styleUrls: ['./task-details.component.scss'],
 })
 export class TaskDetailsComponent implements OnInit {
   @ViewChild('fileGrid') fileGrid!: ElementRef;
-  
+
   // Add missing properties
   private isDraggingGrid = false;
   private startX = 0;
@@ -32,22 +43,24 @@ export class TaskDetailsComponent implements OnInit {
   showImageViewer = false;
   currentImageIndex = 0;
   images: ImageInfo[] = [];
-  
+
   constructor(
     @Inject(MAT_DIALOG_DATA) public task: Task,
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
     private taskService: TaskService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbar: SnackbarService
   ) {
     // Check if description is long enough to be collapsible
     if (this.task.description) {
       const tempElement = document.createElement('p');
-      tempElement.style.cssText = 'font-size: 20px; width: 100%; position: absolute; visibility: hidden;';
+      tempElement.style.cssText =
+        'font-size: 20px; width: 100%; position: absolute; visibility: hidden;';
       tempElement.textContent = this.task.description;
       document.body.appendChild(tempElement);
       const height = tempElement.offsetHeight;
       document.body.removeChild(tempElement);
-      
+
       // Assuming ~24px per line (20px font + line-height), check if more than 3 lines
       this.isDescriptionLong = height > 72;
     }
@@ -55,17 +68,21 @@ export class TaskDetailsComponent implements OnInit {
 
   ngOnInit() {
     if (this.task.files) {
-      this.images = this.task.files.map(file => ({
+      this.images = this.task.files.map((file) => ({
         url: file.data,
         name: file.name,
-        size: this.getBase64Size(file.data)
+        size: this.getBase64Size(file.data),
       }));
     }
   }
 
   private getBase64Size(base64String: string): number {
-    const padding = base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0;
-    return (base64String.length * 0.75) - padding;
+    const padding = base64String.endsWith('==')
+      ? 2
+      : base64String.endsWith('=')
+      ? 1
+      : 0;
+    return base64String.length * 0.75 - padding;
   }
 
   toggleDescription(): void {
@@ -81,22 +98,29 @@ export class TaskDetailsComponent implements OnInit {
   async toggleSubtask(subtask: Subtask): Promise<void> {
     subtask.completed = !subtask.completed;
     try {
-      await this.taskService.updateSubtaskStatus(this.task.id, this.task.subtasks);
+      await this.taskService.updateSubtaskStatus(
+        this.task.id,
+        this.task.subtasks
+      );
     } catch (error) {
-      console.error('Error updating subtask:', error);
+      this.snackbar.error('Failed to update subtask status.');
       subtask.completed = !subtask.completed; // Revert on error
     }
   }
 
   async deleteTask(): Promise<void> {
-    if (confirm('Are you sure you want to delete this task?')) {
-      try {
-        await this.taskService.deleteTask(this.task.id);
-        this.dialogRef.close('deleted');
-      } catch (error) {
-        console.error('Error deleting task:', error);
-      }
-    }
+    this.snackbar
+      .confirm({ message: 'Are you sure you want to delete this task?' })
+      .subscribe(async (confirmed) => {
+        if (confirmed) {
+          try {
+            await this.taskService.deleteTask(this.task.id);
+            this.dialogRef.close('deleted');
+          } catch (error) {
+            this.snackbar.error('Failed to delete task.');
+          }
+        }
+      });
   }
 
   editTask(): void {
@@ -106,11 +130,11 @@ export class TaskDetailsComponent implements OnInit {
       height: '90vh',
       data: {
         isEditMode: true,
-        taskToEdit: this.task
-      }
+        taskToEdit: this.task,
+      },
     });
 
-    dialogRef.afterClosed().subscribe(result => {
+    dialogRef.afterClosed().subscribe((result) => {
       if (result === 'taskUpdated') {
         this.dialogRef.close('updated');
       }
@@ -155,20 +179,22 @@ export class TaskDetailsComponent implements OnInit {
   getFileName(base64String: string): string {
     try {
       // Extrahiere den Dateinamen aus dem Base64-Metadaten
-      const match = base64String.match(/^data:image\/[^;]+;name=([^;]+);base64,/);
+      const match = base64String.match(
+        /^data:image\/[^;]+;name=([^;]+);base64,/
+      );
       if (match && match[1]) {
         return decodeURIComponent(match[1]);
       }
-      
+
       // Fallback: Generiere einen Namen basierend auf dem Bildtyp
       const typeMatch = base64String.match(/^data:image\/([^;]+);/);
       if (typeMatch && typeMatch[1]) {
         return `Image.${typeMatch[1]}`;
       }
-      
+
       return 'Image';
     } catch (error) {
-      console.error('Error extracting filename:', error);
+      this.snackbar.error('Error extracting filename.');
       return 'Image';
     }
   }
@@ -182,10 +208,9 @@ export class TaskDetailsComponent implements OnInit {
       link.click();
       document.body.removeChild(link);
     } catch (error) {
-      console.error('Error downloading file:', error);
+      this.snackbar.error('Failed to download file.');
     }
   }
-
 
   openImageViewer(index: number): void {
     if (this.task.files[index]?.data) {

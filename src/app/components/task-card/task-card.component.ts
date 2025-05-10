@@ -6,6 +6,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
 import { TaskService } from '../../services/task.service';
 import { MatButtonModule } from '@angular/material/button';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-task-card',
@@ -32,7 +33,10 @@ export class TaskCardComponent {
     { value: 'done', label: 'Done' }
   ];
 
-  constructor(private taskService: TaskService) {}
+  constructor(
+    private taskService: TaskService,
+    private snackbar: SnackbarService
+  ) {}
 
   onDragStart(event: DragEvent) {
     this.dragStarted.emit(event);
@@ -51,7 +55,7 @@ export class TaskCardComponent {
         await this.taskService.updateTaskStatus(this.task.id, newStatus);
       } catch (error) {
         this.task.status = oldStatus;
-        console.error('Error updating task status:', error);
+        this.snackbar.error('Failed to update task status. Please try again.');
       }
     }
   }
