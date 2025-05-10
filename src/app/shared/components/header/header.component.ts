@@ -7,6 +7,7 @@ import { User } from '../../../models/user.class';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { DialogService } from '../../../services/dialog.service';
+import { SnackbarService } from '../../../services/snackbar.service';
 
 @Component({
   selector: 'app-header',
@@ -19,11 +20,11 @@ export class HeaderComponent implements OnInit {
   isDropdownOpen = false;
   user: User = new User();
 
-  constructor(
-    public userService: UserService,
+  constructor(    public userService: UserService,
     private authService: AuthService,
     private router: Router,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private snackbar: SnackbarService
   ) {
     // Add click outside listener
     document.addEventListener('click', (event) => {
@@ -49,13 +50,12 @@ export class HeaderComponent implements OnInit {
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
-
   async logoutUser() {
     try {
       await this.authService.logout();
       this.router.navigate(['/login']);
     } catch (error) {
-      console.error('Logout failed:', error);
+      this.snackbar.error('Logout failed. Please try again.');
     }
   }
 
