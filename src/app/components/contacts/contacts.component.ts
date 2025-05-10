@@ -8,6 +8,7 @@ import { ContactDetailsComponent } from '../contact-details/contact-details.comp
 import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
 import { User } from '../../models/user.class';
 import { firstValueFrom } from 'rxjs';
+import{SnackbarService} from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-contacts',
@@ -28,7 +29,8 @@ export class ContactsComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private dialogService: DialogService
+    private dialogService: DialogService,
+    private snackbarService: SnackbarService,
   ) {}
 
   ngOnInit() {
@@ -60,7 +62,7 @@ export class ContactsComponent implements OnInit {
         }
       }
     } catch (error) {
-      console.error('Error loading contacts:', error);
+      this.snackbarService.error('Failed to load contacts');
     }
   }
 

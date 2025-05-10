@@ -76,8 +76,7 @@ export class ContactDetailsComponent {
             this.snackbarService.success('Contact successfully deleted');
             this.contactDeleted.emit();
           } catch (error) {
-            this.snackbarService.error('Could not delete contact');
-            console.error('Error deleting contact:', error);
+            this.snackbarService.error('Error deleting contact');
           }
         }
       });
