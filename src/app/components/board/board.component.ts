@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-board',
@@ -33,7 +34,8 @@ export class BoardComponent implements OnInit {
 
   constructor(
     private taskService: TaskService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -51,7 +53,7 @@ export class BoardComponent implements OnInit {
       this.tasks = await this.taskService.getAllTasks();
       this.filteredTasks = [...this.tasks];
     } catch (error) {
-      console.error('Error loading tasks:', error);
+      this.snackbarService.error('Failed to load tasks');
     }
   }
 
@@ -106,12 +108,11 @@ export class BoardComponent implements OnInit {
       this.draggedTask = null;
       await this.loadTasks();
       
-      // Remove all highlight lines after drop
       ['todoBoard', 'inProgressBoard', 'awaitFeedbackBoard', 'doneBoard'].forEach(id => {
         this.removeHighlight(id);
       });
     } catch (error) {
-      console.error('Error moving task:', error);
+      this.snackbarService.error('Failed to move task');
     }
   }
 

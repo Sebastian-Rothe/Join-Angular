@@ -228,7 +228,6 @@ export class AddTaskComponent implements OnInit {
         type: file.type
       };
     } catch (error) {
-      console.error('Error compressing image:', error);
       throw error;
     }
   }
@@ -334,7 +333,6 @@ export class AddTaskComponent implements OnInit {
           this.clearForm();
         }
       } catch (error) {
-        console.error('Error handling task:', error);
         this.snackbarService.error(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
       }
     }
