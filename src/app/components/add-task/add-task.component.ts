@@ -2,6 +2,7 @@ import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef, Opti
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -90,15 +91,15 @@ export class AddTaskComponent implements OnInit {
 
   // Helper method to convert timestamp to Date object for the datepicker
   dateValue: Date | null = null;
-
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private taskService: TaskService,
     private imageService: ImageService,
     private snackbarService: SnackbarService,
+    private router: Router,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: { 
+    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: {
       initialStatus?: string,
       isEditMode?: boolean,
       taskToEdit?: Task
@@ -157,7 +158,6 @@ export class AddTaskComponent implements OnInit {
         this.sortContacts(); // Sort if current user is already loaded
       }
     } catch (error) {
-      console.error('Error loading users:', error);
       this.snackbarService.error('Failed to load users');
     }
   }
@@ -314,7 +314,6 @@ export class AddTaskComponent implements OnInit {
     
     return Boolean(this.task.title.trim() && isDueDateValid && this.task.category);
   }
-
   async createTask(): Promise<void> {
     if (this.validateForm()) {
       try {
@@ -328,7 +327,9 @@ export class AddTaskComponent implements OnInit {
           await this.taskService.createTask(this.task);
           this.snackbarService.success('Task added to board', true);
           if (this.dialogRef) {
-            this.closeDialog();
+            this.dialogRef.close('taskAdded');
+          } else {
+            this.router.navigate(['/main/board']);
           }
           this.clearForm();
         }
