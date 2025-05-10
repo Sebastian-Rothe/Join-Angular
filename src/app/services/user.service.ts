@@ -9,16 +9,17 @@ import {
   setDoc,
   deleteDoc,
 } from '@angular/fire/firestore';
-import {
-  getStorage,
-  ref,
-  uploadString,
-  getDownloadURL,
-} from '@angular/fire/storage';
+// import {
+//   getStorage,
+//   ref,
+//   uploadString,
+//   getDownloadURL,
+// } from '@angular/fire/storage';
 import { AuthService } from './auth.service';
 import { Observable, switchMap, map, of, firstValueFrom } from 'rxjs';
 import { User } from '../models/user.class';
 import { ImageService } from './image.service';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,6 +29,8 @@ export class UserService {
   firestore: Firestore = inject(Firestore);
   authService = inject(AuthService);
   imageService = inject(ImageService);
+  private snackbar = inject(SnackbarService);
+
   constructor() {
     // User-Stream erstellen, der sich automatisch bei Auth-Änderungen aktualisiert
     this.currentUser$ = this.authService.user$.pipe(
@@ -44,7 +47,7 @@ export class UserService {
           }
           return null;
         } catch (error) {
-          console.error('Error fetching user data:', error);
+          this.snackbar.error('Error fetching user data. Please try again.');
           return null;
         }
       })
@@ -59,7 +62,7 @@ export class UserService {
       }
       return null;
     } catch (error) {
-      console.error('Error fetching user by ID:', error);
+      this.snackbar.error('Error fetching user data. Please try again.');
       return null;
     }
   }
@@ -71,15 +74,17 @@ export class UserService {
 
       const usersSnapshot = await getDocs(collection(this.firestore, 'users'));
       const deletePromises = usersSnapshot.docs
-        .filter(doc => {
+        .filter((doc) => {
           const userData = doc.data();
           return userData['isGuest'] && doc.id !== currentUser.uid;
         })
-        .map(doc => this.deleteUser(doc.id));
+        .map((doc) => this.deleteUser(doc.id));
 
       await Promise.all(deletePromises);
     } catch (error) {
-      console.error('Error during guest users cleanup:', error);
+      this.snackbar.error(
+        'Error during guest users cleanup. Please try again.'
+      );
     }
   }
 
@@ -90,14 +95,16 @@ export class UserService {
       const currentUser = await firstValueFrom(this.currentUser$);
 
       return querySnapshot.docs
-        .map(doc => new User({ ...doc.data(), uid: doc.id }))
-        .filter(user => {
-          return (!user.isGuest && !user.email.includes('guest@temporary.com')) || 
-                 (currentUser && user.uid === currentUser.uid);
+        .map((doc) => new User({ ...doc.data(), uid: doc.id }))
+        .filter((user) => {
+          return (
+            (!user.isGuest && !user.email.includes('guest@temporary.com')) ||
+            (currentUser && user.uid === currentUser.uid)
+          );
         })
         .sort((a, b) => a.name.localeCompare(b.name));
     } catch (error) {
-      console.error('Error fetching users:', error);
+      this.snackbar.error('Error fetching users. Please try again.');
       return [];
     }
   }
@@ -113,7 +120,7 @@ export class UserService {
         profilePicture: compressedImage,
       });
     } catch (error) {
-      console.error('Error updating profile picture:', error);
+      this.snackbar.error('Error updating profile picture. Please try again.');
       throw error;
     }
   }
@@ -141,7 +148,7 @@ export class UserService {
 
       return newUser;
     } catch (error) {
-      console.error('Error creating user:', error);
+      this.snackbar.error('Error creating user. Please try again.');
       throw error;
     }
   }
@@ -166,7 +173,7 @@ export class UserService {
         profilePicture: userData.profilePicture || '',
       });
     } catch (error) {
-      console.error('Error updating user:', error);
+      this.snackbar.error('Error updating user. Please try again.');
       throw error;
     }
   }
@@ -176,7 +183,7 @@ export class UserService {
       const userRef = doc(this.firestore, 'users', userId);
       await deleteDoc(userRef);
     } catch (error) {
-      console.error('Error deleting user:', error);
+      this.snackbar.error('Error deleting user. Please try again.');
       throw error;
     }
   }
