@@ -110,7 +110,15 @@ export class TaskService {
   async updateTaskStatus(taskId: string, status: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
-      await updateDoc(taskRef, { status });    } catch (error) {
+      await updateDoc(taskRef, { status });
+      
+      // Update local tasks
+      const currentTasks = this.taskSubject.value;
+      const updatedTasks = currentTasks.map(task => 
+        task.id === taskId ? { ...task, status } : task
+      );
+      this.taskSubject.next(updatedTasks);
+    } catch (error) {
       this.snackbar.error('Error updating task status. Please try again.');
       throw error;
     }
@@ -120,7 +128,15 @@ export class TaskService {
     try {
       const taskRef = doc(this.firestore, 'tasks', task.id);
       const preparedTask = this.prepareTaskForFirebase(task);
-      await updateDoc(taskRef, preparedTask);    } catch (error) {
+      await updateDoc(taskRef, preparedTask);
+      
+      // Update local tasks
+      const currentTasks = this.taskSubject.value;
+      const updatedTasks = currentTasks.map(t => 
+        t.id === task.id ? task : t
+      );
+      this.taskSubject.next(updatedTasks);
+    } catch (error) {
       this.snackbar.error('Error updating task. Please try again.');
       throw error;
     }
