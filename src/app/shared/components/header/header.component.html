@@ -1,24 +1,34 @@
-<header>        
-    <div class="header-left-content">
-        <span class="header-title">Kanban Project Management Tool</span>
-        <span><img class="logo-small" src="./assets/icons/join-logo-gray.svg" alt="Logo" /></span>
+<header>
+  <div class="header-left-content">
+    <span class="header-title">Kanban Project Management Tool</span>
+    <span
+      ><img
+        class="logo-small"
+        src="./assets/icons/join-logo-gray.svg"
+        alt="Logo"
+    /></span>
+  </div>
+  <div class="header-right-content">
+    <a routerLink="/main/help" class="help-icon" title="Help" aria-label="Help">
+      <mat-icon>help_outline</mat-icon>
+    </a>
+
+    <button class="profile-avatar" (click)="toggleDropdown()" [attr.aria-label]="'Profile menu for ' + user.initials">
+      <img
+        *ngIf="user?.profilePicture"
+        [src]="user.profilePicture"
+        alt="Profile picture"
+      />
+      <span *ngIf="!user?.profilePicture" class="initials">{{
+        user.initials
+      }}</span>
+    </button>
+
+    <div class="dropdown-menu" [class.show]="isDropdownOpen">
+      <a (click)="openAccountDialog()">My Account</a>
+      <a routerLink="/main/legal">Legal Notice</a>
+      <a routerLink="/main/privacy">Privacy Policy</a>
+      <a routerLink="/login" (click)="logoutUser()">Log out</a>
     </div>
-    <div class="header-right-content">
-        <a routerLink="/main/help" class="help-icon">
-            <mat-icon>help_outline</mat-icon>
-        </a>
-        
-        <div class="profile-avatar" 
-             (click)="toggleDropdown()">
-            <img *ngIf="user?.profilePicture" [src]="user.profilePicture" alt="Profile picture">
-            <span *ngIf="!user?.profilePicture" class="initials">{{ user.initials }}</span> 
-        </div>
-        
-        <div class="dropdown-menu" [class.show]="isDropdownOpen">
-            <a (click)="openAccountDialog()">My Account</a>
-            <a routerLink="/main/legal">Legal Notice</a>
-            <a routerLink="/main/privacy">Privacy Policy</a>
-            <a routerLink="/login" (click)="logoutUser()">Log out</a>
-        </div>
-    </div>     
+  </div>
 </header>
