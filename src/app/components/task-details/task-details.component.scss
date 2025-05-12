@@ -83,9 +83,10 @@ $color-background: #f6f7f8;
 
 .task-title {
   margin: 16px 0;
-  font-size: 61px;
+  font-size: 36px;
   font-weight: 700;
-  line-height: 120%;
+  inline-size: auto;
+  
 }
 
 .task-description {
@@ -121,7 +122,7 @@ $color-background: #f6f7f8;
 
 // ---------- Info Sections ----------
 .info-section {
-  margin-bottom: 24px;
+  margin-bottom: 16px;
 
   &.inline {
     display: flex;
@@ -510,7 +511,7 @@ $color-background: #f6f7f8;
 // ---------- Media Queries ----------
 @media (max-width: 800px) {
   .task-title {
-    font-size: 44px;
+    font-size: 30px;
     margin: 12px 0;
   }
 
@@ -539,14 +540,14 @@ $color-background: #f6f7f8;
 
   // Font size adjustments
   .info-section {
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     &.stacked {
       gap: 12px;
     }
   }
 
   .task-title {
-    font-size: 36px;
+    font-size: 28px;
     margin: 10px 0;
   }
 
@@ -570,14 +571,14 @@ $color-background: #f6f7f8;
 
   // Element adjustments
   .info-section {
-    margin-bottom: 16px;
+    margin-bottom: 10px;
     &.stacked {
       gap: 10px;
     }
   }
 
   .task-title {
-    font-size: 32px;
+    font-size: 24px;
     margin: 8px 0;
   }
 
@@ -612,7 +613,7 @@ $color-background: #f6f7f8;
   }
 
   .task-title {
-    font-size: 28px;
+    font-size: 20px;
     margin: 6px 0;
   }
 
