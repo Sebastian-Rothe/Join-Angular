@@ -63,67 +63,124 @@ export class TaskService {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await updateDoc(taskRef, { subtasks: updatedSubtasks });
-
-      // Update local tasks
-      const currentTasks = this.taskSubject.value;
-      const updatedTasks = currentTasks.map((task) =>
-        task.id === taskId ? { ...task, subtasks: updatedSubtasks } : task
-      );
-      this.taskSubject.next(updatedTasks);
+      this.updateLocalTasks(taskId, { subtasks: updatedSubtasks });
     } catch (error) {
       this.snackbarService.error('Error updating subtask status. Please try again.');
       throw error;
     }
   }
 
-  // Modify getAllTasks to use BehaviorSubject
+  private async convertFirebaseTaskToModel(doc: any): Promise<Task> {
+    const taskData = doc.data();
+    const assignedUsers = await this.getAssignedUsers(taskData['assignedTo']);
+    
+    return new Task({
+      title: taskData['title'],
+      description: taskData['description'],
+      dueDate: taskData['dueDate'],
+      priority: taskData['priority'],
+      category: taskData['category'],
+      subtasks: taskData['subtasks'] || [],
+      status: taskData['status'],
+      files: taskData['files'] || [],
+      id: doc.id,
+      assignedTo: assignedUsers.filter((user) => user !== null),
+    });
+  }
+
+  private async getAssignedUsers(userIds: string[] = []): Promise<any[]> {
+    return Promise.all(
+      userIds.map(uid => this.userService.getUserById(uid))
+    );
+  }
+
+  private updateLocalTasks(taskId: string, updates: Partial<Task>): void {
+    const currentTasks = this.taskSubject.value;
+    const updatedTasks = currentTasks.map(task =>
+      task.id === taskId ? { ...task, ...updates } : task
+    );
+    this.taskSubject.next(updatedTasks);
+  }
+
   async getAllTasks(): Promise<Task[]> {
     try {
       const tasksCollection = collection(this.firestore, 'tasks');
       const querySnapshot = await getDocs(tasksCollection);
-      const tasks: Task[] = [];
-
-      for (const doc of querySnapshot.docs) {
-        const taskData = doc.data() as { [key: string]: any };
-        const assignedUsers = await Promise.all(
-          taskData['assignedTo']?.map((uid: string) =>
-            this.userService.getUserById(uid)
-          ) || []
-        );
-
-        const task = new Task({
-          title: taskData['title'],
-          description: taskData['description'],
-          dueDate: taskData['dueDate'],
-          priority: taskData['priority'],
-          category: taskData['category'],
-          subtasks: taskData['subtasks'] || [],
-          status: taskData['status'],
-          files: taskData['files'] || [], // TaskFile objects are retrieved directly
-          id: doc.id,
-          assignedTo: assignedUsers.filter((user) => user !== null),
-        });
-        tasks.push(task);
-      }
+      const tasks = await Promise.all(
+        querySnapshot.docs.map(doc => this.convertFirebaseTaskToModel(doc))
+      );
       this.taskSubject.next(tasks);
       return tasks;
     } catch (error) {
-      this.snackbarService.error('Error loading tasks. Please try again.');
+      this.handleError('Error loading tasks');
       throw error;
     }
+  }
+
+  private calculateTaskMetrics(tasks: Task[]): any {
+    const metrics = this.initializeMetrics();
+    let earliestUrgentDeadline: Date | null = null;
+
+    tasks.forEach(task => {
+      this.updateStatusMetrics(metrics, task);
+      earliestUrgentDeadline = this.updateUrgentMetrics(metrics, task, earliestUrgentDeadline);
+    });
+
+    metrics.upcomingDeadline = earliestUrgentDeadline;
+    return metrics;
+  }
+
+  private initializeMetrics() {
+    return {
+      todo: 0,
+      done: 0,
+      urgent: 0,
+      upcomingDeadline: null as Date | null,
+      tasksInBoard: 0,
+      tasksInProgress: 0,
+      awaitingFeedback: 0,
+    };
+  }
+
+  private updateStatusMetrics(metrics: any, task: Task): void {
+    metrics.tasksInBoard++;
+    switch (task.status) {
+      case 'todo': metrics.todo++; break;
+      case 'done': metrics.done++; break;
+      case 'inProgress': metrics.tasksInProgress++; break;
+      case 'awaitFeedback': metrics.awaitingFeedback++; break;
+    }
+  }
+
+  private updateUrgentMetrics(metrics: any, task: Task, currentEarliest: Date | null): Date | null {
+    if (task.priority !== 'urgent') return currentEarliest;
+    
+    metrics.urgent++;
+    if (!task.dueDate) return currentEarliest;
+
+    const dueDate = new Date(task.dueDate);
+    return !currentEarliest || dueDate < currentEarliest ? dueDate : currentEarliest;
+  }
+
+  async getTaskMetrics() {
+    try {
+      const tasks = await this.getAllTasks();
+      return this.calculateTaskMetrics(tasks);
+    } catch (error) {
+      this.handleError('Error calculating metrics');
+      throw error;
+    }
+  }
+
+  private handleError(message: string): void {
+    this.snackbarService.error(message + '. Please try again.');
   }
 
   async updateTaskStatus(taskId: string, status: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await updateDoc(taskRef, { status });
-
-      // Update local tasks
-      const currentTasks = this.taskSubject.value;
-      const updatedTasks = currentTasks.map((task) =>
-        task.id === taskId ? { ...task, status } : task
-      );
-      this.taskSubject.next(updatedTasks);
+      this.updateLocalTasks(taskId, { status });
     } catch (error) {
       this.snackbarService.error('Error updating task status. Please try again.');
       throw error;
@@ -135,13 +192,7 @@ export class TaskService {
       const taskRef = doc(this.firestore, 'tasks', task.id);
       const preparedTask = this.prepareTaskForFirebase(task);
       await updateDoc(taskRef, preparedTask);
-
-      // Update local tasks
-      const currentTasks = this.taskSubject.value;
-      const updatedTasks = currentTasks.map((t) =>
-        t.id === task.id ? task : t
-      );
-      this.taskSubject.next(updatedTasks);
+      this.updateLocalTasks(task.id, task);
       this.snackbarService.success('task successfully updated');
     } catch (error) {
       this.snackbarService.error('Error updating task. Please try again.');
@@ -156,58 +207,6 @@ export class TaskService {
       this.snackbarService.success('Task successfully deleted');
     } catch (error) {
       this.snackbarService.error('Error deleting task. Please try again.');
-      throw error;
-    }
-  }
-
-  async getTaskMetrics() {
-    try {
-      const tasks = await this.getAllTasks();
-
-      const metrics = {
-        todo: 0,
-        done: 0,
-        urgent: 0,
-        upcomingDeadline: null as Date | null,
-        tasksInBoard: tasks.length,
-        tasksInProgress: 0,
-        awaitingFeedback: 0,
-      };
-
-      let earliestUrgentDeadline: Date | null = null;
-
-      tasks.forEach((task) => {
-        switch (
-          task.status // Remove normalization since we know the exact values
-        ) {
-          case 'todo':
-            metrics.todo++;
-            break;
-          case 'done':
-            metrics.done++;
-            break;
-          case 'inProgress': // Matches exactly what's in Firebase
-            metrics.tasksInProgress++;
-            break;
-          case 'awaitFeedback': // Matches exactly what's in Firebase
-            metrics.awaitingFeedback++;
-            break;
-        }
-
-        if (task.priority === 'urgent') {
-          metrics.urgent++;
-          if (task.dueDate) {
-            const dueDate = new Date(task.dueDate);
-            if (!earliestUrgentDeadline || dueDate < earliestUrgentDeadline) {
-              earliestUrgentDeadline = dueDate;
-            }
-          }
-        }
-      });
-      metrics.upcomingDeadline = earliestUrgentDeadline;
-      return metrics;
-    } catch (error) {
-      this.snackbarService.error('Error calculating metrics. Please try again.');
       throw error;
     }
   }
