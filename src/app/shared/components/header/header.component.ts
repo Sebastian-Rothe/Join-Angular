@@ -9,6 +9,19 @@ import { AuthService } from '../../../services/auth.service';
 import { DialogService } from '../../../services/dialog.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 
+/**
+ * Header component that displays the application's top navigation bar.
+ * 
+ * @description
+ * This component provides the main navigation header with user profile management,
+ * including a dropdown menu for user actions like logout and account settings.
+ * It handles user authentication state and provides navigation controls.
+ * 
+ * @example
+ * ```html
+ * <app-header></app-header>
+ * ```
+ */
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,10 +30,24 @@ import { SnackbarService } from '../../../services/snackbar.service';
   standalone: true
 })
 export class HeaderComponent implements OnInit {
+  /** Controls the visibility state of the user dropdown menu */
   isDropdownOpen = false;
+
+  /** Current user object containing user details */
   user: User = new User();
 
-  constructor(    public userService: UserService,
+  /**
+   * Creates an instance of HeaderComponent.
+   * Sets up click outside listener for dropdown menu.
+   * 
+   * @param userService - Service for user-related operations
+   * @param authService - Service for authentication operations
+   * @param router - Angular router service for navigation
+   * @param dialogService - Service for managing dialog windows
+   * @param snackbarService - Service for showing notification messages
+   */
+  constructor(
+    public userService: UserService,
     private authService: AuthService,
     private router: Router,
     private dialogService: DialogService,
@@ -35,6 +62,10 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Lifecycle hook that initializes the component.
+   * Subscribes to user updates and maintains current user state.
+   */
   ngOnInit(): void {
     this.userService.currentUser$.subscribe(user => {
       if (user) {
@@ -43,13 +74,27 @@ export class HeaderComponent implements OnInit {
     });
   }
 
+  /**
+   * Toggles the visibility of the dropdown menu.
+   * Used when clicking the profile avatar.
+   */
   openDropdownMenu() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
 
+  /**
+   * Alternative method to toggle dropdown visibility.
+   * @deprecated Use openDropdownMenu() instead
+   */
   toggleDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;
   }
+
+  /**
+   * Handles user logout process.
+   * Attempts to logout and redirects to login page on success.
+   * Shows error message if logout fails.
+   */
   async logoutUser() {
     try {
       await this.authService.logout();
@@ -59,6 +104,10 @@ export class HeaderComponent implements OnInit {
     }
   }
 
+  /**
+   * Opens the account settings dialog.
+   * Allows users to modify their account information.
+   */
   openAccountDialog(): void {
     this.dialogService.openDialog('account');
   }
