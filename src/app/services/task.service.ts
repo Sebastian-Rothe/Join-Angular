@@ -15,6 +15,13 @@ import { UserService } from './user.service';
 import { BehaviorSubject } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
 
+/**
+ * Service for managing tasks in the application
+ * 
+ * @class TaskService
+ * @description Handles all task-related operations including CRUD operations,
+ * task metrics calculation, and synchronization with Firestore
+ */
 @Injectable({
   providedIn: 'root',
 })
@@ -29,6 +36,13 @@ export class TaskService {
     private snackbarService: SnackbarService
   ) {}
 
+  /**
+   * Prepares a task object for Firebase storage
+   * 
+   * @private
+   * @param {Task} task - The task to be prepared
+   * @returns {any} Firebase-compatible task object
+   */
   private prepareTaskForFirebase(task: Task): any {
     return {
       title: task.title,
@@ -44,6 +58,13 @@ export class TaskService {
     };
   }
 
+  /**
+   * Creates a new task in Firestore
+   * 
+   * @param {Task} task - The task to create
+   * @returns {Promise<string>} The ID of the created task
+   * @throws {Error} If task creation fails
+   */
   async createTask(task: Task): Promise<string> {
     try {
       const tasksCollection = collection(this.firestore, 'tasks');
@@ -56,6 +77,14 @@ export class TaskService {
     }
   }
 
+  /**
+   * Updates the status of subtasks for a specific task
+   * 
+   * @param {string} taskId - The ID of the task
+   * @param {Subtask[]} updatedSubtasks - Array of updated subtasks
+   * @returns {Promise<void>}
+   * @throws {Error} If subtask update fails
+   */
   async updateSubtaskStatus(
     taskId: string,
     updatedSubtasks: Subtask[]
@@ -70,6 +99,13 @@ export class TaskService {
     }
   }
 
+  /**
+   * Converts a Firestore document to a Task model
+   * 
+   * @private
+   * @param {any} doc - Firestore document
+   * @returns {Promise<Task>} Converted Task instance
+   */
   private async convertFirebaseTaskToModel(doc: any): Promise<Task> {
     const taskData = doc.data();
     const assignedUsers = await this.getAssignedUsers(taskData['assignedTo']);
@@ -88,12 +124,26 @@ export class TaskService {
     });
   }
 
+  /**
+   * Fetches user data for assigned users
+   * 
+   * @private
+   * @param {string[]} userIds - Array of user IDs
+   * @returns {Promise<any[]>} Array of user data
+   */
   private async getAssignedUsers(userIds: string[] = []): Promise<any[]> {
     return Promise.all(
       userIds.map(uid => this.userService.getUserById(uid))
     );
   }
 
+  /**
+   * Updates local task state
+   * 
+   * @private
+   * @param {string} taskId - Task ID to update
+   * @param {Partial<Task>} updates - Partial task data to apply
+   */
   private updateLocalTasks(taskId: string, updates: Partial<Task>): void {
     const currentTasks = this.taskSubject.value;
     const updatedTasks = currentTasks.map(task =>
@@ -102,6 +152,12 @@ export class TaskService {
     this.taskSubject.next(updatedTasks);
   }
 
+  /**
+   * Retrieves all tasks from Firestore
+   * 
+   * @returns {Promise<Task[]>} Array of all tasks
+   * @throws {Error} If task retrieval fails
+   */
   async getAllTasks(): Promise<Task[]> {
     try {
       const tasksCollection = collection(this.firestore, 'tasks');
@@ -117,6 +173,13 @@ export class TaskService {
     }
   }
 
+  /**
+   * Calculates metrics for tasks
+   * 
+   * @private
+   * @param {Task[]} tasks - Array of tasks to analyze
+   * @returns {any} Object containing calculated metrics
+   */
   private calculateTaskMetrics(tasks: Task[]): any {
     const metrics = this.initializeMetrics();
     let earliestUrgentDeadline: Date | null = null;
@@ -130,6 +193,12 @@ export class TaskService {
     return metrics;
   }
 
+  /**
+   * Initializes metrics object with default values
+   * 
+   * @private
+   * @returns {Object} Default metrics object
+   */
   private initializeMetrics() {
     return {
       todo: 0,
@@ -142,6 +211,13 @@ export class TaskService {
     };
   }
 
+  /**
+   * Updates status-related metrics
+   * 
+   * @private
+   * @param {any} metrics - Metrics object to update
+   * @param {Task} task - Task to analyze
+   */
   private updateStatusMetrics(metrics: any, task: Task): void {
     metrics.tasksInBoard++;
     switch (task.status) {
@@ -152,6 +228,15 @@ export class TaskService {
     }
   }
 
+  /**
+   * Updates urgent task metrics
+   * 
+   * @private
+   * @param {any} metrics - Metrics object to update
+   * @param {Task} task - Task to analyze
+   * @param {Date | null} currentEarliest - Current earliest deadline
+   * @returns {Date | null} Updated earliest deadline
+   */
   private updateUrgentMetrics(metrics: any, task: Task, currentEarliest: Date | null): Date | null {
     if (task.priority !== 'urgent') return currentEarliest;
     
@@ -162,6 +247,12 @@ export class TaskService {
     return !currentEarliest || dueDate < currentEarliest ? dueDate : currentEarliest;
   }
 
+  /**
+   * Retrieves and calculates task metrics
+   * 
+   * @returns {Promise<any>} Object containing task metrics
+   * @throws {Error} If metrics calculation fails
+   */
   async getTaskMetrics() {
     try {
       const tasks = await this.getAllTasks();
@@ -172,10 +263,24 @@ export class TaskService {
     }
   }
 
+  /**
+   * Handles error messages consistently
+   * 
+   * @private
+   * @param {string} message - Error message to display
+   */
   private handleError(message: string): void {
     this.snackbarService.error(message + '. Please try again.');
   }
 
+  /**
+   * Updates the status of a task
+   * 
+   * @param {string} taskId - ID of the task to update
+   * @param {string} status - New status value
+   * @returns {Promise<void>}
+   * @throws {Error} If status update fails
+   */
   async updateTaskStatus(taskId: string, status: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
@@ -187,6 +292,13 @@ export class TaskService {
     }
   }
 
+  /**
+   * Updates an existing task
+   * 
+   * @param {Task} task - Updated task data
+   * @returns {Promise<void>}
+   * @throws {Error} If task update fails
+   */
   async updateTask(task: Task): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', task.id);
@@ -200,6 +312,13 @@ export class TaskService {
     }
   }
 
+  /**
+   * Deletes a task
+   * 
+   * @param {string} taskId - ID of the task to delete
+   * @returns {Promise<void>}
+   * @throws {Error} If task deletion fails
+   */
   async deleteTask(taskId: string): Promise<void> {
     try {
       const taskRef = doc(this.firestore, 'tasks', taskId);
