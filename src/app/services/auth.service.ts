@@ -18,18 +18,50 @@ import { Observable } from 'rxjs';
 import { User } from '../models/user.class';
 import { SnackbarService } from './snackbar.service';
 
+/**
+ * Authentication service that handles user authentication, registration, and management
+ * using Firebase Authentication and Firestore.
+ * 
+ * @class AuthService
+ * @description Manages all authentication-related operations including login, registration,
+ * guest access, and user document management in Firestore.
+ */
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
+  /**
+   * Observable that emits the current authentication state of the user
+   * @type {Observable<any>}
+   */
   user$: Observable<any>;
+
+  /**
+   * Firebase Firestore instance
+   * @type {Firestore}
+   */
   firestore: Firestore = inject(Firestore);
+
+  /**
+   * Firebase Auth instance
+   * @type {Auth}
+   */
   auth = inject(Auth);
+
   constructor(private snackbarService: SnackbarService) {
     this.user$ = user(this.auth);
   }
 
-  async login(email: string, password: string) {    try {
+  /**
+   * Authenticates a user with email and password
+   * 
+   * @param {string} email - User's email address
+   * @param {string} password - User's password
+   * @returns {Promise<{user: any, userData: any}>} Object containing user credentials and user data
+   * @throws {Error} If login fails or user data is not found
+   */
+  async login(email: string, password: string) {
+    try {
       const userCredential = await signInWithEmailAndPassword(
         this.auth,
         email,
@@ -48,12 +80,23 @@ export class AuthService {
       }
       throw new Error('User data not found');
     } catch (error) {
-      this.snackbarService.error('Error logging in. Please check your credentials.');
+      this.snackbarService.error(
+        'Error logging in. Please check your credentials.'
+      );
       throw error;
     }
   }
 
-  async register(email: string, password: string): Promise<any> {    try {
+  /**
+   * Registers a new user with email and password
+   * 
+   * @param {string} email - New user's email address
+   * @param {string} password - New user's password
+   * @returns {Promise<any>} Firebase user credential
+   * @throws {Error} If registration fails
+   */
+  async register(email: string, password: string): Promise<any> {
+    try {
       const userCredential = await createUserWithEmailAndPassword(
         this.auth,
         email,
@@ -66,21 +109,37 @@ export class AuthService {
     }
   }
 
+  /**
+   * Creates or updates a user document in Firestore
+   * 
+   * @param {string} userId - User's unique identifier
+   * @param {User} userData - User data to be stored
+   * @returns {Promise<void>}
+   */
   async createUserDocument(userId: string, userData: User) {
     const userRef = doc(this.firestore, 'users', userId);
     await setDoc(userRef, userData.toPlainObject());
   }
 
+  /**
+   * Creates an anonymous guest user account
+   * 
+   * @returns {Promise<any>} Firebase user credential for guest
+   * @throws {Error} If guest login is disabled or fails
+   */
   async guestLogin(): Promise<any> {
     try {
       const userCredential = await signInAnonymously(this.auth);
       if (userCredential.user) {
         await this.createGuestDocument(userCredential.user.uid);
         return userCredential.user;
-      }      throw new Error('Guest login failed');
+      }
+      throw new Error('Guest login failed');
     } catch (error: any) {
       if (error.code === 'auth/admin-restricted-operation') {
-        this.snackbarService.error('Guest login is not enabled. Please contact administrator.');
+        this.snackbarService.error(
+          'Guest login is not enabled. Please contact administrator.'
+        );
         throw error;
       }
       this.snackbarService.error('Guest login failed. Please try again.');
@@ -88,6 +147,13 @@ export class AuthService {
     }
   }
 
+  /**
+   * Creates a Firestore document for a guest user
+   * 
+   * @private
+   * @param {string} userId - Guest user's unique identifier
+   * @returns {Promise<void>}
+   */
   private async createGuestDocument(userId: string) {
     const guestUser = new User({
       uid: userId,
@@ -101,6 +167,13 @@ export class AuthService {
     await this.createUserDocument(userId, guestUser);
   }
 
+  /**
+   * Signs out the current user and performs cleanup
+   * For guest users, deletes their Firestore document
+   * 
+   * @returns {Promise<void>}
+   * @throws {Error} If logout fails
+   */
   async logout() {
     try {
       const currentUser = this.auth.currentUser;
