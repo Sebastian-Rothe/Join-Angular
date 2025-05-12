@@ -1,9 +1,25 @@
 import { Injectable } from '@angular/core';
 
+/**
+ * Service for handling image processing operations
+ * 
+ * @class ImageService
+ * @description Provides functionality for image compression and processing
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class ImageService {
+  /**
+   * Compresses an image file by resizing and quality reduction
+   * 
+   * @param {File} file - The image file to compress
+   * @param {number} [maxWidth=800] - Maximum width of the compressed image
+   * @param {number} [maxHeight=800] - Maximum height of the compressed image
+   * @param {number} [quality=0.8] - JPEG quality (0 to 1)
+   * @returns {Promise<string>} Base64 encoded compressed image
+   * @throws {Error} If canvas context cannot be obtained or image processing fails
+   */
   compressImage(file: File, maxWidth = 800, maxHeight = 800, quality = 0.8): Promise<string> {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
