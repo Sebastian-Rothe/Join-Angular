@@ -127,6 +127,7 @@
     }
 
     .contact-avatar {
+      min-width: 42px;
       width: 42px;
       height: 42px;
       border-radius: 50%;
@@ -338,7 +339,7 @@
     .button-container {
       display: none;
     }
-    .contacts-list{
+    .contacts-list {
       padding: 24px;
     }
 
@@ -409,7 +410,6 @@
 
     app-contact-details {
       height: calc(100vh - 200px);
-      
     }
   }
   .contacts-list {
@@ -432,7 +432,7 @@
 @media (max-width: 400px) {
   .contact-details-section {
     height: calc(100vh - 80px);
-    
+
     app-contact-details {
       height: calc(100vh - 180px);
     }
@@ -441,7 +441,7 @@
     padding: 8px;
     .contact-group {
       margin-bottom: 8px;
- 
+
       .contact-item {
         padding: 4px;
         gap: 12px;
@@ -454,7 +454,7 @@
   .contact-details-section {
     height: calc(100vh - 76px);
     padding: 10px;
-    
+
     app-contact-details {
       height: calc(100vh - 160px);
     }
