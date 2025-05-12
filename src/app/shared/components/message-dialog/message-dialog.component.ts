@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import {
@@ -20,7 +20,7 @@ export interface MessageDialogData {
   imports: [CommonModule, MatIconModule, MatDialogModule],
   styleUrls: ['./message-dialog.component.scss'],
   template: `
-    <div class="message-dialog {{ data.type }}">
+    <div class="message-dialog {{ data.type }}" [class.aktiv]="isVisible">
       <div class="message">{{ data.message }}</div>
       @if(data.type === 'success' && data.showBoardIcon) {
         <div class="icon-container">
@@ -30,11 +30,19 @@ export interface MessageDialogData {
     </div>
   `,
 })
-export class MessageDialogComponent {
+export class MessageDialogComponent implements OnInit {
+  isVisible = false;
+
   constructor(
     public dialogRef: MatDialogRef<MessageDialogComponent>,
     @Inject(MAT_DIALOG_DATA) public data: MessageDialogData
-  ) {
-    setTimeout(() => this.dialogRef.close(), 2500);
+  ) {}
+
+  ngOnInit() {
+    setTimeout(() => this.isVisible = true, 50);
+    setTimeout(() => {
+      this.isVisible = false;
+      setTimeout(() => this.dialogRef.close(), 225);
+    }, 2200);
   }
 }

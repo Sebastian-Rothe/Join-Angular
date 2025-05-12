@@ -1,28 +1,23 @@
 @use "../../../../styles.scss" as *;
+
 :host {
   display: block;
-  overflow-x: hidden;
-  width: 100%;
-  
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1100;
 }
-// Override Material Dialog styles
-::ng-deep {
-  .success-dialog {
-    .mdc-dialog__surface {
-      border-radius: 20px !important;
-    }
+
+.message-dialog {
+  transform: translateY(-100vh) scale(0.01);
+  transition: all 225ms ease-in-out;
+
+  &.aktiv {
+    transform: translateY(0) scale(1);
   }
 
-  .error-dialog {
-    .mdc-dialog__surface {
-      border-radius: 20px !important;
-      background: transparent !important;
-      box-shadow: none !important;
-    }
-  }
-}
-.message-dialog {
-  // text-align: center;
+  border-radius: 20px 20px;
   min-height: 80px;
   display: flex;
   justify-content: center;
