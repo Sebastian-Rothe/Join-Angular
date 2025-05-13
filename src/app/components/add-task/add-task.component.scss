@@ -1241,8 +1241,10 @@ mat-form-field {
 }
 @media (max-width: 400px) {
   .footer-add-task {
+    padding: 12px;
     .footer-add-task-right {
       gap: 8px;
+      height: 40px;
     }
   }
 }
