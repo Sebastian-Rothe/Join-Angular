@@ -135,7 +135,9 @@
                          (mouseleave)="stopDragging()">
                         <div *ngFor="let file of task.files; let i = index" class="file-preview-item">
                             <div class="file-preview-content">
-                                <img [src]="getFilePreview(file)" alt="File preview">
+                                <img [src]="getFilePreview(file)" 
+                                     alt="File preview"
+                                     (click)="openImageViewer(i)">
                                 <div class="file-name">{{ file.name }}</div>
                                 <button class="delete-file-btn" (click)="removeFile(i)">
                                     <mat-icon>delete</mat-icon>
@@ -145,6 +147,14 @@
                     </div>
                 </div>
             </div>
+
+            <app-image-viewer
+                *ngIf="showImageViewer"
+                [images]="images"
+                [currentIndex]="currentIndex"
+                (indexChange)="currentIndex = $event"
+                (close)="closeImageViewer()">
+            </app-image-viewer>
 
             <div class="form-group">
                 <label>Subtasks</label>

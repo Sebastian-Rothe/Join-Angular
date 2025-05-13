@@ -14,9 +14,11 @@ import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
 import { ImageService } from '../../services/image.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { HeaderService } from '../../services/header.service';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { User } from '../../models/user.class';
 import { CustomDateAdapter } from '../../shared/adapters/custom-date.adapter';
+import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -40,7 +42,8 @@ export const MY_DATE_FORMATS = {
     MatDatepickerModule,
     MatInputModule,
     MatFormFieldModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    ImageViewerComponent
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
@@ -91,12 +94,18 @@ export class AddTaskComponent implements OnInit {
 
   // Helper method to convert timestamp to Date object for the datepicker
   dateValue: Date | null = null;
+
+  images: { url: string, name: string, size: number }[] = [];
+  currentIndex: number = 0;
+  showImageViewer: boolean = false;
+
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private taskService: TaskService,
     private imageService: ImageService,
     private snackbarService: SnackbarService,
+    public headerService: HeaderService, // Change from private to public
     private router: Router,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: {
@@ -448,8 +457,32 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
+  openImageViewer(index: number): void {
+    if (this.task.files[index]?.data) {
+      this.headerService.setHeaderZIndex('0');
+      this.images = this.task.files.map(file => ({
+        url: file.data,
+        name: file.name,
+        size: this.getBase64Size(file.data)
+      }));
+      this.currentIndex = index;
+      this.showImageViewer = true;
+    }
+  }
+
+  closeImageViewer(): void {
+    this.showImageViewer = false;
+    this.headerService.resetHeaderZIndex();
+  }
+
   ngOnDestroy(): void {
     this.filePreviews.forEach((url) => URL.revokeObjectURL(url));
     this.filePreviews.clear();
+  }
+
+  private getBase64Size(base64String: string): number {
+    const padding = (base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0);
+    const size = (base64String.length * 3) / 4 - padding;
+    return size;
   }
 }

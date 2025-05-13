@@ -3,7 +3,7 @@
 header {
   height: 96px; // Adjusted to match screenshot
   position: absolute; // Changed back to fixed
-  z-index: 900; // Lower than navbar's z-index
+  z-index: 1; // Lower than navbar's z-index
   top: 0;
   display: flex;
   background-color: $white;

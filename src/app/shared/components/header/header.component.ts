@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
@@ -8,6 +8,7 @@ import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { DialogService } from '../../../services/dialog.service';
 import { SnackbarService } from '../../../services/snackbar.service';
+import { HeaderService } from '../../../services/header.service';
 
 /**
  * Header component that displays the application's top navigation bar.
@@ -29,12 +30,14 @@ import { SnackbarService } from '../../../services/snackbar.service';
   imports: [MatIconModule, CommonModule, RouterModule, MatMenuModule],
   standalone: true
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit, AfterViewInit {
   /** Controls the visibility state of the user dropdown menu */
   isDropdownOpen = false;
 
   /** Current user object containing user details */
   user: User = new User();
+
+  @ViewChild('header') headerElement!: ElementRef;
 
   /**
    * Creates an instance of HeaderComponent.
@@ -45,13 +48,15 @@ export class HeaderComponent implements OnInit {
    * @param router - Angular router service for navigation
    * @param dialogService - Service for managing dialog windows
    * @param snackbarService - Service for showing notification messages
+   * @param headerService - Service for managing header-related operations
    */
   constructor(
     public userService: UserService,
     private authService: AuthService,
     private router: Router,
     private dialogService: DialogService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private headerService: HeaderService
   ) {
     // Add click outside listener
     document.addEventListener('click', (event) => {
@@ -72,6 +77,16 @@ export class HeaderComponent implements OnInit {
         this.user = user;
       }
     });
+  }
+
+  /**
+   * Lifecycle hook that is called after the view has been initialized.
+   * Sets the header element in the HeaderService.
+   */
+  ngAfterViewInit() {
+    if (this.headerElement) {
+      this.headerService.setHeaderElement(this.headerElement.nativeElement);
+    }
   }
 
   /**
