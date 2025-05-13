@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
-import{ SnackbarService } from '../../services/snackbar.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +15,15 @@ import{ SnackbarService } from '../../services/snackbar.service';
   imports: [CommonModule, FormsModule, RouterModule, MatIconModule]
 })
 export class LoginComponent {
-  email: string = '';
-  password: string = '';
+  email = '';
+  password = '';
   hidePassword = true;
   isPasswordFocused = false;
+
+  formErrors = {
+    email: false,
+    password: false
+  };
 
   constructor(
     private router: Router,
@@ -26,20 +31,32 @@ export class LoginComponent {
     private snackbarService: SnackbarService
   ) {}
 
-  // ngOnInit() {
-  //   this.authService.loginError$.subscribe(error => {
-  //     this.loginError = error;
-  //   });
-  // }
-
   async loginUser() {
-    if (!this.email || !this.password) return;
-    
     try {
-      await this.authService.login(this.email, this.password);
-      this.router.navigate(['/main']);
-    } catch (error) {
-      this.snackbarService.error('Login failed. Please check your credentials.')
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      
+      if (!this.email?.trim()) {
+        this.snackbarService.error('Please enter your email address');
+        return;
+      }
+
+      if (!emailRegex.test(this.email.trim())) {
+        this.snackbarService.error('Please enter a valid email address');
+        return;
+      }
+
+      if (!this.password) {
+        this.snackbarService.error('Please enter your password');
+        return;
+      }
+
+      const result = await this.authService.login(this.email.trim(), this.password);
+      if (result?.user) {
+        // this.snackbarService.success('Welcome back!');
+        await this.router.navigate(['/main']);
+      }
+    } catch (error: any) {
+      // AuthService handles specific error messages
     }
   }
 

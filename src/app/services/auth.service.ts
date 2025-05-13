@@ -62,27 +62,19 @@ export class AuthService {
    */
   async login(email: string, password: string) {
     try {
-      const userCredential = await signInWithEmailAndPassword(
-        this.auth,
-        email,
-        password
-      );
-      if (userCredential.user) {
-        const userDoc = await getDoc(
-          doc(this.firestore, 'users', userCredential.user.uid)
-        );
-        if (userDoc.exists()) {
-          return {
-            user: userCredential.user,
-            userData: userDoc.data(),
-          };
-        }
+      const userCredential = await signInWithEmailAndPassword(this.auth, email, password);
+      if (!userCredential.user) {
+        throw { code: 'auth/no-user-data' };
       }
-      throw new Error('User data not found');
-    } catch (error) {
-      this.snackbarService.error(
-        'Error logging in. Please check your credentials.'
-      );
+      const userDoc = await getDoc(doc(this.firestore, 'users', userCredential.user.uid));
+      if (!userDoc.exists()) {
+        throw { code: 'auth/no-user-data' };
+      }
+
+      return { user: userCredential.user, userData: userDoc.data() };
+
+    } catch (error: any) {
+      this.snackbarService.error('Login failed. Please check your credentials');
       throw error;
     }
   }
