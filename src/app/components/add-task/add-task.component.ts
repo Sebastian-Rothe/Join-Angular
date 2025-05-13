@@ -1,3 +1,38 @@
+/**
+ * Component for creating and editing tasks in the Join application.
+ * 
+ * This component provides a comprehensive interface for:
+ * - Creating new tasks
+ * - Editing existing tasks
+ * - Managing task assignments
+ * - Handling file attachments
+ * - Setting task priorities and categories
+ * 
+ * Features:
+ * - Drag and drop file upload
+ * - Contact selection and management
+ * - Due date selection with validation
+ * - Subtask management
+ * - Category and priority selection
+ * 
+ * The component can be used both as a standalone page and as a dialog.
+ * 
+ * @example
+ * ```typescript
+ * // Opening as a dialog for creating a new task
+ * this.dialog.open(AddTaskComponent, {
+ *   data: { initialStatus: 'todo' }
+ * });
+ * 
+ * // Opening as a dialog for editing an existing task
+ * this.dialog.open(AddTaskComponent, {
+ *   data: { 
+ *     isEditMode: true,
+ *     taskToEdit: existingTask
+ *   }
+ * });
+ * ```
+ */
 import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef, Optional, Inject } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -55,57 +90,102 @@ export const MY_DATE_FORMATS = {
   styleUrls: ['./add-task.component.scss']
 })
 export class AddTaskComponent implements OnInit {
+  /** Reference to the file grid element for horizontal scrolling */
   @ViewChild('fileGrid') fileGrid!: ElementRef;
+  
+  /** Minimum allowed date for task due date */
   minDate: Date;
 
+  /** Flag for tracking file grid dragging state */
   private isDraggingGrid = false;
+  
+  /** Starting X coordinate for drag operation */
   private startX = 0;
+  
+  /** Initial scroll position for drag operation */
   private scrollLeft = 0;
 
+  /** Map to store file preview URLs */
   private filePreviews = new Map<File, string>();
 
+  /** Available task categories */
   categories = [
     { value: 'TechnicalTask', label: 'Technical Task' },
     { value: 'UserStory', label: 'User Story' }
   ];
+
+  /** Flag for category dropdown state */
   categoryOpen: boolean = false;
   
+  /** The task being created or edited */
   task: Task = new Task();
 
+  /** List of all available contacts */
   contacts: User[] = [];
+  
+  /** Currently selected contacts for task assignment */
   selectedContacts: User[] = [];
+  
+  /** Flag for contacts dropdown state */
   dropdownOpen = false;
   
+  /** Current subtask input value */
   newSubtask = '';
+  
+  /** Flag for subtask input active state */
   isSubtaskInputActive = false;
   
+  /** Form validation error states */
   errors = {
     title: false,
     dueDate: false,
     category: false
   };
 
+  /** Currently logged in user */
   currentUser: User | null = null;
 
+  /** Flag for file drag state */
   isDragging = false;
 
-  isDialog = false;  // Add this property
+  /** Flag indicating whether component is used in dialog */
+  isDialog = false;
+  
+  /** Flag indicating edit mode */
   isEditMode = false;
 
-  // Helper method to convert timestamp to Date object for the datepicker
+  /** Selected date for datepicker */
   dateValue: Date | null = null;
 
+  /** Array of image information for viewer */
   images: { url: string, name: string, size: number }[] = [];
+  
+  /** Current image index in viewer */
   currentIndex: number = 0;
+  
+  /** Flag for image viewer visibility */
   showImageViewer: boolean = false;
 
+  /**
+   * Creates an instance of AddTaskComponent.
+   * 
+   * @param userService - Service for user management
+   * @param authService - Service for authentication
+   * @param taskService - Service for task operations
+   * @param imageService - Service for image processing
+   * @param snackbarService - Service for notifications
+   * @param headerService - Service for header management
+   * @param router - Angular router service
+   * @param dialogRef - Optional reference if used as dialog
+   * @param dialogData - Optional configuration data
+   */
   constructor(
     private userService: UserService,
     private authService: AuthService,
     private taskService: TaskService,
     private imageService: ImageService,
     private snackbarService: SnackbarService,
-    public headerService: HeaderService, // Change from private to public
+    public headerService: HeaderService,
     private router: Router,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
     @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: {
@@ -117,26 +197,52 @@ export class AddTaskComponent implements OnInit {
     registerLocaleData(localeDe);
     this.isDialog = !!dialogRef;
     this.minDate = new Date();
-    this.minDate.setHours(0, 0, 0, 0); // Setze Zeit auf Mitternacht
+    this.minDate.setHours(0, 0, 0, 0);
     
     if (dialogData?.isEditMode && dialogData?.taskToEdit) {
-      this.isEditMode = true;
-      this.task = new Task(dialogData.taskToEdit);
-      this.selectedContacts = [...this.task.assignedTo];
-      this.dateValue = this.task.dueDate ? new Date(this.task.dueDate) : null;
-    } else if (dialogData?.initialStatus) {
-      this.task.status = dialogData.initialStatus;
+      this.initializeEditMode(dialogData.taskToEdit);
     } else {
-      this.task.status = 'todo';
+      this.initializeCreateMode(dialogData?.initialStatus);
     }
   }
 
-  ngOnInit(): void {
-    this.setupCurrentUser();  // Load current user first
-    this.loadContacts();
+  /**
+   * Initializes the component in edit mode
+   * 
+   * @param taskToEdit - The task to be edited
+   */
+  private initializeEditMode(taskToEdit: Task): void {
+    this.isEditMode = true;
+    this.task = new Task(taskToEdit);
+    this.selectedContacts = [...this.task.assignedTo];
+    this.dateValue = this.task.dueDate ? new Date(this.task.dueDate) : null;
   }
 
-  private setupCurrentUser(): void {
+  /**
+   * Initializes the component in create mode
+   * 
+   * @param initialStatus - Optional initial status for the new task
+   */
+  private initializeCreateMode(initialStatus?: string): void {
+    this.task.status = initialStatus || 'todo';
+  }
+
+  ngOnInit(): void {
+    this.loadUserAndContacts();
+  }
+
+  /**
+   * Loads the current user and all available contacts.
+   */
+  private async loadUserAndContacts(): Promise<void> {
+    await this.setupCurrentUser();
+    await this.loadContacts();
+  }
+
+  /**
+   * Sets up the current user and initializes task assignment.
+   */
+  private async setupCurrentUser(): Promise<void> {
     this.authService.user$.subscribe(async (user) => {
       if (user) {
         const userDoc = await this.userService.getUserById(user.uid);
@@ -146,12 +252,29 @@ export class AddTaskComponent implements OnInit {
             this.selectedContacts = [this.currentUser];
             this.task.assignedTo = [this.currentUser];
           }
-          this.sortContacts(); // Sort contacts after current user is set
+          this.sortContacts();
         }
       }
     });
   }
 
+  /**
+   * Loads all available contacts from the user service.
+   */
+  private async loadContacts(): Promise<void> {
+    try {
+      this.contacts = await this.userService.getAllUsers();
+      if (this.currentUser) {
+        this.sortContacts();
+      }
+    } catch (error) {
+      this.snackbarService.error('Failed to load users');
+    }
+  }
+
+  /**
+   * Sorts the contacts list, prioritizing the current user.
+   */
   private sortContacts(): void {
     this.contacts.sort((a, b) => {
       if (a.uid === this.currentUser?.uid) return -1;
@@ -160,19 +283,15 @@ export class AddTaskComponent implements OnInit {
     });
   }
 
-  async loadContacts(): Promise<void> {
-    try {
-      this.contacts = await this.userService.getAllUsers();
-      if (this.currentUser) {
-        this.sortContacts(); // Sort if current user is already loaded
-      }
-    } catch (error) {
-      this.snackbarService.error('Failed to load users');
-    }
+  /**
+   * Updates the assigned contacts for the task.
+   */
+  private updateAssignedContacts(): void {
+    this.task.assignedTo = [...this.selectedContacts];
   }
 
   @HostListener('document:click', ['$event'])
-  onDocumentClick(event: MouseEvent) {
+  private handleOutsideClick(event: MouseEvent): void {
     // Handle contacts dropdown
     const contactsDropdown = document.querySelector('.dropdown');
     if (this.dropdownOpen && !contactsDropdown?.contains(event.target as Node)) {
@@ -217,14 +336,56 @@ export class AddTaskComponent implements OnInit {
       this.selectedContacts.splice(index, 1);
     }
     
-    this.task.assignedTo = [...this.selectedContacts];
+    this.updateAssignedContacts();
   }
 
   removeContact(contact: User): void {
     const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
     if (index !== -1) {
       this.selectedContacts.splice(index, 1);
-      this.task.assignedTo = [...this.selectedContacts];
+      this.updateAssignedContacts();
+    }
+  }
+
+  private async processFiles(files: File[]): Promise<TaskFile[]> {
+    const allowedTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
+    const validFiles = [];
+
+    for (const file of files) {
+      const extension = '.' + file.name.split('.').pop()?.toLowerCase();
+      if (!allowedTypes.includes(extension)) {
+        throw new Error(`File "${file.name}" has invalid type. Only jpg, jpeg, png, and pdf files are allowed.`);
+      }
+      validFiles.push(file);
+    }
+
+    return Promise.all(validFiles.map(file => this.fileToTaskFile(file)));
+  }
+
+  private async handleFileUpload(files: File[]): Promise<void> {
+    try {
+      const taskFiles = await this.processFiles(files);
+      this.task.files = [...this.task.files, ...taskFiles];
+    } catch (error) {
+      this.snackbarService.error(error instanceof Error ? error.message : 'Failed to process files');
+    }
+  }
+
+  async onFileSelected(event: Event): Promise<void> {
+    const input = event.target as HTMLInputElement;
+    if (input.files?.length) {
+      await this.handleFileUpload(Array.from(input.files));
+    }
+  }
+
+  async onDrop(event: DragEvent): Promise<void> {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+
+    const files = event.dataTransfer?.files;
+    if (files?.length) {
+      await this.handleFileUpload(Array.from(files));
     }
   }
 
@@ -237,26 +398,7 @@ export class AddTaskComponent implements OnInit {
         type: file.type
       };
     } catch (error) {
-      throw error;
-    }
-  }
-
-  async onFileSelected(event: Event): Promise<void> {
-    const input = event.target as HTMLInputElement;
-    if (input.files) {
-      const allowedTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
-      const files = Array.from(input.files);
-      
-      for (const file of files) {
-        const extension = '.' + file.name.split('.').pop()?.toLowerCase();
-        if (!allowedTypes.includes(extension)) {
-          this.snackbarService.error(`File "${file.name}" has invalid type. Only jpg, jpeg, png, and pdf files are allowed.`);
-          return;
-        }
-      }
-      
-      const taskFiles = await Promise.all(files.map(file => this.fileToTaskFile(file)));
-      this.task.files = [...this.task.files, ...taskFiles];
+      throw new Error(`Failed to process file "${file.name}"`);
     }
   }
 
@@ -309,42 +451,64 @@ export class AddTaskComponent implements OnInit {
     this.task.subtasks.splice(index, 1);
   }
 
-  validateForm(): boolean {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
-    
-    const isDueDateValid = this.task.dueDate > 0;
-
-    this.errors = {
-      title: !this.task.title.trim(),
-      dueDate: !isDueDateValid,
-      category: !this.task.category
-    };
-    
-    return Boolean(this.task.title.trim() && isDueDateValid && this.task.category);
+  private validateTitle(): boolean {
+    const isValid = Boolean(this.task.title.trim());
+    this.errors.title = !isValid;
+    return isValid;
   }
+
+  private validateDueDate(): boolean {
+    const isValid = this.task.dueDate > 0;
+    this.errors.dueDate = !isValid;
+    return isValid;
+  }
+
+  private validateCategory(): boolean {
+    const isValid = Boolean(this.task.category);
+    this.errors.category = !isValid;
+    return isValid;
+  }
+
+  validateForm(): boolean {
+    const isTitleValid = this.validateTitle();
+    const isDueDateValid = this.validateDueDate();
+    const isCategoryValid = this.validateCategory();
+    
+    return isTitleValid && isDueDateValid && isCategoryValid;
+  }
+
+  private async handleTaskCreation(): Promise<void> {
+    await this.taskService.createTask(this.task);
+    this.snackbarService.success('Task added to board', true);
+    
+    if (this.dialogRef) {
+      this.dialogRef.close('taskAdded');
+    } else {
+      await this.router.navigate(['/main/board']);
+    }
+    this.clearForm();
+  }
+
+  private async handleTaskUpdate(): Promise<void> {
+    await this.taskService.updateTask(this.task);
+    this.snackbarService.success('Task successfully updated', false);
+    
+    if (this.dialogRef) {
+      await this.closeDialog();
+    }
+  }
+
   async createTask(): Promise<void> {
-    if (this.validateForm()) {
-      try {
-        if (this.isEditMode) {
-          await this.taskService.updateTask(this.task);
-          this.snackbarService.success('Task successfully updated', false);
-          if (this.dialogRef) {
-            this.closeDialog();
-          }
-        } else {
-          await this.taskService.createTask(this.task);
-          this.snackbarService.success('Task added to board', true);
-          if (this.dialogRef) {
-            this.dialogRef.close('taskAdded');
-          } else {
-            this.router.navigate(['/main/board']);
-          }
-          this.clearForm();
-        }
-      } catch (error) {
-        this.snackbarService.error(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
+    if (!this.validateForm()) return;
+
+    try {
+      if (this.isEditMode) {
+        await this.handleTaskUpdate();
+      } else {
+        await this.handleTaskCreation();
       }
+    } catch (error) {
+      this.snackbarService.error(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
     }
   }
 
@@ -357,28 +521,6 @@ export class AddTaskComponent implements OnInit {
   selectCategory(value: string): void {
     this.task.category = value;
     this.categoryOpen = false;
-  }
-
-  async onDrop(event: DragEvent): Promise<void> {
-    event.preventDefault();
-    event.stopPropagation();
-    this.isDragging = false;
-
-    const files = event.dataTransfer?.files;
-    if (files) {
-      const allowedTypes = ['image/jpeg', 'image/png'];
-      const validFiles = Array.from(files).filter(file => allowedTypes.includes(file.type));
-      
-      if (validFiles.length > 0) {
-        const taskFiles = await Promise.all(validFiles.map(file => this.fileToTaskFile(file)));
-        this.task.files = [...this.task.files, ...taskFiles];
-      } else {
-        this.snackbarService.error({
-          message: 'This file format is not allowed!',
-          secondLine: 'You can only upload JPEG and PNG.'
-        });
-      }
-    }
   }
 
   onDragOver(event: DragEvent): void {
@@ -400,40 +542,52 @@ export class AddTaskComponent implements OnInit {
     }
   }
 
-  startDragging(event: MouseEvent): void {
-    this.isDraggingGrid = true;
-    this.startX = event.pageX - this.fileGrid.nativeElement.offsetLeft;
-    this.scrollLeft = this.fileGrid.nativeElement.scrollLeft;
-    this.fileGrid.nativeElement.style.cursor = 'grabbing';
-  }
-
-  stopDragging(): void {
-    this.isDraggingGrid = false;
-    this.fileGrid.nativeElement.style.cursor = 'grab';
-  }
-
-  onDrag(event: MouseEvent): void {
+  private handleFileGridDrag(event: MouseEvent): void {
     if (!this.isDraggingGrid) return;
+    
     event.preventDefault();
     const x = event.pageX - this.fileGrid.nativeElement.offsetLeft;
     const walk = (x - this.startX) * 2;
     this.fileGrid.nativeElement.scrollLeft = this.scrollLeft - walk;
   }
 
-  closeDialog(): void {
+  private initializeFileGridDrag(event: MouseEvent): void {
+    this.isDraggingGrid = true;
+    this.startX = event.pageX - this.fileGrid.nativeElement.offsetLeft;
+    this.scrollLeft = this.fileGrid.nativeElement.scrollLeft;
+    this.fileGrid.nativeElement.style.cursor = 'grabbing';
+  }
+
+  private resetFileGridDrag(): void {
+    this.isDraggingGrid = false;
+    this.fileGrid.nativeElement.style.cursor = 'grab';
+  }
+
+  startDragging(event: MouseEvent): void {
+    this.initializeFileGridDrag(event);
+  }
+
+  stopDragging(): void {
+    this.resetFileGridDrag();
+  }
+
+  onDrag(event: MouseEvent): void {
+    this.handleFileGridDrag(event);
+  }
+
+  private async closeDialogWithAnimation(): Promise<void> {
+    const dialogContainer = document.querySelector('.add-task-dialog .mdc-dialog__surface');
+    if (dialogContainer) {
+      dialogContainer.classList.remove('slide-in');
+      dialogContainer.classList.add('slide-out');
+      await new Promise(resolve => setTimeout(resolve, 300));
+    }
+    this.dialogRef?.close();
+  }
+
+  async closeDialog(): Promise<void> {
     if (this.dialogRef) {
-      const dialogContainer = document.querySelector('.add-task-dialog .mdc-dialog__surface');
-      if (dialogContainer) {
-        dialogContainer.classList.remove('slide-in');
-        dialogContainer.classList.add('slide-out');
-        
-        // Warte auf das Ende der Animation
-        setTimeout(() => {
-          this.dialogRef?.close();
-        }, 300); // Entspricht der Animations-Dauer
-      } else {
-        this.dialogRef.close();
-      }
+      await this.closeDialogWithAnimation();
     }
   }
 
