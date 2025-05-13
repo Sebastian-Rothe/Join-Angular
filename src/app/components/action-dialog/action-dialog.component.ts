@@ -193,7 +193,13 @@ export class ActionDialogComponent implements OnInit {
             this.profileImagePreview || this.formData.profilePicture || '',
         });
 
-        this.snackbarService.success('Contact successfully updated');
+        const successMessage =
+          this.config.contact.uid ===
+          (await firstValueFrom(this.userService.currentUser$))?.uid
+            ? 'Account successfully updated'
+            : 'Contact successfully updated';
+
+        this.snackbarService.success(successMessage);
         this.dialogRef.close(true);
       }
     } catch (error) {
