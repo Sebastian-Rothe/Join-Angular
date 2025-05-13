@@ -314,12 +314,18 @@ export class AddTaskComponent implements OnInit {
    * Prevents event propagation if event is provided.
    * 
    * @param event - Optional mouse event
-   */
-  toggleDropdown(event?: MouseEvent): void {
+   */  toggleDropdown(event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
     }
     this.dropdownOpen = !this.dropdownOpen;
+    
+    if (this.dropdownOpen) {
+      setTimeout(() => {
+        const element = document.querySelector('.dropdown');
+        element?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }, 100);
+    }
   }
 
   /**

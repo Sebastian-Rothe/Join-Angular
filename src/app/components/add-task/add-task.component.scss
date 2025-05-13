@@ -55,7 +55,7 @@ $container-padding-small: 12px;
   padding: 0 $container-padding;
   width: 100%;
   box-sizing: border-box;
-  overflow-y: auto;
+  // overflow-y: auto;
 
   @media (max-width: 1300px) {
     padding: 0 72px;
@@ -420,6 +420,7 @@ mat-form-field {
     z-index: 1000;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+  
 
     &.show {
       display: block;
