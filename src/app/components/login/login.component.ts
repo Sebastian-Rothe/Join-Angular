@@ -7,6 +7,10 @@ import { RouterModule } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { SnackbarService } from '../../services/snackbar.service';
 
+/**
+ * Component that handles the login functionality of the application.
+ * Provides user authentication through email/password and guest login options.
+ */
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -31,6 +35,12 @@ export class LoginComponent {
     private snackbarService: SnackbarService
   ) {}
 
+  /**
+   * Validates the email input against required format.
+   * @param {string} email - The email address to validate
+   * @returns {boolean} True if email is valid, false otherwise
+   * @private
+   */
   private validateEmail(email: string): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
@@ -47,6 +57,12 @@ export class LoginComponent {
     return true;
   }
 
+  /**
+   * Validates if password is provided.
+   * @param {string} password - The password to validate
+   * @returns {boolean} True if password is not empty, false otherwise
+   * @private
+   */
   private validatePassword(password: string): boolean {
     if (!password) {
       this.snackbarService.error('Please enter your password');
@@ -55,6 +71,13 @@ export class LoginComponent {
     return true;
   }
 
+  /**
+   * Performs the actual login operation using the auth service.
+   * @param {string} email - The user's email address
+   * @param {string} password - The user's password
+   * @returns {Promise<boolean>} Promise resolving to true if login successful
+   * @private
+   */
   private async performLogin(email: string, password: string): Promise<boolean> {
     const result = await this.authService.login(email.trim(), password);
     if (result?.user) {
@@ -64,6 +87,12 @@ export class LoginComponent {
     return false;
   }
 
+  /**
+   * Main login method that orchestrates email validation, password validation,
+   * and login attempt.
+   * @async
+   * @returns {Promise<void>}
+   */
   async loginUser() {
     try {
       if (!this.validateEmail(this.email)) return;
@@ -74,6 +103,12 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * Handles guest user login functionality.
+   * Redirects to main page upon successful login.
+   * @async
+   * @returns {Promise<void>}
+   */
   async loginGuest() {
     try {
       const guestUser = await this.authService.guestLogin();
@@ -85,18 +120,32 @@ export class LoginComponent {
     }
   }
 
+  /**
+   * Navigates to the sign-up page.
+   */
   openSignUpPage() {
     this.router.navigate(['/signup']);
   }
 
+  /**
+   * Toggles password visibility in the password input field.
+   */
   togglePasswordVisibility() {
     this.hidePassword = !this.hidePassword;
   }
 
+  /**
+   * Handles the focus event of the password input field.
+   * Sets the password field focus state.
+   */
   onPasswordFocus() {
     this.isPasswordFocused = true;
   }
 
+  /**
+   * Handles the blur event of the password input field.
+   * Resets password visibility and focus state after a short delay.
+   */
   onPasswordBlur() {
     setTimeout(() => {
       this.isPasswordFocused = false;
