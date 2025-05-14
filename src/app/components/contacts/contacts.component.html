@@ -1,34 +1,42 @@
-<section class="contacts-container">
-  <section class="contact-list-section" [class.mobile-hidden]="isMobileView && isContactDetailsVisible">
+<section class="contacts-container" role="main">
+  <section class="contact-list-section" [class.mobile-hidden]="isMobileView && isContactDetailsVisible" 
+           role="region" aria-label="Contacts list">
     <div class="button-container">
-      <button class="new-contact-button" (click)="openNewContactDialog()">
+      <button class="new-contact-button" 
+              (click)="openNewContactDialog()" 
+              aria-label="Add new contact">
         Add new contact 
-        <mat-icon>person_add</mat-icon>
+        <mat-icon aria-hidden="true">person_add</mat-icon>
       </button>
     </div>
 
     <div class="contacts-list">
       <div *ngFor="let letter of groupedContacts | keyvalue" class="contact-group">
-        <div class="letter-divider">{{letter.key}}</div>
-        <div *ngFor="let contact of letter.value" 
+        <div class="letter-divider">{{letter.key}}</div>        <div *ngFor="let contact of letter.value" 
              class="contact-item"
              [class.selected]="selectedContact?.uid === contact.uid"
-             (click)="onContactSelect(contact)">
-          <div class="contact-avatar" [style.background-color]="contact.iconColor">
-            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" alt="Profile picture">
+             (click)="onContactSelect(contact)"
+             role="button"
+             tabindex="0"
+             [attr.aria-label]="'Select ' + contact.name"
+             (keydown.enter)="onContactSelect(contact)">
+          <div class="contact-avatar" 
+               [style.background-color]="contact.iconColor"
+               aria-hidden="true">
+            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name + ' profile picture'">
             <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
           </div>
           <div class="contact-info">
-            <div class="contact-name">{{ contact.name }}</div>
+            <div class="contact-name" role="heading" aria-level="3">{{ contact.name }}</div>
             <div class="contact-email">{{ contact.email }}</div>
           </div>
         </div>
       </div>
-    </div>
-
-    <div class="mobile-add-button" (click)="openNewContactDialog()">
-      <mat-icon class="mobile-icon">person_add</mat-icon>
-    </div>
+    </div>    <button class="mobile-add-button" 
+            (click)="openNewContactDialog()"
+            aria-label="Add new contact">
+      <mat-icon class="mobile-icon" aria-hidden="true">person_add</mat-icon>
+    </button>
   </section>
 
   <section class="contact-details-section" 
