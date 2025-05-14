@@ -31,30 +31,44 @@ export class LoginComponent {
     private snackbarService: SnackbarService
   ) {}
 
+  private validateEmail(email: string): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    
+    if (!email?.trim()) {
+      this.snackbarService.error('Please enter your email address');
+      return false;
+    }
+
+    if (!emailRegex.test(email.trim())) {
+      this.snackbarService.error('Please enter a valid email address');
+      return false;
+    }
+
+    return true;
+  }
+
+  private validatePassword(password: string): boolean {
+    if (!password) {
+      this.snackbarService.error('Please enter your password');
+      return false;
+    }
+    return true;
+  }
+
+  private async performLogin(email: string, password: string): Promise<boolean> {
+    const result = await this.authService.login(email.trim(), password);
+    if (result?.user) {
+      await this.router.navigate(['/main']);
+      return true;
+    }
+    return false;
+  }
+
   async loginUser() {
     try {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      
-      if (!this.email?.trim()) {
-        this.snackbarService.error('Please enter your email address');
-        return;
-      }
-
-      if (!emailRegex.test(this.email.trim())) {
-        this.snackbarService.error('Please enter a valid email address');
-        return;
-      }
-
-      if (!this.password) {
-        this.snackbarService.error('Please enter your password');
-        return;
-      }
-
-      const result = await this.authService.login(this.email.trim(), this.password);
-      if (result?.user) {
-        // this.snackbarService.success('Welcome back!');
-        await this.router.navigate(['/main']);
-      }
+      if (!this.validateEmail(this.email)) return;
+      if (!this.validatePassword(this.password)) return;
+      await this.performLogin(this.email, this.password);
     } catch (error: any) {
       // AuthService handles specific error messages
     }
