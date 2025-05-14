@@ -254,7 +254,7 @@ form {
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 86px;
+      font-size: 60px;
       background: #d1d1d1;
       color: white;
       overflow: hidden;
@@ -374,7 +374,6 @@ form {
         width: clamp(90px, 18vw, 120px);
         height: clamp(90px, 18vw, 120px);
       }
-
     }
   }
 
@@ -437,6 +436,20 @@ form {
 
     p {
       font-size: clamp(14px, 1.5vw, 16px);
+    }
+  }
+}
+@media (max-width: 600px) {
+  .right-pane {
+    .profil-icon {
+      margin: 0;
+      position: absolute;
+      top: -60px;
+
+      .avatar,
+      mat-icon {
+        font-size: 40px;
+      }
     }
   }
 }
