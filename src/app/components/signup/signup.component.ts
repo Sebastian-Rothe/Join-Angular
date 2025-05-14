@@ -4,7 +4,8 @@ import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
-import { User } from '../../models/user.class';  
+import { User } from '../../models/user.class';
+import { SnackbarService } from '../../services/snackbar.service';  
 
 @Component({
   selector: 'app-signup',
@@ -33,7 +34,11 @@ export class SignupComponent {
   isConfirmPasswordFocused = false;
   user = new User(); // User wird beim Start initialisiert
   currentField: 'username' | 'email' | 'password' | 'confirmPassword' | 'policy' | null = null;
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private snackbarService: SnackbarService
+  ) {}
 
   private validateUsername(): boolean {
     const nameRegex = /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
@@ -168,9 +173,8 @@ export class SignupComponent {
     });
     await this.authService.createUserDocument(firebaseUser.uid, newUser);
   }
-
   private handleSignupSuccess(): void {
-    this.showSuccessPopup();
+    this.snackbarService.success('Sign up successful! Redirecting to login...');
     setTimeout(() => {
       this.router.navigate(['/login']);
     }, 2000);
@@ -192,16 +196,6 @@ export class SignupComponent {
 
   backToLoginPage() {
     this.router.navigate(['/login']);
-  }
-
-  private showSuccessPopup() {
-    const popup = document.getElementById('success-popup');
-    if (popup) {
-      popup.style.display = 'flex';
-      setTimeout(() => {
-        popup.style.display = 'none';
-      }, 2000);
-    }
   }
 
   private getErrorMessage(errorCode: string): string {
