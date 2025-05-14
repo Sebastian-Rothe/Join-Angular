@@ -5,6 +5,7 @@
   overflow: hidden;
   display: flex;
   justify-content: center;
+  background-color: #f6f7f8;
 }
 
 .content-container {
@@ -13,7 +14,7 @@
   left: calc(50% - 960px + 232px); // Centered with navbar offset
   right: calc(50% - 960px);
   bottom: 0;
-  background-color: #F6F7F8;
+  background-color: white;
   transition: left 225ms ease-in-out;
   width: calc(100% - 232px);
   max-width: calc(1920px - 232px);
