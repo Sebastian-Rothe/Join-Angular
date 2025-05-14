@@ -8,7 +8,7 @@ import { ContactDetailsComponent } from '../contact-details/contact-details.comp
 import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
 import { User } from '../../models/user.class';
 import { firstValueFrom } from 'rxjs';
-import{SnackbarService} from '../../services/snackbar.service';
+import { SnackbarService } from '../../services/snackbar.service';
 
 @Component({
   selector: 'app-contacts',
@@ -44,28 +44,49 @@ export class ContactsComponent implements OnInit {
     this.currentUser = await firstValueFrom(this.userService.currentUser$);
   }
 
+  
   public async loadContacts() {
     try {
-      let allUsers = await this.userService.getAllUsers();
-      
-      // Filter out current user from contacts list
-      this.contacts = allUsers.filter(user => user.uid !== this.currentUser?.uid && user.email !== 'guest@temporary.com');
-      
-      this.contacts.sort((a, b) => a.name.localeCompare(b.name));
-      this.groupContacts();
-      
-      // Wenn ein Kontakt ausgewählt ist, aktualisiere dessen Daten
-      if (this.selectedContact) {
-        const updatedContact = this.contacts.find(c => c.uid === this.selectedContact?.uid);
-        if (updatedContact) {
-          this.selectedContact = updatedContact;
-        }
-      }
+      const allUsers = await this.userService.getAllUsers();
+      this.processContacts(allUsers);
+      this.updateSelectedContactIfNeeded();
     } catch (error) {
       this.snackbarService.error('Failed to load contacts');
     }
   }
 
+
+  private processContacts(allUsers: User[]): void {
+    this.contacts = this.filterContacts(allUsers);
+    this.sortContacts();
+    this.groupContacts();
+  }
+
+ 
+  private filterContacts(users: User[]): User[] {
+    return users.filter(user => 
+      user.uid !== this.currentUser?.uid && 
+      user.email !== 'guest@temporary.com'
+    );
+  }
+
+ 
+  private sortContacts(): void {
+    this.contacts.sort((a, b) => a.name.localeCompare(b.name));
+  }
+
+ 
+   
+  private updateSelectedContactIfNeeded(): void {
+    if (!this.selectedContact) return;
+    
+    const updatedContact = this.contacts.find(c => c.uid === this.selectedContact?.uid);
+    if (updatedContact) {
+      this.selectedContact = updatedContact;
+    }
+  }
+
+ 
   private groupContacts() {
     this.groupedContacts = {};
     this.contacts.forEach((contact) => {
@@ -77,34 +98,55 @@ export class ContactsComponent implements OnInit {
     });
   }
 
+
   onContactSelect(contact: User) {
     if (this.selectedContact) {
-      // Slide out current contact
-      this.isSlideIn = false;
-      this.isSlideOut = true;
-
-      setTimeout(() => {
-        this.selectedContact = contact;
-        this.isSlideOut = false;
-
-        // Trigger slide in animation in next frame
-        requestAnimationFrame(() => {
-          this.isSlideIn = true;
-        });
-
-        if (this.isMobileView) {
-          this.isContactDetailsVisible = true;
-        }
-      }, 200); // Match sliding-out animation duration
+      this.handleContactSwitch(contact);
     } else {
-      // First contact selection
-      this.selectedContact = contact;
-      requestAnimationFrame(() => {
-        this.isSlideIn = true;
-      });
-      if (this.isMobileView) {
-        this.isContactDetailsVisible = true;
-      }
+      this.handleFirstContactSelection(contact);
+    }
+  }
+
+ 
+  private handleContactSwitch(contact: User): void {
+    this.startSlideOutAnimation();
+    this.scheduleContactUpdate(contact);
+  }
+
+
+  private handleFirstContactSelection(contact: User): void {
+    this.selectedContact = contact;
+    this.startSlideInAnimation();
+    this.updateMobileView();
+  }
+
+
+  private startSlideOutAnimation(): void {
+    this.isSlideIn = false;
+    this.isSlideOut = true;
+  }
+
+  
+  private startSlideInAnimation(): void {
+    requestAnimationFrame(() => {
+      this.isSlideIn = true;
+    });
+  }
+
+
+  private scheduleContactUpdate(newContact: User): void {
+    setTimeout(() => {
+      this.selectedContact = newContact;
+      this.isSlideOut = false;
+      this.startSlideInAnimation();
+      this.updateMobileView();
+    }, 200);
+  }
+
+
+  private updateMobileView(): void {
+    if (this.isMobileView) {
+      this.isContactDetailsVisible = true;
     }
   }
 
