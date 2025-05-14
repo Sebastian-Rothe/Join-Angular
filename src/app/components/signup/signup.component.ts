@@ -7,6 +7,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { User } from '../../models/user.class';
 import { SnackbarService } from '../../services/snackbar.service';  
 
+/**
+ * Component that handles the user registration process.
+ * Provides form validation, Firebase authentication, and user creation functionality.
+ * Includes features for password visibility toggling and sequential form validation.
+ */
 @Component({
   selector: 'app-signup',
   standalone: true,
@@ -15,31 +20,71 @@ import { SnackbarService } from '../../services/snackbar.service';
   styleUrls: ['./signup.component.scss'],
 })
 export class SignupComponent {
+  /** User's chosen username */
   username: string = '';
+  
+  /** User's email address */
   email: string = '';
+  
+  /** User's chosen password */
   password: string = '';
+  
+  /** Password confirmation field */
   confirmPassword: string = '';
+  
+  /** Indicates whether privacy policy has been accepted */
   policyAccepted: boolean = false;
+  
+  /** Error message to display to the user */
   errorMessage: string = '';
+  
+  /** Indicates whether the form has been submitted */
   formSubmitted = false;
+  
+  /** Object containing validation error messages for each form field */
   validationErrors = {
     username: '',
     email: '',
     password: '',
     confirmPassword: '',
   };
+  
+  /** Controls password field visibility */
   hidePassword = true;
+  
+  /** Controls confirm password field visibility */
   hideConfirmPassword = true;
+  
+  /** Tracks if password field is focused */
   isPasswordFocused = false;
+  
+  /** Tracks if confirm password field is focused */
   isConfirmPasswordFocused = false;
-  user = new User(); // User wird beim Start initialisiert
+  
+  /** User instance initialized at component start */
+  user = new User();
+  
+  /** Tracks the currently active form field */
   currentField: 'username' | 'email' | 'password' | 'confirmPassword' | 'policy' | null = null;
+
+  /**
+   * Creates an instance of SignupComponent.
+   * @param {AuthService} authService - Service for Firebase authentication
+   * @param {Router} router - Angular router for navigation
+   * @param {SnackbarService} snackbarService - Service for displaying notifications
+   */
   constructor(
     private authService: AuthService, 
     private router: Router,
     private snackbarService: SnackbarService
   ) {}
 
+  /**
+   * Validates the username input against required format.
+   * Checks for minimum length and valid characters.
+   * @returns {boolean} True if username is valid, false otherwise
+   * @private
+   */
   private validateUsername(): boolean {
     const nameRegex = /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
     
@@ -59,6 +104,12 @@ export class SignupComponent {
     return true;
   }
 
+  /**
+   * Validates the email input against required format.
+   * Checks for proper email format using regex.
+   * @returns {boolean} True if email is valid, false otherwise
+   * @private
+   */
   private validateEmail(): boolean {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!this.email.trim()) {
@@ -73,6 +124,11 @@ export class SignupComponent {
     return true;
   }
 
+  /**
+   * Validates the password against minimum requirements.
+   * @returns {boolean} True if password is valid, false otherwise
+   * @private
+   */
   private validatePassword(): boolean {
     if (!this.password) {
       this.validationErrors.password = 'Password is required';
@@ -86,6 +142,11 @@ export class SignupComponent {
     return true;
   }
 
+  /**
+   * Validates that the confirm password matches the original password.
+   * @returns {boolean} True if passwords match, false otherwise
+   * @private
+   */
   private validateConfirmPassword(): boolean {
     if (!this.confirmPassword) {
       this.validationErrors.confirmPassword = 'Please confirm your password';
@@ -99,6 +160,11 @@ export class SignupComponent {
     return true;
   }
 
+  /**
+   * Validates a specific form field based on field name.
+   * @param {string} field - The name of the field to validate
+   * @returns {boolean} True if field is valid, false otherwise
+   */
   validateField(field: string): boolean {
     if (!this.shouldValidateField(field)) return true;
 
@@ -111,6 +177,11 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Validates the entire form in a sequential manner.
+   * Validates fields in order: username, email, password, confirmPassword, policy.
+   * @returns {boolean} True if all validations pass, false otherwise
+   */
   validateForm(): boolean {
     this.formSubmitted = true;
     this.errorMessage = '';
@@ -146,6 +217,13 @@ export class SignupComponent {
     return true;
   }
 
+  /**
+   * Determines if a field should be validated based on the validation sequence.
+   * Each field is validated only if the previous fields are valid.
+   * @param {string} field - The field to check for validation
+   * @returns {boolean} True if the field should be validated, false otherwise
+   * @private
+   */
   private shouldValidateField(field: string): boolean {
     switch (field) {
       case 'username':
@@ -161,10 +239,21 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Creates a new user account in Firebase Authentication.
+   * @returns {Promise<any>} Firebase user object
+   * @private
+   */
   private async createFirebaseUser(): Promise<any> {
     return await this.authService.register(this.email, this.password);
   }
 
+  /**
+   * Creates a user document in the database after successful authentication.
+   * @param {any} firebaseUser - The Firebase user object
+   * @returns {Promise<void>}
+   * @private
+   */
   private async createUserInDatabase(firebaseUser: any): Promise<void> {
     const newUser = new User({
       uid: firebaseUser.uid,
@@ -173,6 +262,11 @@ export class SignupComponent {
     });
     await this.authService.createUserDocument(firebaseUser.uid, newUser);
   }
+
+  /**
+   * Handles successful signup by showing success message and redirecting.
+   * @private
+   */
   private handleSignupSuccess(): void {
     this.snackbarService.success('Sign up successful! Redirecting to login...');
     setTimeout(() => {
@@ -180,6 +274,12 @@ export class SignupComponent {
     }, 2000);
   }
 
+  /**
+   * Main signup method that orchestrates the registration process.
+   * Validates form, creates Firebase user, and stores user data.
+   * @async
+   * @returns {Promise<void>}
+   */
   async signUp() {
     if (!this.validateForm()) return;
 
@@ -194,10 +294,19 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Navigates back to the login page.
+   */
   backToLoginPage() {
     this.router.navigate(['/login']);
   }
 
+  /**
+   * Maps Firebase error codes to user-friendly error messages.
+   * @param {string} errorCode - Firebase error code
+   * @returns {string} User-friendly error message
+   * @private
+   */
   private getErrorMessage(errorCode: string): string {
     switch (errorCode) {
       case 'auth/email-already-in-use':
@@ -211,6 +320,10 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Toggles the visibility of password fields.
+   * @param {'password' | 'confirmPassword'} field - The password field to toggle
+   */
   togglePasswordVisibility(field: 'password' | 'confirmPassword') {
     if (field === 'password') {
       this.hidePassword = !this.hidePassword;
@@ -219,6 +332,10 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Handles focus events for password fields.
+   * @param {'password' | 'confirmPassword'} field - The password field receiving focus
+   */
   onPasswordFocus(field: 'password' | 'confirmPassword') {
     if (field === 'password') {
       this.isPasswordFocused = true;
@@ -227,6 +344,11 @@ export class SignupComponent {
     }
   }
 
+  /**
+   * Handles blur events for password fields.
+   * Hides password after a short delay.
+   * @param {'password' | 'confirmPassword'} field - The password field losing focus
+   */
   onPasswordBlur(field: 'password' | 'confirmPassword') {
     setTimeout(() => {
       if (field === 'password') {
