@@ -35,70 +35,74 @@ export class SignupComponent {
   currentField: 'username' | 'email' | 'password' | 'confirmPassword' | 'policy' | null = null;
   constructor(private authService: AuthService, private router: Router) {}
 
+  private validateUsername(): boolean {
+    const nameRegex = /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
+    
+    if (!this.username.trim()) {
+      this.validationErrors.username = 'Name is required';
+      return false;
+    }
+    if (this.username.trim().length < 2) {
+      this.validationErrors.username = 'Name must be at least 2 characters';
+      return false;
+    }
+    if (!nameRegex.test(this.username)) {
+      this.validationErrors.username = 'Please enter a valid name';
+      return false;
+    }
+    this.validationErrors.username = '';
+    return true;
+  }
+
+  private validateEmail(): boolean {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!this.email.trim()) {
+      this.validationErrors.email = 'Email is required';
+      return false;
+    }
+    if (!emailRegex.test(this.email)) {
+      this.validationErrors.email = 'Please enter a valid email';
+      return false;
+    }
+    this.validationErrors.email = '';
+    return true;
+  }
+
+  private validatePassword(): boolean {
+    if (!this.password) {
+      this.validationErrors.password = 'Password is required';
+      return false;
+    }
+    if (this.password.length < 6) {
+      this.validationErrors.password = 'Password must be at least 6 characters';
+      return false;
+    }
+    this.validationErrors.password = '';
+    return true;
+  }
+
+  private validateConfirmPassword(): boolean {
+    if (!this.confirmPassword) {
+      this.validationErrors.confirmPassword = 'Please confirm your password';
+      return false;
+    }
+    if (this.password !== this.confirmPassword) {
+      this.validationErrors.confirmPassword = 'Passwords do not match';
+      return false;
+    }
+    this.validationErrors.confirmPassword = '';
+    return true;
+  }
+
   validateField(field: string): boolean {
-    // Nur validieren wenn es das aktuelle Feld ist oder alle vorherigen valide sind
     if (!this.shouldValidateField(field)) return true;
 
     switch (field) {
-      case 'username':
-        const nameRegex =
-          /^[a-zA-ZäöüÄÖÜß]+(([',. -][a-zA-ZäöüÄÖÜß ])?[a-zA-ZäöüÄÖÜß]*)*$/;
-        if (!this.username.trim()) {
-          this.validationErrors.username = 'Name is required';
-          return false;
-        }
-        if (this.username.trim().length < 2) {
-          this.validationErrors.username = 'Name must be at least 2 characters';
-          return false;
-        }
-        if (!nameRegex.test(this.username)) {
-          this.validationErrors.username = 'Please enter a valid name';
-          return false;
-        }
-        this.validationErrors.username = '';
-        return true;
-
-      case 'email':
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        if (!this.email.trim()) {
-          this.validationErrors.email = 'Email is required';
-          return false;
-        }
-        if (!emailRegex.test(this.email)) {
-          this.validationErrors.email = 'Please enter a valid email';
-          return false;
-        }
-        this.validationErrors.email = '';
-        return true;
-
-      case 'password':
-        if (!this.password) {
-          this.validationErrors.password = 'Password is required';
-          return false;
-        }
-        if (this.password.length < 6) {
-          this.validationErrors.password =
-            'Password must be at least 6 characters';
-          return false;
-        }
-        this.validationErrors.password = '';
-        return true;
-
-      case 'confirmPassword':
-        if (!this.confirmPassword) {
-          this.validationErrors.confirmPassword =
-            'Please confirm your password';
-          return false;
-        }
-        if (this.password !== this.confirmPassword) {
-          this.validationErrors.confirmPassword = 'Passwords do not match';
-          return false;
-        }
-        this.validationErrors.confirmPassword = '';
-        return true;
-
-      default:
-        return true;
+      case 'username': return this.validateUsername();
+      case 'email': return this.validateEmail();
+      case 'password': return this.validatePassword();
+      case 'confirmPassword': return this.validateConfirmPassword();
+      default: return true;
     }
   }
 
@@ -152,28 +156,34 @@ export class SignupComponent {
     }
   }
 
+  private async createFirebaseUser(): Promise<any> {
+    return await this.authService.register(this.email, this.password);
+  }
+
+  private async createUserInDatabase(firebaseUser: any): Promise<void> {
+    const newUser = new User({
+      uid: firebaseUser.uid,
+      name: this.username,
+      email: this.email
+    });
+    await this.authService.createUserDocument(firebaseUser.uid, newUser);
+  }
+
+  private handleSignupSuccess(): void {
+    this.showSuccessPopup();
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 2000);
+  }
+
   async signUp() {
     if (!this.validateForm()) return;
 
     try {
-      // Erst Firebase Auth User erstellen
-      const firebaseUser = await this.authService.register(this.email, this.password);
-      
+      const firebaseUser = await this.createFirebaseUser();
       if (firebaseUser) {
-        // Dann User-Objekt mit allen Daten erstellen
-        const newUser = new User({
-          uid: firebaseUser.uid,
-          name: this.username,
-          email: this.email
-        });
-
-        // User-Daten in Firestore speichern
-        await this.authService.createUserDocument(firebaseUser.uid, newUser);
-
-        this.showSuccessPopup();
-        setTimeout(() => {
-          this.router.navigate(['/login']);
-        }, 2000);
+        await this.createUserInDatabase(firebaseUser);
+        this.handleSignupSuccess();
       }
     } catch (error: any) {
       this.errorMessage = this.getErrorMessage(error.code);
