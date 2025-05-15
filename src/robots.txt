@@ -4,11 +4,16 @@ User-agent: *
 
 # Allow public pages and resources
 Allow: /
+Allow: /index.html
 Allow: /login
 Allow: /signup
 Allow: /legal
 Allow: /privacy
 Allow: /help
+Allow: /main/summary
+Allow: /main/help
+Allow: /main/legal
+Allow: /main/privacy
 Allow: /*.css$
 Allow: /*.js$
 Allow: /*.png$
@@ -16,13 +21,11 @@ Allow: /*.jpg$
 Allow: /*.svg$
 Allow: /*.ico$
 
-# Prevent access to sensitive areas
-Disallow: /main/
-Disallow: /board/
-Disallow: /add-task/
-Disallow: /contacts/
-Disallow: /summary/
-Disallow: /task-details/
+# Prevent access to sensitive areas (require authentication)
+Disallow: /main/board
+Disallow: /main/add-task
+Disallow: /main/contacts
+Disallow: /main/task-details
 
 # Prevent indexing of API endpoints and dynamic content
 Disallow: /api/
@@ -36,8 +39,3 @@ Disallow: /assets/templates/
 # Crawling settings
 Crawl-delay: 10
 
-# Site map location (if implemented in the future)
-# Sitemap: https://join.example.com/sitemap.xml
-
-# Crawl delay to prevent server overload
-Crawl-delay: 10
