@@ -239,3 +239,12 @@
         left: 0;
     }
 }
+
+// Styles für überhöhten Viewport
+:host-context(.height-exceeded) {
+  .sidebar {
+    height: $max-height;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}

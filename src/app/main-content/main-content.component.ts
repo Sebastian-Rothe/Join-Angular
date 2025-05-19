@@ -1,7 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, HostBinding } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { NavbarComponent } from '../shared/components/navbar/navbar.component';
+import { ViewportResizeService } from '../services/viewport-resize.service';
+import { tap } from 'rxjs/operators';
 
 /**
  * Main content component that serves as the primary layout container.
@@ -24,7 +26,19 @@ import { NavbarComponent } from '../shared/components/navbar/navbar.component';
   standalone: true,
   imports: [HeaderComponent, NavbarComponent, RouterModule],
   templateUrl: './main-content.component.html',
-  styleUrl: './main-content.component.scss'
+  styleUrls: ['./main-content.component.scss']
 })
-export class MainContentComponent {
+export class MainContentComponent implements OnInit {
+  @HostBinding('class.height-exceeded')
+  isHeightExceeded = false;
+
+  constructor(private readonly viewportService: ViewportResizeService) {}
+
+  ngOnInit() {
+    this.viewportService.heightExceeded$.pipe(
+      tap(exceeded => console.log('Height exceeded:', exceeded))
+    ).subscribe(
+      exceeded => this.isHeightExceeded = exceeded
+    );
+  }
 }

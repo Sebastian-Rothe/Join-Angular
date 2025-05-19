@@ -1,3 +1,5 @@
+@use '../../styles.scss' as *; // Import your SCSS variables
+
 .main-layout {
   width: 100%;
   height: 100vh;
@@ -61,5 +63,29 @@
   .content-container {
     bottom: 60px; // Smaller mobile nav
     top: 60px; // Adjust for smaller header height
+  }
+}
+
+:host(.height-exceeded) { // Änderung von :host-context zu :host
+  display: block;
+  position: fixed;
+  inset: 0;
+  height: $max-height !important;
+  background-color: #f6f7f8;
+
+  .main-layout {
+    position: fixed;
+    height: $max-height;
+    width: 100%;
+    max-width: 1920px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .content-container {
+    position: absolute;
+    height: $max-height-minus-header;
+    top: 96px;
   }
 }
