@@ -209,23 +209,68 @@
   margin: 32px 0;
   padding: 0 40px;
 
-  input[type="checkbox"] {
-    width: 16px;
-    height: 16px;
+  .custom-checkbox {
     cursor: pointer;
-  }
+    display: flex;
+    align-items: center;
+    gap: 8px;
 
-  span {
-    font-size: 16px;
-    color: $dark-navy;
-  }
+    input[type="checkbox"] {
+      display: none;
+      
+      &:checked + svg {
+        .unchecked {
+          display: none;
+        }
+        
+        .checked {
+          display: block;
+        }
+        
+        // rect, path {
+        //   stroke: white;
+        // }
+        
+        // background-color: $dark-navy;
+        
+        &:hover {
+          background-color: lightgray;
+        }
+      }
+    }
 
-  a {
-    color: $primary-blue;
-    text-decoration: none;
-    &:hover{
-      text-decoration: underline;
-      scale: 1.1!important;
+    svg {
+      min-width: 19px;
+      min-height: 19px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-radius: 3px;
+
+      .checked,
+      .unchecked {
+        stroke: $dark-navy;
+      }
+
+      .checked {
+        display: none;
+      }
+
+      &:hover {
+        transform: scale(1.1);
+      }
+    }
+
+    span {
+      font-size: 16px;
+      color: $dark-navy;
+    }
+
+    a {
+      color: $primary-blue;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
     }
   }
 }
