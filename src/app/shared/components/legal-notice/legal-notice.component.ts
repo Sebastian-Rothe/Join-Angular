@@ -1,18 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 /**
  * Component for displaying legal information and notices.
- * 
- * @description
- * This component presents legal information such as terms of service,
- * privacy policy, and other legal disclaimers. It includes navigation
- * functionality to return to the previous page.
- * 
- * @example
- * ```html
- * <app-legal-notice></app-legal-notice>
- * ```
  */
 @Component({
   selector: 'app-legal-notice',
@@ -20,16 +11,21 @@ import { MatIconModule } from '@angular/material/icon';
   templateUrl: './legal-notice.component.html',
   styleUrl: './legal-notice.component.scss'
 })
-export class LegalNoticeComponent {
+export class LegalNoticeComponent implements OnInit {
   /**
    * Creates an instance of LegalNoticeComponent.
-   * 
    */
-  constructor() {}
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    const element = document.querySelector('.all');
+    if (element && !this.router.url.startsWith('/main')) {
+      element.classList.add('with-scrollbar');
+    }
+  }
 
   /**
    * Navigates back to the previous page using browser history.
-   * Uses the browser's native history API.
    */
   navigateBack() {
     window.history.back();

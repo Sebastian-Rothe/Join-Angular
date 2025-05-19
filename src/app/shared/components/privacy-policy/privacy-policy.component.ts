@@ -1,34 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
+import { Router } from '@angular/router';
 
 /**
  * Component for displaying the application's privacy policy.
- * 
- * @description
- * This component presents the privacy policy information to users,
- * detailing how their data is collected, used, and protected.
- * Includes navigation functionality to return to the previous page.
- * 
- * @example
- * ```html
- * <app-privacy-policy></app-privacy-policy>
- * ```
  */
 @Component({
   selector: 'app-privacy-policy',
+  standalone: true,
   imports: [MatIconModule],
   templateUrl: './privacy-policy.component.html',
   styleUrl: './privacy-policy.component.scss'
 })
-export class PrivacyPolicyComponent {
+export class PrivacyPolicyComponent implements OnInit {
   /**
    * Creates an instance of PrivacyPolicyComponent.
    */
-  constructor() {}
+  constructor(private router: Router) {}
+
+  ngOnInit() {
+    const element = document.querySelector('.all');
+    if (element && !this.router.url.startsWith('/main')) {
+      element.classList.add('with-scrollbar');
+    }
+  }
 
   /**
    * Navigates back to the previous page using browser history.
-   * Uses the browser's native history API.
    */
   navigateBack() {
     window.history.back();
