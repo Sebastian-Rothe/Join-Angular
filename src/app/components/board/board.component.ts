@@ -313,7 +313,8 @@ export class BoardComponent implements OnInit {
     return this.dialog.open(AddTaskComponent, {
       width: window.innerWidth <= 375 ? '95%' : '90%',
       maxWidth: '1000px',
-      height: '90vh',
+      height: '80vh',
+      maxHeight: '900px',
       panelClass: ['add-task-dialog', 'slide-in'],
       data: { initialStatus }
     });

@@ -145,7 +145,7 @@
       right: 35px; // Changed from 12px to 35px to move icon more to the left
       top: 50%; // Anpassung für vertikale Zentrierung
       transform: translateY(-50%);
-      color: $dark-navy;
+      color: #818181; // Änderung von dark-navy zu border-color (grau)
       font-size: 24px;
       display: inline-block; // Material Icons Standard
       width: 24px;

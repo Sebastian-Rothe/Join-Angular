@@ -165,6 +165,7 @@ form {
   width: 80%;
   max-width: 1200px;
   height: 60%;
+  max-height: 600px;
   background-color: white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
@@ -330,6 +331,7 @@ form {
 @media (max-width: 860px) {
   .popup {
     height: 80%;
+    max-height: none;
     width: 95%;
   }
 
