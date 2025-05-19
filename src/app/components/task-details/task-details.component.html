@@ -22,7 +22,7 @@
     <div class="info-section inline">
       <div class="label">Priority:</div>
       <div class="content">
-        {{ task.priority }}
+        {{ task.priority | titlecase }}
         <img [src]="'assets/icons/Prio' + (task.priority | titlecase) + '.svg'" alt="Priority">
       </div>
     </div>

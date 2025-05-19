@@ -1,4 +1,4 @@
-@use '../../../styles.scss' as *;
+@use "../../../styles.scss" as *;
 
 // ---------- Variables ----------
 $color-primary: #2a3647;
@@ -86,7 +86,6 @@ $color-background: #f6f7f8;
   font-size: 36px;
   font-weight: 700;
   inline-size: auto;
-  
 }
 
 .task-description {
@@ -127,6 +126,18 @@ $color-background: #f6f7f8;
   &.inline {
     display: flex;
     gap: 10px;
+
+    .content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      img {
+        width: 24px;
+        height: 24px;
+        object-fit: contain;
+      }
+    }
   }
 
   &.stacked {
@@ -524,6 +535,12 @@ $color-background: #f6f7f8;
   .info-section .content {
     font-size: 16px;
   }
+
+  .task-category {
+    font-size: 20px;
+    padding: 6px 14px;
+    margin-top: 8px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -588,36 +605,51 @@ $color-background: #f6f7f8;
   }
 
   .subtask-list {
-    gap: 6px;
+    gap: 2px;
   }
-}
-
-@media (max-width: 400px) {
-  // Padding adjustments
-  .task-details-header {
-    padding: 12px 12px 4px;
-  }
-  .task-details-content {
-    padding: 0 12px;
-  }
-  .task-details-footer {
-    padding: 4px 12px 12px;
+  .task-category {
+    font-size: 18px;
+    padding: 5px 12px;
+    margin-top: 6px;
   }
 
-  // Element adjustments
-  .info-section {
-    margin-bottom: 8px;
-    &.stacked {
-      gap: 8px;
+  @media (max-width: 400px) {
+    // Padding adjustments
+    .task-details-header {
+      padding: 12px 12px 4px;
     }
-  }
+    .task-details-content {
+      padding: 0 12px;
+    }
+    .task-details-footer {
+      padding: 4px 12px 12px;
+    }
 
-  .task-title {
-    font-size: 20px;
-    margin: 6px 0;
-  }
+    // Element adjustments
+    .info-section {
+      margin-bottom: 8px;
+      &.stacked {
+        gap: 8px;
+      }
+    }
 
-  .task-description {
-    margin: 8px 0;
+    .task-title {
+      font-size: 20px;
+      margin: 6px 0;
+    }
+
+    .task-description {
+      margin: 8px 0;
+    }
+
+    .task-category {
+      font-size: 16px;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 4px;
+    }
+    .subtask-list {
+    gap: 0;
+  }
   }
 }
