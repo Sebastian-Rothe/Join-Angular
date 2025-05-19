@@ -1,5 +1,5 @@
-<div class="new-contact-overlay" [class.aktiv]="isVisible">
-  <div class="popup">
+<div class="new-contact-overlay" [class.aktiv]="isVisible" (click)="onClose()">
+  <div class="popup" (click)="$event.stopPropagation()">
     <div class="popup-content">
       <div class="left-side-new-c">
         <span class="closePopupMobile" (click)="onClose()">
