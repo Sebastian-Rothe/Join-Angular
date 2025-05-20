@@ -377,6 +377,7 @@ export class BoardComponent implements OnInit {
     return this.dialog.open(TaskDetailsComponent, {
       width: '80%',
       maxWidth: '520px',
+      maxHeight: '950px',
       height: '80vh',
       data: task,
       panelClass: 'custom-dialog'
