@@ -85,6 +85,10 @@
 
       mat-icon {
         color: #2a3647;
+        font-size: 40px;
+        width: 40px;
+        height: 40px;
+        font-weight: bold;
       }
     }
   }
@@ -148,6 +152,7 @@
       background: white;
 
       img {
+        scale: 1.1;
         filter: brightness(0) saturate(100%) invert(37%) sepia(74%)
           saturate(7471%) hue-rotate(356deg) brightness(101%) contrast(101%);
       }

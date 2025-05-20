@@ -3,6 +3,7 @@
 .contact-details {
   position: relative;
   height: calc(100vh - 96px - 64px - 70px); // Abzüglich Header-Höhe
+  max-height: calc($max-height-minus-header - 166px);
   overflow-y: auto;
 
   .contact-header {
