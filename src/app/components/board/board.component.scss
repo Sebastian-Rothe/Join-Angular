@@ -1,3 +1,5 @@
+@use "../../../styles.scss" as *;
+
 input,
 button {
   border: unset;
@@ -337,5 +339,12 @@ h3 {
 
   .drag-area {
     height: 240px;
+  }
+}
+
+:host-context(.height-exceeded) {
+  .main-board {
+    height: $max-height-minus-header;
+  
   }
 }
