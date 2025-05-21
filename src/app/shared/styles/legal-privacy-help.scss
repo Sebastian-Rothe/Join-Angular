@@ -6,7 +6,10 @@
   overflow-y: auto;
 
   &.with-scrollbar {
+    height: 100vh;
     max-height: 1375px;
+
+   
     &::-webkit-scrollbar {
       width: 5px;
     }
