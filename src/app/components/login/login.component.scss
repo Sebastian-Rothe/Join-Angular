@@ -110,10 +110,10 @@
   gap: 30px;
 }
 
-.footer-links a {
-  text-decoration: none;
-  color: #a8a8a8;
-}
+// .footer-links a {
+//   text-decoration: none;
+//   color: #202020;
+// }
 
 /* ************************************************************login section */
 .login-section {
@@ -271,7 +271,7 @@ input[type="password"].invalid {
 
   a {
     text-decoration: none;
-    color: #a8a8a8;
+    color: #696969;
     &:hover {
       color: $primary-blue;
       scale: 1.05;
