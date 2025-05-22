@@ -9,6 +9,7 @@ import { ActionDialogComponent } from '../action-dialog/action-dialog.component'
 import { User } from '../../models/user.class';
 import { firstValueFrom } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';
+import { ContactStateService } from '../../services/contact-state.service';
 
 /**
  * Component for managing and displaying user contacts.
@@ -76,6 +77,7 @@ export class ContactsComponent implements OnInit {
     private userService: UserService,
     private dialogService: DialogService,
     private snackbarService: SnackbarService,
+    private contactStateService: ContactStateService
   ) {}
 
   /**
@@ -202,6 +204,9 @@ export class ContactsComponent implements OnInit {
     this.selectedContact = contact;
     this.startSlideInAnimation();
     this.updateMobileView();
+    if (this.isMobileView) {
+      this.contactStateService.setContactOpened(true, contact);
+    }
   }
 
   /**
@@ -233,6 +238,9 @@ export class ContactsComponent implements OnInit {
       this.isSlideOut = false;
       this.startSlideInAnimation();
       this.updateMobileView();
+      if (this.isMobileView) {
+        this.contactStateService.setContactOpened(true, newContact);
+      }
     }, 200);
   }
 
@@ -257,6 +265,7 @@ export class ContactsComponent implements OnInit {
       this.isContactDetailsVisible = false;
       this.selectedContact = null;
       this.isSlideOut = false;
+      this.contactStateService.setContactOpened(false);
     }, 200); // Match animation duration
   }
 
@@ -281,6 +290,7 @@ export class ContactsComponent implements OnInit {
   onContactDeleted() {
     this.selectedContact = null;
     this.isContactDetailsVisible = false;
+    this.contactStateService.setContactOpened(false);
     this.loadContacts();
   }
 
@@ -288,6 +298,30 @@ export class ContactsComponent implements OnInit {
    * Checks the screen size and updates the mobile view state.
    */
   private checkScreenSize() {
+    const wasMobile = this.isMobileView;
     this.isMobileView = window.innerWidth <= 850;
+    
+    // Update contact state when switching between mobile/desktop
+    if (this.isMobileView !== wasMobile && this.selectedContact) {
+      this.contactStateService.setContactOpened(this.isMobileView, this.selectedContact);
+    }
+  }
+
+  /**
+   * Shows the details of the selected contact and updates the contact state.
+   * 
+   * @param contact - The contact whose details are to be shown
+   */
+  showContactDetails(contact: User) {
+    this.selectedContact = contact;
+    this.contactStateService.setContactOpened(true, contact);
+  }
+
+  /**
+   * Closes the contact details view and updates the contact state.
+   */
+  closeContactDetails() {
+    this.selectedContact = null;
+    this.contactStateService.setContactOpened(false);
   }
 }

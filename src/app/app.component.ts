@@ -1,26 +1,75 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
+import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { SeoService } from './services/seo.service';
+import { MobileMenuOverlayComponent } from './components/mobile-menu-overlay/mobile-menu-overlay.component';
+import { MobileMenuService } from './services/mobile-menu.service';
+import { ContactStateService } from './services/contact-state.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
   standalone: true,
-  imports: [RouterOutlet, MatIconModule]
+  imports: [
+    RouterOutlet, 
+    MatIconModule,
+    CommonModule,
+    MobileMenuOverlayComponent,
+  
+  ]
 })
 export class AppComponent implements OnInit {
   title = 'Join-Angular';
+  showMobileMenu = false;
 
-  constructor(private seoService: SeoService, private router: Router) {}
+  constructor(
+    private seoService: SeoService, 
+    private router: Router,
+    private mobileMenuService: MobileMenuService,
+    private contactStateService: ContactStateService
+  ) {
+    // Route-Change Listener
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe(() => {
+      this.checkMobileMenuVisibility();
+    });
+
+    // Viewport-Change Listener
+    window.addEventListener('resize', () => {
+      this.checkMobileMenuVisibility();
+    });
+
+    this.contactStateService.contactOpened$.subscribe(isOpen => {
+      this.showMobileMenu = isOpen && window.innerWidth <= 850;
+    });
+
+    window.addEventListener('resize', () => {
+      this.contactStateService.contactOpened$.subscribe(isOpen => {
+        this.showMobileMenu = isOpen && window.innerWidth <= 850;
+      });
+    });
+  }
+
+  private checkMobileMenuVisibility() {
+    
+    const isContactDetails = this.router.url.includes('/main/contacts/');
+    
+    
+    const isMobileWidth = window.innerWidth <= 850;
+    this.showMobileMenu = isContactDetails && isMobileWidth;
+  }
 
   ngOnInit() {
     // Überwache Route-Änderungen und aktualisiere Meta-Tags
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
-    ).subscribe(() => {
+    ).subscribe((event: any) => {
+      this.showMobileMenu = event.url.includes('/contacts/') && window.innerWidth <= 850;
+
       const currentRoute = this.router.url;
       
       // Konfiguriere Meta-Tags basierend auf der aktuellen Route
@@ -83,5 +132,22 @@ export class AppComponent implements OnInit {
 
       this.seoService.updateMetaTags(config);
     });
+
+    this.mobileMenuService.editClick$.subscribe(() => {
+      // Event wird an Contact Details Component weitergeleitet
+      this.handleEdit();
+    });
+
+    this.mobileMenuService.deleteClick$.subscribe(() => {
+      this.handleDelete();
+    });
+  }
+
+  handleEdit() {
+    // Event wird weitergeleitet
+  }
+
+  handleDelete() {
+    // Event wird weitergeleitet
   }
 }

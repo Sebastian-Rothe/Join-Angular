@@ -100,115 +100,6 @@
   }
 }
 
-.mobile-menu-button {
-  position: absolute;
-  bottom: 4px; // Abstand zur Navbar
-  right: 4px;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background-color: $dark-navy;
-  border: none;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: background-color 225ms ease-in-out;
-
-  &:hover {
-    background-color: $primary-blue;
-  }
-
-  mat-icon {
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
-  }
-}
-
-::ng-deep {
-  .mobile-actions-menu {
-    border-radius: 20px 20px 0 20px !important;
-    padding: 8px;
-    position: absolute !important;
-    bottom: 14px !important; // Abstand zum mobile-menu-button + dessen Höhe
-    right: 14px !important;
-    box-shadow: 0 4px 4px $box-shadow-hover !important;
-
-    .mdc-menu-surface {
-      background-color: $white !important;
-      transform: none !important;
-
-      &.mat-mdc-menu-panel {
-        min-width: 200px !important;
-      }
-    }
-
-    &.mat-mdc-menu-panel {
-      animation: slideInMenu 0.3s ease-out forwards !important;
-
-      &.hiding {
-        animation: slideOutMenu 0.3s ease-out forwards !important;
-      }
-    }
-
-    .mat-mdc-menu-content {
-      padding: 0;
-    }
-
-    .mat-mdc-menu-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      color: $dark-navy;
-      transition: all 225ms ease-in-out;
-      padding: 12px 24px;
-
-      &:hover {
-        background-color: transparent !important;
-        color: $primary-blue;
-        box-shadow: none;
-
-        mat-icon {
-          color: $primary-blue;
-        }
-      }
-
-      &:active {
-        border: 2px solid $primary-blue;
-        border-radius: $border-radius-default;
-      }
-
-      mat-icon {
-        margin: 0;
-        transition: color 225ms ease-in-out;
-      }
-    }
-  }
-}
-
-@keyframes slideInMenu {
-  from {
-    transform: translateX(100%);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
-}
-
-@keyframes slideOutMenu {
-  from {
-    transform: translateX(0);
-    opacity: 1;
-  }
-  to {
-    transform: translateX(100%);
-    opacity: 1;
-  }
-}
-
 @media (max-width: 850px) {
   .contact-header {
     .contact-avatar.large {
@@ -230,12 +121,6 @@
 @media (max-width: 800px) {
   .contact-details {
     height: calc(100vh - 305px); // Abzüglich Header + Navbar
-  }
-
-  ::ng-deep {
-    .mobile-actions-menu {
-      bottom: 94px !important;
-    }
   }
 }
 @media (max-width: 650px) {
@@ -286,23 +171,6 @@
 
 @media (max-width: 375px) {
   .contact-details {
-    height: calc(100vh - 216px); // Angepasst für kleinere Navbar
-  }
-
-  .mobile-menu-button {
-    width: 45px;
-    height: 45px;
-
-    mat-icon {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
-    }
-  }
-
-  ::ng-deep {
-    .mobile-actions-menu {
-      bottom: 74px !important;
-    }
+    height: calc(100vh - 216px);
   }
 }

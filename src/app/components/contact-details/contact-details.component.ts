@@ -6,6 +6,7 @@ import { User } from '../../models/user.class';
 import { DialogService } from '../../services/dialog.service';
 import { UserService } from '../../services/user.service';
 import { SnackbarService } from '../../services/snackbar.service';
+import { MobileMenuService } from '../../services/mobile-menu.service';
 
 /**
  * Component for displaying and managing contact details.
@@ -36,7 +37,14 @@ import { SnackbarService } from '../../services/snackbar.service';
 })
 export class ContactDetailsComponent {
   /** The contact user object to display details for */
-  @Input() contact: User | null = null;
+  @Input() set contact(value: User | null) {
+    this._contact = value;
+    this.mobileMenuService.setCurrentContact(value);
+  }
+  get contact() {
+    return this._contact;
+  }
+  private _contact: User | null = null;
 
   /** Flag indicating if component is being rendered in mobile view */
   @Input() isMobileView = false;
@@ -60,8 +68,17 @@ export class ContactDetailsComponent {
   constructor(
     private dialogService: DialogService, 
     private userService: UserService,
-    private snackbarService: SnackbarService
-  ) {}
+    private snackbarService: SnackbarService,
+    private mobileMenuService: MobileMenuService
+  ) {
+    this.mobileMenuService.editClick$.subscribe(() => {
+      this.contactUpdated.emit();
+    });
+
+    this.mobileMenuService.deleteClick$.subscribe(() => {
+      this.contactDeleted.emit();
+    });
+  }
 
   /**
    * Initializes click outside listener for mobile menu.

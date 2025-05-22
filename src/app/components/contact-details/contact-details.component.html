@@ -6,39 +6,8 @@
         </div>
         <div class="contact-name-section">
             <h2>{{ contact.name }}</h2>
-            <div class="contact-actions" *ngIf="!isMobileView">
-                <button class="action-button edit" (click)="openEditDialog()">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                </button>
-                <button class="action-button delete" (click)="deleteContact()">
-                    <mat-icon>delete</mat-icon>
-                    <span>Delete</span>
-                </button>
-            </div>
         </div>
     </div>
-
-    <!-- Mobile Menu Button -->
-    <button *ngIf="isMobileView" class="mobile-menu-button" [matMenuTriggerFor]="menu">
-        <mat-icon>more_vert</mat-icon>
-    </button>
-
-    <!-- Mobile Menu -->
-    <mat-menu #menu="matMenu" 
-              class="mobile-actions-menu"
-              [hasBackdrop]="true"
-              [overlapTrigger]="false"
-              overlayPanelClass="slide-menu-panel">
-        <button mat-menu-item (click)="openEditDialog()">
-            <mat-icon>edit</mat-icon>
-            <span>Edit</span>
-        </button>
-        <button mat-menu-item (click)="deleteContact()">
-            <mat-icon>delete</mat-icon>
-            <span>Delete</span>
-        </button>
-    </mat-menu>
 
     <div class="contact-information">
         <h3>Contact Information</h3>
