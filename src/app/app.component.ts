@@ -4,9 +4,10 @@ import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { filter } from 'rxjs/operators';
 import { SeoService } from './services/seo.service';
-import { MobileMenuOverlayComponent } from './components/mobile-menu-overlay/mobile-menu-overlay.component';
 import { MobileMenuService } from './services/mobile-menu.service';
 import { ContactStateService } from './services/contact-state.service';
+import { MobileMenuOverlayComponent } from './shared/components/mobile-menu-overlay/mobile-menu-overlay.component';
+// import { MobileMenuOverlayComponent } from './components/mobile-menu-overlay/mobile-menu-overlay.component';
 
 @Component({
   selector: 'app-root',
