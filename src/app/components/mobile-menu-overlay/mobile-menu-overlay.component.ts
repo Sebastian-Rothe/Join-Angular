@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
@@ -33,7 +33,7 @@ import { User } from '../../models/user.class';
     </mat-menu>
   `
 })
-export class MobileMenuOverlayComponent {
+export class MobileMenuOverlayComponent implements OnInit {
   @ViewChild(MatMenuTrigger) menuTrigger!: MatMenuTrigger;
   private currentContact: User | null = null;
 
@@ -48,32 +48,16 @@ export class MobileMenuOverlayComponent {
     );
   }
 
-  async handleEdit() {
-    if (this.currentContact) {
-      const dialogRef = await this.dialogService.openDialog('edit', this.currentContact);
-      dialogRef.afterClosed().subscribe(result => {
-        if (result) {
-          this.mobileMenuService.triggerEdit();
-        }
-      });
-    }
-  }
-
-  async handleDelete() {
-    const uid = this.currentContact?.uid;
-    if (!uid) return;
-
-    this.snackbarService.confirm({
-      message: 'Are you sure you want to delete this contact?'
-    }).subscribe(async (confirmed) => {
-      if (confirmed) {
-        try {
-          await this.userService.deleteUser(uid);
-          this.snackbarService.success('Contact successfully deleted');
-          this.mobileMenuService.triggerDelete();
-        } catch (error) {
-          this.snackbarService.error('Error deleting contact');
-        }
+  ngOnInit(): void {
+    document.addEventListener('click', (event: MouseEvent) => {
+      const menuElement = document.querySelector('.mobile-actions-menu');
+      const buttonElement = document.querySelector('.mobile-menu-button');
+      
+      if (menuElement && 
+          buttonElement && 
+          !menuElement.contains(event.target as Node) && 
+          !buttonElement.contains(event.target as Node)) {
+        this.closeMenuWithAnimation();
       }
     });
   }
@@ -86,6 +70,20 @@ export class MobileMenuOverlayComponent {
         this.menuTrigger.closeMenu();
         panel.classList.remove('hiding');
       }, 280);
+    }
+  }
+
+  async handleEdit() {
+    if (this.currentContact) {
+      await this.mobileMenuService.handleEdit();
+      this.closeMenuWithAnimation();
+    }
+  }
+
+  async handleDelete() {
+    if (this.currentContact?.uid) {
+      await this.mobileMenuService.handleDelete();
+      this.closeMenuWithAnimation();
     }
   }
 }

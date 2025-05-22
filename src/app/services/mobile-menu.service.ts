@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
 import { User } from '../models/user.class';
+import { DialogService } from './dialog.service';
+import { UserService } from './user.service';
+import { SnackbarService } from './snackbar.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,15 +18,45 @@ export class MobileMenuService {
   editClick$ = this.editClickSource.asObservable();
   deleteClick$ = this.deleteClickSource.asObservable();
 
+  constructor(
+    private dialogService: DialogService,
+    private userService: UserService,
+    private snackbarService: SnackbarService
+  ) {}
+
   setCurrentContact(contact: User | null) {
     this.currentContactSource.next(contact);
   }
 
-  triggerEdit() {
-    this.editClickSource.next();
+  async handleEdit() {
+    const contact = this.currentContactSource.getValue();
+    if (contact) {
+      const dialogRef = await this.dialogService.openDialog('edit', contact);
+      dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          this.editClickSource.next();
+        }
+      });
+    }
   }
 
-  triggerDelete() {
-    this.deleteClickSource.next();
+  async handleDelete() {
+    const contact = this.currentContactSource.getValue();
+    const uid = contact?.uid;
+    if (!uid) return;
+
+    this.snackbarService.confirm({
+      message: 'Are you sure you want to delete this contact?'
+    }).subscribe(async (confirmed) => {
+      if (confirmed) {
+        try {
+          await this.userService.deleteUser(uid);
+          this.snackbarService.success('Contact successfully deleted');
+          this.deleteClickSource.next();
+        } catch (error) {
+          this.snackbarService.error('Error deleting contact');
+        }
+      }
+    });
   }
 }
