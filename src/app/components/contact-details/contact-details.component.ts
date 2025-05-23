@@ -68,4 +68,10 @@ export class ContactDetailsComponent {
       this.contactDeleted.emit();
     });
   }
+  deleteContact() {
+    this.mobileMenuService.handleDelete();
+  }
+  openEditDialog() {
+    this.mobileMenuService.handleEdit();
+  }
 }
