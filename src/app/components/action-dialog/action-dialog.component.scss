@@ -157,7 +157,6 @@ form {
 
   &.aktiv {
     transform: translate(0);
-    background-color: rgba(0, 0, 0, 0.3);
   }
 }
 
@@ -441,16 +440,8 @@ form {
     }
   }
   .new-contact-overlay {
-
-  transform: translateY(100%);
-  transition: transform 0.5s ease-in-out, background-color 0.5s ease-in-out;
-
-
-  &.aktiv {
-    transform: translate(0);
-    background-color: rgba(0, 0, 0, 0.3);
+    transform: translateY(100%);
   }
-}
 }
 @media (max-width: 600px) {
   .right-pane {
