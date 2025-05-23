@@ -112,6 +112,14 @@ export class ActionDialogComponent implements OnInit {
     private snackbarService: SnackbarService
   ) {}
 
+  isEditing: boolean = false;
+
+   makeEditable(event: Event): void {
+    if (this.config.type === 'account') return;
+    const input = event.target as HTMLInputElement;
+    input.readOnly = false;
+    this.isEditing = true;
+  }
   /**
    * Initializes the dialog component.
    * Loads appropriate data based on dialog type and sets up visibility.

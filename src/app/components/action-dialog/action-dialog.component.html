@@ -18,65 +18,93 @@
         </span>
         <div class="align-new-contact-input">
           <div class="profil-icon">
-            <div class="avatar" *ngIf="config.type === 'edit' || config.type === 'account'">
-              <img *ngIf="profileImagePreview || formData.profilePicture" 
-                   [src]="profileImagePreview || formData.profilePicture" 
-                   alt="Profile picture">
+            <div
+              class="avatar"
+              *ngIf="config.type === 'edit' || config.type === 'account'"
+            >
+              <img
+                *ngIf="profileImagePreview || formData.profilePicture"
+                [src]="profileImagePreview || formData.profilePicture"
+                alt="Profile picture"
+              />
               <span *ngIf="!profileImagePreview && !formData.profilePicture">
-                {{ config.type === 'account' ? formData.initials : config.contact?.initials }}
+                {{
+                  config.type === "account"
+                    ? formData.initials
+                    : config.contact?.initials
+                }}
               </span>
             </div>
-            <mat-icon *ngIf="config.type === 'add' && !profileImagePreview">person</mat-icon>
-            <img *ngIf="config.type === 'add' && profileImagePreview" 
-                 [src]="profileImagePreview" 
-                 class="avatar" 
-                 alt="Profile preview">
-            
+            <mat-icon *ngIf="config.type === 'add' && !profileImagePreview"
+              >person</mat-icon
+            >
+            <img
+              *ngIf="config.type === 'add' && profileImagePreview"
+              [src]="profileImagePreview"
+              class="avatar"
+              alt="Profile preview"
+            />
+
             <label class="upload-button" *ngIf="config.type !== 'account'">
-              <input type="file" 
-                     accept=".jpg,.jpeg,.png" 
-                     (change)="onFileSelected($event)">
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                (change)="onFileSelected($event)"
+              />
               <mat-icon>add_a_photo</mat-icon>
             </label>
           </div>
           <form class="align-form" (ngSubmit)="onSubmit()" #form="ngForm">
-            <input 
+            <input
               [(ngModel)]="formData.name"
               name="name"
-              class="icon-name" 
-              type="text" 
+              class="icon-name"
+              type="text"
               placeholder="Name"
-              [readonly]="config.type === 'account'"
+              [readonly]="config.type === 'account' || !isEditing"
+              (click)="makeEditable($event)"
               [class.error]="contactErrors.name"
-              required>
-            <input 
+              required
+            />
+            <input
               [(ngModel)]="formData.email"
               name="email"
-              class="icon-email" 
-              type="email" 
+              class="icon-email"
+              type="email"
               placeholder="Email"
-              [readonly]="config.type === 'account'"
+              [readonly]="config.type === 'account' || !isEditing"
+              (click)="makeEditable($event)"
               [class.error]="contactErrors.email"
-              required>
-            <input 
+              required
+            />
+            <input
               [(ngModel)]="formData.phone"
               name="phone"
-              class="icon-phone" 
+              class="icon-phone"
               type="tel"
               pattern="[0-9]*"
               placeholder="Phone"
-              [readonly]="config.type === 'account'"
+              [readonly]="config.type === 'account' || !isEditing"
+              (click)="makeEditable($event)"
               [class.error]="contactErrors.phone"
-              required>
+              required
+            />
             <div class="align-form-buttons">
-              <button class="secondary-btn" type="button" 
-                      (click)="config.type === 'account' ? deleteAccount() : onClose()">
+              <button
+                class="secondary-btn"
+                type="button"
+                (click)="
+                  config.type === 'account' ? deleteAccount() : onClose()
+                "
+              >
                 {{ getPrimaryButtonText() }}
                 <mat-icon *ngIf="config.type !== 'account'">close</mat-icon>
               </button>
-              <button class="primary-btn" 
-                      [type]="config.type === 'account' ? 'button' : 'submit'"
-                      (click)="config.type === 'account' ? openEditDialog() : null">
+              <button
+                class="primary-btn"
+                [type]="config.type === 'account' ? 'button' : 'submit'"
+                (click)="config.type === 'account' ? openEditDialog() : null"
+              >
                 {{ getSecondaryButtonText() }}
                 <mat-icon *ngIf="config.type !== 'account'">check</mat-icon>
               </button>
