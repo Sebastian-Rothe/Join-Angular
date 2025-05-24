@@ -304,33 +304,33 @@
   }
 }
 
-:host-context(.height-exceeded) {
-  height: 984px;
-  position: fixed;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
+// :host-context(.height-exceeded) {
+//   height: 984px;
+//   position: fixed;
+//   left: 50%;
+//   top: 50%;
+//   transform: translate(-50%, -50%);
 
-  .main-section {
-    height: 100%;
-    max-width: 1920px;
-  }
+//   .main-section {
+//     height: 100%;
+//     max-width: 1920px;
+//   }
 
-  .logo-sidebar {
-    position: absolute;
-    top: 12px;
-  }
+//   .logo-sidebar {
+//     position: absolute;
+//     top: 12px;
+//   }
 
-  .header-login-content {
-    position: absolute;
-    top: 20px;
-  }
+//   .header-login-content {
+//     position: absolute;
+//     top: 20px;
+//   }
 
-  .footer-links {
-    position: absolute;
-    bottom: 160px;
-  }
-}
+//   .footer-links {
+//     position: absolute;
+//     bottom: 160px;
+//   }
+// }
 
 
 @media (max-width: 1200px) {
@@ -382,20 +382,20 @@
  
 
   .logo-sidebar {
-    top: 8px;
-    left: 8px;
+    // top: 8px;
+    // left: 8px;
     width: 80px;
     height: 80px;
   }
 }
 
 @media (max-width: 550px) {
-  .content {
-    height: 100vh;
-  }
+  // .content {
+  //   height: 100vh;
+  // }
 
   .signup-section {
-    margin-top: 80px;
+    // margin-top: 80px;
     padding: 20px 0;
   }
 
@@ -474,8 +474,8 @@
 
 @media (max-width: 450px) {
   .logo-sidebar {
-    top: 4px;
-    left: 4px;
+    // top: 4px;
+    // left: 4px;
     width: 70px;
     height: 70px;
   }
@@ -487,7 +487,7 @@
   }
   
   .check-policy-section {
-    margin: 0;
+    margin: 0 0 10px 0;
     font-size: 12px;
   }
 }
