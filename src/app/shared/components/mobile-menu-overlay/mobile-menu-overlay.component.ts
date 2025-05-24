@@ -47,6 +47,10 @@ export class MobileMenuOverlayComponent implements OnInit {
       contact => this.currentContact = contact
     );
   }
+//TODO: Add some route check to make sure buttons are only shown on the correct pages
+  // This component listens for clicks outside the menu to close it with an animation
+
+
 
   ngOnInit(): void {
     document.addEventListener('click', (event: MouseEvent) => {

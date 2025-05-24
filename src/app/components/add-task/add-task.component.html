@@ -254,12 +254,19 @@
             <span class="required-desktop"><span class="required">*</span>This field is required</span>
         </div>
         <div class="footer-add-task-right">
-            <button type="button" class="secondary-btn" (click)="clearForm()">
-                Clear <mat-icon>close</mat-icon>
-            </button>
-            <button type="button" class="primary-btn" (click)="createTask()">
-                {{ isEditMode ? 'Save Task' : 'Create Task' }} <mat-icon>check</mat-icon>
-            </button>
+            <ng-container *ngIf="!isEditMode">
+                <button type="button" class="secondary-btn" (click)="clearForm()">
+                    Clear <mat-icon>close</mat-icon>
+                </button>
+                <button type="button" class="primary-btn" (click)="createTask()">
+                    Create Task <mat-icon>check</mat-icon>
+                </button>
+            </ng-container>
+            <ng-container *ngIf="isEditMode">
+                <button type="button" class="primary-btn" (click)="createTask()">
+                    Ok <mat-icon>check</mat-icon>
+                </button>
+            </ng-container>
         </div>
     </div>
     
