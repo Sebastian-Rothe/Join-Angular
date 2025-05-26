@@ -646,7 +646,7 @@ export class AddTaskComponent implements OnInit {
    */
   private async handleTaskUpdate(): Promise<void> {
     await this.taskService.updateTask(this.task);
-    this.snackbarService.success('Task successfully updated', false);
+    // this.snackbarService.success('Task successfully updated', false);
     
     if (this.dialogRef) {
       await this.closeDialog();
