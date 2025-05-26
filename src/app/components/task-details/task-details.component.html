@@ -30,12 +30,14 @@
     <div class="info-section stacked">
       <div class="label">Assigned to:</div>
       <div class="task-assigned">
-        <div *ngFor="let user of task.assignedTo" 
-             class="style-avatar-overlap"
-             [attr.data-tooltip]="user.name"
-             [style.background-color]="user.iconColor">
-          <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
-          <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+        <div class="avatar-container">
+          <div *ngFor="let user of task.assignedTo" 
+               class="style-avatar-overlap"
+               [attr.data-tooltip]="user.name"
+               [style.background-color]="user.iconColor">
+            <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
+            <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
+          </div>
         </div>
       </div>
     </div>

@@ -202,6 +202,7 @@ $color-background: #f6f7f8;
   margin-right: 0; // Remove negative margin since we're stacking
   border: 1px solid white;
   box-sizing: border-box;
+  min-width: 32px;
   width: 32px;
   height: 32px;
 
@@ -214,14 +215,19 @@ $color-background: #f6f7f8;
 }
 
 .task-assigned {
-  margin-left: 12px;
+  margin: 0 12px;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 8px;
+  width: 100%;
+}
 
-  .content {
-    margin-left: -4px; // Kompensiert den negativen Margin der Avatare
-  }
+.avatar-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  row-gap: 8px;
+  max-width: 100%;
 }
 
 // ---------- Checkbox & Subtask Styling ----------

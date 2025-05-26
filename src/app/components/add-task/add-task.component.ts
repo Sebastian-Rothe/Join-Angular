@@ -681,7 +681,7 @@ export class AddTaskComponent implements OnInit {
     this.task = new Task();
     this.selectedContacts = [];
     this.clearSubtaskInput();
-    this.dateValue = null;  // Reset date input field
+    this.dateValue = null;  
   }
 
   /**
