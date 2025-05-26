@@ -1,69 +1,125 @@
-<section class="contacts-container" role="main">
-  <section class="contact-list-section" [class.mobile-hidden]="isMobileView && isContactDetailsVisible" 
-           role="region" aria-label="Contacts list">
+<main class="contacts-container">
+  <section
+    class="contact-list-section"
+    [class.mobile-hidden]="isMobileView && isContactDetailsVisible"
+    role="region"
+    aria-label="Contacts directory"
+  >
     <div class="button-container">
-      <button class="new-contact-button" 
-              (click)="openNewContactDialog()" 
-              aria-label="Add new contact">
-        Add new contact 
+      <button
+        class="new-contact-button"
+        (click)="openNewContactDialog()"
+        aria-label="Add new contact"
+      >
+        <span>Add new contact</span>
         <mat-icon aria-hidden="true">person_add</mat-icon>
       </button>
     </div>
 
-    <div class="contacts-list">
-      <div *ngFor="let letter of groupedContacts | keyvalue" class="contact-group">
-        <div class="letter-divider">{{letter.key}}</div>        <div *ngFor="let contact of letter.value" 
-             class="contact-item"
-             [class.selected]="selectedContact?.uid === contact.uid"
-             (click)="onContactSelect(contact)"
-             role="button"
-             tabindex="0"
-             [attr.aria-label]="'Select ' + contact.name"
-             (keydown.enter)="onContactSelect(contact)">
-          <div class="contact-avatar" 
-               [style.background-color]="contact.iconColor"
-               aria-hidden="true">
-            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name + ' profile picture'">
-            <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
-          </div>
-          <div class="contact-info">
-            <div class="contact-name" role="heading" aria-level="3">{{ contact.name }}</div>
-            <div class="contact-email">{{ contact.email }}</div>
-          </div>
-        </div>
+    <nav class="contacts-list" aria-label="Contacts alphabetical list">
+      <div
+        *ngFor="let letter of groupedContacts | keyvalue"
+        class="contact-group"
+        role="region"
+        [attr.aria-labelledby]="'letter-' + letter.key"
+      >
+        <h2 class="letter-divider" [id]="'letter-' + letter.key">
+          {{ letter.key }}
+        </h2>
+        <ul role="list" class="contact-items">
+          <li
+            *ngFor="let contact of letter.value"
+            class="contact-item"
+            [class.selected]="selectedContact?.uid === contact.uid"
+            (click)="onContactSelect(contact)"
+            (keydown.enter)="onContactSelect(contact)"
+            (keydown.space)="onContactSelect(contact)"
+            role="button"
+            tabindex="0"
+            [attr.aria-pressed]="selectedContact?.uid === contact.uid"
+            [attr.aria-label]="contact.name + '. Email: ' + contact.email"
+          >
+            <div
+              class="contact-avatar"
+              [style.background-color]="contact.iconColor"
+              aria-hidden="true"
+            >
+              <img
+                *ngIf="contact.profilePicture"
+                [src]="contact.profilePicture"
+                [alt]="
+                  contact.profilePicture
+                    ? contact.name + ' profile picture'
+                    : 'contact-initials'
+                "
+                role="presentation"
+              />
+              <span *ngIf="!contact.profilePicture" aria-hidden="true">{{
+                contact.initials
+              }}</span>
+            </div>
+            <div class="contact-info">
+              <span class="contact-name">{{ contact.name }}</span>
+              <span class="contact-email">{{ contact.email }}</span>
+            </div>
+          </li>
+        </ul>
       </div>
-    </div>    <button class="mobile-add-button" 
-            (click)="openNewContactDialog()"
-            aria-label="Add new contact">
+    </nav>
+
+    <button
+      class="mobile-add-button"
+      (click)="openNewContactDialog()"
+      aria-label="Add new contact"
+    >
       <mat-icon class="mobile-icon" aria-hidden="true">person_add</mat-icon>
     </button>
   </section>
 
-  <section class="contact-details-section" 
-           [class.mobile-visible]="isMobileView && isContactDetailsVisible"
-           [class.slide-in]="selectedContact">
-    <div class="contact-heading">
+  <section
+    class="contact-details-section"
+    [class.mobile-visible]="isMobileView && isContactDetailsVisible"
+    [class.slide-in]="selectedContact"
+    role="region"
+    aria-label="Contact details"
+    [attr.aria-expanded]="!!selectedContact"
+  >
+    <div class="contact-heading" role="banner">
       <div class="title-row">
-        <span class="contacts-title">Contacts</span>
-        <span *ngIf="isMobileView" class="back-button" (click)="onBackToList()">
-          <mat-icon>arrow_back</mat-icon>
-        </span>
+        <h1 class="contacts-title">Contacts</h1>
+        <button
+          *ngIf="isMobileView"
+          class="back-button"
+          (click)="onBackToList()"
+          aria-label="Back to contacts list"
+        >
+          <mat-icon aria-hidden="true">arrow_back</mat-icon>
+        </button>
       </div>
       <div class="subtitle-row">
-        <div class="divider"></div>
+        <div class="divider" aria-hidden="true"></div>
         <span class="better-text">Better with a team</span>
       </div>
     </div>
 
-    <div class="contact-content" 
-         [class.sliding-in]="isSlideIn"
-         [class.sliding-out]="isSlideOut">
-      <app-contact-details 
+    <div
+      class="contact-content"
+      [class.sliding-in]="isSlideIn"
+      [class.sliding-out]="isSlideOut"
+      role="region"
+      [attr.aria-label]="
+        selectedContact
+          ? 'Details for ' + selectedContact.name
+          : 'No contact selected'
+      "
+    >
+      <app-contact-details
         [contact]="selectedContact"
         [isMobileView]="isMobileView"
         (contactUpdated)="loadContacts()"
-        (contactDeleted)="onContactDeleted()">
+        (contactDeleted)="onContactDeleted()"
+      >
       </app-contact-details>
     </div>
   </section>
-</section>
+</main>

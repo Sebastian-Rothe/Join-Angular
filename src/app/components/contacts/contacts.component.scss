@@ -64,7 +64,9 @@
     margin-bottom: 24px;
     position: relative;
     padding: 0;
-
+    > ul {
+      padding: 0;
+    }
     .letter-divider {
       color: $dark-navy;
       font-size: 21px;
@@ -369,11 +371,15 @@
     }
 
     .back-button {
+      background: none;
       mat-icon {
         width: 32px;
         height: 32px;
         font-size: 32px;
         color: $primary-blue;
+      }
+      &:hover {
+        box-shadow: none;
       }
     }
 
