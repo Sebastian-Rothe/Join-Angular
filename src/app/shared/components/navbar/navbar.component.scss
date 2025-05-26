@@ -14,6 +14,18 @@
     color: $white;
     bottom: 0;
     transition: transform 225ms ease-in-out, width 225ms ease-in-out;
+        box-shadow: none;
+    
+    &::before {
+        content: '';
+        position: absolute;
+        left: -4000px;
+        top: -4000px;
+        right: 0;
+        bottom: -4000px;
+        background: $dark-navy;
+        z-index: -1;
+    }
 }
 
 .logo-container {
