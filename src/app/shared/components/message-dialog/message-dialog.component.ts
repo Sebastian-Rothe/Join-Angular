@@ -55,6 +55,9 @@ export interface MessageDialogData {
           <img src="/assets/icons/Board.svg" alt="Board Icon">
         </div>
       }
+      @if(data.type === 'error') {
+        <mat-icon class="close-icon" (click)="close()">close</mat-icon>
+      }
     </div>
   `,
 })
@@ -76,14 +79,26 @@ export class MessageDialogComponent implements OnInit {
   /**
    * Lifecycle hook that handles the dialog's appearance and disappearance timing.
    * - Shows the dialog after 50ms
-   * - Starts closing animation after 2.2 seconds
+   * - Starts closing animation after 2.2 seconds (only for success messages)
    * - Completely closes the dialog after the closing animation (225ms)
    */
   ngOnInit() {
     setTimeout(() => this.isVisible = true, 50);
-    setTimeout(() => {
-      this.isVisible = false;
-      setTimeout(() => this.dialogRef.close(), 225);
-    }, 2200);
+    
+    // Only auto-close for success messages
+    if (this.data.type === 'success') {
+      setTimeout(() => {
+        this.isVisible = false;
+        setTimeout(() => this.dialogRef.close(), 225);
+      }, 2200);
+    }
+  }
+
+  /**
+   * Closes the dialog manually, used for error messages
+   */
+  close() {
+    this.isVisible = false;
+    setTimeout(() => this.dialogRef.close(), 225);
   }
 }

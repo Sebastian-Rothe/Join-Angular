@@ -59,6 +59,7 @@
     background: #ff3d00;
     padding: 16px 24px;
     min-width: 300px;
+    position: relative;
 
     .icon-container {
       display: none;
@@ -76,6 +77,21 @@
         margin-top: 4px;
         font-size: 12px;
         opacity: 0.9;
+      }
+    }
+
+    .close-icon {
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      color: white;
+      cursor: pointer;
+      font-size: 20px;
+      width: 20px;
+      height: 20px;
+
+      &:hover {
+        opacity: 0.8;
       }
     }
   }
