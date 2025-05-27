@@ -422,7 +422,10 @@ export class AddTaskComponent implements OnInit {
       const taskFiles = await this.processFiles(files);
       this.task.files = [...this.task.files, ...taskFiles];
     } catch (error) {
-      this.snackbarService.error(error instanceof Error ? error.message : 'Failed to process files');
+      this.snackbarService.error({
+        message: 'This file format is not allowed!',
+        secondLine: 'You can only upload JPEG and PNG.'
+      });
     }
   }
 

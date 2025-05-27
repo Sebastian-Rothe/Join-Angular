@@ -57,7 +57,7 @@
 
   &.error {
     background: #ff3d00;
-    padding: 16px 24px;
+    padding: 18px 40px;
     min-width: 300px;
     position: relative;
 
@@ -66,16 +66,17 @@
     }
 
     .message {
+      display: flex;
+      flex-direction: column;
       text-align: center;
       color: white;
-      font-size: 18px;
-      line-height: 1.5;
-      text-align: left;
+      font-size: 20px;
+      line-height: 1.2;
 
       .second-line {
         text-align: center;
         margin-top: 4px;
-        font-size: 12px;
+        font-size: 14px;
         opacity: 0.9;
       }
     }
@@ -95,4 +96,5 @@
       }
     }
   }
+
 }

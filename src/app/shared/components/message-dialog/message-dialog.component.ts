@@ -9,7 +9,7 @@ import {
 
 /**
  * Interface for configuring the message dialog
- * 
+ *
  * @interface MessageDialogData
  * @property {('success' | 'error')} type - The type of message to display
  * @property {string} message - The main message text
@@ -25,12 +25,12 @@ export interface MessageDialogData {
 
 /**
  * A material design dialog component for displaying temporary messages.
- * 
+ *
  * @description
  * This component displays a dialog with success or error messages that automatically
  * dismisses itself after a short duration. It includes animations for smooth
  * appearance and disappearance.
- * 
+ *
  * @example
  * ```typescript
  * this.dialog.open(MessageDialogComponent, {
@@ -49,14 +49,19 @@ export interface MessageDialogData {
   styleUrls: ['./message-dialog.component.scss'],
   template: `
     <div class="message-dialog {{ data.type }}" [class.aktiv]="isVisible">
-      <div class="message">{{ data.message }}</div>
+      <div class="message">
+        {{ data.message }}
+
+        @if (data.secondLine) {
+        <span class="second-line">{{ data.secondLine }}</span>
+        }
+      </div>
       @if(data.type === 'success' && data.showBoardIcon) {
-        <div class="icon-container">
-          <img src="/assets/icons/Board.svg" alt="Board Icon">
-        </div>
-      }
-      @if(data.type === 'error') {
-        <mat-icon class="close-icon" (click)="close()">close</mat-icon>
+      <div class="icon-container">
+        <img src="/assets/icons/Board.svg" alt="Board Icon" />
+      </div>
+      } @if(data.type === 'error') {
+      <mat-icon class="close-icon" (click)="close()">close</mat-icon>
       }
     </div>
   `,
@@ -67,7 +72,7 @@ export class MessageDialogComponent implements OnInit {
 
   /**
    * Creates an instance of MessageDialogComponent.
-   * 
+   *
    * @param dialogRef - Reference to the dialog instance
    * @param data - Configuration data for the message dialog
    */
@@ -83,8 +88,8 @@ export class MessageDialogComponent implements OnInit {
    * - Completely closes the dialog after the closing animation (225ms)
    */
   ngOnInit() {
-    setTimeout(() => this.isVisible = true, 50);
-    
+    setTimeout(() => (this.isVisible = true), 50);
+
     // Only auto-close for success messages
     if (this.data.type === 'success') {
       setTimeout(() => {
