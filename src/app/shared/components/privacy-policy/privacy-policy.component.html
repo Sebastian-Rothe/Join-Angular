@@ -1,7 +1,9 @@
 <main class="all">
   <div>
     <h2 class="title">
+      @if (user$ | async) {
       <mat-icon class="backIcon" (click)="navigateBack()">arrow_back</mat-icon>
+      }
       Datenschutzerklärung
     </h2>
 

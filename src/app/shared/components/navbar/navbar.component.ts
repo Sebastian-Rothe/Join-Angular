@@ -30,7 +30,6 @@ export class NavbarComponent {
 
   constructor(private authService: AuthService) {
     this.user$ = this.authService.user$;
-    console.log('NavbarComponent initialized, user$ observable:', this.user$);
-    
+  
   }
 }

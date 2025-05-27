@@ -1,27 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
+
 
 /**
  * Component for displaying legal information and notices.
  */
 @Component({
   selector: 'app-legal-notice',
-  imports: [MatIconModule],
+  imports: [MatIconModule, AsyncPipe],
   templateUrl: './legal-notice.component.html',
-  styleUrl: './legal-notice.component.scss'
+  styleUrl: './legal-notice.component.scss',
 })
-export class LegalNoticeComponent implements OnInit {
-  /**
-   * Creates an instance of LegalNoticeComponent.
-   */
-  constructor(private router: Router) {}
-
-  ngOnInit() {
-    const element = document.querySelector('.all');
-    if (element && !this.router.url.startsWith('/main')) {
-      element.classList.add('with-scrollbar');
-    }
+export class LegalNoticeComponent {
+  user$: Observable<any>;
+  constructor(private authService: AuthService) {
+    this.user$ = this.authService.user$;
   }
 
   /**

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { Observable } from 'rxjs';
+import { AsyncPipe } from '@angular/common';
 
 /**
  * Component for displaying the application's privacy policy.
@@ -8,21 +10,15 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-privacy-policy',
   standalone: true,
-  imports: [MatIconModule],
+  imports: [MatIconModule, AsyncPipe],
   templateUrl: './privacy-policy.component.html',
   styleUrl: './privacy-policy.component.scss'
 })
-export class PrivacyPolicyComponent implements OnInit {
-  /**
-   * Creates an instance of PrivacyPolicyComponent.
-   */
-  constructor(private router: Router) {}
+export class PrivacyPolicyComponent {
+  user$: Observable<any>;
 
-  ngOnInit() {
-    const element = document.querySelector('.all');
-    if (element && !this.router.url.startsWith('/main')) {
-      element.classList.add('with-scrollbar');
-    }
+  constructor(private authService: AuthService) {
+    this.user$ = this.authService.user$;
   }
 
   /**

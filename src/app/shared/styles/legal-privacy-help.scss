@@ -5,19 +5,19 @@
   padding: 0 24px;
   overflow-y: auto;
 
-  &.with-scrollbar {
-    height: 100vh;
-    max-height: 1375px;
+  // &.with-scrollbar {
+  //   height: 100vh;
+  //   max-height: 1375px;
 
    
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #a8a8a8;
-      border-radius: 10px;
-    }
-  }
+  //   &::-webkit-scrollbar {
+  //     width: 5px;
+  //   }
+  //   &::-webkit-scrollbar-thumb {
+  //     background: #a8a8a8;
+  //     border-radius: 10px;
+  //   }
+  // }
 }
 
 .title {
