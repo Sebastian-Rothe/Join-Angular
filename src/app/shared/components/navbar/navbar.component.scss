@@ -82,6 +82,15 @@
             width: 30px;
         }
 
+        mat-icon {
+            margin-left: 56px;
+            margin-right: 16px;
+            height: 30px;
+            width: 30px;
+            font-size: 30px;
+            color: #cdcdcd;
+        }
+
         span {
             flex: 1;
         }
@@ -141,13 +150,14 @@
         &:hover {
             background-color: #091931;
             border-radius: 8px;
-            width: 68px;
+            width: fit-content;
+            min-width: 68px;
             height: 68px;
-            padding: 8px;
+            padding: 12px;
             color: white;
             transform: scale(1.05);
             @media (max-width: 375px) {
-                width: 56px;
+                // width: 56px;
                 height: 56px;
                 
             }
@@ -197,6 +207,9 @@
                 img {
                     margin: 0;
                 }
+                mat-icon {
+                    margin: 0;
+                }
             }
         }
 
@@ -240,9 +253,14 @@
             width: 20px;
             height: 20px;
         }
-        span {
-            font-size: 12px;
+        mat-icon{
+            width: 20px;
+            height: 20px;
+            font-size: 20px;
         }
+        // span {
+        //     font-size: 12px;
+        // }
     }
 }
 

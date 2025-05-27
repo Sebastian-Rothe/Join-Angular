@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
+import { AsyncPipe } from '@angular/common';
+import { Observable } from 'rxjs';
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Navigation bar component for the application's main navigation.
@@ -17,10 +21,16 @@ import { RouterLink } from '@angular/router';
  */
 @Component({
   selector: 'app-navbar',
-  imports: [RouterLink],
+  imports: [RouterLink, AsyncPipe, MatIconModule],
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent {
+  user$: Observable<any>;
 
+  constructor(private authService: AuthService) {
+    this.user$ = this.authService.user$;
+    console.log('NavbarComponent initialized, user$ observable:', this.user$);
+    
+  }
 }

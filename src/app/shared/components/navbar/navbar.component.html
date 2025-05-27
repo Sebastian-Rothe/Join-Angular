@@ -1,66 +1,96 @@
 <aside class="sidebar" id="sidebarMenu">
-    <figure class="logo-container">
-        <img class="logo-image" src="/assets/icons/join-logo-white.svg" alt="" /> 
-    </figure>
+  <figure class="logo-container">
+    <img class="logo-image" src="/assets/icons/join-logo-white.svg" alt="" />
+  </figure>
 
-    <nav class="menu-container">
-        <ul class="menu-items">
-            <li class="menu-item">               
-                <a routerLink="/main/summary" routerLinkActive="active">        
-                    <img src="assets/icons/summary.svg" alt=""/>
-                    <span>Summary</span>
-                </a>                
-            </li>
-            <li class="menu-item">               
-                <a routerLink="/main/add-task" routerLinkActive="active">        
-                    <img src="assets/icons/AddTask.svg" alt=""/>
-                    <span>Add Task</span>
-                </a>               
-            </li>
-            <li class="menu-item">                
-                <a routerLink="/main/board" routerLinkActive="active">     
-                    <img src="assets/icons/Board.svg" alt=""/>
-                    <span>Board</span>
-                </a>                
-            </li>
-            <li class="menu-item">               
-                <a routerLink="/main/contacts" routerLinkActive="active">        
-                    <img src="assets/icons/contacts.svg" alt=""/>
-                    <span>Contacts</span>
-                </a>                
-            </li>    
-        </ul>
+  <nav class="menu-container">
+    <ul class="menu-items">
+      @if (user$ | async) {
+      <li class="menu-item">
+        <a routerLink="/main/summary" routerLinkActive="active">
+          <img src="assets/icons/summary.svg" alt="" />
+          <span>Summary</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a routerLink="/main/add-task" routerLinkActive="active">
+          <img src="assets/icons/AddTask.svg" alt="" />
+          <span>Add Task</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a routerLink="/main/board" routerLinkActive="active">
+          <img src="assets/icons/Board.svg" alt="" />
+          <span>Board</span>
+        </a>
+      </li>
+      <li class="menu-item">
+        <a routerLink="/main/contacts" routerLinkActive="active">
+          <img src="assets/icons/contacts.svg" alt="" />
+          <span>Contacts</span>
+        </a>
+      </li>
+      } @else {
+      <li class="menu-item">
+        <a routerLink="/login" routerLinkActive="active">
+          <mat-icon>login</mat-icon>
+          <span>Log In</span>
+        </a>
+      </li>
+      }
+    </ul>
 
-        <div class="footer-container">
-            <a routerLink="/main/privacy">Privacy Policy</a>
-            <a routerLink="/main/legal">Legal Notice</a>
-        </div>
-    </nav>
+    <div class="footer-container">
+      <a routerLink="/main/privacy">Privacy Policy</a>
+      <a routerLink="/main/legal">Legal Notice</a>
+    </div>
+  </nav>
 </aside>
 
+@if (user$ | async) {
 <div class="menu-mobile-display-container">
-    <div class="menu-mobile-display-item">
-        <a routerLink="/main/summary" routerLinkActive="active">        
-            <img src="assets/icons/summary.svg" alt=""/> 
-            <span>Summary</span>        
-        </a>
-    </div>
-    <div class="menu-mobile-display-item">
-        <a routerLink="/main/board" routerLinkActive="active">        
-            <img src="assets/icons/Board.svg" alt=""/>
-            <span>Board</span>         
-        </a>
-    </div>
-    <div class="menu-mobile-display-item">
-        <a routerLink="/main/add-task" routerLinkActive="active">       
-            <img src="assets/icons/AddTask.svg" alt=""/>     
-            <span>Add Task</span>   
-        </a>
-    </div>
-    <div class="menu-mobile-display-item">
-        <a routerLink="/main/contacts" routerLinkActive="active">        
-            <img src="assets/icons/contacts.svg" alt=""/> 
-            <span>Contacts</span>          
-        </a>
-    </div>
+  <div class="menu-mobile-display-item">
+    <a routerLink="/main/summary" routerLinkActive="active">
+      <img src="assets/icons/summary.svg" alt="" />
+      <span>Summary</span>
+    </a>
+  </div>
+  <div class="menu-mobile-display-item">
+    <a routerLink="/main/board" routerLinkActive="active">
+      <img src="assets/icons/Board.svg" alt="" />
+      <span>Board</span>
+    </a>
+  </div>
+  <div class="menu-mobile-display-item">
+    <a routerLink="/main/add-task" routerLinkActive="active">
+      <img src="assets/icons/AddTask.svg" alt="" />
+      <span>Add Task</span>
+    </a>
+  </div>
+  <div class="menu-mobile-display-item">
+    <a routerLink="/main/contacts" routerLinkActive="active">
+      <img src="assets/icons/contacts.svg" alt="" />
+      <span>Contacts</span>
+    </a>
+  </div>
 </div>
+} @else {
+<div class="menu-mobile-display-container">
+  <div class="menu-mobile-display-item">
+    <a routerLink="/login" routerLinkActive="active">
+      <mat-icon>login</mat-icon>
+      <span>Log In</span>
+    </a>
+  </div>
+  <div class="menu-mobile-display-item">
+    <a routerLink="/main/privacy" routerLinkActive="active">
+      <span>Privacy Policy</span>
+    </a>
+  </div>
+  <div class="menu-mobile-display-item">
+    <a routerLink="/main/legal" routerLinkActive="active">
+      <span>Legal Notice</span>
+    </a>
+  </div>
+</div>
+}
