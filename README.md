@@ -1,59 +1,103 @@
-# JoinAngular
+# Join - Task Management System
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 19.2.4.
+Join is a sophisticated task management application built with Angular, featuring Kanban-style organization and real-time collaboration capabilities. This project utilizes Firebase for authentication and data storage.
 
-## Development server
+## Features
 
-To start a local development server, run:
+- **User Authentication**
+  - Email/Password login
+  - Guest access
+  - User registration
+  - Secure authentication via Firebase
 
-```bash
-ng serve
+- **Task Management**
+  - Kanban board with drag-and-drop functionality
+  - Task creation and editing
+  - Status tracking (Todo, In Progress, Await Feedback, Done)
+  - Task categorization and priority levels
+  - Real-time updates
+
+- **Contact Management**
+  - User contact list
+  - Contact details management
+  - Task assignment to contacts
+
+- **Responsive Design**
+  - Mobile-friendly interface
+  - Adaptive layouts for all screen sizes
+  - Modern Material Design
+
+## Technical Requirements
+
+- Node.js (v18 or higher)
+- Angular CLI (v19.2.4)
+- Firebase account and project
+
+## Setup Instructions
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd Join-Angular
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Firebase Configuration**
+   - Create a Firebase project at [Firebase Console](https://console.firebase.google.com)
+   - Enable Authentication and Firestore
+   - Add your Firebase configuration to the environment files
+
+4. **Development Server**
+   ```bash
+   ng serve
+   ```
+   Navigate to `http://localhost:4200/`
+
+5. **Build for Production**
+   ```bash
+   ng build
+   ```
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── components/     # Application components
+│   ├── services/       # Service classes
+│   ├── models/         # Data models
+│   ├── shared/         # Shared components and utilities
+│   └── main-content/   # Main layout components
+├── assets/            # Static assets
+└── environments/      # Environment configurations
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Technology Stack
 
-## Code scaffolding
+- Angular 19
+- Firebase (Authentication & Firestore)
+- Angular Material
+- RxJS
+- TypeScript
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Contributing
 
-```bash
-ng generate component component-name
-```
+1. Fork the repository
+2. Create a feature branch
+3. Commit your changes
+4. Push to the branch
+5. Create a Pull Request
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## License
 
-```bash
-ng generate --help
-```
+This project is licensed under the MIT License - see the LICENSE file for details.
 
-## Building
+## Acknowledgments
 
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- Angular team for the excellent framework
+- Firebase for backend services
+- Material Design team for UI components
