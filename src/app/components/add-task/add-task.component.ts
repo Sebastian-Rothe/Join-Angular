@@ -396,13 +396,13 @@ export class AddTaskComponent implements OnInit {
    * @throws Error if file type is not allowed
    */
   private async processFiles(files: File[]): Promise<TaskFile[]> {
-    const allowedTypes = ['.pdf', '.jpg', '.jpeg', '.png'];
+    const allowedTypes = ['.jpg', '.jpeg', '.png'];
     const validFiles = [];
 
     for (const file of files) {
       const extension = '.' + file.name.split('.').pop()?.toLowerCase();
       if (!allowedTypes.includes(extension)) {
-        throw new Error(`File "${file.name}" has invalid type. Only jpg, jpeg, png, and pdf files are allowed.`);
+        throw new Error(`File "${file.name}" has invalid type. Only jpg, jpeg, png files are allowed.`);
       }
       validFiles.push(file);
     }
