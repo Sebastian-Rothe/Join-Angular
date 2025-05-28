@@ -77,7 +77,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
         this.user = user;
       }
     });
-    console.log('HeaderComponent initialized with user:', this.user);
+
     
   }
 
