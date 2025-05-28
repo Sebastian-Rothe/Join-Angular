@@ -221,7 +221,7 @@
     display: flex;
     align-items: center;
     gap: 28px;
-    margin-bottom: 32px;
+    // margin-bottom: 32px;
 
     .title-row {
       display: flex;
@@ -306,11 +306,13 @@
 
 @media (max-width: 1080px) {
   .contact-details-section .contact-heading {
-    margin: 0;
+    margin: 24px 0;
     gap: 0;
     flex-direction: column;
     align-items: flex-start;
-
+    .contacts-title {
+      margin: 0;
+    }
     .subtitle-row .divider {
       height: 3px;
       width: 90px;
@@ -411,6 +413,14 @@
     .contact-heading {
       .title-row .contacts-title {
         font-size: 47px;
+      }
+      .subtitle-row {
+        margin-left: 4px;
+        flex-direction: column-reverse;
+        gap: 8px;
+        .divider {
+          margin: 0 40px 0 0;
+        }
       }
     }
 
