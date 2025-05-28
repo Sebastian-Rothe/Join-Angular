@@ -56,7 +56,6 @@ export class ImageService {
           canvas.height = height;
           ctx.drawImage(img, 0, 0, width, height);
 
-          // Bestimme den korrekten MIME-Type basierend auf der Originaldatei
           const mimeType = file.type || 'image/jpeg';
           const compressedBase64 = canvas.toDataURL(mimeType, quality);
           resolve(compressedBase64);

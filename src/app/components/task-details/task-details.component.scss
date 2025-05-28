@@ -215,11 +215,11 @@ $color-background: #f6f7f8;
 }
 
 .task-assigned {
-  margin: 0 12px;
+  margin: 0 16px;
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  width: 100%;
+  // width: 100%;
 }
 
 .avatar-container {
