@@ -179,7 +179,7 @@
     // Fehlermeldung mit Animation
     .error-message {
       color: $error-red;
-      font-size: 12px;
+      font-size: 16px;
       margin-top: 4px;
       opacity: 0;
       transform: translateY(-10px);
@@ -197,7 +197,7 @@
   .error-Password,
   .error-confirm-password {
     color: $error-red;
-    font-size: 12px;
+    font-size: 16px;
     margin-top: 4px;
   }
 }
@@ -277,7 +277,7 @@
 
 .error-message {
   color: $error-red;
-  font-size: 12px;
+  font-size: 16px;
   display: block;
   margin-top: 4px;
 }
@@ -376,7 +376,7 @@
 
   .check-policy-section {
     padding: 0 20px;
-    font-size: 14px;
+    font-size: 16px;
   }
 
  
@@ -444,7 +444,7 @@
     padding: 0 15px;
 
     span { 
-      font-size: 14px;
+      font-size: 16px;
     }
   }
 
@@ -488,6 +488,6 @@
   
   .check-policy-section {
     margin: 0 0 10px 0;
-    font-size: 12px;
+    font-size: 16px;
   }
 }
