@@ -1,4 +1,4 @@
-// @use '../../../styles.scss' as *;
+@use "../../../styles.scss" as *;
 
 .left-side {
   background: #2a3647;
@@ -146,9 +146,7 @@ form {
   bottom: 0;
   left: 0;
   background-color: rgba(0, 0, 0, 0);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   color: white;
   padding: 20px;
   transform: translateX(100%);
@@ -222,10 +220,9 @@ form {
 .right-pane {
   width: 60%;
   position: relative;
-  display: flex;
+
+  @include flex-center;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
 
   .align-new-contact-input {
     width: 100%;
@@ -239,9 +236,7 @@ form {
   }
 
   .profil-icon {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
     margin-top: 50px;
     margin-bottom: 100px;
     position: relative;
@@ -251,9 +246,7 @@ form {
       width: 120px;
       height: 120px;
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       font-size: 60px;
       background: #d1d1d1;
       color: white;
@@ -277,9 +270,7 @@ form {
       border: none;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
       cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      @include flex-center;
       z-index: 10;
 
       input[type="file"] {
