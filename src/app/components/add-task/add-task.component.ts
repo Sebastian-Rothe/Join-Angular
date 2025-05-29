@@ -47,7 +47,7 @@ import localeDe from '@angular/common/locales/de';
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
-import { ImageService } from '../../services/image.service';
+import { ImageService, ViewerImageInfo } from '../../services/image.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { HeaderService } from '../../services/header.service';
 import { Task, Subtask, TaskFile } from '../../models/task.class';
@@ -158,7 +158,7 @@ export class AddTaskComponent implements OnInit {
   dateValue: Date | null = null;
 
   /** Array of image information for viewer */
-  images: { url: string, name: string, size: number }[] = [];
+  images: ViewerImageInfo[] = [];
   
   /** Current image index in viewer */
   currentIndex: number = 0;
@@ -851,11 +851,7 @@ export class AddTaskComponent implements OnInit {
   openImageViewer(index: number): void {
     if (this.task.files[index]?.data) {
       this.headerService.setHeaderZIndex('0');
-      this.images = this.task.files.map(file => ({
-        url: file.data,
-        name: file.name,
-        size: this.getBase64Size(file.data)
-      }));
+      this.images = this.imageService.convertFilesToViewerImages(this.task.files);
       this.currentIndex = index;
       this.showImageViewer = true;
     }
@@ -875,17 +871,5 @@ export class AddTaskComponent implements OnInit {
   ngOnDestroy(): void {
     this.filePreviews.forEach((url) => URL.revokeObjectURL(url));
     this.filePreviews.clear();
-  }
-
-  /**
-   * Calculates the size of a base64 encoded string in bytes.
-   * 
-   * @param base64String - The base64 string to calculate size for
-   * @returns The size in bytes
-   */
-  private getBase64Size(base64String: string): number {
-    const padding = (base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0);
-    const size = (base64String.length * 3) / 4 - padding;
-    return size;
   }
 }

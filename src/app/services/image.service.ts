@@ -1,6 +1,15 @@
 import { Injectable } from '@angular/core';
 
 /**
+ * Interface for image information in the viewer
+ */
+export interface ViewerImageInfo {
+  url: string;
+  name: string;
+  size: number;
+}
+
+/**
  * Service for handling image processing operations
  *
  * @class ImageService
@@ -66,5 +75,37 @@ export class ImageService {
       reader.onerror = () => reject('Error reading file');
       reader.readAsDataURL(file);
     });
+  }
+  /**
+   * Convert task files to viewer image info format
+   * @param files - Array of task files
+   * @returns Array of ViewerImageInfo objects
+   */
+  convertFilesToViewerImages(
+    files: { data: string; name: string }[]
+  ): ViewerImageInfo[] {
+    return files.map((file) => ({
+      url: file.data,
+      name: file.name,
+      size: this.getBase64Size(file.data),
+    }));
+  }
+  /**
+   * Calculate the size of a base64 string in bytes
+   * @param {string} base64String - The base64 string to calculate size for
+   * @returns {number} Size in bytes
+   */
+  getBase64Size(base64String: string): number {
+    const padding = this.calculateBase64Padding(base64String);
+    return (base64String.length * 3) / 4 - padding;
+  }
+
+  /**
+   * Calculate padding for base64 string
+   * @param {string} base64String - The base64 string
+   * @returns {number} The padding size
+   */
+  private calculateBase64Padding(base64String: string): number {
+    return base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0;
   }
 }

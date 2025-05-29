@@ -17,16 +17,7 @@ import { TaskService } from '../../services/task.service';
 import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
 import { SnackbarService } from '../../services/snackbar.service';
-
-/** Interface for image information display */
-interface ImageInfo {
-  /** URL or base64 data of the image */
-  url: string;
-  /** Name of the image file */
-  name: string;
-  /** Size of the image in bytes */
-  size: number;
-}
+import { ImageService, ViewerImageInfo } from '../../services/image.service';
 
 /**
  * Component that displays detailed information about a task.
@@ -66,7 +57,7 @@ export class TaskDetailsComponent implements OnInit {
   currentImageIndex = 0;
   
   /** Array of image information for display */
-  images: ImageInfo[] = [];
+  images: ViewerImageInfo[] = [];
 
   /**
    * Creates an instance of TaskDetailsComponent.
@@ -81,7 +72,8 @@ export class TaskDetailsComponent implements OnInit {
     public dialogRef: MatDialogRef<TaskDetailsComponent>,
     private taskService: TaskService,
     private dialog: MatDialog,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private imageService: ImageService
   ) {
     this.checkDescriptionLength();
   }
@@ -134,33 +126,8 @@ export class TaskDetailsComponent implements OnInit {
    */
   private initializeImages(): void {
     if (this.task.files) {
-      this.images = this.task.files.map((file) => ({
-        url: file.data,
-        name: file.name,
-        size: this.getBase64Size(file.data),
-      }));
+      this.images = this.imageService.convertFilesToViewerImages(this.task.files);
     }
-  }
-
-  /**
-   * Calculate the size of a base64 string in bytes
-   * @private
-   * @param {string} base64String - The base64 string
-   * @returns {number} The size in bytes
-   */
-  private getBase64Size(base64String: string): number {
-    const padding = this.calculateBase64Padding(base64String);
-    return base64String.length * 0.75 - padding;
-  }
-
-  /**
-   * Calculate padding for base64 string
-   * @private
-   * @param {string} base64String - The base64 string
-   * @returns {number} The padding size
-   */
-  private calculateBase64Padding(base64String: string): number {
-    return base64String.endsWith('==') ? 2 : base64String.endsWith('=') ? 1 : 0;
   }
 
   /**
@@ -380,54 +347,6 @@ export class TaskDetailsComponent implements OnInit {
    */
   private updateGridScroll(walk: number): void {
     this.fileGrid.nativeElement.scrollLeft = this.scrollLeft - walk;
-  }
-
-  /**
-   * Extracts or generates a filename from a base64 string.
-   * @param {string} base64String - The base64 string containing the file data
-   * @returns {string} The extracted or generated filename
-   */
-  getFileName(base64String: string): string {
-    try {
-      const filename = this.extractFilenameFromMetadata(base64String);
-      if (filename) return filename;
-
-      const typeBasedName = this.generateFilenameFromType(base64String);
-      if (typeBasedName) return typeBasedName;
-
-      return 'Image';
-    } catch (error) {
-      this.snackbarService.error('Error extracting filename.');
-      return 'Image';
-    }
-  }
-
-  /**
-   * Extract filename from base64 metadata
-   * @private
-   * @param {string} base64String - The base64 string containing metadata
-   * @returns {string | null} The extracted filename or null
-   */
-  private extractFilenameFromMetadata(base64String: string): string | null {
-    const match = base64String.match(/^data:image\/[^;]+;name=([^;]+);base64,/);
-    if (match && match[1]) {
-      return decodeURIComponent(match[1]);
-    }
-    return null;
-  }
-
-  /**
-   * Generate filename based on image type
-   * @private
-   * @param {string} base64String - The base64 string containing the file data
-   * @returns {string | null} The generated filename or null
-   */
-  private generateFilenameFromType(base64String: string): string | null {
-    const typeMatch = base64String.match(/^data:image\/([^;]+);/);
-    if (typeMatch && typeMatch[1]) {
-      return `Image.${typeMatch[1]}`;
-    }
-    return null;
   }
 
   /**
