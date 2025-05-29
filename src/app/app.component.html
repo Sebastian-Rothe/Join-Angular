@@ -1,22 +1,16 @@
 <div class="app-wrapper">
   <div class="app-container" role="main">
-    <!-- <app-header></app-header> -->
     <main>
       <router-outlet></router-outlet>
     </main>
-   
   </div>
 </div>
 
-<app-mobile-menu-overlay *ngIf="showMobileMenu"
-                        (edit)="handleEdit()"
-                        (delete)="handleDelete()">
-</app-mobile-menu-overlay>
+@if(showMobileMenu){
+  <app-mobile-menu-overlay> </app-mobile-menu-overlay>
+}
 
 <div class="rotation-screen" role="alert" aria-live="polite">
   <mat-icon>screen_rotation</mat-icon>
   <span>Please rotate your device!</span>
 </div>
-
-
-
