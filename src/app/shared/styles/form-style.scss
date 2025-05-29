@@ -1,0 +1,211 @@
+@use '../../../styles.scss' as *;
+
+// ---------- Form Elements ----------
+.form-group {
+  margin-bottom: 12px;
+  position: relative;
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+
+    .left-content {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+
+  .attachments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+
+    label {
+      margin-bottom: 2px;
+    }
+
+    .left-side {
+      display: flex;
+      flex-direction: column;
+
+      span {
+        font-size: 14px;
+        color: #686868;
+      }
+    }
+  }
+
+  label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  .required {
+    color: $error-red;
+    margin-left: 4px;
+  }
+}
+
+.input-style {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  font-size: 16px;
+
+  &.error {
+    border: 1px solid $error-red !important;
+  }
+}
+
+.input-style:focus,
+textarea:focus {
+  outline: none;
+  border: 2px solid $primary-blue;
+}
+
+textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 12px;
+  border: 1px solid $border-color;
+  border-radius: 8px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+input[type="date"] {
+  position: relative;
+  color: #686868;
+
+  &::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+  }
+
+  &::-webkit-datetime-edit-fields-wrapper {
+    padding: 0;
+  }
+
+  &::-webkit-datetime-edit-text {
+    padding: 0 4px;
+  }
+
+  &::-webkit-datetime-edit-day-field,
+  &::-webkit-datetime-edit-month-field,
+  &::-webkit-datetime-edit-year-field {
+    padding: 0;
+  }
+
+  &::-webkit-inner-spin-button {
+    display: none;
+  }
+
+  &::-webkit-clear-button {
+    display: none;
+  }
+
+  &:not(:valid) {
+    &::-webkit-datetime-edit {
+      content: "dd/mm/yyyy";
+      color: #686868;
+    }
+  }
+}
+
+mat-form-field {
+  width: 100%;
+
+  ::ng-deep {
+    .mat-mdc-form-field-flex {
+      background-color: $white !important;
+      border: 1px solid $border-color !important;
+
+      border-radius: 8px !important;
+    }
+
+    .mat-mdc-form-field-outline {
+      border: 1px solid $border-color !important;
+      border-radius: 8px !important;
+    }
+
+    .mat-focused .mat-mdc-form-field-outline,
+    .mat-form-field-outline.mat-form-field-outline-thick,
+    .mdc-text-field--focused:not(.mdc-text-field--disabled)
+      .mdc-notched-outline__leading,
+    .mdc-text-field--focused:not(.mdc-text-field--disabled)
+      .mdc-notched-outline__notch,
+    .mdc-text-field--focused:not(.mdc-text-field--disabled)
+      .mdc-notched-outline__trailing {
+      border: 2px solid $primary-blue !important;
+      border-width: 2px !important;
+      border-radius: 8px !important;
+      opacity: 1 !important;
+    }
+
+    .mdc-text-field--focused {
+      .mat-mdc-form-field-outline {
+        border: 2px solid $primary-blue !important;
+        border-radius: 8px !important;
+      }
+    }
+
+    .mat-mdc-text-field-wrapper {
+      padding: 0 !important;
+      background-color: transparent !important;
+      height: 44px !important;
+
+      &.mdc-text-field--focused {
+        outline: 2px solid $primary-blue !important;
+        border-radius: 8px !important;
+      }
+    }
+
+    .mat-mdc-form-field-infix {
+      padding: 8px 12px !important;
+      height: 44px !important;
+      min-height: 44px !important;
+    }
+
+    .mdc-floating-label {
+      display: none !important;
+    }
+
+    .mdc-notched-outline {
+      display: none !important;
+    }
+
+    .mdc-notched-outline__leading,
+    .mdc-notched-outline__notch,
+    .mdc-notched-outline__trailing {
+      border: none !important;
+      outline: none !important;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper,
+    .mat-mdc-form-field-bottom-align::before {
+      display: none !important;
+      height: 0 !important;
+    }
+
+    .mat-datepicker-toggle {
+      button {
+        &:hover {
+          box-shadow: none !important;
+        }
+      }
+    }
+    .mat-mdc-form-field-infix {
+      @include flex-center;
+    }
+  }
+
+  &.error {
+    ::ng-deep .mat-mdc-form-field-flex {
+      border: 1px solid $error-red !important;
+    }
+  }
+}
