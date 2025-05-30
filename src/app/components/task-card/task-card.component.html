@@ -17,34 +17,44 @@
 
   <h3 class="task-title">{{ task.title }}</h3>
   <p class="task-description">{{ task.description || 'Task without a description' }}</p>
-  <div class="task-subtasks" *ngIf="task.subtasks?.length">
-    <div class="progress-bar">
-      <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) / task.subtasks.length * 100"></div>
+  @if (task.subtasks.length) {
+    <div class="task-subtasks">
+      <div class="progress-bar">
+        <div class="progress" [style.width.%]="(task.subtasks | completedSubtasks) / task.subtasks.length * 100"></div>
+      </div>
+      <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
     </div>
-    <span class="subtask-info">{{ task.subtasks | completedSubtasks }}/{{ task.subtasks.length }} Subtasks</span>
-  </div>
+  }
   <div class="task-footer">
     <div class="task-assigned">
-      <div *ngFor="let user of task.assignedTo.slice(0, 3)" 
-           class="style-avatar-overlap"
-           [style.background-color]="user.iconColor"
-           [style.width.px]="32"
-           [style.height.px]="32">
-        <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
-        <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
-      </div>
-      <span class="align-assignedTo-count" *ngIf="task.assignedTo.length > 3">
-        +{{ task.assignedTo.length - 3 }}
-      </span>
+      @for (user of task.assignedTo.slice(0, 3); track user) {
+        <div class="style-avatar-overlap"
+             [style.background-color]="user.iconColor"
+             [style.width.px]="32"
+             [style.height.px]="32">
+          @if (user.profilePicture) {
+            <img [src]="user.profilePicture" [alt]="user.name">
+          }
+          @else {
+            <span>{{ user.initials }}</span>
+          }
+        </div>
+      }
+      @if (task.assignedTo.length > 3) {
+        <span class="align-assignedTo-count">
+          +{{ task.assignedTo.length - 3 }}
+        </span>
+      }
     </div>
     <div class="priority-icon" [ngClass]="task.priority"></div>
   </div>
 </div>
 
 <mat-menu #menu="matMenu" class="task-status-menu">
-  <button mat-menu-item 
-          *ngFor="let status of getFilteredStatuses()"
-          (click)="moveToStatus(status.value)">
-    {{ status.label }}
-  </button>
+  @for (status of getFilteredStatuses(); track status) {
+    <button mat-menu-item 
+            (click)="moveToStatus(status.value)">
+      {{ status.label }}
+    </button>
+  }
 </mat-menu>

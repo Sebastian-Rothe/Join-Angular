@@ -31,65 +31,76 @@
       <div class="label">Assigned to:</div>
       <div class="task-assigned">
         <div class="avatar-container">
-          <div *ngFor="let user of task.assignedTo" 
-               class="style-avatar-overlap"
-               [attr.data-tooltip]="user.name"
-               [style.background-color]="user.iconColor">
-            <img *ngIf="user.profilePicture" [src]="user.profilePicture" [alt]="user.name">
-            <span *ngIf="!user.profilePicture">{{ user.initials }}</span>
-          </div>
+          @for (user of task.assignedTo; track user) {
+            <div class="style-avatar-overlap"
+                 [attr.data-tooltip]="user.name"
+                 [style.background-color]="user.iconColor">
+              @if (user.profilePicture) {
+                <img [src]="user.profilePicture" [alt]="user.name">
+              }
+              @else {
+                <span>{{ user.initials }}</span>
+              }
+            </div>
+          }
         </div>
       </div>
     </div>
 
     <div class="info-section stacked">
       <div class="label">Attachments:</div>
-      <div class="file-list-container" *ngIf="task.files?.length; else noFiles">
-        <div class="file-grid" 
-             #fileGrid
-             (wheel)="onWheel($event)"
-             (mousedown)="startDragging($event)"
-             (mousemove)="onDrag($event)"
-             (mouseup)="stopDragging()"
-             (mouseleave)="stopDragging()">
-          <div *ngFor="let file of task.files; let i = index" class="file-preview-item">
-            <div class="file-preview-content">
-              <img [src]="file.data" [alt]="file.name" (click)="openImageViewer(i)">
-              <div class="file-name">{{ file.name }}</div>
-              <div class="file-preview-overlay">
-                <mat-icon (click)="downloadFile(file); $event.stopPropagation()">cloud_download</mat-icon>
+      @if (task.files.length) {
+        <div class="file-list-container">
+          <div class="file-grid" 
+               #fileGrid
+               (wheel)="onWheel($event)"
+               (mousedown)="startDragging($event)"
+               (mousemove)="onDrag($event)"
+               (mouseup)="stopDragging()"
+               (mouseleave)="stopDragging()">
+            @for (file of task.files; track file; let i = $index) {
+              <div class="file-preview-item">
+                <div class="file-preview-content">
+                  <img [src]="file.data" [alt]="file.name" (click)="openImageViewer(i)">
+                  <div class="file-name">{{ file.name }}</div>
+                  <div class="file-preview-overlay">
+                    <mat-icon (click)="downloadFile(file); $event.stopPropagation()">cloud_download</mat-icon>
+                  </div>
+                </div>
               </div>
-            </div>
+            }
           </div>
         </div>
-      </div>
-      <ng-template #noFiles>
+      } @else {
         <div class="empty-state">No files attached</div>
-      </ng-template>
+      }
     </div>
 
     <div class="info-section stacked">
       <div class="label">Subtasks:</div>
-      <div class="subtask-list" *ngIf="task.subtasks?.length; else noSubtasks">
-        <div *ngFor="let subtask of task.subtasks" class="custom-checkbox">
-          <div class="subtask-content">
-            <input type="checkbox" 
-                   [checked]="subtask.completed"
-                   (change)="toggleSubtask(subtask)">
-            <svg (click)="toggleSubtask(subtask); $event.stopPropagation()" 
-                 width="19" height="18" viewBox="0 0 19 18" fill="none" 
-                 xmlns="http://www.w3.org/2000/svg">
-              <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
-              <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
-              <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-            </svg>
-            <span class="subtask-text">{{ subtask.title }}</span>
-          </div>
+      @if (task.subtasks.length) {
+        <div class="subtask-list">
+          @for (subtask of task.subtasks; track subtask) {
+            <div class="custom-checkbox">
+              <div class="subtask-content">
+                <input type="checkbox" 
+                       [checked]="subtask.completed"
+                       (change)="toggleSubtask(subtask)">
+                <svg (click)="toggleSubtask(subtask); $event.stopPropagation()" 
+                     width="19" height="18" viewBox="0 0 19 18" fill="none" 
+                     xmlns="http://www.w3.org/2000/svg">
+                  <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
+                  <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
+                  <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                </svg>
+                <span class="subtask-text">{{ subtask.title }}</span>
+              </div>
+            </div>
+          }
         </div>
-      </div>
-      <ng-template #noSubtasks>
+      } @else {
         <div class="empty-state">No subtasks</div>
-      </ng-template>
+      }
     </div>
   </div>
 
@@ -106,10 +117,11 @@
   </div>
 </div>
 
-<app-image-viewer
-  *ngIf="showImageViewer"
-  [images]="images"
-  [currentIndex]="currentImageIndex"
-  (indexChange)="onCurrentIndexChange($event)"
-  (close)="showImageViewer = false"
-></app-image-viewer>
+@if (showImageViewer) {
+  <app-image-viewer
+    [images]="images"
+    [currentIndex]="currentImageIndex"
+    (indexChange)="onCurrentIndexChange($event)"
+    (close)="showImageViewer = false"
+  ></app-image-viewer>
+}

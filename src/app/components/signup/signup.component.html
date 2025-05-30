@@ -8,7 +8,9 @@
     <div class="signup-section">
       <div class="title-section-signup">
         <div class="title-section-left">
-          <mat-icon class="arrow-left" (click)="backToLoginPage()">arrow_back</mat-icon>
+          <mat-icon class="arrow-left" (click)="backToLoginPage()"
+            >arrow_back</mat-icon
+          >
         </div>
         <div class="title-section-right">
           <span>Sign up</span>
@@ -23,10 +25,20 @@
             [(ngModel)]="username"
             placeholder="Name"
             class="input-with-icon"
-            [class.error]="validationErrors.username" />
-          <mat-icon class="input-icon" [class.error-active]="validationErrors.username">person</mat-icon>
-          <div class="error-message" [class.show]="currentField === 'username' && validationErrors.username">
-            {{validationErrors.username}}
+            [class.error]="validationErrors.username"
+          />
+          <mat-icon
+            class="input-icon"
+            [class.error-active]="validationErrors.username"
+            >person</mat-icon
+          >
+          <div
+            class="error-message"
+            [class.show]="
+              currentField === 'username' && validationErrors.username
+            "
+          >
+            {{ validationErrors.username }}
           </div>
         </div>
 
@@ -36,10 +48,18 @@
             [(ngModel)]="email"
             placeholder="Email"
             class="input-with-icon"
-            [class.error]="validationErrors.email" />
-          <mat-icon class="input-icon" [class.error-active]="validationErrors.email">mail</mat-icon>
-          <div class="error-message" [class.show]="currentField === 'email' && validationErrors.email">
-            {{validationErrors.email}}
+            [class.error]="validationErrors.email"
+          />
+          <mat-icon
+            class="input-icon"
+            [class.error-active]="validationErrors.email"
+            >mail</mat-icon
+          >
+          <div
+            class="error-message"
+            [class.show]="currentField === 'email' && validationErrors.email"
+          >
+            {{ validationErrors.email }}
           </div>
         </div>
 
@@ -51,21 +71,32 @@
             class="input-with-icon"
             [class.error]="validationErrors.password"
             (focus)="onPasswordFocus('password')"
-            (blur)="onPasswordBlur('password')" />
-          <mat-icon 
-            class="input-icon" 
+            (blur)="onPasswordBlur('password')"
+          />
+          @if (!isPasswordFocused) {
+          <mat-icon
+            class="input-icon"
             [class.error-active]="validationErrors.password"
-            *ngIf="!isPasswordFocused">lock</mat-icon>
-          <mat-icon 
-            class="input-icon clickable" 
-            *ngIf="isPasswordFocused"
+          >
+            lock
+          </mat-icon>
+          } @else{
+          <mat-icon
+            class="input-icon clickable"
             [class.error-active]="validationErrors.password"
             (click)="togglePasswordVisibility('password')"
-            (mousedown)="$event.preventDefault()">
-            {{hidePassword ? 'visibility_off' : 'visibility'}}
+            (mousedown)="$event.preventDefault()"
+          >
+            {{ hidePassword ? "visibility_off" : "visibility" }}
           </mat-icon>
-          <div class="error-message" [class.show]="currentField === 'password' && validationErrors.password">
-            {{validationErrors.password}}
+          }
+          <div
+            class="error-message"
+            [class.show]="
+              currentField === 'password' && validationErrors.password
+            "
+          >
+            {{ validationErrors.password }}
           </div>
         </div>
 
@@ -77,46 +108,91 @@
             class="input-with-icon"
             [class.error]="validationErrors.confirmPassword"
             (focus)="onPasswordFocus('confirmPassword')"
-            (blur)="onPasswordBlur('confirmPassword')" />
-          <mat-icon 
-            class="input-icon" 
+            (blur)="onPasswordBlur('confirmPassword')"
+          />
+          @if (!isConfirmPasswordFocused) {
+          <mat-icon
+            class="input-icon"
             [class.error-active]="validationErrors.confirmPassword"
-            *ngIf="!isConfirmPasswordFocused">lock</mat-icon>
-          <mat-icon 
-            class="input-icon clickable" 
-            *ngIf="isConfirmPasswordFocused"
+          >
+            lock
+          </mat-icon>
+          } @else{
+          <mat-icon
+            class="input-icon clickable"
             [class.error-active]="validationErrors.confirmPassword"
             (click)="togglePasswordVisibility('confirmPassword')"
-            (mousedown)="$event.preventDefault()">
-            {{hideConfirmPassword ? 'visibility_off' : 'visibility'}}
+            (mousedown)="$event.preventDefault()"
+          >
+            {{ hideConfirmPassword ? "visibility_off" : "visibility" }}
           </mat-icon>
-          <div class="error-message" [class.show]="currentField === 'confirmPassword' && validationErrors.confirmPassword">
-            {{validationErrors.confirmPassword}}
+          }
+          <div
+            class="error-message"
+            [class.show]="
+              currentField === 'confirmPassword' &&
+              validationErrors.confirmPassword
+            "
+          >
+            {{ validationErrors.confirmPassword }}
           </div>
         </div>
 
-        <div class="error-message" *ngIf="currentField === 'policy' && errorMessage">
+        @if (currentField === 'policy' && errorMessage) {
+        <div class="error-message">
           {{ errorMessage }}
         </div>
+        }
       </div>
 
       <div class="check-policy-section">
         <label class="custom-checkbox">
-          <input type="checkbox" [(ngModel)]="policyAccepted" id="policy-checkbox">
-          <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"/>
-            <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"/>
-            <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <input
+            type="checkbox"
+            [(ngModel)]="policyAccepted"
+            id="policy-checkbox"
+          />
+          <svg
+            width="19"
+            height="18"
+            viewBox="0 0 19 18"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              class="unchecked"
+              x="1.38818"
+              y="1"
+              width="16"
+              height="16"
+              rx="3"
+              stroke="#2A3647"
+              stroke-width="2"
+            />
+            <path
+              class="checked"
+              d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+            />
+            <path
+              class="checked"
+              d="M5.38818 9L9.38818 13L17.3882 1.5"
+              stroke="#2A3647"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
           </svg>
-          <span>I accept the <a routerLink="/privacy">Privacy policy</a></span>
+          <span
+            >I accept the <a routerLink="/main/privacy">Privacy policy</a></span
+          >
         </label>
       </div>
 
       <div class="button-section-signup">
-        <button class="primary-btn" 
-                (click)="signUp()">
-          Sign Up
-        </button>
+        <button class="primary-btn" (click)="signUp()">Sign Up</button>
       </div>
     </div>
 
@@ -126,5 +202,3 @@
     </footer>
   </div>
 </div>
-
-
