@@ -1,11 +1,15 @@
 <div class="container-main" [class.dialog-mode]="isDialog">
-    <div class="title-container" *ngIf="isDialog">
+    @if (isDialog) {
+        <div class="title-container">
+            <div class="title">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
+            <button class="close-button" (click)="closeDialog()">
+                <mat-icon>close</mat-icon>
+            </button>
+        </div>
+    }
+    @if (!isDialog) {
         <div class="title">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
-        <button class="close-button" (click)="closeDialog()">
-            <mat-icon>close</mat-icon>
-        </button>
-    </div>
-    <div class="title" *ngIf="!isDialog">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
+    }
     <div class="left-right-container">
         <div class="left-side">
             <div class="form-group">
@@ -78,13 +82,13 @@
                             {{ task.category || 'Select task category' }}
                             <span><mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon></span>
                         </button>
-                        <div class="dropdown-content" [class.show]="categoryOpen">
-                            <div *ngFor="let cat of categories" 
-                                 class="category-option" 
-                                 (click)="selectCategory(cat.value)"
-                                 [class.selected]="task.category === cat.value">
-                                {{ cat.label }}
-                            </div>
+                        <div class="dropdown-content" [class.show]="categoryOpen">                            @for (cat of categories; track cat) {
+                                <div class="category-option" 
+                                     (click)="selectCategory(cat.value)"
+                                     [class.selected]="task.category === cat.value">
+                                    {{ cat.label }}
+                                </div>
+                            }
                         </div>
                     </div>
                     <div class="error-validation" [class.visible]="errors.category">This field is required</div>
@@ -101,12 +105,14 @@
                         <label>Attachments</label>
                         <span>Allowed file types are JPEG and PNG</span>
                     </div>
-                    <div class="delete-all-btn" *ngIf="task.files?.length">
-                        <button (click)="removeAllFiles()">
-                            <mat-icon>delete</mat-icon>
-                            Delete all
-                        </button>
-                    </div>
+                    @if (task.files?.length) {
+                        <div class="delete-all-btn">
+                            <button (click)="removeAllFiles()">
+                                <mat-icon>delete</mat-icon>
+                                Delete all
+                            </button>
+                        </div>
+                    }
                 </div>
                 <div class="file-upload-zone" 
                      (dragover)="onDragOver($event)"
@@ -125,125 +131,148 @@
                         <mat-icon>add</mat-icon>
                     </div>
                 </div>
-                <div class="file-list-container" *ngIf="task.files?.length">
-                    <div class="file-grid" 
-                         #fileGrid
-                         (wheel)="onWheel($event)"
-                         (mousedown)="startDragging($event)"
-                         (mousemove)="onDrag($event)"
-                         (mouseup)="stopDragging()"
-                         (mouseleave)="stopDragging()">
-                        <div *ngFor="let file of task.files; let i = index" class="file-preview-item">
-                            <div class="file-preview-content">
-                                <img [src]="getFilePreview(file)" 
-                                     alt="File preview"
-                                     (click)="openImageViewer(i)">
-                                <div class="file-name">{{ file.name }}</div>
-                                <button class="delete-file-btn" (click)="removeFile(i)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
+                @if (task.files?.length) {
+                    <div class="file-list-container">
+                        <div class="file-grid" 
+                             #fileGrid
+                             (wheel)="onWheel($event)"
+                             (mousedown)="startDragging($event)"
+                             (mousemove)="onDrag($event)"
+                             (mouseup)="stopDragging()"
+                             (mouseleave)="stopDragging()">
+                            @for (file of task.files; track file; let i = $index) {
+                                <div class="file-preview-item">
+                                    <div class="file-preview-content">
+                                        <img [src]="getFilePreview(file)" 
+                                             alt="File preview"
+                                             (click)="openImageViewer(i)">
+                                        <div class="file-name">{{ file.name }}</div>
+                                        <button class="delete-file-btn" (click)="removeFile(i)">
+                                            <mat-icon>delete</mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
                         </div>
                     </div>
+                }
+
+                @if (showImageViewer) {
+                    <app-image-viewer
+                        [images]="images"
+                        [currentIndex]="currentIndex"
+                        (indexChange)="currentIndex = $event"
+                        (close)="closeImageViewer()">
+                    </app-image-viewer>
+                }
+
+                <div class="form-group">
+                    <label>Subtasks</label>
+                    <div class="subtask-form">
+                        <input class="input-style" type="text" 
+                               [(ngModel)]="newSubtask" 
+                               (input)="subTaskInput()"
+                               (keyup.enter)="addSubtask()"
+                               placeholder="Add new subtask">
+                        <div class="subtask-buttons">
+                            @if (!isSubtaskInputActive) {
+                                <button type="button" class="subtask-btn">
+                                    <span class="subtask-btn-plus" (click)="activateSubtaskInput()">
+                                        <mat-icon>add</mat-icon>
+                                    </span>
+                                </button>
+                            }
+                            @if (isSubtaskInputActive) {
+                                <button type="button" class="subtask-btn-checked" (click)="addSubtask()">
+                                    <mat-icon>check</mat-icon>
+                                </button>
+                                <div class="subtask-btn-divider"></div>
+                                <button type="button" class="subtask-btn-cancel" (click)="clearSubtaskInput()">
+                                    <mat-icon>close</mat-icon>
+                                </button>
+                            }
+                        </div>
+                    </div>
+                    
+                    @if (task.subtasks?.length) {
+                        <div class="subtask-list-container">
+                            <ul>
+                                @for (subtask of task.subtasks; track subtask; let i = $index) {
+                                    <li class="subtask-item">
+                                        <div class="subtask-text">{{ subtask.title }}</div>
+                                        <div class="subtask-actions">
+                                            <button type="button" class="edit-subtask" (click)="editSubtask(i)">
+                                                <mat-icon>edit</mat-icon>
+                                            </button>
+                                            <button type="button" class="delete-subtask" (click)="deleteSubtask(i)">
+                                                <mat-icon>delete</mat-icon>
+                                            </button>
+                                        </div>
+                                    </li>
+                                }
+                            </ul>
+                        </div>
+                    }
                 </div>
-            </div>
 
-            <app-image-viewer
-                *ngIf="showImageViewer"
-                [images]="images"
-                [currentIndex]="currentIndex"
-                (indexChange)="currentIndex = $event"
-                (close)="closeImageViewer()">
-            </app-image-viewer>
-
-            <div class="form-group">
-                <label>Subtasks</label>
-                <div class="subtask-form">
-                    <input class="input-style" type="text" 
-                           [(ngModel)]="newSubtask" 
-                           (input)="subTaskInput()"
-                           (keyup.enter)="addSubtask()"
-                           placeholder="Add new subtask">
-                    <div class="subtask-buttons">
-                        <button type="button" class="subtask-btn" *ngIf="!isSubtaskInputActive">
-                            <span class="subtask-btn-plus" (click)="activateSubtaskInput()">
-                                <mat-icon>add</mat-icon>
-                            </span>
+                <div class="form-group">
+                    <label for="dropdown">Assigned to</label>
+                    <div class="dropdown">
+                        <button type="button" (click)="toggleDropdown($event)" class="dropdown-btn">
+                            Select contacts to assign 
+                            <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
                         </button>
-                        <ng-container *ngIf="isSubtaskInputActive">
-                            <button type="button" class="subtask-btn-checked" (click)="addSubtask()">
-                                <mat-icon>check</mat-icon>
-                            </button>
-                            <div class="subtask-btn-divider"></div>
-                            <button type="button" class="subtask-btn-cancel" (click)="clearSubtaskInput()">
-                                <mat-icon>close</mat-icon>
-                            </button>
-                        </ng-container>
-                    </div>
-                </div>
-                
-                <div class="subtask-list-container" *ngIf="task.subtasks?.length">
-                    <ul>
-                        <li *ngFor="let subtask of task.subtasks; let i = index" class="subtask-item">
-                            <div class="subtask-text">{{ subtask.title }}</div>
-                            <div class="subtask-actions">
-                                <button type="button" class="edit-subtask" (click)="editSubtask(i)">
-                                    <mat-icon>edit</mat-icon>
-                                </button>
-                                <button type="button" class="delete-subtask" (click)="deleteSubtask(i)">
-                                    <mat-icon>delete</mat-icon>
-                                </button>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="dropdown">Assigned to</label>
-                <div class="dropdown">
-                    <button type="button" (click)="toggleDropdown($event)" class="dropdown-btn">
-                        Select contacts to assign 
-                        <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
-                    </button>
-                    <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
-                        <div *ngFor="let contact of contacts" 
-                             class="user-option" 
-                             [class.selected]="isContactSelected(contact)"
-                             (click)="toggleContact(contact)"
-                             style="border-radius: 8px; margin-bottom: 2px;">
-                            <div class="user-avatar" [style.background-color]="contact.iconColor">
-                                <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name">
-                                <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
-                            </div>
-                            <div class="user-info">
-                                {{ contact.name }}
-                                <span *ngIf="contact.uid === currentUser?.uid">(You)</span>
-                            </div>
-                            <label class="custom-checkbox" (click)="$event.stopPropagation()">
-                                <input type="checkbox" 
-                                       [checked]="isContactSelected(contact)"
-                                       (change)="toggleContact(contact)">
-                                <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
-                                    <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
-                                    <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                </svg>
-                            </label>
+                        <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
+                            @for (contact of contacts; track contact) {
+                                <div class="user-option" 
+                                     [class.selected]="isContactSelected(contact)"
+                                     (click)="toggleContact(contact)"
+                                     style="border-radius: 8px; margin-bottom: 2px;">
+                                    <div class="user-avatar" [style.background-color]="contact.iconColor">
+                                        @if (contact.profilePicture) {
+                                            <img [src]="contact.profilePicture" [alt]="contact.name">
+                                        }
+                                        @if (!contact.profilePicture) {
+                                            <span>{{ contact.initials }}</span>
+                                        }
+                                    </div>
+                                    <div class="user-info">
+                                        {{ contact.name }}
+                                        @if (contact.uid === currentUser?.uid) {
+                                            <span>(You)</span>
+                                        }
+                                    </div>
+                                    <label class="custom-checkbox" (click)="$event.stopPropagation()">
+                                        <input type="checkbox" 
+                                               [checked]="isContactSelected(contact)"
+                                               (change)="toggleContact(contact)">
+                                        <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                            <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
+                                            <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
+                                            <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+                                        </svg>
+                                    </label>
+                                </div>
+                            }
                         </div>
                     </div>
-                </div>
-                <div class="selected-badges">
-                    <div *ngFor="let contact of selectedContacts" class="user-badge">
-                        <div class="user-avatar" [style.background-color]="contact.iconColor">
-                            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" [alt]="contact.name">
-                            <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
-                        </div>
-                        <span class="badge-close" (click)="removeContact(contact)">×</span>
+                    <div class="selected-badges">                        @for (contact of selectedContacts; track contact) {
+                            <div class="user-badge">
+                                <div class="user-avatar" [style.background-color]="contact.iconColor">
+                                    @if (contact.profilePicture) {
+                                        <img [src]="contact.profilePicture" [alt]="contact.name">
+                                    }
+                                    @if (!contact.profilePicture) {
+                                        <span>{{ contact.initials }}</span>
+                                    }
+                                </div>
+                                <span class="badge-close" (click)="removeContact(contact)">×</span>
+                            </div>
+                        }
                     </div>
-                </div>
-                <div class="required-hint">
-                    <span><span class="required">*</span>This field is required</span>
+                    <div class="required-hint">
+                        <span><span class="required">*</span>This field is required</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -253,20 +282,19 @@
         <div class="footer-add-task-left desktop-only">
             <span class="required-desktop"><span class="required">*</span>This field is required</span>
         </div>
-        <div class="footer-add-task-right">
-            <ng-container *ngIf="!isEditMode">
+        <div class="footer-add-task-right">            @if (!isEditMode) {
                 <button type="button" class="secondary-btn" (click)="clearForm()">
                     Clear <mat-icon>close</mat-icon>
                 </button>
                 <button type="button" class="primary-btn" (click)="createTask()">
                     Create Task <mat-icon>check</mat-icon>
                 </button>
-            </ng-container>
-            <ng-container *ngIf="isEditMode">
+            }
+            @if (isEditMode) {
                 <button type="button" class="primary-btn" (click)="createTask()">
                     Ok <mat-icon>check</mat-icon>
                 </button>
-            </ng-container>
+            }
         </div>
     </div>
     
