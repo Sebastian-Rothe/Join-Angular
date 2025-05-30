@@ -1,8 +1,10 @@
-import { Component } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
-import { AuthService } from '../../../services/auth.service';
-import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Component } from '@angular/core';
+import { Observable } from 'rxjs';
+// Angular Material imports
+import { MatIconModule } from '@angular/material/icon';
+// Services
+import { AuthService } from '../../../services/auth.service';
 
 /**
  * Component for displaying the application's privacy policy.

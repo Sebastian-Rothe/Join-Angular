@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Subject } from 'rxjs';
-import { User } from '../models/user.class';
+// Services
 import { DialogService } from './dialog.service';
-import { UserService } from './user.service';
 import { SnackbarService } from './snackbar.service';
+import { UserService } from './user.service';
+// Models
+import { User } from '../models/user.class';
 
 @Injectable({
   providedIn: 'root'

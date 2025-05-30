@@ -1,4 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+// Angular Fire imports for Firebase Authentication and Firestore
 import {
   Auth,
   signInWithEmailAndPassword,
@@ -14,9 +16,10 @@ import {
   getDoc,
   deleteDoc,
 } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
-import { User } from '../models/user.class';
+// Services
 import { SnackbarService } from './snackbar.service';
+// Models
+import { User } from '../models/user.class';
 
 /**
  * Authentication service that handles user authentication, registration, and management

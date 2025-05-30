@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+// Angular Material imports
+import { MatIconModule } from '@angular/material/icon';
 
 /**
  * Help component that displays application usage instructions and documentation.

@@ -1,9 +1,11 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
 import { AsyncPipe } from '@angular/common';
 import { Observable } from 'rxjs';
+import { RouterLink } from '@angular/router';
+// Angular Material imports
 import { MatIconModule } from '@angular/material/icon';
+// Services
+import { AuthService } from '../../../services/auth.service';
 
 /**
  * Navigation bar component for the application's main navigation.

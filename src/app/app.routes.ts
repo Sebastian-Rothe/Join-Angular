@@ -1,7 +1,7 @@
 import { Routes } from '@angular/router';
+import { MainContentComponent } from './main-content/main-content.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
-import { MainContentComponent } from './main-content/main-content.component';
 import { ContactsComponent } from './components/contacts/contacts.component';
 import { SummaryComponent } from './components/summary/summary.component';
 import { BoardComponent } from './components/board/board.component';

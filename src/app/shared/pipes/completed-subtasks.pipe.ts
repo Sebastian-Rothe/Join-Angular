@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+// Models
 import { Subtask } from '../../models/task.class';
 
 /**

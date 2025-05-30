@@ -1,4 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { BehaviorSubject } from 'rxjs';
+// Angular Fire imports for Firebase Firestore
 import {
   Firestore,
   collection,
@@ -10,10 +12,11 @@ import {
   where,
   getDocs,
 } from '@angular/fire/firestore';
-import { Task, TaskFile, Subtask } from '../models/task.class';
+// Services
 import { UserService } from './user.service';
-import { BehaviorSubject } from 'rxjs';
 import { SnackbarService } from './snackbar.service';
+// Models
+import { Task, TaskFile, Subtask } from '../models/task.class';
 
 /**
  * Service for managing tasks in the application

@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+// Angular Material imports 
+import { MatDialog } from '@angular/material/dialog';
+// Components for dialogs
 import { ConfirmDialogComponent } from '../shared/components/confirm-dialog/confirm-dialog.component';
 import { MessageDialogComponent } from '../shared/components/message-dialog/message-dialog.component';
 

@@ -1,4 +1,6 @@
 import { Injectable, inject } from '@angular/core';
+import { Observable, switchMap, map, of, firstValueFrom } from 'rxjs';
+// Angular Fire imports for Firebase Firestore
 import {
   Firestore,
   doc,
@@ -9,11 +11,12 @@ import {
   setDoc,
   deleteDoc,
 } from '@angular/fire/firestore';
+// Services
 import { AuthService } from './auth.service';
-import { Observable, switchMap, map, of, firstValueFrom } from 'rxjs';
+import { SnackbarService } from './snackbar.service';
+// Models
 import { User } from '../models/user.class';
 import { ImageService } from './image.service';
-import { SnackbarService } from './snackbar.service';
 
 /**
  * Interface for user data manipulation

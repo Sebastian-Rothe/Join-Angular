@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
+// Material imports
+import { MatIconModule } from '@angular/material/icon';
+// Services
 import { TaskService } from '../../services/task.service';
 import { UserService } from '../../services/user.service';
 import { SnackbarService } from '../../services/snackbar.service';

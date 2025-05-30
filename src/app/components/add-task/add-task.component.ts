@@ -1,59 +1,77 @@
 /**
  * Component for creating and editing tasks in the Join application.
- * 
+ *
  * This component provides a comprehensive interface for:
  * - Creating new tasks
  * - Editing existing tasks
  * - Managing task assignments
  * - Handling file attachments
  * - Setting task priorities and categories
- * 
+ *
  * Features:
  * - Drag and drop file upload
  * - Contact selection and management
  * - Due date selection with validation
  * - Subtask management
  * - Category and priority selection
- * 
+ *
  * The component can be used both as a standalone page and as a dialog.
- * 
+ *
  * @example
  * ```typescript
  * // Opening as a dialog for creating a new task
  * this.dialog.open(AddTaskComponent, {
  *   data: { initialStatus: 'todo' }
  * });
- * 
+ *
  * // Opening as a dialog for editing an existing task
  * this.dialog.open(AddTaskComponent, {
- *   data: { 
+ *   data: {
  *     isEditMode: true,
  *     taskToEdit: existingTask
  *   }
  * });
  * ```
  */
-import { Component, OnInit, HostListener, LOCALE_ID, ViewChild, ElementRef, Optional, Inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  HostListener,
+  LOCALE_ID,
+  ViewChild,
+  ElementRef,
+  Optional,
+  Inject,
+} from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
+import localeDe from '@angular/common/locales/de';
+// Angular Material imports
+import { MatIconModule } from '@angular/material/icon';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatNativeDateModule, MAT_DATE_LOCALE, DateAdapter, MAT_DATE_FORMATS } from '@angular/material/core';
+import {
+  MatNativeDateModule,
+  MAT_DATE_LOCALE,
+  DateAdapter,
+  MAT_DATE_FORMATS,
+} from '@angular/material/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import localeDe from '@angular/common/locales/de';
+// Service imports
 import { UserService } from '../../services/user.service';
 import { AuthService } from '../../services/auth.service';
 import { TaskService } from '../../services/task.service';
 import { ImageService, ViewerImageInfo } from '../../services/image.service';
 import { SnackbarService } from '../../services/snackbar.service';
 import { HeaderService } from '../../services/header.service';
+// Model imports
 import { Task, Subtask, TaskFile } from '../../models/task.class';
 import { User } from '../../models/user.class';
-import { CustomDateAdapter } from '../../shared/adapters/custom-date.adapter';
+
 import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
+import { CustomDateAdapter } from '../../shared/adapters/custom-date.adapter';
 
 export const MY_DATE_FORMATS = {
   parse: {
@@ -71,37 +89,37 @@ export const MY_DATE_FORMATS = {
   selector: 'app-add-task',
   standalone: true,
   imports: [
-    CommonModule, 
-    FormsModule, 
+    CommonModule,
+    FormsModule,
     MatIconModule,
     MatDatepickerModule,
     MatInputModule,
     MatFormFieldModule,
     MatNativeDateModule,
-    ImageViewerComponent
+    ImageViewerComponent,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     { provide: LOCALE_ID, useValue: 'de-DE' },
     { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS },
-    { provide: DateAdapter, useClass: CustomDateAdapter }
+    { provide: DateAdapter, useClass: CustomDateAdapter },
   ],
   templateUrl: './add-task.component.html',
-  styleUrls: ['./add-task.component.scss']
+  styleUrls: ['./add-task.component.scss'],
 })
 export class AddTaskComponent implements OnInit {
   /** Reference to the file grid element for horizontal scrolling */
   @ViewChild('fileGrid') fileGrid!: ElementRef;
-  
+
   /** Minimum allowed date for task due date */
   minDate: Date;
 
   /** Flag for tracking file grid dragging state */
   private isDraggingGrid = false;
-  
+
   /** Starting X coordinate for drag operation */
   private startX = 0;
-  
+
   /** Initial scroll position for drag operation */
   private scrollLeft = 0;
 
@@ -111,35 +129,35 @@ export class AddTaskComponent implements OnInit {
   /** Available task categories */
   categories = [
     { value: 'TechnicalTask', label: 'Technical Task' },
-    { value: 'UserStory', label: 'User Story' }
+    { value: 'UserStory', label: 'User Story' },
   ];
 
   /** Flag for category dropdown state */
   categoryOpen: boolean = false;
-  
+
   /** The task being created or edited */
   task: Task = new Task();
 
   /** List of all available contacts */
   contacts: User[] = [];
-  
+
   /** Currently selected contacts for task assignment */
   selectedContacts: User[] = [];
-  
+
   /** Flag for contacts dropdown state */
   dropdownOpen = false;
-  
+
   /** Current subtask input value */
   newSubtask = '';
-  
+
   /** Flag for subtask input active state */
   isSubtaskInputActive = false;
-  
+
   /** Form validation error states */
   errors = {
     title: false,
     dueDate: false,
-    category: false
+    category: false,
   };
 
   /** Currently logged in user */
@@ -150,7 +168,7 @@ export class AddTaskComponent implements OnInit {
 
   /** Flag indicating whether component is used in dialog */
   isDialog = false;
-  
+
   /** Flag indicating edit mode */
   isEditMode = false;
 
@@ -159,16 +177,16 @@ export class AddTaskComponent implements OnInit {
 
   /** Array of image information for viewer */
   images: ViewerImageInfo[] = [];
-  
+
   /** Current image index in viewer */
   currentIndex: number = 0;
-  
+
   /** Flag for image viewer visibility */
   showImageViewer: boolean = false;
 
   /**
    * Creates an instance of AddTaskComponent.
-   * 
+   *
    * @param userService - Service for user management
    * @param authService - Service for authentication
    * @param taskService - Service for task operations
@@ -188,17 +206,19 @@ export class AddTaskComponent implements OnInit {
     public headerService: HeaderService,
     private router: Router,
     @Optional() private dialogRef: MatDialogRef<AddTaskComponent>,
-    @Optional() @Inject(MAT_DIALOG_DATA) private dialogData?: {
-      initialStatus?: string,
-      isEditMode?: boolean,
-      taskToEdit?: Task
+    @Optional()
+    @Inject(MAT_DIALOG_DATA)
+    private dialogData?: {
+      initialStatus?: string;
+      isEditMode?: boolean;
+      taskToEdit?: Task;
     }
   ) {
     registerLocaleData(localeDe);
     this.isDialog = !!dialogRef;
     this.minDate = new Date();
     this.minDate.setHours(0, 0, 0, 0);
-    
+
     if (dialogData?.isEditMode && dialogData?.taskToEdit) {
       this.initializeEditMode(dialogData.taskToEdit);
     } else {
@@ -208,7 +228,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Initializes the component in edit mode
-   * 
+   *
    * @param taskToEdit - The task to be edited
    */
   private initializeEditMode(taskToEdit: Task): void {
@@ -220,7 +240,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Initializes the component in create mode
-   * 
+   *
    * @param initialStatus - Optional initial status for the new task
    */
   private initializeCreateMode(initialStatus?: string): void {
@@ -298,13 +318,19 @@ export class AddTaskComponent implements OnInit {
   private handleOutsideClick(event: MouseEvent): void {
     // Handle contacts dropdown
     const contactsDropdown = document.querySelector('.dropdown');
-    if (this.dropdownOpen && !contactsDropdown?.contains(event.target as Node)) {
+    if (
+      this.dropdownOpen &&
+      !contactsDropdown?.contains(event.target as Node)
+    ) {
       this.dropdownOpen = false;
     }
 
     // Handle category dropdown
     const categoryDropdown = document.querySelector('.dropdown-category');
-    if (this.categoryOpen && !categoryDropdown?.contains(event.target as Node)) {
+    if (
+      this.categoryOpen &&
+      !categoryDropdown?.contains(event.target as Node)
+    ) {
       this.categoryOpen = false;
     }
   }
@@ -312,14 +338,14 @@ export class AddTaskComponent implements OnInit {
   /**
    * Toggles the contacts dropdown menu.
    * Prevents event propagation if event is provided.
-   * 
+   *
    * @param event - Optional mouse event
-   */  toggleDropdown(event?: MouseEvent): void {
+   */ toggleDropdown(event?: MouseEvent): void {
     if (event) {
       event.stopPropagation();
     }
     this.dropdownOpen = !this.dropdownOpen;
-    
+
     if (this.dropdownOpen) {
       setTimeout(() => {
         const element = document.querySelector('.dropdown');
@@ -330,7 +356,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Toggles the category dropdown menu and scrolls it into view.
-   * 
+   *
    * @param event - Mouse event to prevent propagation
    */
   toggleCategory(event: MouseEvent): void {
@@ -346,41 +372,41 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Checks if a contact is currently selected.
-   * 
+   *
    * @param contact - The contact to check
    * @returns True if contact is selected, false otherwise
    */
   isContactSelected(contact: User): boolean {
-    return this.selectedContacts.some(c => c.uid === contact.uid);
+    return this.selectedContacts.some((c) => c.uid === contact.uid);
   }
 
   /**
    * Toggles the selection state of a contact for task assignment.
    * If the contact is already selected, removes them from selection.
    * If not selected, adds them to selection.
-   * 
+   *
    * @param contact - The contact to toggle selection for
    */
   toggleContact(contact: User): void {
-    const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
-    
+    const index = this.selectedContacts.findIndex((c) => c.uid === contact.uid);
+
     if (index === -1) {
       this.selectedContacts.push(contact);
     } else {
       this.selectedContacts.splice(index, 1);
     }
-    
+
     this.updateAssignedContacts();
   }
 
   /**
    * Removes a contact from the selected contacts list.
    * Updates the task's assigned contacts after removal.
-   * 
+   *
    * @param contact - The contact to remove from selection
    */
   removeContact(contact: User): void {
-    const index = this.selectedContacts.findIndex(c => c.uid === contact.uid);
+    const index = this.selectedContacts.findIndex((c) => c.uid === contact.uid);
     if (index !== -1) {
       this.selectedContacts.splice(index, 1);
       this.updateAssignedContacts();
@@ -390,7 +416,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Processes multiple files for task attachment.
    * Validates file types and converts them to TaskFile format.
-   * 
+   *
    * @param files - Array of files to process
    * @returns Promise resolving to array of TaskFile objects
    * @throws Error if file type is not allowed
@@ -402,19 +428,21 @@ export class AddTaskComponent implements OnInit {
     for (const file of files) {
       const extension = '.' + file.name.split('.').pop()?.toLowerCase();
       if (!allowedTypes.includes(extension)) {
-        throw new Error(`File "${file.name}" has invalid type. Only jpg, jpeg, png files are allowed.`);
+        throw new Error(
+          `File "${file.name}" has invalid type. Only jpg, jpeg, png files are allowed.`
+        );
       }
       validFiles.push(file);
     }
 
-    return Promise.all(validFiles.map(file => this.fileToTaskFile(file)));
+    return Promise.all(validFiles.map((file) => this.fileToTaskFile(file)));
   }
 
   /**
    * Handles the file upload process for both drag-and-drop and file input.
    * Processes the files and adds them to the task's file list.
    * Shows error message if file processing fails.
-   * 
+   *
    * @param files - Array of files to upload
    */
   private async handleFileUpload(files: File[]): Promise<void> {
@@ -424,7 +452,7 @@ export class AddTaskComponent implements OnInit {
     } catch (error) {
       this.snackbarService.error({
         message: 'This file format is not allowed!',
-        secondLine: 'You can only upload JPEG and PNG.'
+        secondLine: 'You can only upload JPEG and PNG.',
       });
     }
   }
@@ -432,7 +460,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Handles file selection from file input element.
    * Processes selected files if any are chosen.
-   * 
+   *
    * @param event - The file input change event
    */
   async onFileSelected(event: Event): Promise<void> {
@@ -445,7 +473,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Handles file drop event for drag-and-drop file upload.
    * Prevents default browser behavior and processes dropped files.
-   * 
+   *
    * @param event - The drop event containing files
    */
   async onDrop(event: DragEvent): Promise<void> {
@@ -462,7 +490,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Converts a File object to TaskFile format.
    * Compresses images before conversion.
-   * 
+   *
    * @param file - The file to convert
    * @returns Promise resolving to TaskFile object
    * @throws Error if file processing fails
@@ -473,7 +501,7 @@ export class AddTaskComponent implements OnInit {
       return {
         data: compressedImageData,
         name: file.name,
-        type: file.type
+        type: file.type,
       };
     } catch (error) {
       throw new Error(`Failed to process file "${file.name}"`);
@@ -482,7 +510,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Gets the preview URL for a task file.
-   * 
+   *
    * @param file - The task file to get preview for
    * @returns The data URL for the file preview
    */
@@ -492,7 +520,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Removes a file from the task's file list.
-   * 
+   *
    * @param index - Index of the file to remove
    */
   removeFile(index: number): void {
@@ -508,7 +536,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Sets the priority level for the task.
-   * 
+   *
    * @param priority - The priority level to set
    */
   selectPriority(priority: 'urgent' | 'medium' | 'low'): void {
@@ -544,7 +572,7 @@ export class AddTaskComponent implements OnInit {
     if (this.newSubtask.trim()) {
       this.task.subtasks.push({
         title: this.newSubtask.trim(),
-        completed: false
+        completed: false,
       });
       this.clearSubtaskInput();
     }
@@ -552,7 +580,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Moves a subtask back to the input field for editing.
-   * 
+   *
    * @param index - Index of the subtask to edit
    */
   editSubtask(index: number): void {
@@ -563,7 +591,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Deletes a subtask from the list.
-   * 
+   *
    * @param index - Index of the subtask to delete
    */
   deleteSubtask(index: number): void {
@@ -573,7 +601,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Validates the task title.
    * Title must not be empty after trimming whitespace.
-   * 
+   *
    * @returns True if title is valid, false otherwise
    */
   private validateTitle(): boolean {
@@ -585,7 +613,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Validates the task due date.
    * Due date must be set and greater than 0.
-   * 
+   *
    * @returns True if due date is valid, false otherwise
    */
   private validateDueDate(): boolean {
@@ -597,7 +625,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Validates the task category.
    * Category must be selected.
-   * 
+   *
    * @returns True if category is valid, false otherwise
    */
   private validateCategory(): boolean {
@@ -610,14 +638,14 @@ export class AddTaskComponent implements OnInit {
    * Validates the entire task form.
    * Checks title, due date, and category.
    * Updates error states for invalid fields.
-   * 
+   *
    * @returns True if all validations pass, false otherwise
    */
   validateForm(): boolean {
     const isTitleValid = this.validateTitle();
     const isDueDateValid = this.validateDueDate();
     const isCategoryValid = this.validateCategory();
-    
+
     return isTitleValid && isDueDateValid && isCategoryValid;
   }
 
@@ -626,13 +654,13 @@ export class AddTaskComponent implements OnInit {
    * Creates the task in the database, shows success message,
    * closes dialog if in dialog mode or navigates to board,
    * and clears the form.
-   * 
+   *
    * @throws {Error} If task creation fails
    */
   private async handleTaskCreation(): Promise<void> {
     await this.taskService.createTask(this.task);
     this.snackbarService.success('Task added to board', true);
-    
+
     if (this.dialogRef) {
       this.dialogRef.close('taskAdded');
     } else {
@@ -644,13 +672,13 @@ export class AddTaskComponent implements OnInit {
   /**
    * Updates an existing task in the database.
    * Shows a success message upon completion and closes the dialog if in dialog mode.
-   * 
+   *
    * @throws {Error} If task update fails
    */
   private async handleTaskUpdate(): Promise<void> {
     await this.taskService.updateTask(this.task);
     // this.snackbarService.success('Task successfully updated', false);
-    
+
     if (this.dialogRef) {
       await this.closeDialog();
     }
@@ -673,7 +701,9 @@ export class AddTaskComponent implements OnInit {
         await this.handleTaskCreation();
       }
     } catch (error) {
-      this.snackbarService.error(this.isEditMode ? 'Failed to update task' : 'Failed to create task');
+      this.snackbarService.error(
+        this.isEditMode ? 'Failed to update task' : 'Failed to create task'
+      );
     }
   }
 
@@ -684,12 +714,12 @@ export class AddTaskComponent implements OnInit {
     this.task = new Task();
     this.selectedContacts = [];
     this.clearSubtaskInput();
-    this.dateValue = null;  
+    this.dateValue = null;
   }
 
   /**
    * Sets the category for the task and closes the dropdown.
-   * 
+   *
    * @param value - The category value to set
    */
   selectCategory(value: string): void {
@@ -699,7 +729,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Handles dragover event for file upload zone.
-   * 
+   *
    * @param event - The dragover event
    */
   onDragOver(event: DragEvent): void {
@@ -710,7 +740,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Handles dragleave event for file upload zone.
-   * 
+   *
    * @param event - The dragleave event
    */
   onDragLeave(event: DragEvent): void {
@@ -721,7 +751,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Handles mouse wheel event for horizontal scrolling in file grid.
-   * 
+   *
    * @param event - The wheel event
    */
   onWheel(event: WheelEvent): void {
@@ -734,12 +764,12 @@ export class AddTaskComponent implements OnInit {
   /**
    * Handles the file grid drag movement.
    * Updates scroll position based on drag distance.
-   * 
+   *
    * @param event - Mouse event containing current coordinates
    */
   private handleFileGridDrag(event: MouseEvent): void {
     if (!this.isDraggingGrid) return;
-    
+
     event.preventDefault();
     const x = event.pageX - this.fileGrid.nativeElement.offsetLeft;
     const walk = (x - this.startX) * 2;
@@ -749,7 +779,7 @@ export class AddTaskComponent implements OnInit {
   /**
    * Initializes the file grid drag operation.
    * Sets up initial coordinates and cursor style.
-   * 
+   *
    * @param event - Mouse event containing start coordinates
    */
   private initializeFileGridDrag(event: MouseEvent): void {
@@ -770,7 +800,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Starts the dragging operation for file grid.
-   * 
+   *
    * @param event - Mouse event that triggered the drag
    */
   startDragging(event: MouseEvent): void {
@@ -786,7 +816,7 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Handles ongoing drag operation for file grid.
-   * 
+   *
    * @param event - Mouse event containing current coordinates
    */
   onDrag(event: MouseEvent): void {
@@ -798,11 +828,13 @@ export class AddTaskComponent implements OnInit {
    * Waits for animation to complete before closing.
    */
   private async closeDialogWithAnimation(): Promise<void> {
-    const dialogContainer = document.querySelector('.add-task-dialog .mdc-dialog__surface');
+    const dialogContainer = document.querySelector(
+      '.add-task-dialog .mdc-dialog__surface'
+    );
     if (dialogContainer) {
       dialogContainer.classList.remove('slide-in');
       dialogContainer.classList.add('slide-out');
-      await new Promise(resolve => setTimeout(resolve, 300));
+      await new Promise((resolve) => setTimeout(resolve, 300));
     }
     this.dialogRef?.close();
   }
@@ -820,16 +852,16 @@ export class AddTaskComponent implements OnInit {
   /**
    * Handles date selection from the datepicker.
    * Validates that the selected date is in the future.
-   * 
+   *
    * @param event - The date selection event
    */
   onDateSelected(event: any): void {
     const selectedDate = event.value;
-    
+
     if (selectedDate) {
       const dateToCheck = new Date(selectedDate);
       dateToCheck.setHours(0, 0, 0, 0);
-      
+
       if (dateToCheck < this.minDate) {
         this.dateValue = null;
         this.task.dueDate = 0;
@@ -845,13 +877,15 @@ export class AddTaskComponent implements OnInit {
 
   /**
    * Opens the image viewer for a specific file.
-   * 
+   *
    * @param index - Index of the file to view
    */
   openImageViewer(index: number): void {
     if (this.task.files[index]?.data) {
       this.headerService.setHeaderZIndex('0');
-      this.images = this.imageService.convertFilesToViewerImages(this.task.files);
+      this.images = this.imageService.convertFilesToViewerImages(
+        this.task.files
+      );
       this.currentIndex = index;
       this.showImageViewer = true;
     }

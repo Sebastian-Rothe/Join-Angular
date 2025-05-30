@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// Angular Material imports
 import { MatIconModule } from '@angular/material/icon';
 
 /**

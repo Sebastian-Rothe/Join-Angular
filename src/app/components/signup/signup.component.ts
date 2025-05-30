@@ -1,11 +1,14 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
-import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+// Material imports
 import { MatIconModule } from '@angular/material/icon';
-import { User } from '../../models/user.class';
+// Services
+import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';  
+// Models
+import { User } from '../../models/user.class';
 
 /**
  * Component that handles the user registration process.

@@ -1,10 +1,13 @@
 import { Component, OnInit, HostListener } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
+// Angular Material imports
+import { MatIconModule } from '@angular/material/icon';
+// Services
 import { SeoService } from './services/seo.service';
 import { ContactStateService } from './services/contact-state.service';
+// Shared Components
 import { MobileMenuOverlayComponent } from './shared/components/mobile-menu-overlay/mobile-menu-overlay.component';
 
 /**

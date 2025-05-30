@@ -1,11 +1,14 @@
 import { Component, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// Angular Material imports
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule, MatMenuTrigger } from '@angular/material/menu';
+// Services
 import { DialogService } from '../../../services/dialog.service';
 import { UserService } from '../../../services/user.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { MobileMenuService } from '../../../services/mobile-menu.service';
+// Models
 import { User } from '../../../models/user.class';
 
 @Component({

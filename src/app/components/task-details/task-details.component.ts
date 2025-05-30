@@ -6,18 +6,22 @@ import {
   OnInit,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
+// Angular Material imports
 import { MatIconModule } from '@angular/material/icon';
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialog,
 } from '@angular/material/dialog';
-import { Task, Subtask, TaskFile } from '../../models/task.class';
+// Services
 import { TaskService } from '../../services/task.service';
-import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
-import { AddTaskComponent } from '../add-task/add-task.component';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ImageService, ViewerImageInfo } from '../../services/image.service';
+// Components
+import { AddTaskComponent } from '../add-task/add-task.component';
+import { ImageViewerComponent } from '../../shared/components/image-viewer/image-viewer.component';
+// Models
+import { Task, Subtask, TaskFile } from '../../models/task.class';
 
 /**
  * Component that displays detailed information about a task.

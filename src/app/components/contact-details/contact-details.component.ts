@@ -6,13 +6,13 @@ import { MobileMenuService } from '../../services/mobile-menu.service';
 
 /**
  * Component for displaying and managing contact details.
- * 
+ *
  * Features:
  * - Displays detailed information about a selected contact
  * - Provides edit and delete functionality
  * - Supports both desktop and mobile views
  * - Emits events for contact updates and deletions
- * 
+ *
  * @example
  * ```html
  * <app-contact-details
@@ -28,7 +28,7 @@ import { MobileMenuService } from '../../services/mobile-menu.service';
   standalone: true,
   imports: [CommonModule, MatIconModule],
   templateUrl: './contact-details.component.html',
-  styleUrls: ['./contact-details.component.scss']
+  styleUrls: ['./contact-details.component.scss'],
 })
 export class ContactDetailsComponent {
   /** The contact user object to display details for */
@@ -52,14 +52,12 @@ export class ContactDetailsComponent {
 
   /**
    * Creates an instance of ContactDetailsComponent.
-   * 
+   *
    * @param dialogService - Service for managing dialog windows
    * @param userService - Service for user CRUD operations
    * @param snackbarService - Service for displaying notifications
    */
-  constructor(
-    private mobileMenuService: MobileMenuService
-  ) {
+  constructor(private mobileMenuService: MobileMenuService) {
     this.mobileMenuService.editClick$.subscribe(() => {
       this.contactUpdated.emit();
     });

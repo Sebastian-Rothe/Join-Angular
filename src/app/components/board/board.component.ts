@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
 import { RouterModule } from '@angular/router';
-import { TaskService } from '../../services/task.service';
-import { Task } from '../../models/task.class';
-
+// Material imports
+import { MatIconModule } from '@angular/material/icon';
 import { MatDialog } from '@angular/material/dialog';
+// Services
+import { TaskService } from '../../services/task.service';
+import { SnackbarService } from '../../services/snackbar.service';
+// Models
+import { Task } from '../../models/task.class';
+// Components
 import { TaskDetailsComponent } from '../task-details/task-details.component';
 import { TaskCardComponent } from '../task-card/task-card.component';
 import { AddTaskComponent } from '../add-task/add-task.component';
-import { SnackbarService } from '../../services/snackbar.service';
 
 /**
  * Interface for dialog results returned by task dialogs

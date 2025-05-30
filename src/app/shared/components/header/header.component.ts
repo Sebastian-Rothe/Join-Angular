@@ -1,14 +1,17 @@
 import { Component, OnInit, AfterViewInit, ElementRef, ViewChild } from '@angular/core';
-import { MatIconModule } from '@angular/material/icon';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
+// Angular Material imports
+import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
-import { User } from '../../../models/user.class';
+// Services
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { DialogService } from '../../../services/dialog.service';
 import { SnackbarService } from '../../../services/snackbar.service';
 import { HeaderService } from '../../../services/header.service';
+// Models
+import { User } from '../../../models/user.class';
 
 /**
  * Header component that displays the application's top navigation bar.

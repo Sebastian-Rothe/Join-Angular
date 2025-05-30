@@ -2,9 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { AuthService } from '../../services/auth.service';
 import { RouterModule } from '@angular/router';
+// Material imports
 import { MatIconModule } from '@angular/material/icon';
+// Services
+import { AuthService } from '../../services/auth.service';
 import { SnackbarService } from '../../services/snackbar.service';
 
 /**

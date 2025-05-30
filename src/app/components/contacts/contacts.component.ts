@@ -1,15 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
+// Material imports
 import { MatIconModule } from '@angular/material/icon';
 import { MatDialogRef } from '@angular/material/dialog';
+// Services
 import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
-import { ContactDetailsComponent } from '../contact-details/contact-details.component';
-import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
-import { User } from '../../models/user.class';
-import { firstValueFrom } from 'rxjs';
 import { SnackbarService } from '../../services/snackbar.service';
 import { ContactStateService } from '../../services/contact-state.service';
+// Components
+import { ContactDetailsComponent } from '../contact-details/contact-details.component';
+import { ActionDialogComponent } from '../action-dialog/action-dialog.component';
+// Models
+import { User } from '../../models/user.class';
 
 /**
  * Component for managing and displaying user contacts.

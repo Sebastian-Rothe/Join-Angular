@@ -1,4 +1,5 @@
 import { Component, Inject } from '@angular/core';
+// Angular imports
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { MatIconModule } from '@angular/material/icon';
 

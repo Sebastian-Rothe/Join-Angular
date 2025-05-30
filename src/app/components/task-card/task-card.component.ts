@@ -1,12 +1,16 @@
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Task } from '../../models/task.class';
-import { CompletedSubtasksPipe } from '../../shared/pipes/completed-subtasks.pipe';
+// Material imports
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+// Services
 import { TaskService } from '../../services/task.service';
 import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from '../../services/snackbar.service';
+// Models
+import { Task } from '../../models/task.class';
+// Pipes
+import { CompletedSubtasksPipe } from '../../shared/pipes/completed-subtasks.pipe';
 
 /**
  * Component that represents a draggable task card in the board view.

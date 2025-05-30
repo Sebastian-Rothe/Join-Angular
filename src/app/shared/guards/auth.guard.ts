@@ -4,8 +4,9 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
 } from '@angular/router';
-import { UserService } from '../../services/user.service';
 import { firstValueFrom } from 'rxjs';
+// Services
+import { UserService } from '../../services/user.service';
 import { SnackbarService } from '../../services/snackbar.service';
 
 /**

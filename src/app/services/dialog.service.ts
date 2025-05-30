@@ -1,10 +1,14 @@
 import { Injectable } from '@angular/core';
+import { firstValueFrom } from 'rxjs';
+// Angular Material imports
 import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+// Services
+import { AuthService } from './auth.service';
+// Components
 import { ActionDialogComponent } from '../components/action-dialog/action-dialog.component';
+// Models
 import { DialogConfig } from '../models/dialog.model';
 import { User } from '../models/user.class';
-import { AuthService } from './auth.service';
-import { firstValueFrom } from 'rxjs';
 
 /**
  * Service for managing Material Dialog interactions throughout the application

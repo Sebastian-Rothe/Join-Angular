@@ -1,8 +1,10 @@
 import { Component, OnInit, HostBinding } from '@angular/core';
 import { RouterModule } from '@angular/router';
+// Services
+import { ViewportResizeService } from '../services/viewport-resize.service';
+// Components
 import { HeaderComponent } from '../shared/components/header/header.component';
 import { NavbarComponent } from '../shared/components/navbar/navbar.component';
-import { ViewportResizeService } from '../services/viewport-resize.service';
 
 /**
  * Main content component that serves as the primary layout container.
