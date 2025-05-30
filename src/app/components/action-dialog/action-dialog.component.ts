@@ -1,18 +1,21 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatIconModule } from '@angular/material/icon';
 import { FormsModule } from '@angular/forms';
+import { firstValueFrom } from 'rxjs';
+import { Router } from '@angular/router';
+// material imports
 import {
   MAT_DIALOG_DATA,
   MatDialogRef,
   MatDialogModule,
 } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+// models imports
+import { User } from '../../models/user.class';
 import { DialogConfig } from '../../models/dialog.model';
+// services imports
 import { UserService } from '../../services/user.service';
 import { DialogService } from '../../services/dialog.service';
-import { User } from '../../models/user.class';
-import { firstValueFrom } from 'rxjs';
-import { Router } from '@angular/router';
 import { ImageService } from '../../services/image.service';
 import { SnackbarService } from '../../services/snackbar.service';
 

@@ -1,4 +1,4 @@
-@use '../../styles.scss' as *; // Import your SCSS variables
+@use '../../styles.scss' as *; 
 
 .main-layout {
   width: 100%;
@@ -12,8 +12,8 @@
 
 .content-container {
   position: fixed;
-  top: 96px; // Header height
-  left: calc(50% - 960px + 232px); // Centered with navbar offset
+  top: 96px; 
+  left: calc(50% - 960px + 232px); 
   right: calc(50% - 960px);
   bottom: 0;
   background-color: white;
@@ -41,7 +41,7 @@
 
 @media (max-width: 1030px) {
   .content-container {
-    left: 120px; // Smaller sidebar
+    left: 120px; 
     width: calc(100% - 120px);
   }
   .main-content {
