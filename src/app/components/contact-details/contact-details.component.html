@@ -1,33 +1,41 @@
-<div class="contact-details" *ngIf="contact">
-    <div class="contact-header">
-        <div class="contact-avatar large" [style.background-color]="contact.iconColor">
-            <img *ngIf="contact.profilePicture" [src]="contact.profilePicture" alt="Profile picture">
-            <span *ngIf="!contact.profilePicture">{{ contact.initials }}</span>
+@if (contact) {
+    <div class="contact-details">
+        <div class="contact-header">
+            <div class="contact-avatar large" [style.background-color]="contact.iconColor">
+                @if (contact.profilePicture) {
+                    <img [src]="contact.profilePicture" alt="Profile picture">
+                }
+                @if (!contact.profilePicture) {
+                    <span>{{ contact.initials }}</span>
+                }
+            </div>
+            <div class="contact-name-section">
+                <h2>{{ contact.name }}</h2>
+                @if (!isMobileView) {
+                    <div class="contact-actions">
+                        <button class="action-button edit" (click)="openEditDialog()">
+                            <mat-icon>edit</mat-icon>
+                            <span>Edit</span>
+                        </button>
+                        <button class="action-button delete" (click)="deleteContact()">
+                            <mat-icon>delete</mat-icon>
+                            <span>Delete</span>
+                        </button>
+                    </div>
+                }
+            </div>
         </div>
-        <div class="contact-name-section">
-            <h2>{{ contact.name }}</h2>
-                <div class="contact-actions" *ngIf="!isMobileView">
-                <button class="action-button edit" (click)="openEditDialog()">
-                    <mat-icon>edit</mat-icon>
-                    <span>Edit</span>
-                </button>
-                <button class="action-button delete" (click)="deleteContact()">
-                    <mat-icon>delete</mat-icon>
-                    <span>Delete</span>
-                </button>
+
+        <div class="contact-information">
+            <h3>Contact Information</h3>
+            <div class="info-group">
+                <h4>Email</h4>
+                <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+            </div>
+            <div class="info-group">
+                <h4>Phone</h4>
+                <a [href]="'tel:' + contact.phone">{{ contact.phone }}</a>
             </div>
         </div>
     </div>
-
-    <div class="contact-information">
-        <h3>Contact Information</h3>
-        <div class="info-group">
-            <h4>Email</h4>
-            <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
-        </div>
-        <div class="info-group">
-            <h4>Phone</h4>
-            <a [href]="'tel:' + contact.phone">{{ contact.phone }}</a>
-        </div>
-    </div>
-</div>
+}

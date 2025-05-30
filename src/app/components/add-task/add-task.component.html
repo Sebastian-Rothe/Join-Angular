@@ -1,301 +1,414 @@
 <div class="container-main" [class.dialog-mode]="isDialog">
-    @if (isDialog) {
-        <div class="title-container">
-            <div class="title">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
-            <button class="close-button" (click)="closeDialog()">
-                <mat-icon>close</mat-icon>
+  @if (isDialog) {
+  <div class="title-container">
+    <div class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</div>
+    <button class="close-button" (click)="closeDialog()">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  } @if (!isDialog) {
+  <div class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</div>
+  }
+  <div class="left-right-container">
+    <div class="left-side">
+      <div class="form-group">
+        <label for="title">Title<span class="required">*</span></label>
+        <input
+          class="input-style"
+          [class.error]="errors.title"
+          type="text"
+          id="title"
+          name="title"
+          placeholder="Enter a title"
+          [(ngModel)]="task.title"
+        />
+        <div class="error-validation" [class.visible]="errors.title">
+          This field is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <textarea
+          id="description"
+          name="description"
+          rows="4"
+          cols="50"
+          placeholder="Enter a Description..."
+          [(ngModel)]="task.description"
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="date">Due date<span class="required">*</span></label>
+        <mat-form-field appearance="outline" [class.error]="errors.dueDate">
+          <input
+            matInput
+            [matDatepicker]="picker"
+            [min]="minDate"
+            [placeholder]="'dd/mm/yyyy'"
+            [(ngModel)]="dateValue"
+            (dateChange)="onDateSelected($event)"
+            name="dueDate"
+            required
+          />
+          <mat-datepicker-toggle
+            matSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <div class="error-validation" [class.visible]="errors.dueDate">
+          This field is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Prio</label>
+        <div class="priority-buttons">
+          <button
+            type="button"
+            id="urgent"
+            class="priority-btn"
+            [class.active]="task.priority === 'urgent'"
+            (click)="selectPriority('urgent')"
+          >
+            Urgent
+            <img src="assets/icons/PrioUrgent.svg" alt="Urgent Icon" />
+          </button>
+          <button
+            type="button"
+            id="medium"
+            class="priority-btn"
+            [class.active]="task.priority === 'medium'"
+            (click)="selectPriority('medium')"
+          >
+            Medium
+            <img src="assets/icons/PrioMedium.svg" alt="Medium Icon" />
+          </button>
+          <button
+            type="button"
+            id="low"
+            class="priority-btn"
+            [class.active]="task.priority === 'low'"
+            (click)="selectPriority('low')"
+          >
+            Low
+            <img src="assets/icons/PrioLow.svg" alt="Low Icon" />
+          </button>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="category">Category<span class="required">*</span></label>
+        <div class="dropdown-category">
+          <div class="category-wrapper">
+            <button
+              type="button"
+              (click)="toggleCategory($event)"
+              class="dropdown-btn"
+              [class.error]="errors.category"
+            >
+              {{ task.category || "Select task category" }}
+              <span
+                ><mat-icon [class.rotated]="categoryOpen"
+                  >arrow_drop_down</mat-icon
+                ></span
+              >
             </button>
+            <div class="dropdown-content" [class.show]="categoryOpen">
+              @for (cat of categories; track cat) {
+              <div
+                class="category-option"
+                (click)="selectCategory(cat.value)"
+                [class.selected]="task.category === cat.value"
+              >
+                {{ cat.label }}
+              </div>
+              }
+            </div>
+          </div>
+          <div class="error-validation" [class.visible]="errors.category">
+            This field is required
+          </div>
         </div>
-    }
-    @if (!isDialog) {
-        <div class="title">{{ isEditMode ? 'Edit Task' : 'Add Task' }}</div>
-    }
-    <div class="left-right-container">
-        <div class="left-side">
-            <div class="form-group">
-                <label for="title">Title<span class="required">*</span></label>
-                <input class="input-style" 
-                       [class.error]="errors.title"
-                       type="text" 
-                       id="title" 
-                       name="title" 
-                       placeholder="Enter a title" 
-                       [(ngModel)]="task.title">
-                <div class="error-validation" [class.visible]="errors.title">
-                  This field is required
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label for="description">Description</label>
-                <textarea id="description" name="description" rows="4" cols="50" placeholder="Enter a Description..." [(ngModel)]="task.description"></textarea>
-            </div>
-
-            <div class="form-group">
-                <label for="date">Due date<span class="required">*</span></label>
-                <mat-form-field appearance="outline" [class.error]="errors.dueDate">
-                    <input matInput [matDatepicker]="picker" 
-                           [min]="minDate"
-                           [placeholder]="'dd/mm/yyyy'"
-                           [(ngModel)]="dateValue"
-                           (dateChange)="onDateSelected($event)"
-                           name="dueDate"
-                           required>
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <div class="error-validation" [class.visible]="errors.dueDate">This field is required</div>
-            </div>
-            
-            <div class="form-group">
-                <label>Prio</label>
-                <div class="priority-buttons">
-                    <button type="button" id="urgent" class="priority-btn" 
-                            [class.active]="task.priority === 'urgent'" 
-                            (click)="selectPriority('urgent')">
-                        Urgent
-                        <img src="assets/icons/PrioUrgent.svg" alt="Urgent Icon">
-                    </button>
-                    <button type="button" id="medium" class="priority-btn" 
-                            [class.active]="task.priority === 'medium'" 
-                            (click)="selectPriority('medium')">
-                        Medium
-                        <img src="assets/icons/PrioMedium.svg" alt="Medium Icon">
-                    </button>
-                    <button type="button" id="low" class="priority-btn" 
-                            [class.active]="task.priority === 'low'" 
-                            (click)="selectPriority('low')">
-                        Low
-                        <img src="assets/icons/PrioLow.svg" alt="Low Icon">
-                    </button>
-                </div>
-            </div>
-            
-            <div class="form-group">
-                <label for="category">Category<span class="required">*</span></label>
-                <div class="dropdown-category">
-                    <div class="category-wrapper">
-                        <button type="button" 
-                                (click)="toggleCategory($event)" 
-                                class="dropdown-btn"
-                                [class.error]="errors.category">
-                            {{ task.category || 'Select task category' }}
-                            <span><mat-icon [class.rotated]="categoryOpen">arrow_drop_down</mat-icon></span>
-                        </button>
-                        <div class="dropdown-content" [class.show]="categoryOpen">                            @for (cat of categories; track cat) {
-                                <div class="category-option" 
-                                     (click)="selectCategory(cat.value)"
-                                     [class.selected]="task.category === cat.value">
-                                    {{ cat.label }}
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="error-validation" [class.visible]="errors.category">This field is required</div>
-                </div>
-            </div>
-        </div>  
-                    
-        <div class="divider"></div>
-
-        <div class="right-side">
-            <div class="form-group">
-                <div class="attachments-header">
-                    <div class="left-side">
-                        <label>Attachments</label>
-                        <span>Allowed file types are JPEG and PNG</span>
-                    </div>
-                    @if (task.files?.length) {
-                        <div class="delete-all-btn">
-                            <button (click)="removeAllFiles()">
-                                <mat-icon>delete</mat-icon>
-                                Delete all
-                            </button>
-                        </div>
-                    }
-                </div>
-                <div class="file-upload-zone" 
-                     (dragover)="onDragOver($event)"
-                     (dragleave)="onDragLeave($event)"
-                     (drop)="onDrop($event)"
-                     (click)="fileInput.click()"
-                     [class.dragging]="isDragging">
-                    <input type="file" 
-                           #fileInput
-                           multiple
-                           (change)="onFileSelected($event)"
-                           accept=".jpg,.jpeg,.png"
-                           style="display: none;">
-                    <div class="upload-content">
-                        <span>Drag a file or browse</span>
-                        <mat-icon>add</mat-icon>
-                    </div>
-                </div>
-                @if (task.files?.length) {
-                    <div class="file-list-container">
-                        <div class="file-grid" 
-                             #fileGrid
-                             (wheel)="onWheel($event)"
-                             (mousedown)="startDragging($event)"
-                             (mousemove)="onDrag($event)"
-                             (mouseup)="stopDragging()"
-                             (mouseleave)="stopDragging()">
-                            @for (file of task.files; track file; let i = $index) {
-                                <div class="file-preview-item">
-                                    <div class="file-preview-content">
-                                        <img [src]="getFilePreview(file)" 
-                                             alt="File preview"
-                                             (click)="openImageViewer(i)">
-                                        <div class="file-name">{{ file.name }}</div>
-                                        <button class="delete-file-btn" (click)="removeFile(i)">
-                                            <mat-icon>delete</mat-icon>
-                                        </button>
-                                    </div>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                }
-
-                @if (showImageViewer) {
-                    <app-image-viewer
-                        [images]="images"
-                        [currentIndex]="currentIndex"
-                        (indexChange)="currentIndex = $event"
-                        (close)="closeImageViewer()">
-                    </app-image-viewer>
-                }
-
-                <div class="form-group">
-                    <label>Subtasks</label>
-                    <div class="subtask-form">
-                        <input class="input-style" type="text" 
-                               [(ngModel)]="newSubtask" 
-                               (input)="subTaskInput()"
-                               (keyup.enter)="addSubtask()"
-                               placeholder="Add new subtask">
-                        <div class="subtask-buttons">
-                            @if (!isSubtaskInputActive) {
-                                <button type="button" class="subtask-btn">
-                                    <span class="subtask-btn-plus" (click)="activateSubtaskInput()">
-                                        <mat-icon>add</mat-icon>
-                                    </span>
-                                </button>
-                            }
-                            @if (isSubtaskInputActive) {
-                                <button type="button" class="subtask-btn-checked" (click)="addSubtask()">
-                                    <mat-icon>check</mat-icon>
-                                </button>
-                                <div class="subtask-btn-divider"></div>
-                                <button type="button" class="subtask-btn-cancel" (click)="clearSubtaskInput()">
-                                    <mat-icon>close</mat-icon>
-                                </button>
-                            }
-                        </div>
-                    </div>
-                    
-                    @if (task.subtasks?.length) {
-                        <div class="subtask-list-container">
-                            <ul>
-                                @for (subtask of task.subtasks; track subtask; let i = $index) {
-                                    <li class="subtask-item">
-                                        <div class="subtask-text">{{ subtask.title }}</div>
-                                        <div class="subtask-actions">
-                                            <button type="button" class="edit-subtask" (click)="editSubtask(i)">
-                                                <mat-icon>edit</mat-icon>
-                                            </button>
-                                            <button type="button" class="delete-subtask" (click)="deleteSubtask(i)">
-                                                <mat-icon>delete</mat-icon>
-                                            </button>
-                                        </div>
-                                    </li>
-                                }
-                            </ul>
-                        </div>
-                    }
-                </div>
-
-                <div class="form-group">
-                    <label for="dropdown">Assigned to</label>
-                    <div class="dropdown">
-                        <button type="button" (click)="toggleDropdown($event)" class="dropdown-btn">
-                            Select contacts to assign 
-                            <span><mat-icon [class.rotated]="dropdownOpen">arrow_drop_down</mat-icon></span>
-                        </button>
-                        <div id="contactsDropdown" class="dropdown-content" [class.show]="dropdownOpen">
-                            @for (contact of contacts; track contact) {
-                                <div class="user-option" 
-                                     [class.selected]="isContactSelected(contact)"
-                                     (click)="toggleContact(contact)"
-                                     style="border-radius: 8px; margin-bottom: 2px;">
-                                    <div class="user-avatar" [style.background-color]="contact.iconColor">
-                                        @if (contact.profilePicture) {
-                                            <img [src]="contact.profilePicture" [alt]="contact.name">
-                                        }
-                                        @if (!contact.profilePicture) {
-                                            <span>{{ contact.initials }}</span>
-                                        }
-                                    </div>
-                                    <div class="user-info">
-                                        {{ contact.name }}
-                                        @if (contact.uid === currentUser?.uid) {
-                                            <span>(You)</span>
-                                        }
-                                    </div>
-                                    <label class="custom-checkbox" (click)="$event.stopPropagation()">
-                                        <input type="checkbox" 
-                                               [checked]="isContactSelected(contact)"
-                                               (change)="toggleContact(contact)">
-                                        <svg width="19" height="18" viewBox="0 0 19 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                            <rect class="unchecked" x="1.38818" y="1" width="16" height="16" rx="3" stroke="#2A3647" stroke-width="2"></rect>
-                                            <path class="checked" d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882" stroke="#2A3647" stroke-width="2" stroke-linecap="round"></path>
-                                            <path class="checked" d="M5.38818 9L9.38818 13L17.3882 1.5" stroke="#2A3647" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
-                                        </svg>
-                                    </label>
-                                </div>
-                            }
-                        </div>
-                    </div>
-                    <div class="selected-badges">                        @for (contact of selectedContacts; track contact) {
-                            <div class="user-badge">
-                                <div class="user-avatar" [style.background-color]="contact.iconColor">
-                                    @if (contact.profilePicture) {
-                                        <img [src]="contact.profilePicture" [alt]="contact.name">
-                                    }
-                                    @if (!contact.profilePicture) {
-                                        <span>{{ contact.initials }}</span>
-                                    }
-                                </div>
-                                <span class="badge-close" (click)="removeContact(contact)">×</span>
-                            </div>
-                        }
-                    </div>
-                    <div class="required-hint">
-                        <span><span class="required">*</span>This field is required</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
 
-    <div class="footer-add-task">
-        <div class="footer-add-task-left desktop-only">
-            <span class="required-desktop"><span class="required">*</span>This field is required</span>
+    <div class="divider"></div>
+
+    <div class="right-side">
+      <div class="form-group">
+        <div class="attachments-header">
+          <div class="left-side">
+            <label>Attachments</label>
+            <span>Allowed file types are JPEG and PNG</span>
+          </div>
+          @if (task.files.length) {
+          <div class="delete-all-btn">
+            <button (click)="removeAllFiles()">
+              <mat-icon>delete</mat-icon>
+              Delete all
+            </button>
+          </div>
+          }
         </div>
-        <div class="footer-add-task-right">            @if (!isEditMode) {
-                <button type="button" class="secondary-btn" (click)="clearForm()">
-                    Clear <mat-icon>close</mat-icon>
-                </button>
-                <button type="button" class="primary-btn" (click)="createTask()">
-                    Create Task <mat-icon>check</mat-icon>
-                </button>
-            }
-            @if (isEditMode) {
-                <button type="button" class="primary-btn" (click)="createTask()">
-                    Ok <mat-icon>check</mat-icon>
-                </button>
-            }
+        <div
+          class="file-upload-zone"
+          (dragover)="onDragOver($event)"
+          (dragleave)="onDragLeave($event)"
+          (drop)="onDrop($event)"
+          (click)="fileInput.click()"
+          [class.dragging]="isDragging"
+        >
+          <input
+            type="file"
+            #fileInput
+            multiple
+            (change)="onFileSelected($event)"
+            accept=".jpg,.jpeg,.png"
+            style="display: none"
+          />
+          <div class="upload-content">
+            <span>Drag a file or browse</span>
+            <mat-icon>add</mat-icon>
+          </div>
         </div>
+        @if (task.files.length) {
+        <div class="file-list-container">
+          <div
+            class="file-grid"
+            #fileGrid
+            (wheel)="onWheel($event)"
+            (mousedown)="startDragging($event)"
+            (mousemove)="onDrag($event)"
+            (mouseup)="stopDragging()"
+            (mouseleave)="stopDragging()"
+          >
+            @for (file of task.files; track file; let i = $index) {
+            <div class="file-preview-item">
+              <div class="file-preview-content">
+                <img
+                  [src]="getFilePreview(file)"
+                  alt="File preview"
+                  (click)="openImageViewer(i)"
+                />
+                <div class="file-name">{{ file.name }}</div>
+                <button class="delete-file-btn" (click)="removeFile(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </div>
+            }
+          </div>
+        </div>
+        } @if (showImageViewer) {
+        <app-image-viewer
+          [images]="images"
+          [currentIndex]="currentIndex"
+          (indexChange)="currentIndex = $event"
+          (close)="closeImageViewer()"
+        >
+        </app-image-viewer>
+        }
+      </div>
+      <div class="form-group">
+        <label>Subtasks</label>
+        <div class="subtask-form">
+          <input
+            class="input-style"
+            type="text"
+            [(ngModel)]="newSubtask"
+            (input)="subTaskInput()"
+            (keyup.enter)="addSubtask()"
+            placeholder="Add new subtask"
+          />
+          <div class="subtask-buttons">
+            @if (!isSubtaskInputActive) {
+            <button type="button" class="subtask-btn">
+              <span class="subtask-btn-plus" (click)="activateSubtaskInput()">
+                <mat-icon>add</mat-icon>
+              </span>
+            </button>
+            } @if (isSubtaskInputActive) {
+            <button
+              type="button"
+              class="subtask-btn-checked"
+              (click)="addSubtask()"
+            >
+              <mat-icon>check</mat-icon>
+            </button>
+            <div class="subtask-btn-divider"></div>
+            <button
+              type="button"
+              class="subtask-btn-cancel"
+              (click)="clearSubtaskInput()"
+            >
+              <mat-icon>close</mat-icon>
+            </button>
+            }
+          </div>
+        </div>
+
+        @if (task.subtasks.length) {
+        <div class="subtask-list-container">
+          <ul>
+            @for (subtask of task.subtasks; track subtask; let i = $index) {
+            <li class="subtask-item">
+              <div class="subtask-text">{{ subtask.title }}</div>
+              <div class="subtask-actions">
+                <button
+                  type="button"
+                  class="edit-subtask"
+                  (click)="editSubtask(i)"
+                >
+                  <mat-icon>edit</mat-icon>
+                </button>
+                <button
+                  type="button"
+                  class="delete-subtask"
+                  (click)="deleteSubtask(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </div>
+            </li>
+            }
+          </ul>
+        </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="dropdown">Assigned to</label>
+        <div class="dropdown">
+          <button
+            type="button"
+            (click)="toggleDropdown($event)"
+            class="dropdown-btn"
+          >
+            Select contacts to assign
+            <span
+              ><mat-icon [class.rotated]="dropdownOpen"
+                >arrow_drop_down</mat-icon
+              ></span
+            >
+          </button>
+          <div
+            id="contactsDropdown"
+            class="dropdown-content"
+            [class.show]="dropdownOpen"
+          >
+            @for (contact of contacts; track contact) {
+            <div
+              class="user-option"
+              [class.selected]="isContactSelected(contact)"
+              (click)="toggleContact(contact)"
+              style="border-radius: 8px; margin-bottom: 2px"
+            >
+              <div
+                class="user-avatar"
+                [style.background-color]="contact.iconColor"
+              >
+                @if (contact.profilePicture) {
+                <img [src]="contact.profilePicture" [alt]="contact.name" />
+                } @if (!contact.profilePicture) {
+                <span>{{ contact.initials }}</span>
+                }
+              </div>
+              <div class="user-info">
+                {{ contact.name }}
+                @if (contact.uid === currentUser?.uid) {
+                <span>(You)</span>
+                }
+              </div>
+              <label class="custom-checkbox" (click)="$event.stopPropagation()">
+                <input
+                  type="checkbox"
+                  [checked]="isContactSelected(contact)"
+                  (change)="toggleContact(contact)"
+                />
+                <svg
+                  width="19"
+                  height="18"
+                  viewBox="0 0 19 18"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <rect
+                    class="unchecked"
+                    x="1.38818"
+                    y="1"
+                    width="16"
+                    height="16"
+                    rx="3"
+                    stroke="#2A3647"
+                    stroke-width="2"
+                  ></rect>
+                  <path
+                    class="checked"
+                    d="M17.3882 8V14C17.3882 15.6569 16.045 17 14.3882 17H4.38818C2.73133 17 1.38818 15.6569 1.38818 14V4C1.38818 2.34315 2.73133 1 4.38818 1H12.3882"
+                    stroke="#2A3647"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                  ></path>
+                  <path
+                    class="checked"
+                    d="M5.38818 9L9.38818 13L17.3882 1.5"
+                    stroke="#2A3647"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                  ></path>
+                </svg>
+              </label>
+            </div>
+            }
+          </div>
+        </div>
+        <div class="selected-badges">
+          @for (contact of selectedContacts; track contact) {
+          <div class="user-badge">
+            <div
+              class="user-avatar"
+              [style.background-color]="contact.iconColor"
+            >
+              @if (contact.profilePicture) {
+              <img [src]="contact.profilePicture" [alt]="contact.name" />
+              } @if (!contact.profilePicture) {
+              <span>{{ contact.initials }}</span>
+              }
+            </div>
+            <span class="badge-close" (click)="removeContact(contact)">×</span>
+          </div>
+          }
+        </div>
+        <div class="required-hint">
+          <span><span class="required">*</span>This field is required</span>
+        </div>
+      </div>
     </div>
-    
+  </div>
+
+  <div class="footer-add-task">
+    <div class="footer-add-task-left desktop-only">
+      <span class="required-desktop"
+        ><span class="required">*</span>This field is required</span
+      >
+    </div>
+    <div class="footer-add-task-right">
+      @if (!isEditMode) {
+      <button type="button" class="secondary-btn" (click)="clearForm()">
+        Clear <mat-icon>close</mat-icon>
+      </button>
+      <button type="button" class="primary-btn" (click)="createTask()">
+        Create Task <mat-icon>check</mat-icon>
+      </button>
+      } @if (isEditMode) {
+      <button type="button" class="primary-btn" (click)="createTask()">
+        Ok <mat-icon>check</mat-icon>
+      </button>
+      }
+    </div>
+  </div>
 </div>

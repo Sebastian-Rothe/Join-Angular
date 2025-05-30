@@ -36,18 +36,18 @@
            (drop)="moveTo('todo')"
            (dragleave)="removeHighlight('todoBoard')"
            (dragover)="allowDrop($event); highlight('todoBoard')">
-        <ng-container *ngIf="getTasksByStatus('todo').length > 0; else emptyTodo">
-          <app-task-card 
-            *ngFor="let task of getTasksByStatus('todo')"
-            [task]="task"
-            (dragStarted)="onDragStart($event, task)"
-            (clicked)="openTaskDetails(task)"
-            (statusChanged)="loadTasks()">
-          </app-task-card>
-        </ng-container>
-        <ng-template #emptyTodo>
+        @if (getTasksByStatus('todo').length > 0) {
+          @for (task of getTasksByStatus('todo'); track task) {
+            <app-task-card 
+              [task]="task"
+              (dragStarted)="onDragStart($event, task)"
+              (clicked)="openTaskDetails(task)"
+              (statusChanged)="loadTasks()">
+            </app-task-card>
+          }
+        } @else {
           <div class="empty-section-note">No tasks in todo</div>
-        </ng-template>
+        }
       </div>
     </div>
 
@@ -60,17 +60,17 @@
            (drop)="moveTo('inProgress')"
            (dragleave)="removeHighlight('inProgressBoard')"
            (dragover)="allowDrop($event); highlight('inProgressBoard')">
-        <ng-container *ngIf="getTasksByStatus('inProgress').length > 0; else emptyInProgress">
-          <app-task-card 
-            *ngFor="let task of getTasksByStatus('inProgress')"
-            [task]="task"
-            (dragStarted)="onDragStart($event, task)"
-            (clicked)="openTaskDetails(task)">
-          </app-task-card>
-        </ng-container>
-        <ng-template #emptyInProgress>
+        @if (getTasksByStatus('inProgress').length > 0) {
+          @for (task of getTasksByStatus('inProgress'); track task) {
+            <app-task-card 
+              [task]="task"
+              (dragStarted)="onDragStart($event, task)"
+              (clicked)="openTaskDetails(task)">
+            </app-task-card>
+          }
+        } @else {
           <div class="empty-section-note">No tasks in progress</div>
-        </ng-template>
+        }
       </div>
     </div>
 
@@ -83,17 +83,17 @@
            (drop)="moveTo('awaitFeedback')"
            (dragleave)="removeHighlight('awaitFeedbackBoard')"
            (dragover)="allowDrop($event); highlight('awaitFeedbackBoard')">
-        <ng-container *ngIf="getTasksByStatus('awaitFeedback').length > 0; else emptyFeedback">
-          <app-task-card 
-            *ngFor="let task of getTasksByStatus('awaitFeedback')"
-            [task]="task"
-            (dragStarted)="onDragStart($event, task)"
-            (clicked)="openTaskDetails(task)">
-          </app-task-card>
-        </ng-container>
-        <ng-template #emptyFeedback>
+        @if (getTasksByStatus('awaitFeedback').length > 0) {
+          @for (task of getTasksByStatus('awaitFeedback'); track task) {
+            <app-task-card 
+              [task]="task"
+              (dragStarted)="onDragStart($event, task)"
+              (clicked)="openTaskDetails(task)">
+            </app-task-card>
+          }
+        } @else {
           <div class="empty-section-note">No tasks await feedback</div>
-        </ng-template>
+        }
       </div>
     </div>
 
@@ -105,17 +105,17 @@
            (drop)="moveTo('done')"
            (dragleave)="removeHighlight('doneBoard')"
            (dragover)="allowDrop($event); highlight('doneBoard')">
-        <ng-container *ngIf="getTasksByStatus('done').length > 0; else emptyDone">
-          <app-task-card 
-            *ngFor="let task of getTasksByStatus('done')"
-            [task]="task"
-            (dragStarted)="onDragStart($event, task)"
-            (clicked)="openTaskDetails(task)">
-          </app-task-card>
-        </ng-container>
-        <ng-template #emptyDone>
+        @if (getTasksByStatus('done').length > 0) {
+          @for (task of getTasksByStatus('done'); track task) {
+            <app-task-card 
+              [task]="task"
+              (dragStarted)="onDragStart($event, task)"
+              (clicked)="openTaskDetails(task)">
+            </app-task-card>
+          }
+        } @else {
           <div class="empty-section-note">No tasks done</div>
-        </ng-template>
+        }
       </div>
     </div>
   </div>
