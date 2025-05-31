@@ -44,7 +44,7 @@ import {
   Inject,
 } from '@angular/core';
 import { CommonModule, registerLocaleData } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import localeDe from '@angular/common/locales/de';
 // Angular Material imports
@@ -91,6 +91,7 @@ export const MY_DATE_FORMATS = {
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     MatIconModule,
     MatDatepickerModule,
     MatInputModule,
@@ -110,6 +111,7 @@ export const MY_DATE_FORMATS = {
 export class AddTaskComponent implements OnInit {
   /** Reference to the file grid element for horizontal scrolling */
   @ViewChild('fileGrid') fileGrid!: ElementRef;
+  @ViewChild('taskForm') taskForm!: NgForm;
 
   /** Minimum allowed date for task due date */
   minDate: Date;
@@ -905,5 +907,18 @@ export class AddTaskComponent implements OnInit {
   ngOnDestroy(): void {
     this.filePreviews.forEach((url) => URL.revokeObjectURL(url));
     this.filePreviews.clear();
+  }
+
+  /**
+   * Handles form submission.
+   * Prevents default behavior and calls createTask.
+   *
+   * @param event - The submit event
+   */
+  async onSubmit(event: Event): Promise<void> {
+    event.preventDefault();
+    if (this.taskForm.form.valid) {
+      await this.createTask();
+    }
   }
 }

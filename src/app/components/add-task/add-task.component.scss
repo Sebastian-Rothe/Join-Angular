@@ -24,6 +24,7 @@ $container-padding-small: 12px;
 // ---------- Title & Main Container ----------
 .title {
   position: sticky;
+  margin: 0;
   top: 0;
   padding: 48px $container-padding;
   font-size: var(--heading-font-size);
@@ -413,6 +414,24 @@ $container-padding-small: 12px;
     }
   }
 }
+
+main {
+  display: block;
+}
+
+header {
+  display: block;
+}
+
+section {
+  display: block;
+}
+
+form {
+  margin: 0;
+  padding: 0;
+}
+
 @media (max-width: 400px) {
   .footer-add-task {
     padding: 12px;

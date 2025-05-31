@@ -39,7 +39,6 @@ export interface TaskFile {
  * @property {string} description - Detailed description of the task
  * @property {User[]} assignedTo - Array of users assigned to the task
  * @property {TaskFile[]} files - Array of files attached to the task
- * @property {string[]} fileNames - Array of filenames for attached files
  * @property {number} dueDate - Task due date as Unix timestamp
  * @property {('urgent' | 'medium' | 'low')} priority - Task priority level
  * @property {string} category - Task category
@@ -61,7 +60,6 @@ export class Task {
     description: string;
     assignedTo: User[];
     files: TaskFile[] = []; // Updated to use TaskFile interface
-    fileNames: string[] = []; // Store file names separately
     dueDate: number; // Updated to store dueDate as a timestamp
     priority: 'urgent' | 'medium' | 'low';
     category: string;
@@ -74,7 +72,6 @@ export class Task {
         this.description = obj?.description || '';
         this.assignedTo = obj?.assignedTo || [];
         this.files = obj?.files || []; // Updated to use TaskFile interface
-        this.fileNames = obj?.fileNames || [];
         this.dueDate = obj?.dueDate ? new Date(obj.dueDate).getTime() : 0; // Convert dueDate to timestamp
         this.priority = obj?.priority || 'medium';
         this.category = obj?.category || '';

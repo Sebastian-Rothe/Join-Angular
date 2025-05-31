@@ -1,16 +1,18 @@
-<div class="container-main" [class.dialog-mode]="isDialog">
+<main class="container-main" [class.dialog-mode]="isDialog">
   @if (isDialog) {
-  <div class="title-container">
-    <div class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</div>
-    <button class="close-button" (click)="closeDialog()">
+  <header class="title-container">
+    <h1 class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</h1>
+    <button class="close-button" (click)="closeDialog()" aria-label="Close dialog">
       <mat-icon>close</mat-icon>
     </button>
-  </div>
-  } @if (!isDialog) {
-  <div class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</div>
+  </header>
+  } @else{
+  <header>
+    <h1 class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</h1>
+  </header>
   }
-  <div class="left-right-container">
-    <div class="left-side">
+  <form #taskForm="ngForm" (ngSubmit)="onSubmit($event)" id="taskForm" class="left-right-container">
+    <section class="left-side">
       <div class="form-group">
         <label for="title">Title<span class="required">*</span></label>
         <input
@@ -133,11 +135,11 @@
           </div>
         </div>
       </div>
-    </div>
+    </section>
 
-    <div class="divider"></div>
+    <div class="divider" role="separator"></div>
 
-    <div class="right-side">
+    <section class="right-side">
       <div class="form-group">
         <div class="attachments-header">
           <div class="left-side">
@@ -219,6 +221,7 @@
             class="input-style"
             type="text"
             [(ngModel)]="newSubtask"
+            name="newSubtask"
             (input)="subTaskInput()"
             (keyup.enter)="addSubtask()"
             placeholder="Add new subtask"
@@ -284,6 +287,8 @@
         <div class="dropdown">
           <button
             type="button"
+            id="dropdown"
+            name="assignedTo"
             (click)="toggleDropdown($event)"
             class="dropdown-btn"
           >
@@ -387,28 +392,26 @@
           <span><span class="required">*</span>This field is required</span>
         </div>
       </div>
-    </div>
-  </div>
+    </section>
+  </form>
 
-  <div class="footer-add-task">
+  <footer class="footer-add-task">
     <div class="footer-add-task-left desktop-only">
-      <span class="required-desktop"
-        ><span class="required">*</span>This field is required</span
-      >
+      <span class="required-desktop"><span class="required">*</span>This field is required</span>
     </div>
     <div class="footer-add-task-right">
       @if (!isEditMode) {
       <button type="button" class="secondary-btn" (click)="clearForm()">
         Clear <mat-icon>close</mat-icon>
       </button>
-      <button type="button" class="primary-btn" (click)="createTask()">
+      <button type="submit" class="primary-btn" form="taskForm">
         Create Task <mat-icon>check</mat-icon>
       </button>
       } @if (isEditMode) {
-      <button type="button" class="primary-btn" (click)="createTask()">
+      <button type="submit" class="primary-btn" form="taskForm">
         Ok <mat-icon>check</mat-icon>
       </button>
       }
     </div>
-  </div>
-</div>
+  </footer>
+</main>
