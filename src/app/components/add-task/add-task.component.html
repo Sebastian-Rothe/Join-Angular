@@ -24,7 +24,7 @@
           placeholder="Enter a title"
           [(ngModel)]="task.title"
         />
-        <div class="error-validation" [class.visible]="errors.title">
+        <div class="error-validation" [class.visible]="formSubmitted && errors.title">
           This field is required
         </div>
       </div>
@@ -60,7 +60,7 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <div class="error-validation" [class.visible]="errors.dueDate">
+        <div class="error-validation" [class.visible]="formSubmitted && errors.dueDate">
           This field is required
         </div>
       </div>
@@ -130,7 +130,7 @@
               }
             </div>
           </div>
-          <div class="error-validation" [class.visible]="errors.category">
+          <div class="error-validation" [class.visible]="formSubmitted && errors.category">
             This field is required
           </div>
         </div>

@@ -186,6 +186,9 @@ export class AddTaskComponent implements OnInit {
   /** Flag for image viewer visibility */
   showImageViewer: boolean = false;
 
+  /** Flag for form submission */
+  formSubmitted = false;
+
   /**
    * Creates an instance of AddTaskComponent.
    *
@@ -713,10 +716,16 @@ export class AddTaskComponent implements OnInit {
    * Clears all form data and resets to initial state.
    */
   clearForm(): void {
+    this.formSubmitted = false;
     this.task = new Task();
     this.selectedContacts = [];
     this.clearSubtaskInput();
     this.dateValue = null;
+    this.errors = {
+      title: false,
+      dueDate: false,
+      category: false
+    };
   }
 
   /**
@@ -917,8 +926,12 @@ export class AddTaskComponent implements OnInit {
    */
   async onSubmit(event: Event): Promise<void> {
     event.preventDefault();
-    if (this.taskForm.form.valid) {
-      await this.createTask();
+    this.formSubmitted = true;
+    
+    if (!this.validateForm()) {
+      return;
     }
+
+    await this.createTask();
   }
 }
