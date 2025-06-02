@@ -4,17 +4,50 @@ import { DOCUMENT } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 
+/**
+ * SEO Service for managing meta tags and canonical URLs
+ * 
+ * @description
+ * Handles all SEO-related functionality including:
+ * - Dynamic meta tag updates
+ * - Canonical URL management
+ * - Title updates
+ * - OpenGraph meta tags
+ * - Robots directives
+ * 
+ * @usageNotes
+ * This service automatically updates canonical URLs on route changes
+ * and provides methods to update meta tags for specific pages.
+ * 
+ * @example
+ * ```typescript
+ * constructor(private seoService: SeoService) {
+ *   this.seoService.updateMetaTags({
+ *     title: 'Dashboard',
+ *     description: 'Join Dashboard Overview'
+ *   });
+ * }
+ * ```
+ */
 @Injectable({
   providedIn: 'root'
 })
 export class SeoService {
+  /**
+   * Creates an instance of SeoService.
+   * Sets up route change listener for canonical URL updates.
+   * 
+   * @param meta - Angular's Meta service for managing meta tags
+   * @param title - Angular's Title service for managing document title
+   * @param router - Angular's Router service for navigation events
+   * @param document - DOM document reference for direct manipulation
+   */
   constructor(
     private meta: Meta,
     private title: Title,
     private router: Router,
     @Inject(DOCUMENT) private document: Document
   ) {
-    // Update canonical URL on route changes
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe(() => {
@@ -22,12 +55,27 @@ export class SeoService {
     });
   }
 
+  /**
+   * Updates the canonical URL based on current route
+   * 
+   * @private
+   * @description
+   * Determines the correct canonical URL for the current route and
+   * updates or creates the canonical link tag accordingly.
+   * 
+   * Routes are mapped as follows:
+   * - /legal -> /legal
+   * - /privacy -> /privacy
+   * - /help -> /help
+   * - /main/* -> /main/summary (for protected routes)
+   * - / or /login -> /login
+   * - /signup -> /signup
+   */
   private updateCanonicalUrl(): void {
     const path = this.router.url;
     const baseUrl = 'https://join.sebastian-rothe.com';
     let canonicalUrl = baseUrl;
 
-    // Bestimme die korrekte kanonische URL basierend auf der aktuellen Route
     switch (true) {
       case path.includes('/main/legal') || path === '/legal':
         canonicalUrl = `${baseUrl}/legal`;
@@ -52,13 +100,12 @@ export class SeoService {
         canonicalUrl = `${baseUrl}/main/greeting`;
         break;
       default:
-        // Für geschützte oder nicht aufgelistete Routen
+     
         if (path.includes('/main/')) {
           canonicalUrl = `${baseUrl}/main/summary`;
         }
     }
 
-    // Aktualisiere oder erstelle canonical tag
     let canonical = this.document.querySelector('link[rel="canonical"]');
     if (canonical) {
       canonical.setAttribute('href', canonicalUrl);
@@ -71,7 +118,28 @@ export class SeoService {
   }
 
   /**
-   * Updates meta tags for a specific page
+   * Updates meta tags for SEO optimization
+   * 
+   * @description
+   * Updates various meta tags including:
+   * - Page title
+   * - Meta description
+   * - OpenGraph title and description
+   * - Robots directives
+   * 
+   * @param config - Configuration object for meta tags
+   * @param config.title - Page title (will be appended with "| Join")
+   * @param config.description - Page description
+   * @param config.robots - Robots meta tag content (e.g., "index,follow")
+   * 
+   * @example
+   * ```typescript
+   * seoService.updateMetaTags({
+   *   title: 'Contact List',
+   *   description: 'Manage your contacts efficiently',
+   *   robots: 'index,follow'
+   * });
+   * ```
    */
   updateMetaTags(config: {
     title?: string;
