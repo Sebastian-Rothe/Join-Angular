@@ -1,8 +1,10 @@
+@use '../../../../styles.scss' as *;
+
 .confirm-dialog {
   padding: 24px;
   
   .dialog-title {
-    color: #2A3647;
+    color: $dark-navy;
     font-size: 1.5rem;
     margin-bottom: 24px;
     text-align: center;
@@ -27,15 +29,13 @@
     justify-content: center;
 
     .warning-icon {
-      background-color: white;
+      background-color: $white;
       color: red;  
       border-radius: 50%;
       width: 44px;
       height: 44px;
       font-size: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+     @include flex-center;
     }
   }
 }

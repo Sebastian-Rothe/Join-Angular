@@ -25,7 +25,7 @@ router-outlet {
   left: 0;
   width: 100vw;
   height: 100vh;
-  background-color: #2a3647;
+  background-color: $dark-navy;
   z-index: 2000;
   flex-direction: column;
   gap: 32px;
@@ -36,12 +36,12 @@ router-outlet {
     font-size: 48px;
     width: 48px;
     height: 48px;
-    color: white;
+    color: $white;
     animation: rotate 1.5s ease infinite;
   }
 
   span {
-    color: white;
+    color: $white;
     font-size: 24px;
     font-weight: 500;
   }

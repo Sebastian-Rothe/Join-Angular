@@ -1,4 +1,5 @@
 @use "../../../../styles.scss" as *;
+@use "../../../../styles.scss" as *;
 
 .image-viewer {
   position: fixed;
@@ -6,9 +7,7 @@
   z-index: 2000;
   background: rgba(0, 0, 0, 0.7);
   backdrop-filter: blur(5px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
 }
 
 .viewer-container {
@@ -84,13 +83,11 @@
       border-radius: 50%;
       width: 40px;
       height: 40px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+   @include flex-center;
 
       &:hover {
         background: $primary-blue;
-        color: white;
+        color: $white;
       }
 
       mat-icon {
@@ -127,9 +124,7 @@
 .content-area {
   flex: 1;
   position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -139,9 +134,7 @@
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   transition: transform 0.1s ease;
   cursor: grab;
 
@@ -169,9 +162,7 @@
   z-index: 3;
   width: 48px;
   height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   border-radius: 50%;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 
@@ -194,7 +185,6 @@
   }
 }
 
-// Hover-Effekt wiederherstellen
 .viewer-container:hover {
   .header-bar,
   .nav-btn {

@@ -1,9 +1,9 @@
 @use '../../../../styles.scss' as *;
 
 header {
-  height: 96px; // Adjusted to match screenshot
-  position: absolute; // Changed back to fixed
-  z-index: 1; // Lower than navbar's z-index
+  height: 96px; 
+  position: absolute; 
+  z-index: 1;
   top: 0;
   display: flex;
   background-color: $white;
@@ -11,23 +11,23 @@ header {
   align-items: center;
   font-weight: 400;
   font-size: 20px;
-  right: 0;  // Added to ensure proper alignment
-  left: 232px; // Add this to align with navbar
-  margin: 0;  // Reset any margins
-  padding: 0;  // Reset any padding
+  right: 0; 
+  left: 232px; 
+  margin: 0; 
+  padding: 0; 
   width: calc(100% - 232px);
 }
 
 .header-left-content {
   display: flex;
   flex: 1;
-  justify-content: flex-start; // Changed from center
+  justify-content: flex-start; 
   align-items: center;
   padding: 0 20px 0 40px;
 
   .logo-small {
     display: none;
-    width: 32px;  // Adjusted size
+    width: 32px;  
     height: 32px;
   }
 }
@@ -42,11 +42,11 @@ header {
 }
 
 .help-icon {
+  @include flex-center;
   width: 30px;
   height: 30px;
-  display: inline-block;
   position: relative;
-  margin-top: 4px;
+  margin: 4px 4px 0 0;
   transition: transform 225ms ease-in-out;
   color: gray;
 
@@ -54,29 +54,6 @@ header {
     transform: scale(1.2);
   }
 }
-
-// Entfernen des alten dropdown-menu-profile-avatar Styles
-
-::ng-deep {
-  // // Override Material's menu panel
-  // .mat-mdc-menu-panel {
-  //   background: transparent !important;
-  //   max-width: none !important;
-  // }
-
-  // // Remove default menu styles
-  // .mdc-menu-surface {
-  //   background: none !important;
-  //   box-shadow: none !important;
-  // }
-
-  // Style the menu content
-  .profile-menu {
-    // .mat-mdc-menu-content {
-    //   padding: 0 !important;
-    //   margin: 0 !important;
-    //   background: none !important;
-    // }
 
     .menu-content {
       background-color: $dark-navy;
@@ -98,16 +75,12 @@ header {
         }
       }
     }
-  }
-}
 
 .profile-avatar {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+@include flex-center;
   cursor: pointer;
   background-color: $white;
   overflow: hidden;
@@ -160,19 +133,11 @@ header {
   }
 }
 
-@media (max-width: 1200px) {
-  // .header-title {
-  //   display: none;
-  // }
-  // .logo-small {
-  //   display: block !important;
-  // }
-}
 
 @media (max-width: 1030px) {
   header {
     width: calc(100% - 120px);
-    left: 120px; // Adjust for smaller navbar
+    left: 120px;
     margin-left: 0;
   }
   
@@ -226,11 +191,11 @@ header {
 
 @media (max-width: 375px) {
   header {
-    height: 60px;  // Reduced height to match mobile nav
+    height: 60px;  
   }
 
   .profile-avatar {
-    width: 40px;   // Smaller avatar for mobile
+    width: 40px;   
     height: 40px;
     min-width: 40px;
     font-size: 16px;

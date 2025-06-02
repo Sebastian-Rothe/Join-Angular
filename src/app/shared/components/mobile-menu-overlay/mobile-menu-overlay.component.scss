@@ -10,9 +10,7 @@
   background-color: $dark-navy;
   border: none;
   color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   cursor: pointer;
   z-index: 9;
 
