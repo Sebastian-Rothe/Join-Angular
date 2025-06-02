@@ -7,11 +7,16 @@ import { MobileMenuService } from '../../services/mobile-menu.service';
 /**
  * Component for displaying and managing contact details.
  *
+ * @description
+ * Provides a detailed view of a selected contact with options to edit and delete.
+ * Integrates with MobileMenuService for mobile-specific functionality.
+ * 
  * Features:
  * - Displays detailed information about a selected contact
  * - Provides edit and delete functionality
  * - Supports both desktop and mobile views
  * - Emits events for contact updates and deletions
+ * - Syncs with mobile menu service for responsive design
  *
  * @example
  * ```html
@@ -31,7 +36,10 @@ import { MobileMenuService } from '../../services/mobile-menu.service';
   styleUrls: ['./contact-details.component.scss'],
 })
 export class ContactDetailsComponent {
-  /** The contact user object to display details for */
+  /** 
+   * The contact user object to display details for.
+   * Updates the mobile menu service when value changes.
+   */
   @Input() set contact(value: User | null) {
     this._contact = value;
     this.mobileMenuService.setCurrentContact(value);
@@ -44,18 +52,17 @@ export class ContactDetailsComponent {
   /** Flag indicating if component is being rendered in mobile view */
   @Input() isMobileView = false;
 
-  /** Event emitter that fires when contact is updated */
+  /** Emits when a contact is successfully updated through the edit dialog */
   @Output() contactUpdated = new EventEmitter<void>();
 
-  /** Event emitter that fires when contact is deleted */
+  /** Emits when a contact is successfully deleted */
   @Output() contactDeleted = new EventEmitter<void>();
 
   /**
    * Creates an instance of ContactDetailsComponent.
+   * Sets up subscriptions to mobile menu service events.
    *
-   * @param dialogService - Service for managing dialog windows
-   * @param userService - Service for user CRUD operations
-   * @param snackbarService - Service for displaying notifications
+   * @param mobileMenuService - Service for managing mobile-specific menu operations
    */
   constructor(private mobileMenuService: MobileMenuService) {
     this.mobileMenuService.editClick$.subscribe(() => {
@@ -66,9 +73,27 @@ export class ContactDetailsComponent {
       this.contactDeleted.emit();
     });
   }
+
+  /**
+   * Initiates the contact deletion process.
+   * 
+   * @description
+   * Delegates the delete operation to the mobile menu service.
+   * The service will handle confirmation and actual deletion.
+   * On successful deletion, the contactDeleted event will be emitted.
+   */
   deleteContact() {
     this.mobileMenuService.handleDelete();
   }
+
+  /**
+   * Opens the edit dialog for the current contact.
+   * 
+   * @description
+   * Delegates the edit operation to the mobile menu service.
+   * The service will handle dialog display and contact updating.
+   * On successful edit, the contactUpdated event will be emitted.
+   */
   openEditDialog() {
     this.mobileMenuService.handleEdit();
   }
