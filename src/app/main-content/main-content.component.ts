@@ -12,8 +12,19 @@ import { NavbarComponent } from '../shared/components/navbar/navbar.component';
  * @description
  * This component acts as the main structural container for the application,
  * incorporating the header, navigation bar, and the main content area.
- * It uses Angular's standalone component architecture and serves as a
- * wrapper for all authenticated content.
+ * It uses Angular's standalone component architecture and handles viewport
+ * height monitoring through the ViewportResizeService.
+ * 
+ * Features:
+ * - Responsive layout container
+ * - Automatic height overflow detection
+ * - Integration with header and navigation components
+ * 
+ * @property {boolean} isHeightExceeded - Tracks if the content height exceeds viewport
+ * 
+ * @usageNotes
+ * The component automatically subscribes to viewport changes on initialization
+ * and applies the 'height-exceeded' class when necessary.
  * 
  * @example
  * ```html

@@ -1,10 +1,5 @@
 @use "../../../styles.scss" as *;
 
-// body {
-//   margin: 0;
-//   font-family: "Inter", sans-serif;
-// }
-
 :host {
   display: flex;
   align-items: center;
@@ -38,21 +33,19 @@
   }
 }
 
-/* *******************************************************************start Logo animation */
 .logo-image {
   position: absolute;
-  top: 50vh; /* Start position*/
+  top: 50vh;
   left: 50vw;
   transform: translate(-50%, -50%) scale(4);
-  animation: LogoAnimate 2.1s forwards ease-out; /* Increased duration and changed timing */
+  animation: LogoAnimate 2.1s forwards ease-out;
   width: 100%;
   height: auto;
   z-index: 1;
 }
 
-/* Background div behind the logo image */
 .background-overlay {
-  position: fixed; // Changed from absolute to fixed
+  position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
@@ -67,15 +60,14 @@
 @keyframes LogoAnimate {
   0%,
   30% {
-    /* Stay at initial position for 30% of the animation */
-    top: 50vh; /* Start position */
+    top: 50vh;
     left: 50vw;
-    transform: translate(-50%, -50%) scale(4); /* Start: Enlarged */
+    transform: translate(-50%, -50%) scale(4);
   }
   100% {
-    top: 12px; /* End position (vertical) */
+    top: 12px;
     left: 12px;
-    transform: translate(0, 0) scale(1); /* End position: Normal size */
+    transform: translate(0, 0) scale(1);
   }
 }
 
@@ -92,7 +84,6 @@
   }
 }
 
-/* *******************************************************************End Logo animation */
 .content {
   width: 100%;
 }
@@ -110,12 +101,6 @@
   gap: 30px;
 }
 
-// .footer-links a {
-//   text-decoration: none;
-//   color: #202020;
-// }
-
-/* ************************************************************login section */
 .login-section {
   width: 50%;
   max-width: 692px;
@@ -132,16 +117,14 @@
 }
 
 .title-section {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   flex-direction: column;
   font-size: 61px;
   font-weight: 700;
   height: 89px;
   width: 100%;
   margin-top: 40px;
-  white-space: nowrap; // Verhindert Zeilenumbruch
+  white-space: nowrap;
 }
 
 .divider {
@@ -169,8 +152,7 @@
 
     .input-with-icon {
       @include input-base;
-      width: calc(100% - 20px); // Anpassung für Padding
-      //   padding-right: 45px;
+      width: calc(100% - 20px);
       margin: 0;
       &::-ms-reveal,
       &::-ms-clear {
@@ -186,7 +168,7 @@
 
     .input-icon {
       position: absolute;
-      right: 35px; // Changed from 12px to 35px to move icon more to the left
+      right: 35px;
       top: 50%;
       transform: translateY(-50%);
       color: $dark-navy;
@@ -199,12 +181,11 @@
 
   input {
     @include input-base;
-    width: calc(100% - 50px); // Anpassung für das Icon
+    width: calc(100% - 50px);
     margin-top: 15px;
   }
 }
 
-// Remove old icon classes
 .icon-email,
 .icon-password,
 .icon-name {
@@ -245,7 +226,7 @@ input[type="password"] {
 input[type="text"].invalid,
 input[type="email"].invalid,
 input[type="password"].invalid {
-  border-color: #ff0000;
+  border-color: $error-red;
 }
 
 .error-validation {
@@ -280,14 +261,14 @@ input[type="password"].invalid {
 }
 
 .error-message {
-  color: red;
+  color: $error-red;
   font-size: 0.9em;
   display: none;
   margin-left: 10px;
 }
 
 input[type="checkbox"]:invalid + span {
-  color: red; 
+  color: $error-red;
 }
 
 .signup-hide {
@@ -362,9 +343,7 @@ input[type="checkbox"]:invalid + span {
     display: none !important;
   }
   .header-login-content-responsive {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
     gap: 12px;
     margin-top: 32px;
   }
@@ -406,9 +385,7 @@ input[type="checkbox"]:invalid + span {
   }
 
   .header-login-content-responsive {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
     gap: 12px;
     margin-top: 25px;
   }
