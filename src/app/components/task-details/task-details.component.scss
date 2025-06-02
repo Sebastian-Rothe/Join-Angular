@@ -1,6 +1,6 @@
 @use "../../../styles.scss" as *;
 
-// ---------- Variables ----------
+$color-text: #313c4d;
 
 // ---------- Dialog & Container Layout ----------
 .adjust-popup-edit {
@@ -14,7 +14,7 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: white;
+  background: $white;
   border-radius: 30px;
   overflow: hidden;
 }
@@ -189,10 +189,10 @@
 .style-avatar-overlap {
   border-radius: 50%;
   color: $white;
- @include flex-center;
+  @include flex-center;
   font-weight: 400;
   font-size: 12px;
-  margin-right: 0; 
+  margin-right: 0;
   border: 1px solid $white;
   box-sizing: border-box;
   min-width: 32px;
@@ -222,7 +222,6 @@
   max-width: 100%;
 }
 
-// ---------- Checkbox & Subtask Styling ----------
 .custom-checkbox {
   display: block;
   margin-bottom: 8px;
@@ -276,7 +275,7 @@
   margin-left: 12px;
 }
 
-// ---------- File List & Preview ----------
+
 .file-list-container {
   margin-top: 8px;
   width: 100%;
@@ -319,8 +318,8 @@
       height: 86px;
       border-radius: 8px;
       overflow: hidden;
-      background: $color-background;
-      border: 1px solid $color-border;
+      background: $background-light;
+      border: 1px solid $border-color;
 
       &::after {
         content: "";
@@ -356,13 +355,13 @@
         right: 0;
         height: 22px;
         padding: 4px;
-        background: white;
-        color: $color-primary;
+        background: $white;
+        color: $dark-navy;
         font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        border-top: 1px solid $color-border;
+        border-top: 1px solid $border-color;
       }
 
       .file-preview-overlay {
@@ -376,9 +375,7 @@
         border: none;
         border-radius: 50%;
         background: transparent;
-        display: flex;
-        align-items: center;
-        justify-content: center;
+        @include flex-center;
         opacity: 0;
         transition: all 0.2s ease;
         z-index: 1;
@@ -387,15 +384,15 @@
         mat-icon {
           width: 24px;
           height: 24px;
-          color: white;
+          color: $white;
           transition: all 0.2s ease;
         }
 
         &:hover {
-          background-color: $color-secondary;
+          background-color: $primary-blue;
 
           mat-icon {
-            color: white;
+            color: $white;
             scale: 0.9;
           }
         }
@@ -427,21 +424,21 @@
   border: none;
   cursor: pointer;
   transition: all 0.2s ease;
-  color: $color-primary;
+  color: $dark-navy;
   font-size: 16px;
 
   &:hover {
-    color: $color-secondary;
+    color: $primary-blue;
     transform: scale(1.1);
     box-shadow: none;
 
     mat-icon {
-      color: $color-secondary;
+      color: $primary-blue;
     }
   }
 
   mat-icon {
-    color: $color-primary;
+    color: $dark-navy;
     transition: all 0.2s ease;
   }
 }
@@ -449,15 +446,13 @@
 .button-divider {
   height: 24px;
   width: 1px;
-  background-color: $color-border;
+  background-color: $border-color;
 }
 
-// Custom tooltip for task description
 .task-description {
   &[data-tooltip] {
     position: relative;
 
-    // Tooltip nur anzeigen wenn die Beschreibung auch collapsible ist
     &.collapsible:hover::before {
       content: attr(data-tooltip);
       position: fixed;
@@ -481,7 +476,6 @@
   }
 }
 
-// ---------- Edit Mode Elements ----------
 .left-right-container-to-edit {
   display: flex;
   flex-direction: column;
@@ -506,18 +500,16 @@
   flex-direction: column;
 }
 
-// ---------- Close Button ----------
 .close-button {
   cursor: pointer;
   transition: transform 0.2s ease;
 
   &:hover {
     transform: scale(1.3);
-    color: $color-secondary;
+    color: $primary-blue;
   }
 }
 
-// ---------- Media Queries ----------
 @media (max-width: 800px) {
   .task-title {
     font-size: 30px;
@@ -542,7 +534,6 @@
 }
 
 @media (max-width: 768px) {
-  // Padding adjustments
   .task-details-header {
     padding: 20px 20px 6px;
   }
@@ -552,8 +543,6 @@
   .task-details-footer {
     padding: 6px 20px 20px;
   }
-
-  // Font size adjustments
   .info-section {
     margin-bottom: 12px;
     &.stacked {
@@ -573,7 +562,6 @@
 }
 
 @media (max-width: 600px) {
-  // Padding adjustments
   .task-details-header {
     padding: 16px 16px 4px;
   }
@@ -584,7 +572,6 @@
     padding: 4px 16px 16px;
   }
 
-  // Element adjustments
   .info-section {
     margin-bottom: 10px;
     &.stacked {
@@ -612,7 +599,6 @@
   }
 
   @media (max-width: 400px) {
-    // Padding adjustments
     .task-details-header {
       padding: 12px 12px 4px;
     }
@@ -623,7 +609,6 @@
       padding: 4px 12px 12px;
     }
 
-    // Element adjustments
     .info-section {
       margin-bottom: 8px;
       &.stacked {
@@ -647,7 +632,7 @@
       margin-top: 4px;
     }
     .subtask-list {
-    gap: 0;
-  }
+      gap: 0;
+    }
   }
 }
