@@ -176,7 +176,6 @@ input {
   font-weight: 700;
 }
 
-/* Responsive Design */
 @media (max-width: 1200px) {
   .main-board {
     padding: 16px;
@@ -217,7 +216,6 @@ input {
 
   .align-all-4 {
     width: 100%;
-    // max-height: 256px;
     height: auto;
   }
 
@@ -276,10 +274,6 @@ input {
     min-height: 50px;
     line-height: 1;
   }
-
-  // .search-button {
-  //   display: none;
-  // }
 
   .search-container,
   .input-div,

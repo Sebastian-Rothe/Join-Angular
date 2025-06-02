@@ -30,7 +30,7 @@ interface UserData {
 
 /**
  * Service for managing user data in the application
- * 
+ *
  * @class UserService
  * @description Handles all user-related operations including authentication state management,
  * user CRUD operations, and guest user cleanup in Firestore
@@ -54,7 +54,6 @@ export class UserService {
    * @constructor
    */
   constructor() {
-    // User-Stream erstellen, der sich automatisch bei Auth-Änderungen aktualisiert
     this.currentUser$ = this.authService.user$.pipe(
       switchMap(async (authUser) => {
         if (!authUser) return null;
@@ -64,12 +63,13 @@ export class UserService {
             doc(this.firestore, 'users', authUser.uid)
           );
           if (userDoc.exists()) {
-            // Konvertiere Firestore-Daten in User-Objekt
             return new User(userDoc.data());
           }
           return null;
         } catch (error) {
-          this.snackbarService.error('Error fetching user data. Please try again.');
+          this.snackbarService.error(
+            'Error fetching user data. Please try again.'
+          );
           return null;
         }
       })
@@ -78,7 +78,7 @@ export class UserService {
 
   /**
    * Retrieves a user by their unique identifier
-   * 
+   *
    * @param {string} userId - The unique identifier of the user to retrieve
    * @returns {Promise<User | null>} The user object if found, null otherwise
    */
@@ -97,7 +97,7 @@ export class UserService {
 
   /**
    * Removes all guest user accounts except the current user
-   * 
+   *
    * @returns {Promise<void>}
    */
   async cleanupGuestUsers(): Promise<void> {
@@ -123,7 +123,7 @@ export class UserService {
 
   /**
    * Retrieves all active users, excluding guest accounts
-   * 
+   *
    * @returns {Promise<User[]>} Array of active users sorted by name
    */
   async getAllUsers(): Promise<User[]> {
@@ -149,7 +149,7 @@ export class UserService {
 
   /**
    * Updates a user's profile picture
-   * 
+   *
    * @param {string} userId - The ID of the user to update
    * @param {File} imageFile - The new profile picture file
    * @returns {Promise<void>}
@@ -166,32 +166,30 @@ export class UserService {
         profilePicture: compressedImage,
       });
     } catch (error) {
-      this.snackbarService.error('Error updating profile picture. Please try again.');
+      this.snackbarService.error(
+        'Error updating profile picture. Please try again.'
+      );
       throw error;
     }
   }
 
   /**
    * Creates a new user in the system
-   * 
+   *
    * @param {UserData} userData - The user data for creation
    * @returns {Promise<User>} The newly created user
    * @throws {Error} If user creation fails
    */
   async createUser(userData: UserData): Promise<User> {
     try {
-      // Get reference to users collection
       const usersCollectionRef = collection(this.firestore, 'users');
-      // Generate new document reference with auto-ID
       const newDocRef = doc(usersCollectionRef);
 
-      // Create new User instance with the generated ID
       const newUser = new User({
         uid: newDocRef.id,
         ...userData,
       });
 
-      // Save to Firestore using the generated reference
       await setDoc(newDocRef, newUser.toPlainObject());
 
       return newUser;
@@ -203,20 +201,16 @@ export class UserService {
 
   /**
    * Updates an existing user's information
-   * 
+   *
    * @param {string} userId - The ID of the user to update
    * @param {UserData} userData - The updated user data
    * @returns {Promise<void>}
    * @throws {Error} If the update fails
    */
-  async updateUser(
-    userId: string,
-    userData: UserData
-  ): Promise<void> {
+  async updateUser(userId: string, userData: UserData): Promise<void> {
     try {
       const userRef = doc(this.firestore, 'users', userId);
 
-      // Update the user document
       await updateDoc(userRef, {
         name: userData.name,
         email: userData.email,
@@ -231,7 +225,7 @@ export class UserService {
 
   /**
    * Deletes a user from the system
-   * 
+   *
    * @param {string} userId - The ID of the user to delete
    * @returns {Promise<void>}
    * @throws {Error} If the deletion fails

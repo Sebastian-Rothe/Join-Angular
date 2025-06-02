@@ -1,6 +1,5 @@
 @use "../../../styles.scss" as *;
 
-// Reset default styles for semantic elements
 article {
   margin: 0;
   padding: 0;
@@ -35,7 +34,6 @@ nav {
   padding: 0;
 }
 
-// Adjust heading hierarchy
 h1 {
   font-size: 47px;
   margin: 0;
@@ -44,7 +42,7 @@ h1 {
 
 .contact-details {
   position: relative;
-  height: calc(100vh - 96px - 64px - 70px); // Abzüglich Header-Höhe
+  height: calc(100vh - 96px - 64px - 70px); 
   max-height: calc($max-height-minus-header - 166px);
   overflow-y: auto;
 
@@ -63,9 +61,9 @@ h1 {
       display: flex;
       align-items: center;
       justify-content: center;
-      color: white;
+      color: $white;
       font-size: 47px;
-      border: 3px solid white;
+      border: 3px solid $white;
 
       img {
         width: 100%;
@@ -156,24 +154,23 @@ h1 {
   }
 
   .contact-details {
-    height: calc(100vh - 233px); // Abzüglich Header + Navbar
+    height: calc(100vh - 233px); 
   }
 }
 
 @media (max-width: 800px) {
   .contact-details {
-    height: calc(100vh - 305px); // Abzüglich Header + Navbar
+    height: calc(100vh - 305px); 
   }
 }
 @media (max-width: 650px) {
   .contact-details {
-    height: calc(100vh - 280px); // Abzüglich Header + Navbar
+    height: calc(100vh - 280px); 
   }
   .contact-details {
    
     .contact-header {
       gap: 16px;
-      // margin: 16px 0 0 0;
 
       .contact-name-section h2 {
         font-size: 28px !important;

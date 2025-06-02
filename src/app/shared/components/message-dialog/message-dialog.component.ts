@@ -90,8 +90,6 @@ export class MessageDialogComponent implements OnInit {
    */
   ngOnInit() {
     setTimeout(() => (this.isVisible = true), 50);
-
-    // Only auto-close for success messages
     if (this.data.type === 'success') {
       setTimeout(() => {
         this.isVisible = false;

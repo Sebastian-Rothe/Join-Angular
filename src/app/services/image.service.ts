@@ -76,6 +76,7 @@ export class ImageService {
       reader.readAsDataURL(file);
     });
   }
+
   /**
    * Convert task files to viewer image info format
    * @param files - Array of task files
@@ -90,6 +91,7 @@ export class ImageService {
       size: this.getBase64Size(file.data),
     }));
   }
+  
   /**
    * Calculate the size of a base64 string in bytes
    * @param {string} base64String - The base64 string to calculate size for

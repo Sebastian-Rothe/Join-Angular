@@ -11,6 +11,15 @@ $white: #ffffff;
 $box-shadow-light: rgba(0, 0, 0, 0.08);
 $box-shadow-hover: rgba(0, 0, 0, 0.3);
 
+
+$color-primary: #2a3647;
+$color-secondary: #29abe2;
+$color-text: #313c4d;
+$color-border: #d1d1d1;
+$color-background: #f6f7f8;
+
+
+
 $max-height: 1375px;
 $max-height-minus-header: 1279px;
 $max-width: 1920px;
@@ -127,7 +136,6 @@ button {
   }
 }
 
-// Responsive styles for buttons
 @media (max-width: 768px) {
   .primary-btn,
   .secondary-btn {
@@ -173,7 +181,6 @@ button {
   height: 48px;
   font-size: 20px;
   border: 1px solid $border-color;
-  //   padding-left: 10px;
   padding: 0 12px;
   outline: none;
 
@@ -249,7 +256,6 @@ body {
   }
 }
 
-// Slide animations
 @keyframes slideInRight {
   from {
     transform: translateX(100%);
@@ -294,7 +300,6 @@ body {
   }
 }
 
-// Animation utility classes
 .slide-in {
   animation: slideInRight 0.3s ease forwards;
 }
@@ -313,7 +318,7 @@ body {
   }
 }
 
-// Dialog Animations
+
 .add-task-dialog {
   .mdc-dialog__surface {
     &.slide-in {

@@ -45,7 +45,6 @@ export class DialogService {
     return this.dialog.open(ActionDialogComponent, {
       width: '90%',
       maxWidth: '1000px',
-      // maxHeight: '900px!important',
       data: config,
       disableClose: true,
       hasBackdrop: true

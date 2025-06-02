@@ -1,11 +1,6 @@
 @use "../../../styles.scss" as *;
 
 // ---------- Variables ----------
-$color-primary: #2a3647;
-$color-secondary: #29abe2;
-$color-text: #313c4d;
-$color-border: #d1d1d1;
-$color-background: #f6f7f8;
 
 // ---------- Dialog & Container Layout ----------
 .adjust-popup-edit {
@@ -59,7 +54,7 @@ $color-background: #f6f7f8;
   justify-content: flex-end;
   gap: 8px;
   padding: 8px 24px 24px;
-  background: white;
+  background: $white;
 }
 
 // ---------- Task Category & Title Elements ----------
@@ -69,7 +64,7 @@ $color-background: #f6f7f8;
   margin-top: 12px;
   padding: 8px 16px;
   border-radius: 8px;
-  color: #fff;
+  color: $white;
   display: inline-block;
 
   &.user-story {
@@ -109,11 +104,11 @@ $color-background: #f6f7f8;
       position: absolute;
       right: 0;
       bottom: -20px;
-      background: white;
+      background: $white;
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 12px;
-      color: $color-secondary;
+      color: $primary-blue;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     }
   }
@@ -154,7 +149,7 @@ $color-background: #f6f7f8;
 
   .content {
     font-size: 21px;
-    color: $color-primary;
+    color: $dark-navy;
   }
 }
 
@@ -193,14 +188,12 @@ $color-background: #f6f7f8;
 // ---------- Avatar & User Elements ----------
 .style-avatar-overlap {
   border-radius: 50%;
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  color: $white;
+ @include flex-center;
   font-weight: 400;
   font-size: 12px;
-  margin-right: 0; // Remove negative margin since we're stacking
-  border: 1px solid white;
+  margin-right: 0; 
+  border: 1px solid $white;
   box-sizing: border-box;
   min-width: 32px;
   width: 32px;
@@ -219,7 +212,6 @@ $color-background: #f6f7f8;
   display: flex;
   align-items: flex-start;
   gap: 8px;
-  // width: 100%;
 }
 
 .avatar-container {
@@ -251,7 +243,7 @@ $color-background: #f6f7f8;
 
     .checked,
     .unchecked {
-      stroke: $color-primary;
+      stroke: $dark-navy;
     }
 
     .checked {

@@ -135,21 +135,21 @@ $container-padding-small: 12px;
     gap: 16px;
   }
 
-  // Media Queries für Footer
-  @media (max-width: 1300px) {
-    padding: 20px 72px;
-    height: 150px;
-  }
+  // // Media Queries für Footer
+  // @media (max-width: 1300px) {
+  //   padding: 20px 72px;
+  //   height: 150px;
+  // }
 
-  @media (max-width: 1180px) {
-    padding: 20px 60px;
-    height: 140px;
-  }
+  // @media (max-width: 1180px) {
+  //   padding: 20px 60px;
+  //   height: 140px;
+  // }
 
-  @media (max-width: 900px) {
-    padding: 20px $container-padding-tablet;
-    height: 120px;
-  }
+  // @media (max-width: 900px) {
+  //   padding: 20px $container-padding-tablet;
+  //   height: 120px;
+  // }
 
   @media (max-width: 600px) {
     gap: 8px;
@@ -200,7 +200,7 @@ $container-padding-small: 12px;
       color: $white;
 
       img {
-        filter: brightness(0) invert(1); // Makes SVG icons white
+        filter: brightness(0) invert(1); 
       }
 
       &:nth-child(1) {
@@ -240,7 +240,6 @@ $container-padding-small: 12px;
   }
 }
 
-// ---------- Media Queries ----------
 @media (max-width: 600px) {
   .priority-buttons {
     flex-direction: column;

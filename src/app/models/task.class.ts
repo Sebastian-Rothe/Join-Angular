@@ -55,24 +55,24 @@ export interface TaskFile {
  * ```
  */
 export class Task {
-    id: string; // Removed optional marker
+    id: string; 
     title: string;
     description: string;
     assignedTo: User[];
-    files: TaskFile[] = []; // Updated to use TaskFile interface
-    dueDate: number; // Updated to store dueDate as a timestamp
+    files: TaskFile[] = []; 
+    dueDate: number; 
     priority: 'urgent' | 'medium' | 'low';
     category: string;
     subtasks: Subtask[];
     status: string;
 
     constructor(obj?: any) {
-        this.id = obj?.id || ''; // Ensure it's never undefined
+        this.id = obj?.id || ''; 
         this.title = obj?.title || '';
         this.description = obj?.description || '';
         this.assignedTo = obj?.assignedTo || [];
-        this.files = obj?.files || []; // Updated to use TaskFile interface
-        this.dueDate = obj?.dueDate ? new Date(obj.dueDate).getTime() : 0; // Convert dueDate to timestamp
+        this.files = obj?.files || []; 
+        this.dueDate = obj?.dueDate ? new Date(obj.dueDate).getTime() : 0; 
         this.priority = obj?.priority || 'medium';
         this.category = obj?.category || '';
         this.subtasks = obj?.subtasks || [];

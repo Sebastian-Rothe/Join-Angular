@@ -173,7 +173,6 @@ export class AuthService {
     try {
       const currentUser = this.auth.currentUser;
       if (currentUser?.isAnonymous) {
-        // Using isAnonymous instead of checking document
         await deleteDoc(doc(this.firestore, 'users', currentUser.uid));
       }
       await signOut(this.auth);
