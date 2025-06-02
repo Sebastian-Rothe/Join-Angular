@@ -42,7 +42,7 @@
            role="region"
            aria-label="Todo tasks">
         @if (getTasksByStatus('todo').length > 0) {
-          @for (task of getTasksByStatus('todo'); track task) {
+          @for (task of getTasksByStatus('todo'); track task.id) {
             <app-task-card 
               [task]="task"
               (dragStarted)="onDragStart($event, task)"
@@ -72,7 +72,7 @@
            role="region"
            aria-label="In progress tasks">
         @if (getTasksByStatus('inProgress').length > 0) {
-          @for (task of getTasksByStatus('inProgress'); track task) {
+          @for (task of getTasksByStatus('inProgress'); track task.id) {
             <app-task-card 
               [task]="task"
               (dragStarted)="onDragStart($event, task)"
@@ -101,7 +101,7 @@
            role="region"
            aria-label="Await feedback tasks">
         @if (getTasksByStatus('awaitFeedback').length > 0) {
-          @for (task of getTasksByStatus('awaitFeedback'); track task) {
+          @for (task of getTasksByStatus('awaitFeedback'); track task.id) {
             <app-task-card 
               [task]="task"
               (dragStarted)="onDragStart($event, task)"
@@ -127,7 +127,7 @@
            role="region"
            aria-label="Done tasks">
         @if (getTasksByStatus('done').length > 0) {
-          @for (task of getTasksByStatus('done'); track task) {
+          @for (task of getTasksByStatus('done'); track task.id) {
             <app-task-card 
               [task]="task"
               (dragStarted)="onDragStart($event, task)"

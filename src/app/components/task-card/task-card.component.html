@@ -27,7 +27,7 @@
   }
   <div class="task-footer">
     <div class="task-assigned">
-      @for (user of task.assignedTo.slice(0, 3); track user) {
+      @for (user of task.assignedTo.slice(0, 3); track user.uid) {
         <div class="style-avatar-overlap"
              [style.background-color]="user.iconColor"
              [style.width.px]="32"
@@ -51,7 +51,7 @@
 </div>
 
 <mat-menu #menu="matMenu" class="task-status-menu">
-  @for (status of getFilteredStatuses(); track status) {
+  @for (status of getFilteredStatuses(); track status.value) {
     <button mat-menu-item 
             (click)="moveToStatus(status.value)">
       {{ status.label }}
