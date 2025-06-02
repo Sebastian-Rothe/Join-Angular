@@ -23,13 +23,13 @@
     padding: 24px;
     background-color: $white;
     z-index: 2;
-  @include flex-center;
+    @include flex-center;
     gap: 16px;
     border-bottom: 1px solid $border-color;
   }
 
   .new-contact-button {
-  @include flex-center;
+    @include flex-center;
     @extend %button-base;
     width: 100%;
     height: 56px;
@@ -131,7 +131,7 @@
       height: 42px;
       border-radius: 50%;
       border: 2px solid $white;
-     @include flex-center;
+      @include flex-center;
       color: $white;
       font-weight: 500;
       font-size: 16px;
@@ -149,7 +149,7 @@
       height: 42px;
       border-radius: 50%;
       border: 2px solid $white;
-    @include flex-center;
+      @include flex-center;
       color: $white;
       font-weight: 500;
       font-size: 16px;
@@ -259,12 +259,6 @@
       transform: scale(1.2);
     }
   }
-
-  app-contact-details {
-    display: block;
-    height: calc(100% - 120px);
-    overflow-y: auto;
-  }
 }
 
 .mobile-add-button {
@@ -283,13 +277,13 @@
   .mobile-icon {
     width: 100%;
     height: 100%;
-   @include flex-center;
+    @include flex-center;
     color: $white;
     font-size: 32px;
   }
 
   &:hover {
-    background-color: #29abe2;
+    background-color: $primary-blue;
   }
 }
 
@@ -380,10 +374,6 @@
     .title-row {
       width: 100%;
     }
-
-    app-contact-details {
-      height: calc(100% - 80px);
-    }
   }
 }
 @media (max-width: 800px) {
@@ -394,7 +384,6 @@
 }
 @media (max-width: 650px) {
   .contact-details-section {
-    height: calc(100vh - 89px);
     padding: 16px;
 
     .contact-heading {
@@ -409,10 +398,6 @@
           margin: 0 40px 0 0;
         }
       }
-    }
-
-    app-contact-details {
-      height: calc(100vh - 200px);
     }
   }
   .contacts-list {
@@ -433,13 +418,6 @@
 }
 
 @media (max-width: 400px) {
-  .contact-details-section {
-    height: calc(100vh - 80px);
-
-    app-contact-details {
-      height: calc(100vh - 180px);
-    }
-  }
   .contacts-list {
     padding: 8px;
     .contact-group {
@@ -454,14 +432,6 @@
 }
 
 @media (max-width: 375px) {
-  .contact-details-section {
-    height: calc(100vh - 76px);
-    padding: 10px;
-
-    app-contact-details {
-      height: calc(100vh - 160px);
-    }
-  }
   .mobile-add-button {
     bottom: 76px;
     right: 16px;
