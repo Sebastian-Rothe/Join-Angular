@@ -5,7 +5,7 @@
   width: 100%;
   height: 100%;
   background-color: $background-light;
-  overflow: hidden; // Verhindert horizontalen Scrollbalken
+  overflow: hidden;
 }
 
 .contact-list-section {
@@ -15,7 +15,7 @@
   height: 100%;
   background-color: $white;
   box-shadow: 4px 0px 6px $box-shadow-light;
-  overflow-y: auto; // Scrollbar für Kontaktliste
+  overflow-y: auto;
 
   .button-container {
     position: sticky;
@@ -78,8 +78,8 @@
       &:after {
         content: "";
         position: absolute;
-        left: 0; // Gleicher Abstand wie der Content
-        right: 0; // Gleicher Abstand wie der Content
+        left: 0;
+        right: 0;
         bottom: -8px;
         height: 1px;
         background-color: $border-color;
@@ -90,15 +90,15 @@
       display: flex;
       align-items: center;
       gap: 24px;
-      padding: 15px 24px; // Konsistentes Padding
+      padding: 15px 24px;
       position: relative;
       cursor: pointer;
 
       &:before {
         content: "";
         position: absolute;
-        left: 0; // Gleicher Abstand wie Divider
-        right: 0; // Gleicher Abstand wie Divider
+        left: 0;
+        right: 0;
         top: 0;
         bottom: 0;
         background-color: transparent;
@@ -108,11 +108,10 @@
         z-index: 0;
       }
 
-      // Container für den eigentlichen Content
       .contact-avatar,
       .contact-info {
         position: relative;
-        z-index: 1; // Content über dem Hover-Effekt
+        z-index: 1;
       }
 
       &:hover:before {
@@ -190,11 +189,10 @@
 .contact-details-section {
   flex: 1;
   padding: 32px;
-  overflow: hidden; // Änderung von overflow-y: auto zu overflow: hidden
+  overflow: hidden;
   min-width: 0;
 
   .contact-heading {
-    // Header direkt sichtbar, keine Animation
     transform: translateX(0);
     opacity: 1;
   }
@@ -202,7 +200,7 @@
   .contact-content {
     transform: translateX(100%);
     opacity: 0;
-    transition: none; // Remove transition to allow instant reset
+    transition: none;
 
     &.sliding-in {
       transform: translateX(0);
@@ -221,13 +219,12 @@
     display: flex;
     align-items: center;
     gap: 28px;
-    // margin-bottom: 32px;
 
     .title-row {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      // width: 100%;
+
       gap: 28px;
 
       .contacts-title {
@@ -242,7 +239,7 @@
       gap: 16px;
 
       .divider {
-        background-color: #29abe2;
+        background-color: $primary-blue;
         height: 59px;
         width: 3px;
       }
@@ -271,7 +268,7 @@
 
   app-contact-details {
     display: block;
-    height: calc(100% - 120px); // Höhe abzüglich des Headers
+    height: calc(100% - 120px);
     overflow-y: auto;
   }
 }
@@ -324,14 +321,12 @@
 @media (max-width: 850px) {
   .contacts-container {
     flex-direction: column;
-    // height: calc(100vh - 89px); // Anpassung an Header-Höhe
-    // margin-top: 89px; // Abstand zum Header
   }
   .mobile-add-button {
     position: fixed;
     display: block;
     right: 16px;
-    bottom: 10px; // Anpassung an Mobile-Nav
+    bottom: 16px;
   }
 
   .contact-list-section {
@@ -349,7 +344,7 @@
 
     .contact-group {
       .contact-item {
-        margin: 0; // Reset negative margin on mobile
+        margin: 0;
         padding: 15px;
       }
     }
@@ -365,7 +360,7 @@
     transform: translateX(100%);
     transition: transform 0.3s ease-in-out;
     padding: 24px;
-    overflow: hidden; // Änderung hier auch
+    overflow: hidden;
 
     &.mobile-visible {
       display: block;
@@ -395,14 +390,14 @@
     }
 
     app-contact-details {
-      height: calc(100% - 80px); // Anpassung für Mobile
+      height: calc(100% - 80px);
     }
   }
 }
 @media (max-width: 800px) {
   .mobile-add-button {
     right: 16px;
-    bottom: 90px; // Anpassung an Mobile-Nav
+    bottom: 96px;
   }
 }
 @media (max-width: 650px) {
@@ -478,7 +473,6 @@
   .mobile-add-button {
     bottom: 76px;
     right: 16px;
-
     width: 46px;
     height: 46px;
   }
