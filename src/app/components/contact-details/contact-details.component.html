@@ -1,41 +1,43 @@
 @if (contact) {
-    <div class="contact-details">
-        <div class="contact-header">
-            <div class="contact-avatar large" [style.background-color]="contact.iconColor">
+    <article class="contact-details">
+        <header class="contact-header">
+            <figure class="contact-avatar large" [style.background-color]="contact.iconColor">
                 @if (contact.profilePicture) {
-                    <img [src]="contact.profilePicture" alt="Profile picture">
+                    <img [src]="contact.profilePicture" [alt]="contact.name + '\'s profile picture'">
+                } @else {
+                    <figcaption>{{ contact.initials }}</figcaption>
                 }
-                @if (!contact.profilePicture) {
-                    <span>{{ contact.initials }}</span>
-                }
-            </div>
+            </figure>
+            
             <div class="contact-name-section">
                 <h2>{{ contact.name }}</h2>
                 @if (!isMobileView) {
-                    <div class="contact-actions">
-                        <button class="action-button edit" (click)="openEditDialog()">
-                            <mat-icon>edit</mat-icon>
+                    <nav class="contact-actions">
+                        <button type="button" class="action-button edit" (click)="openEditDialog()">
+                            <mat-icon aria-hidden="true">edit</mat-icon>
                             <span>Edit</span>
                         </button>
-                        <button class="action-button delete" (click)="deleteContact()">
-                            <mat-icon>delete</mat-icon>
+                        <button type="button" class="action-button delete" (click)="deleteContact()">
+                            <mat-icon aria-hidden="true">delete</mat-icon>
                             <span>Delete</span>
                         </button>
-                    </div>
+                    </nav>
                 }
             </div>
-        </div>
+        </header>
 
-        <div class="contact-information">
+        <section class="contact-information">
             <h3>Contact Information</h3>
-            <div class="info-group">
-                <h4>Email</h4>
-                <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
-            </div>
-            <div class="info-group">
-                <h4>Phone</h4>
-                <a [href]="'tel:' + contact.phone">{{ contact.phone }}</a>
-            </div>
-        </div>
-    </div>
+            <dl>
+                <div class="info-group">
+                    <dt><h4>Email</h4></dt>
+                    <dd><a [href]="'mailto:' + contact.email">{{ contact.email }}</a></dd>
+                </div>
+                <div class="info-group">
+                    <dt><h4>Phone</h4></dt>
+                    <dd><a [href]="'tel:' + contact.phone">{{ contact.phone }}</a></dd>
+                </div>
+            </dl>
+        </section>
+    </article>
 }
