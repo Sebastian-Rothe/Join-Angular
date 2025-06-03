@@ -2,6 +2,24 @@
 // For more information: https://material.angular.io/guide/theming
 @use "@angular/material" as mat;
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Inter", sans-serif;
+  overflow: hidden;
+  @include mat.theme(
+    (
+      density: 0,
+    )
+  );
+}
+
+* {
+  box-sizing: border-box;
+}
+
 $primary-blue: #29abe2;
 $dark-navy: #2a3647;
 $background-light: #f6f7f8;
@@ -10,7 +28,6 @@ $error-red: #ff3d00;
 $white: #ffffff;
 $box-shadow-light: rgba(0, 0, 0, 0.08);
 $box-shadow-hover: rgba(0, 0, 0, 0.3);
-
 
 $max-height: 1375px;
 $max-height-minus-header: 1279px;
@@ -40,19 +57,6 @@ $border-radius-xl: 20px;
   }
 }
 
-html {
-  @include mat.theme(
-    (
-      color: (
-        theme-type: light,
-        primary: mat.$azure-palette,
-        tertiary: mat.$blue-palette,
-      ),
-      typography: Roboto,
-      density: 0,
-    )
-  );
-} /* You can add global styles to this file, and also import other style files */
 button {
   cursor: pointer;
   border-radius: $border-radius-default;
@@ -62,6 +66,25 @@ button {
 
   &:hover {
     box-shadow: 0 4px 4px $box-shadow-hover;
+  }
+}
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin input-base {
+  border-radius: $border-radius-default;
+  height: 48px;
+  font-size: 20px;
+  border: 1px solid $border-color;
+  padding: 0 12px;
+  outline: none;
+
+  &:focus {
+    border-color: $primary-blue;
   }
 }
 
@@ -75,15 +98,12 @@ button {
   padding: 0 20px;
 }
 
-// Global Button Styles
 .primary-btn {
   @extend %button-base;
   background-color: $dark-navy;
   color: $white;
   border: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center();
   gap: 10px;
 
   &:hover {
@@ -104,9 +124,7 @@ button {
   background-color: $white;
   color: $dark-navy;
   border: 1px solid $dark-navy;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center();
   gap: 10px;
 
   &:hover {
@@ -160,40 +178,6 @@ button {
       background-color: $background-color;
     }
   }
-}
-
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin input-base {
-  border-radius: $border-radius-default;
-  height: 48px;
-  font-size: 20px;
-  border: 1px solid $border-color;
-  padding: 0 12px;
-  outline: none;
-
-  &:focus {
-    border-color: $primary-blue;
-  }
-}
-
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "Inter", sans-serif;
-  overflow: hidden;
-}
-
-* {
-  box-sizing: border-box;
 }
 
 @keyframes tooltipFadeIn {
@@ -304,19 +288,18 @@ body {
   .slide-in {
     animation: slideInUp 0.3s ease forwards;
   }
-  
+
   .slide-out {
     animation: slideOutDown 0.3s ease forwards;
   }
 }
-
 
 .add-task-dialog {
   .mdc-dialog__surface {
     &.slide-in {
       animation: slideInRight 0.3s ease forwards;
     }
-    
+
     &.slide-out {
       animation: slideOutRight 0.3s ease forwards;
     }
@@ -328,10 +311,9 @@ body {
     &.slide-in {
       animation: slideInUp 0.3s ease forwards;
     }
-    
+
     &.slide-out {
       animation: slideOutDown 0.3s ease forwards;
     }
   }
 }
-

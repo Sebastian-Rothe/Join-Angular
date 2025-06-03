@@ -12,7 +12,7 @@
   color: white;
   @include flex-center;
   cursor: pointer;
-  z-index: 9;
+  // z-index: 9;
 
   &:hover {
     background-color: $primary-blue;
@@ -33,6 +33,7 @@
     bottom: 14px !important;
     right: 14px !important;
     box-shadow: 0 4px 4px $box-shadow-hover !important;
+    background-color: #efedf0!important;
 
     .mdc-menu-surface {
       background-color: $white !important;

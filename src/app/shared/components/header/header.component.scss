@@ -1,8 +1,8 @@
-@use '../../../../styles.scss' as *;
+@use "../../../../styles.scss" as *;
 
 header {
-  height: 96px; 
-  position: absolute; 
+  height: 96px;
+  position: absolute;
   z-index: 1;
   top: 0;
   display: flex;
@@ -11,23 +11,23 @@ header {
   align-items: center;
   font-weight: 400;
   font-size: 20px;
-  right: 0; 
-  left: 232px; 
-  margin: 0; 
-  padding: 0; 
+  right: 0;
+  left: 232px;
+  margin: 0;
+  padding: 0;
   width: calc(100% - 232px);
 }
 
 .header-left-content {
   display: flex;
   flex: 1;
-  justify-content: flex-start; 
+  justify-content: flex-start;
   align-items: center;
   padding: 0 20px 0 40px;
 
   .logo-small {
     display: none;
-    width: 32px;  
+    width: 32px;
     height: 32px;
   }
 }
@@ -46,7 +46,6 @@ header {
   width: 30px;
   height: 30px;
   position: relative;
-  margin: 4px 4px 0 0;
   transition: transform 225ms ease-in-out;
   color: gray;
 
@@ -55,32 +54,32 @@ header {
   }
 }
 
-    .menu-content {
-      background-color: $dark-navy;
-      border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
-      padding: 20px;
-      box-shadow: 0 2px 8px $box-shadow-hover;
-      min-width: 200px;
+.menu-content {
+  background-color: $dark-navy;
+  border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
+  padding: 20px;
+  box-shadow: 0 2px 8px $box-shadow-hover;
+  min-width: 200px;
 
-      .mat-mdc-menu-item {
-        color: $white;
-        font-size: 16px;
-        padding: 10px;
-        border-radius: $border-radius-default;
-        min-height: unset;
-        line-height: normal;
-        
-        &:hover {
-          background-color: #091931;
-        }
-      }
+  .mat-mdc-menu-item {
+    color: $white;
+    font-size: 16px;
+    padding: 10px;
+    border-radius: $border-radius-default;
+    min-height: unset;
+    line-height: normal;
+
+    &:hover {
+      background-color: #091931;
     }
+  }
+}
 
 .profile-avatar {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-@include flex-center;
+  @include flex-center;
   cursor: pointer;
   background-color: $white;
   overflow: hidden;
@@ -94,7 +93,7 @@ header {
 
   .initials {
     color: $primary-blue;
-    font-size: 24px;
+    font-size: 28px;
     font-weight: 575;
   }
   &:hover {
@@ -126,13 +125,12 @@ header {
     border-radius: $border-radius-default;
     font-size: 16px;
     cursor: pointer;
-    
+
     &:hover {
       background-color: #091931;
     }
   }
 }
-
 
 @media (max-width: 1030px) {
   header {
@@ -140,7 +138,7 @@ header {
     left: 120px;
     margin-left: 0;
   }
-  
+
   .header-left-content {
     justify-content: start;
     padding-left: 24px;
@@ -152,7 +150,7 @@ header {
 
 @media (max-width: 902px) {
   .header-left-content {
-    padding-left: 16px; 
+    padding-left: 16px;
   }
 }
 
@@ -169,7 +167,7 @@ header {
 
   .header-left-content {
     padding-left: 16px;
-    
+
     .logo-small {
       display: block;
       width: 58px;
@@ -186,30 +184,30 @@ header {
   .dropdown-menu {
     top: 91px;
     right: 16px;
-    }
+  }
 }
 
 @media (max-width: 375px) {
   header {
-    height: 60px;  
+    height: 60px;
   }
 
   .profile-avatar {
-    width: 40px;   
+    width: 40px;
     height: 40px;
     min-width: 40px;
     font-size: 16px;
 
     .initials {
       font-size: 16px;
-      font-weight: 500;
+      font-weight: 700;
     }
   }
 
   .dropdown-menu {
     top: 62px;
     right: 12px;
-    }
+  }
 
   .help-icon {
     width: 24px;
@@ -218,7 +216,7 @@ header {
 
   .header-left-content {
     padding-left: 12px;
-    
+
     .logo-small {
       width: 40px;
       height: 40px;

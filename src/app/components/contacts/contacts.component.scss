@@ -24,8 +24,6 @@
     background-color: $white;
     z-index: 2;
     @include flex-center;
-    gap: 16px;
-    border-bottom: 1px solid $border-color;
   }
 
   .new-contact-button {

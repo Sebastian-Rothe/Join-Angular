@@ -1,4 +1,4 @@
-@use '../../styles.scss' as *; 
+@use "../../styles.scss" as *;
 
 .main-layout {
   width: 100%;
@@ -12,8 +12,8 @@
 
 .content-container {
   position: fixed;
-  top: 96px; 
-  left: calc(50% - 960px + 232px); 
+  top: 96px;
+  left: calc(50% - 960px + 232px);
   right: calc(50% - 960px);
   bottom: 0;
   background-color: white;
@@ -29,7 +29,7 @@
   overflow-y: auto;
   max-width: calc(1920px - 232px);
   margin: 0 auto;
-    background-color: #f6f7f8;
+  background-color: #f6f7f8;
 }
 
 @media (max-width: 1920px) {
@@ -41,7 +41,7 @@
 
 @media (max-width: 1030px) {
   .content-container {
-    left: 120px; 
+    left: 120px;
     width: calc(100% - 120px);
   }
   .main-content {
@@ -61,17 +61,15 @@
 
 @media (max-width: 375px) {
   .content-container {
-    bottom: 60px; // Smaller mobile nav
-    top: 60px; // Adjust for smaller header height
+    bottom: 60px;
+    top: 60px;
   }
 }
 
-:host(.height-exceeded) { // Änderung von :host-context zu :host
-  // display: block;
-  // position: fixed;
+:host(.height-exceeded) {
   inset: 0;
   height: $max-height !important;
-  background-color: #f6f7f8;
+  background-color: $background-light;
 
   .main-layout {
     position: fixed;
