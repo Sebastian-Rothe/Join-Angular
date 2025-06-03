@@ -11,8 +11,7 @@ $container-padding-small: 12px;
 
 // ---------- Base Layout ----------
 .container-main {
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column);
   width: 100%;
 
   &.dialog-mode {
@@ -23,9 +22,8 @@ $container-padding-small: 12px;
 
 // ---------- Title & Main Container ----------
 .title {
-  position: sticky;
+  @include position($p: sticky, $t: 0);
   margin: 0;
-  top: 0;
   padding: 48px $container-padding;
   font-size: var(--heading-font-size);
   font-weight: 700;
@@ -105,8 +103,8 @@ $container-padding-small: 12px;
   margin: 0 20px;
 
   @media (max-width: 900px) {
-    width: 100%;
-    height: 1px;
+    @include dimensions($w: 100%, $h: 1px);
+
     margin: 10px 0;
   }
 }
@@ -114,12 +112,9 @@ $container-padding-small: 12px;
 // ---------- Footer Section ----------
 .footer-add-task {
   background-color: $background-light;
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
+  @include position($p: sticky, $b: 0);
+  @include flex($jc: space-between, $ai: center);
+  @include dimensions($w: 100%);
   padding: 20px $container-padding;
   height: 160px;
   z-index: 5;
@@ -129,27 +124,9 @@ $container-padding-small: 12px;
       color: $error-red;
     }
   }
-
   .footer-add-task-right {
-    display: flex;
-    gap: 16px;
+    @include flex($g: 16px);
   }
-
-  // // Media Queries für Footer
-  // @media (max-width: 1300px) {
-  //   padding: 20px 72px;
-  //   height: 150px;
-  // }
-
-  // @media (max-width: 1180px) {
-  //   padding: 20px 60px;
-  //   height: 140px;
-  // }
-
-  // @media (max-width: 900px) {
-  //   padding: 20px $container-padding-tablet;
-  //   height: 120px;
-  // }
 
   @media (max-width: 600px) {
     gap: 8px;
@@ -168,23 +145,17 @@ $container-padding-small: 12px;
   }
 }
 
-
-
 // ---------- Priority Section ----------
 .priority-buttons {
-  display: flex;
-  gap: 10px;
-  width: 100%;
+  @include flex($g: 10px);
+  @include dimensions($w: 100%);
 
   .priority-btn {
     font-size: 1.1em;
     font-weight: 700;
     flex: 1;
     padding: 12px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
+    @include flex($jc: center, $ai: center, $g: 8px);
     border: 1px solid $border-color;
     border-radius: 8px;
 
@@ -192,15 +163,14 @@ $container-padding-small: 12px;
     transition: all 0.2s ease;
 
     img {
-      height: 20px;
-      width: 20px;
+      @include dimensions($w: 20px, $h: 20px);
     }
 
     &.active {
       color: $white;
 
       img {
-        filter: brightness(0) invert(1); 
+        filter: brightness(0) invert(1);
       }
 
       &:nth-child(1) {
@@ -220,8 +190,6 @@ $container-padding-small: 12px;
     }
   }
 }
-
-
 
 // ---------- Utils & Animations ----------
 .required-hint {
@@ -261,13 +229,10 @@ $container-padding-small: 12px;
 }
 
 .delete-all-btn {
-  align-self: flex-end;
-  justify-content: flex-end;
+  @include flex($jc: center, $ai: center);
 
   button {
-    display: flex;
-    align-items: center;
-    gap: 4px;
+    @include flex($ai: center, $g: 4px);
     padding: 4px 8px;
     background: none;
     border: none;
@@ -284,18 +249,16 @@ $container-padding-small: 12px;
 
     mat-icon {
       font-size: 18px;
-      width: 18px;
-      height: 18px;
+      @include dimensions($w: 18px, $h: 18px);
     }
   }
 }
 
 .custom-checkbox {
   cursor: pointer;
-  display: flex;
-  align-items: center;
+  @include flex($ai: center, $g: 8px);
+
   margin: 0 !important;
-  gap: 8px;
 
   input[type="checkbox"] {
     display: none;
@@ -349,9 +312,7 @@ $container-padding-small: 12px;
 }
 
 .title-container {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex($jc: space-between, $ai: center);
   padding-right: $container-padding;
   background-color: $background-light;
 
@@ -374,8 +335,7 @@ $container-padding-small: 12px;
     }
     mat-icon {
       font-size: 40px;
-      width: 40px;
-      height: 40px;
+      @include dimensions($w: 40px, $h: 40px);
     }
   }
 
@@ -396,8 +356,7 @@ $container-padding-small: 12px;
     .close-button {
       mat-icon {
         font-size: 32px;
-        width: 32px;
-        height: 32px;
+        @include dimensions($w: 32px, $h: 32px);
       }
     }
   }
@@ -407,8 +366,7 @@ $container-padding-small: 12px;
     .close-button {
       mat-icon {
         font-size: 24px;
-        width: 24px;
-        height: 24px;
+        @include dimensions($w: 24px, $h: 24px);
       }
     }
   }
