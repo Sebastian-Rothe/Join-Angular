@@ -1,9 +1,9 @@
 @use "../../../styles.scss" as *;
 
 .task-card {
-  width: auto;
   min-width: 0;
-  max-width: 100%;
+
+  @include dimensions($w: auto, $mw: 100%);
   margin: 8px 0;
   position: relative;
   background-color: $white;
@@ -61,9 +61,7 @@
 }
 
 .task-subtasks {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex($ai: center, $jc: space-between);
   margin-bottom: 16px;
   white-space: nowrap;
 }
@@ -76,9 +74,8 @@
 }
 
 .progress {
-  height: 8px;
+  @include dimensions($h: 8px, $w: 0%);
   background-color: #0073e6;
-  width: 0%;
   transition: width 0.3s ease;
 }
 
@@ -89,21 +86,17 @@
 }
 
 .task-footer {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex($jc: space-between, $ai: center);
 }
 
 .task-assigned {
-  display: flex;
-  align-items: center;
-  gap: 4px;
+  @include flex($ai: center, $g: 4px);
 }
 
 .style-avatar-overlap {
   border-radius: 50%;
   color: $white;
-@include flex($ai: center, $jc: center);
+  @include flex($ai: center, $jc: center);
   font-weight: 400;
   font-size: 12px;
   margin-right: -8px;
@@ -111,8 +104,7 @@
   box-sizing: border-box;
 
   img {
-    width: 100%;
-    height: 100%;
+    @include dimensions($w: 100%, $h: 100%);
     border-radius: 50%;
     object-fit: cover;
   }
@@ -125,8 +117,7 @@
 }
 
 .priority-icon {
-  width: 20px;
-  height: 20px;
+  @include dimensions($w: 20px, $h: 20px);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -145,22 +136,18 @@
 }
 
 .task-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
+  @include flex($jc: space-between, $ai: flex-start);
   width: 100%;
 }
 
 .menu-button {
   display: none !important;
   background: none;
-  height: 22px;
-  width: 22px;
+  @include dimensions($w: 22px, $h: 22px);
   border-radius: 50%;
-  color: #6B7280;
+  color: #6b7280;
   @include flex($ai: center, $jc: center);
   padding: 0;
-
 
   &:hover {
     box-shadow: none;
@@ -170,10 +157,8 @@
   }
 
   mat-icon {
-   @include flex($ai: center, $jc: center);
-    font-size: 22px;
-    width: 22px;
-    height: 22px;
+    @include flex($ai: center, $jc: center);
+    @include dimensions($w: 22px, $h: 22px, $fs: 22px);
     line-height: 22px;
   }
 }
@@ -188,11 +173,11 @@
     font-size: 14px;
     height: 24px;
     line-height: 40px;
-    
+
     &:hover {
-      background-color: #F8F9FA;
+      background-color: #f8f9fa;
       box-shadow: none;
-      color: #29ABE2;
+      color: $primary-blue;
     }
   }
 }
@@ -205,14 +190,14 @@
   .task-title {
     margin: 8px 0;
     -webkit-line-clamp: 2;
-    line-clamp:2;
+    line-clamp: 2;
   }
 
   .task-description {
     font-size: 13px;
     margin: 8px 0;
     -webkit-line-clamp: 2;
-    line-clamp:2;
+    line-clamp: 2;
   }
 
   .task-subtasks {
@@ -229,14 +214,13 @@
     margin-right: 4px;
   }
   .menu-button {
-    display: block!important;
+    display: block !important;
   }
 }
 
 @media (max-width: 600px) {
   .task-subtasks {
-    flex-direction: column;
-    align-items: flex-start;
+    @include flex($fd: column, $ai: flex-start);
   }
 
   .progress-bar {

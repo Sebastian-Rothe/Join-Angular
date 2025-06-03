@@ -3,9 +3,9 @@ import { CommonModule } from '@angular/common';
 // Material imports
 import { MatMenuModule } from '@angular/material/menu';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 // Services
 import { TaskService } from '../../services/task.service';
-import { MatButtonModule } from '@angular/material/button';
 import { SnackbarService } from '../../services/snackbar.service';
 // Models
 import { Task } from '../../models/task.class';
