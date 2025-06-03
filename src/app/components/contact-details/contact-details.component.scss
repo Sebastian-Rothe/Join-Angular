@@ -1,35 +1,17 @@
 @use "../../../styles.scss" as *;
 
-article {
+article, dl, dt, dd, figure, nav {
   margin: 0;
   padding: 0;
-}
-
-dl {
-  margin: 0;
 }
 
 dt {
   font-weight: normal;
 }
 
-dd {
-  margin: 0;
-}
-
-figure {
-  margin: 0;
-}
-
 figcaption {
   @include flex($ai: center, $jc: center);
-  width: 100%;
-  height: 100%;
-}
-
-nav {
-  margin: 0;
-  padding: 0;
+  @include dimensions($w: 100%, $h: 100%);
 }
 
 h1 {
@@ -44,25 +26,20 @@ h1 {
   overflow-y: auto;
 
   .contact-header {
-    display: flex;
-    gap: 32px;
-    align-items: center;
+    @include flex($ai: center, $g: 32px);
     margin-bottom: 32px;
 
     .contact-avatar.large {
-      width: 120px;
-      height: 120px;
+      @include dimensions($w: 120px, $h: 120px, $fs: 47px);
+      @include flex($ai: center, $jc: center);
       min-width: 120px;
       min-height: 120px;
       border-radius: 50%;
-    @include flex($ai: center, $jc: center);
       color: $white;
-      font-size: 47px;
       border: 3px solid $white;
 
       img {
-        width: 100%;
-        height: 100%;
+        @include dimensions($w: 100%, $h: 100%);
         object-fit: cover;
         border-radius: 50%;
       }
@@ -76,14 +53,11 @@ h1 {
       }
 
       .contact-actions {
+        @include flex($g: 16px);
         margin-top: 6px;
-        display: flex;
-        gap: 16px;
 
         .action-button {
-          display: flex;
-          align-items: center;
-          gap: 8px;
+          @include flex($ai: center, $g: 8px);
           background: none;
           border: none;
           box-shadow: none;
@@ -97,9 +71,7 @@ h1 {
           }
 
           mat-icon {
-            font-size: 24px;
-            width: 24px;
-            height: 24px;
+            @include dimensions($w: 24px, $h: 24px, $fs: 24px);
           }
         }
       }
@@ -138,9 +110,7 @@ h1 {
 @media (max-width: 850px) {
   .contact-header {
     .contact-avatar.large {
-      width: 80px !important;
-      height: 80px !important;
-      font-size: 32px !important;
+      @include dimensions($w: 80px, $h: 80px, $fs: 32px);
     }
 
     .contact-name-section h2 {
@@ -160,11 +130,9 @@ h1 {
       }
 
       .contact-avatar.large {
-        width: 86px !important;
-        height: 86px !important;
-        min-width: 86px !important;
-        min-height: 86px !important;
-        font-size: 24px !important;
+        @include dimensions($w: 86px, $h: 86px, $fs: 24px);
+        min-width: 86px;
+        min-height: 86px;
       }
     }
   }
@@ -178,6 +146,7 @@ h1 {
     }
   }
 }
+
 @media (max-width: 450px) {
   .contact-information {
     margin: 24px 0 0 24px !important;

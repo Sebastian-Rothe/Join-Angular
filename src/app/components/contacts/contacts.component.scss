@@ -2,8 +2,8 @@
 
 .contacts-container {
   display: flex;
-  width: 100%;
-  height: 100%;
+  @include dimensions($w: 100%, $h: 100%);
+
   background-color: $background-light;
   overflow: hidden;
 }
@@ -18,20 +18,17 @@
   overflow-y: auto;
 
   .button-container {
-    position: sticky;
-    top: 0;
+    @include position($p: sticky, $t: 0);
+    @include flex($ai: center, $jc: center);
     padding: 24px;
     background-color: $white;
     z-index: 2;
-    @include flex($ai: center, $jc: center);
   }
 
   .new-contact-button {
-    @include flex($ai: center, $jc: center);
+    @include flex($ai: center, $jc: center, $g: 16px);
     @extend %button-base;
-    width: 100%;
-    height: 56px;
-    gap: 16px;
+    @include dimensions($w: 100%, $h: 56px);
     background-color: $dark-navy;
     color: $white;
     border: none;
@@ -46,9 +43,7 @@
     );
 
     mat-icon {
-      font-size: 32px;
-      width: 32px;
-      height: 32px;
+      @include dimensions($w: 32px, $h: 32px, $fs: 32px);
     }
   }
 }
@@ -57,46 +52,39 @@
   padding: 0 24px;
 
   .contact-group {
-    margin-bottom: 24px;
     position: relative;
+    margin-bottom: 24px;
     padding: 0;
+
     > ul {
       padding: 0;
     }
+
     .letter-divider {
+      position: relative;
       color: $dark-navy;
       font-size: 21px;
       font-weight: 700;
       margin-bottom: 16px;
       padding-left: 24px;
-      position: relative;
 
       &:after {
         content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: -8px;
+        @include position($p: absolute, $l: 0, $r: 0, $b: -8px);
         height: 1px;
         background-color: $border-color;
       }
     }
 
     .contact-item {
-      display: flex;
-      align-items: center;
-      gap: 24px;
+      @include flex($ai: center, $g: 24px);
       padding: 15px 24px;
       position: relative;
       cursor: pointer;
 
       &:before {
         content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
+        @include position($p: absolute, $l: 0, $r: 0, $t: 0, $b: 0);
         background-color: transparent;
         border-radius: $border-radius-default;
         transition: background-color 225ms ease-in-out;
@@ -106,7 +94,7 @@
 
       .contact-avatar,
       .contact-info {
-        position: relative;
+        @include position($p: relative);
         z-index: 1;
       }
 
@@ -125,45 +113,26 @@
 
     .contact-avatar {
       min-width: 42px;
-      width: 42px;
-      height: 42px;
       border-radius: 50%;
       border: 2px solid $white;
       @include flex($ai: center, $jc: center);
       color: $white;
       font-weight: 500;
-      font-size: 16px;
+      @include dimensions($fs: 16px, $w: 42px, $h: 42px);
 
       img {
-        width: 100%;
-        height: 100%;
+        @include dimensions($w: 100%, $h: 100%);
         object-fit: cover;
         border-radius: 50%;
       }
     }
 
     .contact-avatar.large {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      border: 2px solid $white;
-      @include flex($ai: center, $jc: center);
-      color: $white;
-      font-weight: 500;
-      font-size: 16px;
-
-      img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        border-radius: 50%;
-      }
+      @extend .contact-avatar;
     }
 
     .contact-info {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
+      @include flex($fd: column, $g: 4px);
 
       .contact-name {
         font-size: 16px;
@@ -187,6 +156,29 @@
   .contact-heading {
     transform: translateX(0);
     opacity: 1;
+    @include flex($ai: center, $g: 28px);
+
+    .title-row {
+      @include flex($ai: center, $jc: space-between, $g: 28px);
+
+      .contacts-title {
+        @include dimensions($fs: 61px);
+        font-weight: 700;
+      }
+    }
+
+    .subtitle-row {
+      @include flex($ai: center, $g: 16px);
+
+      .divider {
+        background-color: $primary-blue;
+        @include dimensions($w: 3px, $h: 59px);
+      }
+
+      .better-text {
+        white-space: nowrap;
+      }
+    }
   }
 
   .contact-content {
@@ -207,49 +199,12 @@
     }
   }
 
-  .contact-heading {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-
-    .title-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 28px;
-
-      .contacts-title {
-        font-size: 61px;
-        font-weight: 700;
-      }
-    }
-
-    .subtitle-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-
-      .divider {
-        background-color: $primary-blue;
-        height: 59px;
-        width: 3px;
-      }
-
-      .better-text {
-        white-space: nowrap;
-      }
-    }
-  }
-
   .back-button {
     cursor: pointer;
     transition: transform 0.2s ease-in-out;
 
     mat-icon {
-      width: 32px;
-      height: 32px;
-      font-size: 32px;
+      @include dimensions($w: 32px, $h: 32px, $fs: 32px);
       color: $primary-blue;
     }
 
@@ -261,23 +216,18 @@
 
 .mobile-add-button {
   display: none;
-  position: fixed;
-  right: 24px;
-  bottom: 96px;
-  z-index: 1000;
-  width: 56px;
-  height: 56px;
+  @include position($p: fixed, $r: 24px, $b: 96px);
+  @include dimensions($w: 56px, $h: 56px);
   background-color: $dark-navy;
   border-radius: 50%;
   cursor: pointer;
   transition: background-color 225ms ease-in-out;
+  z-index: 1000;
 
   .mobile-icon {
-    width: 100%;
-    height: 100%;
     @include flex($ai: center, $jc: center);
     color: $white;
-    font-size: 32px;
+    @include dimensions($fs: 32px, $w: 100%, $h: 100%);
   }
 
   &:hover {
@@ -287,16 +237,15 @@
 
 @media (max-width: 1080px) {
   .contact-details-section .contact-heading {
+    @include flex($fd: column, $ai: flex-start, $g: 0);
     margin: 24px 0;
-    gap: 0;
-    flex-direction: column;
-    align-items: flex-start;
+
     .contacts-title {
       margin: 0;
     }
+
     .subtitle-row .divider {
-      height: 3px;
-      width: 90px;
+      @include dimensions($w: 90px, $h: 3px);
       margin: 8px 0 8px 24px;
     }
   }
@@ -306,28 +255,25 @@
   .contacts-container {
     flex-direction: column;
   }
+
   .mobile-add-button {
-    position: fixed;
+    @include position($p: fixed, $r: 16px, $b: 16px);
     display: block;
-    right: 16px;
-    bottom: 16px;
   }
 
   .contact-list-section {
-    width: 100%;
-    height: 100%;
+    @include dimensions($w: 100%, $h: 100%);
     min-width: unset;
     max-width: unset;
 
     .button-container {
       display: none;
     }
+
     .contacts-list {
       padding: 24px;
-    }
 
-    .contact-group {
-      .contact-item {
+      .contact-group .contact-item {
         margin: 0;
         padding: 15px;
       }
@@ -335,10 +281,8 @@
   }
 
   .contact-details-section {
-    position: absolute;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    @include position($p: absolute, $l: 0);
+    @include dimensions($w: 100%, $h: 100%);
     background-color: $background-light;
     z-index: 1001;
     transform: translateX(100%);
@@ -354,9 +298,7 @@
     .back-button {
       background: none;
       mat-icon {
-        width: 32px;
-        height: 32px;
-        font-size: 32px;
+        @include dimensions($w: 32px, $h: 32px, $fs: 32px);
         color: $primary-blue;
       }
       &:hover {
@@ -365,39 +307,39 @@
     }
 
     .row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
+      @include flex($ai: center, $g: 16px);
     }
+
     .title-row {
       width: 100%;
     }
   }
 }
+
 @media (max-width: 800px) {
   .mobile-add-button {
-    right: 16px;
-    bottom: 96px;
+    @include position($r: 16px, $b: 96px);
   }
 }
+
 @media (max-width: 650px) {
   .contact-details-section {
     padding: 16px;
 
     .contact-heading {
       .title-row .contacts-title {
-        font-size: 47px;
+        @include dimensions($fs: 47px);
       }
       .subtitle-row {
         margin-left: 4px;
-        flex-direction: column-reverse;
-        gap: 8px;
+        @include flex($fd: column-reverse, $g: 8px);
         .divider {
           margin: 0 40px 0 0;
         }
       }
     }
   }
+
   .contacts-list {
     padding: 12px;
     .contact-group {
@@ -420,7 +362,6 @@
     padding: 8px;
     .contact-group {
       margin-bottom: 8px;
-
       .contact-item {
         padding: 4px;
         gap: 12px;
@@ -431,18 +372,15 @@
 
 @media (max-width: 375px) {
   .mobile-add-button {
-    bottom: 76px;
-    right: 16px;
-    width: 46px;
-    height: 46px;
+    @include position($b: 76px, $r: 16px);
+    @include dimensions($w: 46px, $h: 46px);
   }
 
-  .contact-heading {
-    .contacts-title {
-      font-size: 33px;
-    }
+  .contact-heading .contacts-title {
+    @include dimensions($fs: 33px);
   }
 }
+
 @media (max-width: 340px) {
   .title-row {
     gap: 4px !important;
