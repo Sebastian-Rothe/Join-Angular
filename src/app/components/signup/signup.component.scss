@@ -6,7 +6,7 @@
 }
 
 .main-section {
-  background-color: #f6f7f8;
+  background-color: $background-light;
   @include flex($ai: center, $jc: center, $fd: column);
   @include dimensions($w: 100%, $h: 100%, $mh: $max-height);
   position: relative;
@@ -90,7 +90,7 @@
 
     .input-with-icon {
       @include input-base;
-      width: calc(100% - 20px);
+      width: 100%;
       padding: 0 12px;
       margin: 0;
 
@@ -115,7 +115,7 @@
     }
 
     .input-icon {
-      @include position($p: absolute, $r: 35px, $t: 50%);
+      @include position($p: absolute, $r: 12px, $t: 50%);
       @include dimensions($w: 24px, $h: 24px, $fs: 24px);
       transform: translateY(-50%);
       color: #818181;
