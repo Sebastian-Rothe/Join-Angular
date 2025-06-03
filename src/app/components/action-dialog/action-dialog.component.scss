@@ -24,8 +24,8 @@
     }
 
     .blue-line {
-      width: 60px;
-      height: 3px;
+      @include dimensions($w: 60px, $h: 3px);
+
       background: $primary-blue;
     }
   }
@@ -37,9 +37,7 @@
   position: relative;
 
   .close-desktop {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    @include position($p: absolute, $t: 20px, $r: 20px);
   }
 
   .content-wrapper {
@@ -48,14 +46,12 @@
 }
 
 .profile-icon {
-  display: flex;
-  justify-content: center;
+  @include flex($jc: center);
   margin-bottom: 30px;
 
   .avatar,
   mat-icon {
-    width: 80px;
-    height: 80px;
+    @include dimensions($w: 80px, $h: 80px);
     border-radius: 50%;
     background: $border-color;
     @include flex($ai: center, $jc: center);
@@ -69,10 +65,8 @@
 }
 
 form {
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column, $g: 20px);
   width: 100%;
-  gap: 20px;
 
   input {
     padding: 12px;
@@ -102,11 +96,8 @@ form {
   input.error {
     border-color: $error-red;
   }
-
   .align-form-buttons {
-    display: flex;
-    justify-content: flex-start;
-    gap: 16px;
+    @include flex($jc: flex-start, $g: 16px);
     margin-top: 20px;
 
     button {
@@ -125,8 +116,7 @@ form {
       mat-icon {
         margin-left: 4px;
         font-size: 18px;
-        width: 18px;
-        height: 18px;
+        @include dimensions($w: 18px, $h: 18px);
       }
     }
   }
@@ -137,11 +127,7 @@ form {
 }
 
 .new-contact-overlay {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  left: 0;
+  @include position($p: fixed, $t: 0, $r: 0, $b: 0, $l: 0);
   background-color: rgba(0, 0, 0, 0);
   @include flex($ai: center, $jc: center);
   color: $white;
@@ -156,10 +142,7 @@ form {
 }
 
 .popup {
-  width: 80%;
-  max-width: 1200px;
-  height: 60%;
-  max-height: 600px;
+  @include dimensions($w: 80%, $h: 60%, $mw: 1200px, $mh: 600px);
   background-color: $white;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   border-radius: 24px;
@@ -178,18 +161,13 @@ form {
   color: $white;
   padding: 20px;
   position: relative;
-
   .left-pane {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: left;
+    @include flex($fd: column, $jc: center, $ai: left);
     margin-top: min(150px, calc(20px + 10vw));
     padding-left: 5%;
 
     img {
-      width: 55.6px;
-      height: 66.48px;
+      @include dimensions($w: 55.6px, $h: 66.48px);
     }
 
     h2 {
@@ -218,14 +196,11 @@ form {
   width: 60%;
   position: relative;
 
-  @include flex($ai: center, $jc: center);
-  flex-direction: column;
+  @include flex($ai: center, $jc: center, $fd: column);
 
   .align-new-contact-input {
     width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
+    @include flex($jc: space-evenly, $ai: center);
   }
 
   .align-form {
@@ -240,8 +215,8 @@ form {
 
     .avatar,
     mat-icon {
-      width: 120px;
-      height: 120px;
+      @include dimensions($w: 120px, $h: 120px);
+
       border-radius: 50%;
       @include flex($ai: center, $jc: center);
       font-size: 60px;
@@ -250,18 +225,15 @@ form {
       overflow: hidden;
 
       img {
-        width: 100%;
-        height: 100%;
+        @include dimensions($w: 100%, $h: 100%);
         object-fit: cover;
       }
     }
 
     .upload-button {
-      position: absolute;
-      bottom: -2px;
-      right: 0;
-      width: 40px;
-      height: 40px;
+      @include position($p: absolute, $b: -2px, $r: 0);
+      @include dimensions($w: 40px, $h: 40px);
+
       border-radius: 50%;
       background: $white;
       border: none;
@@ -275,8 +247,8 @@ form {
       }
 
       mat-icon {
-        width: 24px;
-        height: 24px;
+        @include dimensions($w: 24px, $h: 24px);
+
         font-size: 20px;
         color: #2c3e50;
         background: transparent;
@@ -295,9 +267,7 @@ form {
 
 .closePopup,
 .closePopupMobile {
-  position: absolute;
-  top: 16px;
-  right: 16px;
+  @include position($p: absolute, $t: 16px, $r: 16px);
   cursor: pointer;
   mat-icon {
     color: #2c3e50;
@@ -317,9 +287,7 @@ form {
 
 @media (max-width: 860px) {
   .popup {
-    height: 80%;
-    max-height: none;
-    width: 95%;
+    @include dimensions($w: 95%, $h: 80%, $mh: none);
   }
 
   .popup-content {
@@ -327,8 +295,7 @@ form {
   }
 
   .left-side-new-c {
-    width: 100%;
-    height: calc(30% + 50px);
+    @include dimensions($w: 100%, $h: calc(30% + 50px));
 
     .left-pane {
       margin-top: min(60px, calc(20px + 5vw));
@@ -355,13 +322,14 @@ form {
 
     .profil-icon {
       margin: 0;
-      position: absolute;
-      top: -60px;
+      @include position($p: absolute, $t: -60px);
 
       .avatar,
       mat-icon {
-        width: clamp(90px, 18vw, 120px);
-        height: clamp(90px, 18vw, 120px);
+        @include dimensions(
+          $w: clamp(90px, 18vw, 120px),
+          $h: clamp(90px, 18vw, 120px)
+        );
       }
     }
   }
@@ -378,8 +346,7 @@ form {
 
   form {
     .align-form-buttons {
-      align-items: center;
-      justify-content: center;
+      @include flex($ai: center, $jc: center);
     }
   }
 }
@@ -396,9 +363,9 @@ form {
   }
 
   .left-side {
-    width: 100%;
+    @include dimensions($w: 100%, $h: auto);
+
     padding: 20px;
-    height: auto;
   }
 
   .right-side {
@@ -409,12 +376,9 @@ form {
   .close-desktop {
     display: none;
   }
-
   .close-mobile {
     display: block;
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    @include position($p: absolute, $t: 20px, $r: 20px);
     cursor: pointer;
   }
 
@@ -435,8 +399,7 @@ form {
   .right-pane {
     .profil-icon {
       margin: 0;
-      position: absolute;
-      top: -60px;
+      @include position($p: absolute, $t: -60px);
 
       .avatar,
       mat-icon {

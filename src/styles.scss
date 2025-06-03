@@ -69,75 +69,34 @@ button {
   }
 }
 
-@mixin flex-center {
-  display: flex;
-  justify-content: center;
-  align-items: center;
+@mixin position($p: false, $t: false, $r: false, $b: false, $l: false) {
+  @if $p != false { position: $p; }
+  @if $t != false { top: $t; }
+  @if $r != false { right: $r; }
+  @if $b != false { bottom: $b; }
+  @if $l != false { left: $l; }
 }
 
-@mixin position($p: relative, $t: null, $r: null, $b: null, $l: null) {
-  position: $p;
-
-  @if $t {
-    top: $t;
-  }
-
-  @if $r {
-    right: $r;
-  }
-
-  @if $b {
-    bottom: $b;
-  }
-
-  @if $l {
-    left: $l;
-  }
-}
-
-@mixin dimensions($w: null, $h: null, $mw: null, $mh: null) {
-  @if $w {
-    width: $w;
-  }
-
-  @if $h {
-    height: $h;
-  }
-
-  @if $mw {
-    max-width: $mw;
-  }
-
-  @if $mh {
-    max-height: $mh;
-  }
+@mixin dimensions($w: false, $h: false, $mw: false, $mh: false) {
+  @if $w != false { width: $w; }
+  @if $h != false { height: $h; }
+  @if $mw != false { max-width: $mw; }
+  @if $mh != false { max-height: $mh; }
 }
 
 @mixin flex(
-  $d: flex,
-  $ai: null,
-  $jc: null,
-  $fd: null,
-  $g: null,
+  $ai: false,
+  $jc: false,
+  $fd: false,
+  $g: false,
+  $fw: false
 ) {
-  display: $d;
-
-  @if $ai {
-    align-items: $ai;
-  }
-
-  @if $jc {
-    justify-content: $jc;
-  }
-
-  @if $fd {
-    flex-direction: $fd;
-  }
-
-  @if $g {
-    gap: $g;
-  }
-
+  display: flex; // Dies ist der einzige Standardwert
+  @if $ai != false { align-items: $ai; }
+  @if $jc != false { justify-content: $jc; }
+  @if $fd != false { flex-direction: $fd; }
+  @if $g != false { gap: $g; }
+  @if $fw != false { flex-wrap: $fw; }
 }
 
 @mixin input-base {
@@ -168,8 +127,8 @@ button {
   background-color: $dark-navy;
   color: $white;
   border: none;
-  @include flex-center();
-  gap: 10px;
+  @include flex($ai: center, $jc: center, $g: 10px);
+ 
 
   &:hover {
     background-color: $primary-blue;
@@ -189,8 +148,8 @@ button {
   background-color: $white;
   color: $dark-navy;
   border: 1px solid $dark-navy;
-  @include flex-center();
-  gap: 10px;
+  @include flex($ai: center, $jc: center, $g: 10px);
+
 
   &:hover {
     border-color: $primary-blue;
