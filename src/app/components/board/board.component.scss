@@ -14,20 +14,16 @@ input {
 
 /* Base Styles */
 .main-board {
-  height: calc(100vh - 96px);
-  position: relative;
+  @include dimensions($w: 100%, $h: calc(100vh - 96px));
+  @include position($p: relative);
+  @include flex($fd: column);
   padding: 24px;
-  width: 100%;
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
   overflow: hidden;
 }
 
 .head-board {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex($jc: space-between, $ai: center);
   height: auto;
   margin: 12px 0 24px 0;
   padding: 0;
@@ -40,23 +36,18 @@ input {
   padding: 0;
   min-height: 50px;
   line-height: 1;
-  display: flex;
-  align-items: center;
+  @include flex($ai: center);
 }
 
 .search-container {
-  display: flex;
-  align-items: center;
-  gap: 32px;
+  @include flex($ai: center, $g: 32px);
 }
 
 .input-div {
-  display: flex;
-  justify-content: space-between;
+  @include flex($jc: space-between, $g: 10px);
   border: 1px solid #a8a8a8;
   border-radius: 10px;
   padding: 8px 16px 8px 16px;
-  gap: 10px;
   height: 50px;
   background-color: $white;
 }
@@ -68,11 +59,9 @@ input {
 }
 
 .search-input-img {
-  width: 32px;
-  height: 32px;
-  font-size: 26px; 
- @include flex($ai: center, $jc: center);
-  color: #2A3647;
+  @include dimensions($w: 32px, $h: 32px, $fs: 26px);
+  @include flex($ai: center, $jc: center);
+  color: #2a3647;
 
   &:hover {
     border-radius: 50%;
@@ -85,24 +74,21 @@ input {
 
 .addButton {
   min-width: 160px !important;
-  width: 160px !important;
-  height: 48px !important;
+  @include dimensions($w: 160px, $h: 48px);
 }
 
 .board-main-div {
   flex: 1;
   width: 100%;
-  display: flex;
-  gap: 16px;
+  @include flex($g: 16px);
   overflow: hidden;
-  min-height: 0; 
+  min-height: 0;
 }
 
 .align-all-4 {
-  flex: 1 1 0; 
+  flex: 1 1 0;
   min-width: 0;
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column);
   height: 100%;
 }
 
@@ -116,9 +102,8 @@ input {
   margin-bottom: 12px;
   font-size: 1.2rem;
   font-weight: bold;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include flex($jc: space-between, $ai: center);
+
   padding: 4px;
 
   span {
@@ -135,7 +120,7 @@ input {
   flex: 1;
   overflow-y: auto;
   padding: 0 4px;
-  min-height: 0; 
+  min-height: 0;
 
   &::-webkit-scrollbar {
     width: 5px;
@@ -147,7 +132,6 @@ input {
   }
 }
 
-
 .addButton-mobileBoard {
   display: none;
 }
@@ -155,19 +139,15 @@ input {
 .empty-section-note {
   background-color: #eceaea;
   color: #a8a8a8;
-  height: 48px;
-  width: 100%;
+  @include dimensions($w: 100%, $h: 48px, $fs: 16px);
   border-radius: 8px;
   border: 2px dashed $border-color;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  @include flex($jc: center, $ai: center);
   margin: 8px 0;
-  font-size: 16px;
 }
-.icon-button{
-  box-shadow: none!important;
-  background-color: transparent!important;
+.icon-button {
+  box-shadow: none !important;
+  background-color: transparent !important;
 }
 
 .span {
@@ -188,11 +168,9 @@ input {
 
 @media (max-width: 1120px) {
   .head-board {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 16px;
+    @include flex($fd: column, $ai: flex-start, $g: 16px);
   }
-   .board-main-div {
+  .board-main-div {
     gap: 4px;
   }
 
@@ -215,17 +193,14 @@ input {
   }
 
   .align-all-4 {
-    width: 100%;
-    height: auto;
+    @include dimensions($w: 100%, $h: auto);
   }
 
   .task-section {
-    display: flex;
-    flex-direction: row;
+    @include flex($fd: row, $g: 8px);
     overflow-x: auto;
     overflow-y: hidden;
     padding: 2px;
-    gap: 8px;
     cursor: grab;
 
     &::-webkit-scrollbar {
@@ -257,9 +232,7 @@ input {
   }
 
   .task-section {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
+    @include flex($fd: row, $g: 8px);
     width: 100%;
   }
 }
@@ -282,23 +255,17 @@ input {
   }
 
   .align-board-headline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex($jc: space-between, $ai: center);
     width: 100%;
   }
 
   .addButton-mobileBoard {
-    display: flex;
     background-color: #091931;
     color: white;
     border-radius: 10px;
-    width: 44px;
-    height: 44px;
     font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include dimensions($w: 44px, $h: 44px);
+    @include flex($ai: center, $jc: center);
 
     &:hover {
       background-color: #29abe2;
@@ -318,9 +285,7 @@ input {
     width: 100%;
   }
   .align-board-headline {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+    @include flex($jc: space-between, $ai: center);
     width: 100%;
   }
 }
@@ -338,6 +303,5 @@ input {
 :host-context(.height-exceeded) {
   .main-board {
     height: $max-height-minus-header;
-  
   }
 }

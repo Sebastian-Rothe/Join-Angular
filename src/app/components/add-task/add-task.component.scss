@@ -114,9 +114,8 @@ $container-padding-small: 12px;
   background-color: $background-light;
   @include position($p: sticky, $b: 0);
   @include flex($jc: space-between, $ai: center);
-  @include dimensions($w: 100%);
+  @include dimensions($w: 100%, $h: 160px);
   padding: 20px $container-padding;
-  height: 160px;
   z-index: 5;
 
   .footer-add-task-left {
@@ -248,8 +247,7 @@ $container-padding-small: 12px;
     }
 
     mat-icon {
-      font-size: 18px;
-      @include dimensions($w: 18px, $h: 18px);
+      @include dimensions($w: 18px, $h: 18px, $fs: 18px);
     }
   }
 }
@@ -334,8 +332,7 @@ $container-padding-small: 12px;
       transform: scale(1.1);
     }
     mat-icon {
-      font-size: 40px;
-      @include dimensions($w: 40px, $h: 40px);
+      @include dimensions($w: 40px, $h: 40px, $fs: 40px);
     }
   }
 
@@ -355,8 +352,7 @@ $container-padding-small: 12px;
     padding-right: $container-padding-mobile;
     .close-button {
       mat-icon {
-        font-size: 32px;
-        @include dimensions($w: 32px, $h: 32px);
+        @include dimensions($w: 32px, $h: 32px, $fs: 32px);
       }
     }
   }
@@ -365,8 +361,7 @@ $container-padding-small: 12px;
     padding-right: $container-padding-small;
     .close-button {
       mat-icon {
-        font-size: 24px;
-        @include dimensions($w: 24px, $h: 24px);
+        @include dimensions($w: 24px, $h: 24px, $fs: 24px);
       }
     }
   }

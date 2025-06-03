@@ -77,11 +77,12 @@ button {
   @if $l != false { left: $l; }
 }
 
-@mixin dimensions($w: false, $h: false, $mw: false, $mh: false) {
+@mixin dimensions($w: false, $h: false, $mw: false, $mh: false, $fs: false) {
   @if $w != false { width: $w; }
   @if $h != false { height: $h; }
   @if $mw != false { max-width: $mw; }
   @if $mh != false { max-height: $mh; }
+  @if $fs != false { font-size: $fs; }
 }
 
 @mixin flex(

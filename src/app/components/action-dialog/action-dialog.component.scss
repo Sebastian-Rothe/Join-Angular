@@ -51,11 +51,10 @@
 
   .avatar,
   mat-icon {
-    @include dimensions($w: 80px, $h: 80px);
+    @include dimensions($w: 80px, $h: 80px, $fs: 32px);
     border-radius: 50%;
     background: $border-color;
     @include flex($ai: center, $jc: center);
-    font-size: 32px;
   }
 
   mat-icon {
@@ -109,14 +108,14 @@ form {
     // Spezielle Styles für Action Dialog Buttons
     .primary-btn,
     .secondary-btn {
-      height: 45px;
+      @include dimensions($h: 45px, $fs: 16px);
+
       padding: 12px 24px;
-      font-size: 16px;
 
       mat-icon {
         margin-left: 4px;
-        font-size: 18px;
-        @include dimensions($w: 18px, $h: 18px);
+
+        @include dimensions($w: 18px, $h: 18px, $fs: 18px);
       }
     }
   }
@@ -185,9 +184,9 @@ form {
     }
 
     .blue-box {
-      height: 3px;
+      @include dimensions($w: 20%, $h: 3px);
+
       background-color: $primary-blue;
-      width: 20%;
     }
   }
 }
@@ -215,11 +214,11 @@ form {
 
     .avatar,
     mat-icon {
-      @include dimensions($w: 120px, $h: 120px);
+      @include dimensions($w: 120px, $h: 120px, $fs: 60px);
 
       border-radius: 50%;
       @include flex($ai: center, $jc: center);
-      font-size: 60px;
+
       background: $border-color;
       color: $background-light;
       overflow: hidden;
@@ -247,9 +246,8 @@ form {
       }
 
       mat-icon {
-        @include dimensions($w: 24px, $h: 24px);
+        @include dimensions($w: 24px, $h: 24px, $fs: 20px);
 
-        font-size: 20px;
         color: #2c3e50;
         background: transparent;
       }
