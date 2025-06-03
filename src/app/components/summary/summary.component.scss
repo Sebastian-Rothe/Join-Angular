@@ -4,23 +4,17 @@
   padding: 82px 0 82px 64px;
   height: 100%;
   background-color: $background-light;
-  display: flex;
-  gap: 32px;
+  @include flex($g: 32px);
 }
 
 .metrics-container {
   min-width: 622px;
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column);
 }
 
 .summary-header {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 30px;
+  @include flex($ai: center, $g: 30px, $fd: row);
   margin-bottom: 42px;
-
   h1 {
     font-size: 68px;
     font-weight: 700;
@@ -37,8 +31,7 @@
   }
 
   .header-divider {
-    width: 3px;
-    height: 59px;
+    @include dimensions($w: 3px, $h: 59px);
     background: $primary-blue;
     border-radius: 2px;
   }
@@ -46,14 +39,11 @@
 
 .metrics-grid {
   max-width: 580px;
-  display: flex;
-  flex-direction: column;
-  gap: 35px;
+  @include flex($fd: column, $g: 35px);
 }
 
 .metrics-row {
-  display: flex;
-  gap: 35px;
+  @include flex($g: 35px);
   height: 150px;
 
   .metric-card {
@@ -63,7 +53,7 @@
 }
 
 .metric-card {
-  background: white;
+  background: $white;
   border-radius: 30px;
   padding: 0;
   @include flex($ai: center, $jc: center);
@@ -85,9 +75,7 @@
 
       mat-icon {
         color: $dark-navy;
-        font-size: 40px;
-        width: 40px;
-        height: 40px;
+        @include dimensions($w: 40px, $h: 40px, $fs: 40px);
         font-weight: bold;
       }
     }
@@ -95,24 +83,19 @@
 }
 
 .metric-card-content {
-  display: flex;
-  align-items: center;
-  gap: 16px;
+  @include flex($ai: center, $g: 16px);
 }
 
 .icon-circle {
-  width: 69px;
-  height: 69px;
+  @include dimensions($w: 69px, $h: 69px);
   border-radius: 50%;
   background: $dark-navy;
   @include flex($ai: center, $jc: center);
   transition: all 0.2s ease;
 
   mat-icon {
-    color:$white;
-    font-size: 32px;
-    width: 32px;
-    height: 32px;
+    color: $white;
+    @include dimensions($w: 32px, $h: 32px, $fs: 32px);
   }
 }
 
@@ -123,7 +106,6 @@
     margin: 0;
     font-weight: 600;
   }
-
   span {
     font-size: 20px;
     color: $dark-navy;
@@ -134,8 +116,7 @@
   background: $white;
   border-radius: 30px;
   padding: 0 48px;
-  display: flex;
-  align-items: center;
+  @include flex($ai: center);
   height: 150px;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -167,28 +148,23 @@
 }
 
 .urgent-section {
-  display: flex;
-  align-items: center;
-  gap: 18px;
+  @include flex($ai: center, $g: 18px);
 
   .icon-circle {
-    width: 60px;
-    height: 60px;
-    background: #ff3d00;
+    @include dimensions($w: 60px, $h: 60px);
+    background: $error-red;
     border-radius: 50%;
- @include flex($ai: center, $jc: center);
+    @include flex($ai: center, $jc: center);
 
     img {
-      width: 32px;
-      height: 32px;
+      @include dimensions($w: 32px, $h: 32px);
       filter: brightness(0) invert(1);
     }
   }
 }
 
 .vertical-divider {
-  width: 2px;
-  height: 102px;
+  @include dimensions($w: 2px, $h: 102px);
   background: #d1d1d1;
   margin: 0 61px;
 }
@@ -199,7 +175,6 @@
     font-weight: 700;
     margin: 0 0 13px 0;
   }
-
   span {
     font-size: 16px;
     color: $dark-navy;
@@ -207,8 +182,7 @@
 }
 
 .tasks-overview {
-  display: flex;
-  gap: 35px;
+  @include flex($g: 35px);
   height: 150px;
 
   .metric-card {
@@ -222,9 +196,7 @@
 }
 
 .greeting {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  @include flex($fd: column, $jc: center);
 
   h2 {
     font-size: 47px;
@@ -232,13 +204,13 @@
     margin: 0;
     word-break: break-word;
     hyphens: auto;
-  }
 
-  h2:nth-child(2) {
-    color: #29abe2;
-    font-size: 64px;
-    font-weight: 700;
-    margin: 0;
+    &:nth-child(2) {
+      color: $primary-blue;
+      font-size: 64px;
+      font-weight: 700;
+      margin: 0;
+    }
   }
 }
 
@@ -262,7 +234,6 @@
 
   .summary-header {
     margin-bottom: 40px;
-
     h1 {
       font-size: 47px;
     }
@@ -292,13 +263,10 @@
   }
 
   .icon-circle {
-    width: 40px;
-    height: 40px;
+    @include dimensions($w: 40px, $h: 40px);
 
     mat-icon {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
+      @include dimensions($w: 24px, $h: 24px, $fs: 24px);
     }
   }
 
@@ -319,12 +287,10 @@
 
   .urgent-section {
     .icon-circle {
-      width: 40px;
-      height: 40px;
+      @include dimensions($w: 40px, $h: 40px);
 
       img {
-        width: 24px;
-        height: 24px;
+        @include dimensions($w: 24px, $h: 24px);
       }
     }
   }
@@ -356,9 +322,7 @@
 
 @media (max-width: 650px) {
   .summary-header {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 4px;
+    @include flex($fd: column, $ai: flex-start, $g: 4px);
     margin-bottom: 20px;
 
     h1 {
@@ -371,8 +335,7 @@
 
     .header-divider {
       order: 2;
-      width: 90px;
-      height: 3px;
+      @include dimensions($w: 90px, $h: 3px);
       margin-top: 8px;
     }
   }

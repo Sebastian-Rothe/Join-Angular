@@ -92,7 +92,7 @@ button {
   $g: false,
   $fw: false
 ) {
-  display: flex; // Dies ist der einzige Standardwert
+  display: flex; 
   @if $ai != false { align-items: $ai; }
   @if $jc != false { justify-content: $jc; }
   @if $fd != false { flex-direction: $fd; }

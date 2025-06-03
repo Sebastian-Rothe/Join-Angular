@@ -2,39 +2,29 @@
 
 :host {
   @include flex($ai: center, $jc: center);
-  width: 100%;
-  height: 100vh;
+  @include dimensions($w: 100%, $h: 100vh);
 }
 
 .main-section {
   background-color: #f6f7f8;
-  @include flex($ai: center, $jc: center);
-  width: 100%;
-  height: 100%;
-  max-height: $max-height;
-  flex-direction: column;
+  @include flex($ai: center, $jc: center, $fd: column);
+  @include dimensions($w: 100%, $h: 100%, $mh: $max-height);
   position: relative;
   margin: auto;
 }
 
 .logo-sidebar {
-  position: absolute;
-  top: 12px;
-  left: 12px;
-  width: 100px;
-  height: 100px;
+  @include position($p: absolute, $t: 12px, $l: 12px);
+  @include dimensions($w: 100px, $h: 100px);
   z-index: 1000;
 
   img {
-    width: 100%;
-    height: 100%;
+    @include dimensions($w: 100%, $h: 100%);
   }
 }
 
 .arrow-left {
-  width: 48px;
-  height: 48px;
-  font-size: 38px;
+  @include dimensions($w: 48px, $h: 48px, $fs: 38px);
   color: $dark-navy;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -49,25 +39,20 @@
 }
 
 .signup-section {
-  width: 50%;
-  max-width: 692px;
-  max-height: 800px;
+  @include flex($fd: column, $ai: center);
+  @include dimensions($w: 50%, $mw: 692px, $mh: 800px);
   border-radius: $border-radius-xl;
   box-shadow: 0px 0px 10px 3px $box-shadow-light;
   margin: 0 auto;
   padding: 40px 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
   background-color: $white;
 }
 
 .title-section-signup {
   @include flex($ai: center, $jc: center);
-  font-size: 61px;
+
+  @include dimensions($w: 100%, $h: auto, $fs: 61px);
   font-weight: 700;
-  height: auto;
-  width: 100%;
   padding: 0;
   white-space: nowrap;
 
@@ -76,33 +61,26 @@
     padding-left: 30px;
     img {
       cursor: pointer;
-      width: 24px;
-      height: auto;
+      @include dimensions($w: 24px, $h: auto);
     }
   }
 
   .title-section-right {
     flex: 1;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    @include flex($fd: column, $ai: center, $g: 12px);
     margin-right: 84px;
-    gap: 12px;
   }
 }
 
 .divider {
-  width: 150px;
-  height: 3px;
+  @include dimensions($w: 150px, $h: 3px);
   background-color: $primary-blue;
   border-radius: 50px;
 }
 
 .input-section-signup {
+  @include flex($fd: column, $g: 20px);
   width: 80%;
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
   margin-top: 32px;
 
   .input-container {
@@ -137,15 +115,11 @@
     }
 
     .input-icon {
-      position: absolute;
-      right: 35px;
-      top: 50%;
+      @include position($p: absolute, $r: 35px, $t: 50%);
+      @include dimensions($w: 24px, $h: 24px, $fs: 24px);
       transform: translateY(-50%);
       color: #818181;
-      font-size: 24px;
       display: inline-block;
-      width: 24px;
-      height: 24px;
       line-height: 1;
       overflow: hidden;
       -webkit-font-smoothing: antialiased;
@@ -197,17 +171,13 @@
 }
 
 .check-policy-section {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex($ai: center, $g: 8px);
   margin: 32px 0;
   padding: 0 40px;
 
   .custom-checkbox {
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    @include flex($ai: center, $g: 8px);
 
     input[type="checkbox"] {
       display: none;
@@ -271,14 +241,10 @@
 }
 
 .footer-links {
-  height: 5vh;
-  position: absolute;
-  bottom: 16px;
-  left: 50%;
+  @include position($p: absolute, $b: 16px, $l: 50%);
+  @include flex($ai: center, $jc: center, $g: 30px);
+  @include dimensions($w: calc(100% - 80px), $h: 5vh);
   transform: translateX(-50%);
-  width: calc(100% - 80px);
-  @include flex($ai: center, $jc: center);
-  gap: 30px;
   margin: 0 auto;
 
   a {
@@ -433,8 +399,7 @@
 
 @media (max-width: 450px) {
   .logo-sidebar {
-    width: 70px;
-    height: 70px;
+    @include dimensions($w: 70px, $h: 70px);
   }
 }
 
