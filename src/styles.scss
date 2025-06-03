@@ -75,6 +75,71 @@ button {
   align-items: center;
 }
 
+@mixin position($p: relative, $t: null, $r: null, $b: null, $l: null) {
+  position: $p;
+
+  @if $t {
+    top: $t;
+  }
+
+  @if $r {
+    right: $r;
+  }
+
+  @if $b {
+    bottom: $b;
+  }
+
+  @if $l {
+    left: $l;
+  }
+}
+
+@mixin dimensions($w: null, $h: null, $mw: null, $mh: null) {
+  @if $w {
+    width: $w;
+  }
+
+  @if $h {
+    height: $h;
+  }
+
+  @if $mw {
+    max-width: $mw;
+  }
+
+  @if $mh {
+    max-height: $mh;
+  }
+}
+
+@mixin flex(
+  $d: flex,
+  $ai: null,
+  $jc: null,
+  $fd: null,
+  $g: null,
+) {
+  display: $d;
+
+  @if $ai {
+    align-items: $ai;
+  }
+
+  @if $jc {
+    justify-content: $jc;
+  }
+
+  @if $fd {
+    flex-direction: $fd;
+  }
+
+  @if $g {
+    gap: $g;
+  }
+
+}
+
 @mixin input-base {
   border-radius: $border-radius-default;
   height: 48px;

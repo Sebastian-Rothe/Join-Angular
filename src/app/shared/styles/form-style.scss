@@ -199,7 +199,7 @@ mat-form-field {
       }
     }
     .mat-mdc-form-field-infix {
-      @include flex-center;
+      @include flex($ai: center, $jc: center);
     }
   }
 

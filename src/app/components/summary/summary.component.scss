@@ -66,7 +66,7 @@
   background: white;
   border-radius: 30px;
   padding: 0;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   cursor: pointer;
   transition: all 0.2s ease;
   height: 150px;
@@ -105,7 +105,7 @@
   height: 69px;
   border-radius: 50%;
   background: $dark-navy;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   transition: all 0.2s ease;
 
   mat-icon {
@@ -176,7 +176,7 @@
     height: 60px;
     background: #ff3d00;
     border-radius: 50%;
- @include flex-center;
+ @include flex($ai: center, $jc: center);
 
     img {
       width: 32px;

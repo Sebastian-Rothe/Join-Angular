@@ -19,7 +19,7 @@
 
   border-radius: 20px 20px;
   min-height: 80px;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
 
   &.success {
     padding: 18px;

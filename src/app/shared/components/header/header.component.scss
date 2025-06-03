@@ -42,7 +42,7 @@ header {
 }
 
 .help-icon {
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   width: 30px;
   height: 30px;
   position: relative;
@@ -79,7 +79,7 @@ header {
   width: 64px;
   height: 64px;
   border-radius: 50%;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   cursor: pointer;
   background-color: $white;
   overflow: hidden;

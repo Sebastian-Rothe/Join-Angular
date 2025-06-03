@@ -35,7 +35,7 @@
       width: 44px;
       height: 44px;
       font-size: 44px;
-     @include flex-center;
+     @include flex($ai: center, $jc: center);
     }
   }
 }

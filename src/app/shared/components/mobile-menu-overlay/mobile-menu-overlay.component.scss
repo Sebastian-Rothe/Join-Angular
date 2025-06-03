@@ -10,7 +10,7 @@
   background-color: $dark-navy;
   border: none;
   color: white;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   cursor: pointer;
   // z-index: 9;
 

@@ -103,7 +103,7 @@
 .style-avatar-overlap {
   border-radius: 50%;
   color: $white;
-@include flex-center;
+@include flex($ai: center, $jc: center);
   font-weight: 400;
   font-size: 12px;
   margin-right: -8px;
@@ -158,7 +158,7 @@
   width: 22px;
   border-radius: 50%;
   color: #6B7280;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   padding: 0;
 
 
@@ -170,7 +170,7 @@
   }
 
   mat-icon {
-   @include flex-center;
+   @include flex($ai: center, $jc: center);
     font-size: 22px;
     width: 22px;
     height: 22px;

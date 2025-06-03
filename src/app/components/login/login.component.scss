@@ -10,7 +10,7 @@
 
 .main-section {
   background-color: #f6f7f8;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   width: 100%;
   height: 100%;
   max-height: $max-height;
@@ -117,7 +117,7 @@
 }
 
 .title-section {
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   flex-direction: column;
   font-size: 61px;
   font-weight: 700;
@@ -246,7 +246,7 @@ input[type="password"].invalid {
   left: 50%;
   transform: translateX(-50%);
   width: calc(100% - 80px);
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   gap: 30px;
   margin: 0 auto;
 
@@ -343,7 +343,7 @@ input[type="checkbox"]:invalid + span {
     display: none !important;
   }
   .header-login-content-responsive {
-    @include flex-center;
+    @include flex($ai: center, $jc: center);
     gap: 12px;
     margin-top: 32px;
   }
@@ -385,7 +385,7 @@ input[type="checkbox"]:invalid + span {
   }
 
   .header-login-content-responsive {
-    @include flex-center;
+    @include flex($ai: center, $jc: center);
     gap: 12px;
     margin-top: 25px;
   }

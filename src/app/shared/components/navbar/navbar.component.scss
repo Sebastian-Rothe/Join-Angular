@@ -134,10 +134,10 @@
 
 .menu-mobile-display-item {
   flex: 1;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
 
   a {
-    @include flex-center;
+    @include flex($ai: center, $jc: center);
     flex-direction: column;
     gap: 4px;
     text-decoration: none;

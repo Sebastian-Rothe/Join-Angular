@@ -189,7 +189,7 @@ $color-text: #313c4d;
 .style-avatar-overlap {
   border-radius: 50%;
   color: $white;
-  @include flex-center;
+  @include flex($ai: center, $jc: center);
   font-weight: 400;
   font-size: 12px;
   margin-right: 0;
@@ -375,7 +375,7 @@ $color-text: #313c4d;
         border: none;
         border-radius: 50%;
         background: transparent;
-        @include flex-center;
+        @include flex($ai: center, $jc: center);
         opacity: 0;
         transition: all 0.2s ease;
         z-index: 1;

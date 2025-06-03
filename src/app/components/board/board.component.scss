@@ -71,7 +71,7 @@ input {
   width: 32px;
   height: 32px;
   font-size: 26px; 
- @include flex-center;
+ @include flex($ai: center, $jc: center);
   color: #2A3647;
 
   &:hover {

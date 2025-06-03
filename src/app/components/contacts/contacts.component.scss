@@ -23,11 +23,11 @@
     padding: 24px;
     background-color: $white;
     z-index: 2;
-    @include flex-center;
+    @include flex($ai: center, $jc: center);
   }
 
   .new-contact-button {
-    @include flex-center;
+    @include flex($ai: center, $jc: center);
     @extend %button-base;
     width: 100%;
     height: 56px;
@@ -129,7 +129,7 @@
       height: 42px;
       border-radius: 50%;
       border: 2px solid $white;
-      @include flex-center;
+      @include flex($ai: center, $jc: center);
       color: $white;
       font-weight: 500;
       font-size: 16px;
@@ -147,7 +147,7 @@
       height: 42px;
       border-radius: 50%;
       border: 2px solid $white;
-      @include flex-center;
+      @include flex($ai: center, $jc: center);
       color: $white;
       font-weight: 500;
       font-size: 16px;
@@ -275,7 +275,7 @@
   .mobile-icon {
     width: 100%;
     height: 100%;
-    @include flex-center;
+    @include flex($ai: center, $jc: center);
     color: $white;
     font-size: 32px;
   }
