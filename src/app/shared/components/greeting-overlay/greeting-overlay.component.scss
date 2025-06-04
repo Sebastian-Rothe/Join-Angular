@@ -1,11 +1,7 @@
 @use "../../../../styles.scss" as *;
 
 .greeting-overlay {
-  position: fixed;
-  top: 96px;
-  left: 232px;
-  right: 0;
-  bottom: 0;
+  @include position($p: fixed, $t: 96px, $l: 232px, $r: 0, $b: 0);
   background: $background-light;
   @include flex($ai: center, $jc: center);
   z-index: 998;

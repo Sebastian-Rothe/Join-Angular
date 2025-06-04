@@ -1,51 +1,39 @@
 @use "../../../../styles.scss" as *;
 
 header {
-  height: 96px;
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  display: flex;
+  @include dimensions($w: calc(100% - 232px), $h: 96px);
+  @include position($p: absolute, $t: 0, $r: 0, $l: 232px);
+  @include flex($ai: center);
   background-color: $white;
   box-shadow: 0 4px 4px $box-shadow-light;
-  align-items: center;
   font-weight: 400;
   font-size: 20px;
-  right: 0;
-  left: 232px;
+  z-index: 1;
   margin: 0;
   padding: 0;
-  width: calc(100% - 232px);
 }
 
 .header-left-content {
-  display: flex;
+  @include flex($jc: flex-start, $ai: center);
   flex: 1;
-  justify-content: flex-start;
-  align-items: center;
   padding: 0 20px 0 40px;
 
   .logo-small {
+    @include dimensions($w: 32px, $h: 32px);
     display: none;
-    width: 32px;
-    height: 32px;
   }
 }
 
 .header-right-content {
-  display: flex;
+  @include flex($jc: flex-end, $ai: center, $g: 12px);
   flex: 1;
-  justify-content: flex-end;
-  align-items: center;
   padding-right: 40px;
-  gap: 12px;
 }
 
 .help-icon {
   @include flex($ai: center, $jc: center);
-  width: 30px;
-  height: 30px;
-  position: relative;
+  @include dimensions($w: 30px, $h: 30px);
+  @include position($p: relative);
   transition: transform 225ms ease-in-out;
   color: gray;
 
@@ -76,18 +64,16 @@ header {
 }
 
 .profile-avatar {
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
+  @include dimensions($w: 64px, $h: 64px);
   @include flex($ai: center, $jc: center);
+  border-radius: 50%;
   cursor: pointer;
   background-color: $white;
   overflow: hidden;
   border: 3px solid $dark-navy;
 
   img {
-    width: 100%;
-    height: 100%;
+    @include dimensions($w: 100%, $h: 100%);
     object-fit: cover;
   }
 
@@ -103,19 +89,15 @@ header {
 }
 
 .dropdown-menu {
+  @include position($p: absolute, $t: 98px, $r: 45px);
   display: none;
-  position: absolute;
-  top: 98px;
-  right: 45px;
   background-color: $dark-navy;
   border-radius: $border-radius-xl 0 $border-radius-xl $border-radius-xl;
   padding: 20px;
   box-shadow: 0 2px 8px $box-shadow-hover;
 
   &.show {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    @include flex($fd: column, $g: 10px);
   }
 
   a {
@@ -134,8 +116,8 @@ header {
 
 @media (max-width: 1030px) {
   header {
-    width: calc(100% - 120px);
-    left: 120px;
+    @include dimensions($w: calc(100% - 120px));
+    @include position($l: 120px);
     margin-left: 0;
   }
 
@@ -156,22 +138,20 @@ header {
 
 @media (max-width: 800px) {
   header {
-    width: 100%;
-    height: 89px;
-    left: 0;
+    @include dimensions($w: 100%, $h: 89px);
+    @include position($l: 0);
   }
+
   .profile-avatar {
-    width: 58px;
-    height: 58px;
+    @include dimensions($w: 58px, $h: 58px);
   }
 
   .header-left-content {
     padding-left: 16px;
 
     .logo-small {
+      @include dimensions($w: 58px, $h: 58px);
       display: block;
-      width: 58px;
-      height: 58px;
     }
   }
 
@@ -182,8 +162,7 @@ header {
     padding-right: 16px;
   }
   .dropdown-menu {
-    top: 91px;
-    right: 16px;
+    @include position($t: 91px, $r: 16px);
   }
 }
 
@@ -193,8 +172,7 @@ header {
   }
 
   .profile-avatar {
-    width: 40px;
-    height: 40px;
+    @include dimensions($w: 40px, $h: 40px);
     min-width: 40px;
     font-size: 16px;
 
@@ -205,21 +183,18 @@ header {
   }
 
   .dropdown-menu {
-    top: 62px;
-    right: 12px;
+    @include position($t: 62px, $r: 12px);
   }
 
   .help-icon {
-    width: 24px;
-    height: 24px;
+    @include dimensions($w: 24px, $h: 24px);
   }
 
   .header-left-content {
     padding-left: 12px;
 
     .logo-small {
-      width: 40px;
-      height: 40px;
+      @include dimensions($w: 40px, $h: 40px);
     }
   }
   .header-right-content {
@@ -229,6 +204,6 @@ header {
 
 :host-context(.height-exceeded) {
   header {
-    position: absolute;
+    @include position($p: absolute);
   }
 }
