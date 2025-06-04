@@ -2,9 +2,7 @@
 
 :host {
   display: block;
-  position: fixed;
-  top: 50%;
-  left: 50%;
+  @include position($p: fixed, $t: 50%, $l: 50%);
   transform: translate(-50%, -50%);
   z-index: 1100;
 }
@@ -34,8 +32,7 @@
 
     .icon-container {
       img {
-        width: 32px;
-        height: 32px;
+        @include dimensions($w: 32px, $h: 32px);
       }
     }
 
@@ -64,8 +61,7 @@
     }
 
     .message {
-      display: flex;
-      flex-direction: column;
+      @include flex($fd: column);
       text-align: center;
       color: $white;
       font-size: 20px;
@@ -80,19 +76,14 @@
     }
 
     .close-icon {
-      position: absolute;
-      top: 8px;
-      right: 8px;
+      @include position($p: absolute, $t: 8px, $r: 8px);
       color: $white;
       cursor: pointer;
-      font-size: 20px;
-      width: 20px;
-      height: 20px;
+      @include dimensions($w: 20px, $h: 20px, $fs: 20px);
 
       &:hover {
         opacity: 0.8;
       }
     }
   }
-
 }

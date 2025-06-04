@@ -1,30 +1,25 @@
 @use "../styles.scss" as *;
 
 .app-wrapper {
-  width: 100%;
-  height: 100vh;
+  @include dimensions($w: 100%, $h: 100vh);
   @include flex($ai: center, $jc: center);
   overflow: hidden;
 }
 
 .app-container {
   position: relative;
-  width: 100%;
-  max-width: 1920px;
+  @include dimensions($w: 100%, $mw: $max-width);
 }
 
 router-outlet {
-  max-width: 1920px;
+  max-width: $max-width;
   margin: 0 auto;
 }
 
 .rotation-screen {
   display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
+  @include position($p: fixed, $t: 0, $l: 0);
+  @include dimensions($w: 100vw, $h: 100vh);
   background-color: $dark-navy;
   z-index: 2000;
   flex-direction: column;
@@ -33,9 +28,7 @@ router-outlet {
   text-align: center;
 
   mat-icon {
-    font-size: 48px;
-    width: 48px;
-    height: 48px;
+    @include dimensions($w: 48px, $h: 48px,$fs: 48px);
     color: $white;
     animation: rotate 1.5s ease infinite;
   }

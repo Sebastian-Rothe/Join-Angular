@@ -1,15 +1,10 @@
 @use "../../../../styles.scss" as *;
 
 .sidebar {
-  display: flex;
-  flex-direction: column;
-  position: fixed;
+  @include flex($fd: column);
+  @include position($p: fixed, $l: calc(50% - 960px), $t: 0, $b: 0);
+  @include dimensions($w: 232px, $h: 100vh);
   background-color: $dark-navy;
-  height: 100vh;
-  width: 232px;
-  left: calc(50% - 960px);
-  top: 0;
-  bottom: 0;
   z-index: 1000;
   margin: 0;
   color: $white;
@@ -18,33 +13,25 @@
 
   &::before {
     content: "";
-    position: absolute;
-    left: -4000px;
-    top: -4000px;
-    right: 0;
-    bottom: -4000px;
+    @include position($p: absolute, $l: -4000px, $t: -4000px, $r: 0, $b: -4000px);
     background: $dark-navy;
     z-index: -1;
   }
 }
 
 .logo-container {
-  width: 100px;
-  height: 121px;
+  @include dimensions($w: 100px, $h: 121px);
   margin: 64px 0 103px 56px;
   padding: 0;
 
   img {
-    width: 100%;
-    height: 100%;
+    @include dimensions($w: 100%, $h: 100%);
   }
 }
 
 .menu-container {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: space-between;
+  @include flex($fd: column, $jc: space-between);
+  @include dimensions($w: 100%);
   padding-bottom: 64px;
   flex: 1;
 }
@@ -68,8 +55,8 @@
   }
 
   a {
-    display: flex;
-    align-items: center;
+    @include flex($ai: center);
+    @include dimensions($w: 100%);
     text-decoration: none;
     color: $white;
     width: 100%;
@@ -78,16 +65,14 @@
     img {
       margin-left: 56px;
       margin-right: 16px;
-      height: 30px;
-      width: 30px;
+      @include dimensions($w: 30px, $h: 30px);
     }
 
     mat-icon {
+
       margin-left: 56px;
       margin-right: 16px;
-      height: 30px;
-      width: 30px;
-      font-size: 30px;
+      @include dimensions($w: 30px, $h: 30px, $fs: 30px);
       color: #cdcdcd;
     }
 
@@ -98,8 +83,7 @@
 }
 
 .footer-container {
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column);
   color: #cdcdcd;
   font-size: 16px;
   padding-left: 56px;
@@ -120,11 +104,8 @@
 
 .menu-mobile-display-container {
   display: none;
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
+  @include position($p: fixed, $b: 0, $l: 0);
+  @include dimensions($w: 100%, $h: 80px);
   background-color: $dark-navy;
   z-index: 1002;
   padding: 0;
@@ -137,9 +118,7 @@
   @include flex($ai: center, $jc: center);
 
   a {
-    @include flex($ai: center, $jc: center);
-    flex-direction: column;
-    gap: 4px;
+    @include flex($ai: center, $jc: center, $fd: column, $g: 4px);
     text-decoration: none;
     color: $white;
     padding: 4px 0;
@@ -148,9 +127,8 @@
     &:hover {
       background-color: #091931;
       border-radius: 8px;
-      width: fit-content;
+      @include dimensions($w: fit-content, $h: 68px);
       min-width: 68px;
-      height: 68px;
       padding: 12px;
       color: $white;
       transform: scale(1.05);
@@ -160,8 +138,7 @@
     }
 
     img {
-      width: 24px;
-      height: 24px;
+      @include dimensions($w: 24px, $h: 24px);
     }
 
     span {
@@ -181,13 +158,11 @@
     width: 120px;
 
     .logo-container {
-      width: 80px;
-      height: 80px;
+      @include dimensions($w: 80px, $h: 80px);
       margin: 64px 0 103px 20px;
 
       img {
-        width: 80px;
-        height: 80px;
+       @include dimensions($w: 80px, $h: 80px);
       }
     }
 
@@ -226,8 +201,7 @@
   }
 
   .menu-mobile-display-container {
-    display: flex;
-    justify-content: space-evenly;
+    @include flex($jc: space-evenly);
     box-shadow: 0 -4px 4px $box-shadow-light;
   }
 }
@@ -246,13 +220,10 @@
 
   .menu-mobile-display-item a {
     img {
-      width: 20px;
-      height: 20px;
+      @include dimensions($w: 20px, $h: 20px);
     }
     mat-icon {
-      width: 20px;
-      height: 20px;
-      font-size: 20px;
+      @include dimensions($w: 20px, $h: 20px, $fs: 20px);
     }
   }
 }
