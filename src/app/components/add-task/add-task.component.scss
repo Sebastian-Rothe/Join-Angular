@@ -190,7 +190,6 @@ $container-padding-small: 12px;
   }
 }
 
-
 ::ng-deep {
   .mat-calendar {
     background-color: #edeeee;
@@ -200,12 +199,18 @@ $container-padding-small: 12px;
 
   .mat-calendar-body-cell {
     box-shadow: none !important;
+
     &:hover {
-      background-color: rgba(41, 171, 226, 0.1);
+      background-color: $background-light;
+      .mat-calendar-body-cell-content {
+        color: $primary-blue;
+        scale: 1.2;
+      }
     }
 
     .mat-calendar-body-selected {
       background-color: $primary-blue !important;
+      color: $white !important;
     }
   }
 }
