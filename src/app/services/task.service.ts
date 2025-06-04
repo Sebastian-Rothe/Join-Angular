@@ -32,6 +32,9 @@ export class TaskService {
   private taskSubject = new BehaviorSubject<Task[]>([]);
   tasks$ = this.taskSubject.asObservable();
 
+  private taskUpdateSubject = new BehaviorSubject<{taskId: string, subtasks: Subtask[]}>({taskId: '', subtasks: []});
+  taskUpdate$ = this.taskUpdateSubject.asObservable();
+
   private firestore: Firestore = inject(Firestore);
 
   constructor(
@@ -87,8 +90,7 @@ export class TaskService {
    * @param {Subtask[]} updatedSubtasks - Array of updated subtasks
    * @returns {Promise<void>}
    * @throws {Error} If subtask update fails
-   */
-  async updateSubtaskStatus(
+   */  async updateSubtaskStatus(
     taskId: string,
     updatedSubtasks: Subtask[]
   ): Promise<void> {
@@ -96,6 +98,7 @@ export class TaskService {
       const taskRef = doc(this.firestore, 'tasks', taskId);
       await updateDoc(taskRef, { subtasks: updatedSubtasks });
       this.updateLocalTasks(taskId, { subtasks: updatedSubtasks });
+      this.taskUpdateSubject.next({ taskId, subtasks: updatedSubtasks });
     } catch (error) {
       this.snackbarService.error('Error updating subtask status. Please try again.');
       throw error;

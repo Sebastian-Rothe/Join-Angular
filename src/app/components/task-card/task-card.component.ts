@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, OnDestroy, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 // Material imports
 import { MatMenuModule } from '@angular/material/menu';
@@ -11,6 +11,7 @@ import { SnackbarService } from '../../services/snackbar.service';
 import { Task } from '../../models/task.class';
 // Pipes
 import { CompletedSubtasksPipe } from '../../shared/pipes/completed-subtasks.pipe';
+import { Subscription } from 'rxjs';
 
 /**
  * Component that represents a draggable task card in the board view.
@@ -30,7 +31,7 @@ import { CompletedSubtasksPipe } from '../../shared/pipes/completed-subtasks.pip
   templateUrl: './task-card.component.html',
   styleUrls: ['./task-card.component.scss']
 })
-export class TaskCardComponent {
+export class TaskCardComponent implements OnInit, OnDestroy {
   /** The task object to be displayed in the card */
   @Input() task!: Task;
 
@@ -39,6 +40,9 @@ export class TaskCardComponent {
 
   /** Event emitted when drag operation starts */
   @Output() dragStarted = new EventEmitter<DragEvent>();
+
+  /** Subscription to task updates */
+  private taskUpdateSubscription?: Subscription;
 
   /** Available status options for the task */
   availableStatuses = [
@@ -52,11 +56,33 @@ export class TaskCardComponent {
    * Creates an instance of TaskCardComponent.
    * @param {TaskService} taskService - Service for managing tasks
    * @param {SnackbarService} snackbarService - Service for displaying notifications
-   */
-  constructor(
+   */  constructor(
     private taskService: TaskService,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private cdr: ChangeDetectorRef
   ) {}
+
+  /**
+   * Initializes the component and subscribes to task updates.
+   */
+  ngOnInit(): void {    this.taskUpdateSubscription = this.taskService.taskUpdate$.subscribe(
+      update => {
+        if (update.taskId === this.task.id) {
+          this.task.subtasks = [...update.subtasks];
+          this.cdr.detectChanges();
+        }
+      }
+    );
+  }
+
+  /**
+   * Cleans up resources when the component is destroyed.
+   */
+  ngOnDestroy(): void {
+    if (this.taskUpdateSubscription) {
+      this.taskUpdateSubscription.unsubscribe();
+    }
+  }
 
   /**
    * Handles the drag start event of the task card.

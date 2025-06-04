@@ -166,15 +166,12 @@ export class TaskDetailsComponent implements OnInit {
     } catch (error) {
       this.handleSubtaskUpdateError(subtask, previousState);
     }
-  }
-
-  /**
+  }  /**
    * Update subtask status in database
    * @private
-   * @param {Subtask} subtask - The subtask to update
+   * @param {Subtask} subtask - The subtask that was toggled (not used directly)
    * @returns {Promise<void>}
-   */
-  private async updateSubtaskInDatabase(subtask: Subtask): Promise<void> {
+   */  private async updateSubtaskInDatabase(subtask: Subtask): Promise<void> {
     await this.taskService.updateSubtaskStatus(this.task.id, this.task.subtasks);
   }
 
