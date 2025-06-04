@@ -2,30 +2,17 @@
 
 $color-text: #313c4d;
 
-// ---------- Dialog & Container Layout ----------
-.adjust-popup-edit {
-  z-index: 1200 !important;
-  height: 80%;
-  width: 40% !important;
-  max-width: 800px;
-}
-
 .task-details-dialog {
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column);
   height: 100%;
   background: $white;
-  border-radius: 30px!important;
+  border-radius: 30px !important;
   overflow: hidden;
 }
 
-// ---------- Header, Content, Footer Structure ----------
 .task-details-header {
-  position: sticky;
-  top: 0;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  @include position($p: sticky, $t: 0);
+  @include flex($jc: space-between, $ai: center);
   padding: 24px 24px 8px;
   background: $white;
   z-index: 2;
@@ -47,12 +34,8 @@ $color-text: #313c4d;
 }
 
 .task-details-footer {
-  position: sticky;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 8px;
+  @include position($p: sticky, $b: 0);
+  @include flex($ai: center, $jc: flex-end, $g: 8px);
   padding: 8px 24px 24px;
   background: $white;
 }
@@ -119,26 +102,20 @@ $color-text: #313c4d;
   margin-bottom: 16px;
 
   &.inline {
-    display: flex;
-    gap: 10px;
+    @include flex($g: 10px);
 
     .content {
-      display: flex;
-      align-items: center;
-      gap: 8px;
+      @include flex($ai: center, $g: 8px);
 
       img {
-        width: 24px;
-        height: 24px;
+        @include dimensions($w: 24px, $h: 24px);
         object-fit: contain;
       }
     }
   }
 
   &.stacked {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
+    @include flex($fd: column, $g: 15px);
   }
 
   .label {
@@ -155,8 +132,7 @@ $color-text: #313c4d;
 
 // ---------- Priority Styling ----------
 .priority-icon {
-  width: 20px;
-  height: 20px;
+  @include dimensions($w: 20px, $h: 20px);
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center;
@@ -175,33 +151,27 @@ $color-text: #313c4d;
 }
 
 .priority-content {
-  display: flex;
-  align-items: center;
-  gap: 10px;
+  @include flex($ai: center, $g: 10px);
 
   img {
-    width: 17px;
-    height: 17px;
+    @include dimensions($w: 17px, $h: 17px);
   }
 }
 
 // ---------- Avatar & User Elements ----------
 .style-avatar-overlap {
+  @include flex($ai: center, $jc: center);
+  @include dimensions($w: 32px, $h: 32px, $fs: 12px);
   border-radius: 50%;
   color: $white;
-  @include flex($ai: center, $jc: center);
   font-weight: 400;
-  font-size: 12px;
   margin-right: 0;
   border: 1px solid $white;
   box-sizing: border-box;
   min-width: 32px;
-  width: 32px;
-  height: 32px;
 
   img {
-    width: 100%;
-    height: 100%;
+    @include dimensions($w: 100%, $h: 100%);
     border-radius: 50%;
     object-fit: cover;
   }
@@ -209,15 +179,11 @@ $color-text: #313c4d;
 
 .task-assigned {
   margin: 0 16px;
-  display: flex;
-  align-items: flex-start;
-  gap: 8px;
+  @include flex($ai: flex-start, $g: 8px);
 }
 
 .avatar-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
+  @include flex($fw: wrap, $g: 8px);
   row-gap: 8px;
   max-width: 100%;
 }
@@ -227,9 +193,7 @@ $color-text: #313c4d;
   margin-bottom: 8px;
 
   .subtask-content {
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    @include flex($ai: center, $g: 8px);
   }
 
   input[type="checkbox"] {
@@ -269,24 +233,18 @@ $color-text: #313c4d;
 }
 
 .subtask-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+  @include flex($fd: column, $g: 8px);
   margin-left: 12px;
 }
 
-
 .file-list-container {
   margin-top: 8px;
-  width: 100%;
-  height: 100%;
+  @include dimensions($w: 100%, $h: 100%);
   overflow: hidden;
 
   .file-grid {
+    @include flex($fd: row, $g: 16px);
     height: 100%;
-    display: flex;
-    flex-direction: row;
-    gap: 16px;
     padding: 0;
     overflow-x: auto;
     overflow-y: hidden;
@@ -314,8 +272,7 @@ $color-text: #313c4d;
 
     .file-preview-content {
       position: relative;
-      width: 100%;
-      height: 86px;
+      @include dimensions($w: 100%, $h: 86px);
       border-radius: 8px;
       overflow: hidden;
       background: $background-light;
@@ -323,11 +280,7 @@ $color-text: #313c4d;
 
       &::after {
         content: "";
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 22px;
+        @include position($p: absolute, $t: 0, $l: 0, $r: 0, $b: 22px);
         background: rgba(0, 0, 0, 0);
         transition: background 0.2s ease;
         pointer-events: none;
@@ -343,21 +296,16 @@ $color-text: #313c4d;
       }
 
       img {
-        width: 100%;
-        height: 100%;
+        @include dimensions($w: 100%, $h: 100%);
         object-fit: cover;
       }
 
       .file-name {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        height: 22px;
+        @include position($p: absolute, $b: 0, $l: 0, $r: 0);
+        @include dimensions($h: 22px, $fs: 12px);
         padding: 4px;
         background: $white;
         color: $dark-navy;
-        font-size: 12px;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -365,25 +313,21 @@ $color-text: #313c4d;
       }
 
       .file-preview-overlay {
-        position: absolute;
-        top: 40%;
-        left: 50%;
+        @include position($p: absolute, $t: 40%, $l: 50%);
+        @include flex($ai: center, $jc: center);
+        @include dimensions($w: 32px, $h: 32px);
         transform: translate(-50%, -50%);
-        width: 32px;
-        height: 32px;
         padding: 0;
         border: none;
         border-radius: 50%;
         background: transparent;
-        @include flex($ai: center, $jc: center);
         opacity: 0;
         transition: all 0.2s ease;
         z-index: 1;
         cursor: pointer;
 
         mat-icon {
-          width: 24px;
-          height: 24px;
+          @include dimensions($w: 24px, $h: 24px);
           color: $white;
           transition: all 0.2s ease;
         }
@@ -407,18 +351,12 @@ $color-text: #313c4d;
 
 // ---------- Action Buttons ----------
 .action-buttons {
-  position: absolute;
-  bottom: 24px;
-  right: 24px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include position($p: absolute, $b: 24px, $r: 24px);
+  @include flex($ai: center, $g: 8px);
 }
 
 .action-btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  @include flex($ai: center, $g: 8px);
   padding: 8px;
   background: transparent;
   border: none;
@@ -444,8 +382,7 @@ $color-text: #313c4d;
 }
 
 .button-divider {
-  height: 24px;
-  width: 1px;
+   @include dimensions($w: 1px, $h: 24px);
   background-color: $border-color;
 }
 
@@ -455,10 +392,8 @@ $color-text: #313c4d;
 
     &.collapsible:hover::before {
       content: attr(data-tooltip);
-      position: fixed;
+      @include position($p: fixed, $b: 20%, $l: 50%);
       transform: translateX(-50%);
-      left: 50%;
-      bottom: 20%;
       background: rgba($dark-navy, 0.9);
       color: $white;
       padding: 8px 16px;
@@ -477,27 +412,18 @@ $color-text: #313c4d;
 }
 
 .left-right-container-to-edit {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 100%;
-  height: 70vh;
+  @include flex($fd: column, $ai: center);
+  @include dimensions($w: 100%, $h: 70vh);
 
   label {
     margin-top: 12px;
   }
 }
 
-.left-side-to-edit {
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-
+.left-side-to-edit,
 .right-side-to-edit {
   width: 80%;
-  display: flex;
-  flex-direction: column;
+  @include flex($fd: column);
 }
 
 .close-button {
