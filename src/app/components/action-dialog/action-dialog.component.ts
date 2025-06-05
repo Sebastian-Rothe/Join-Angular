@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { firstValueFrom } from 'rxjs';
 import { Router } from '@angular/router';
+import { A11yModule } from '@angular/cdk/a11y';
 // material imports
 import {
   MAT_DIALOG_DATA,
@@ -58,7 +59,13 @@ import { SnackbarService } from '../../services/snackbar.service';
 @Component({
   selector: 'app-action-dialog',
   standalone: true,
-  imports: [CommonModule, MatIconModule, FormsModule, MatDialogModule],
+  imports: [
+    CommonModule, 
+    MatIconModule, 
+    FormsModule, 
+    MatDialogModule,
+    A11yModule
+  ],
   templateUrl: './action-dialog.component.html',
   styleUrl: './action-dialog.component.scss',
 })

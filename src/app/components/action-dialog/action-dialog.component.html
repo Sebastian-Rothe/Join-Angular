@@ -6,6 +6,8 @@
   [attr.aria-modal]="true"
   aria-labelledby="dialog-title"
   aria-describedby="dialog-subtitle"
+  cdkTrapFocus
+  cdkTrapFocusAutoCapture
 >
   <div class="popup" (click)="$event.stopPropagation()" tabindex="-1">
     <div class="popup-content">

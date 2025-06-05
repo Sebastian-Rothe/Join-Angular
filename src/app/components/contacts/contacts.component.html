@@ -17,7 +17,7 @@
     </div>
 
     <nav class="contacts-list" aria-label="Contacts alphabetical list">
-      @for (letter of groupedContacts | keyvalue; track letter) {
+      @for (letter of groupedContacts | keyvalue; track $index) {
         <div
           class="contact-group"
           role="region"
@@ -27,7 +27,7 @@
             {{ letter.key }}
           </h2>
           <ul role="list" class="contact-items">
-            @for (contact of letter.value; track contact) {
+            @for (contact of letter.value; track contact.uid) {
               <li
                 class="contact-item"
                 [class.selected]="selectedContact?.uid === contact.uid"
