@@ -266,7 +266,8 @@ form {
 .closePopup,
 .closePopupMobile {
   @include position($p: absolute, $t: 16px, $r: 16px);
-  cursor: pointer;
+  box-shadow: none !important;
+  background-color: transparent;
   mat-icon {
     color: #2c3e50;
     &:hover {

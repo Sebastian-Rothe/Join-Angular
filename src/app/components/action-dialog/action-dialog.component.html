@@ -1,21 +1,33 @@
-<div class="new-contact-overlay" [class.aktiv]="isVisible" (click)="onClose()">
-  <div class="popup" (click)="$event.stopPropagation()">
+<div class="new-contact-overlay" 
+     [class.aktiv]="isVisible" 
+     (click)="onClose()"
+     role="dialog"
+     [attr.aria-modal]="true"
+     aria-labelledby="dialog-title"
+     aria-describedby="dialog-subtitle">
+  <div class="popup" 
+       (click)="$event.stopPropagation()"
+       tabindex="-1">
     <div class="popup-content">
       <div class="left-side-new-c">
-        <span class="closePopupMobile" (click)="onClose()">
+        <button class="closePopupMobile" 
+                (click)="onClose()" 
+                aria-label="Close dialog">
           <mat-icon>close</mat-icon>
-        </span>
+        </button>
         <div class="left-pane">
           <img src="/assets/icons/join-logo-white.svg" alt="Logo" />
-          <h2>{{ getDialogTitle() }}</h2>
-          <p>{{ getDialogSubtitle() }}</p>
-          <div class="blue-box"></div>
+          <h2 id="dialog-title">{{ getDialogTitle() }}</h2>
+          <p id="dialog-subtitle">{{ getDialogSubtitle() }}</p>
+          <div class="blue-box" role="presentation"></div>
         </div>
       </div>
       <div class="right-pane">
-        <span class="closePopup" (click)="onClose()">
+        <button class="closePopup" 
+                (click)="onClose()" 
+                aria-label="Close dialog">
           <mat-icon>close</mat-icon>
-        </span>
+        </button>
         <div class="align-new-contact-input">
           <div class="profil-icon">
             @if (config.type === 'edit' || config.type === 'account') {
