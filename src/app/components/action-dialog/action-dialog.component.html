@@ -1,18 +1,20 @@
-<div class="new-contact-overlay" 
-     [class.aktiv]="isVisible" 
-     (click)="onClose()"
-     role="dialog"
-     [attr.aria-modal]="true"
-     aria-labelledby="dialog-title"
-     aria-describedby="dialog-subtitle">
-  <div class="popup" 
-       (click)="$event.stopPropagation()"
-       tabindex="-1">
+<div
+  class="new-contact-overlay"
+  [class.aktiv]="isVisible"
+  (click)="onClose()"
+  role="dialog"
+  [attr.aria-modal]="true"
+  aria-labelledby="dialog-title"
+  aria-describedby="dialog-subtitle"
+>
+  <div class="popup" (click)="$event.stopPropagation()" tabindex="-1">
     <div class="popup-content">
       <div class="left-side-new-c">
-        <button class="closePopupMobile" 
-                (click)="onClose()" 
-                aria-label="Close dialog">
+        <button
+          class="closePopupMobile"
+          (click)="onClose()"
+          aria-label="Close dialog"
+        >
           <mat-icon>close</mat-icon>
         </button>
         <div class="left-pane">
@@ -23,52 +25,49 @@
         </div>
       </div>
       <div class="right-pane">
-        <button class="closePopup" 
-                (click)="onClose()" 
-                aria-label="Close dialog">
+        <button
+          class="closePopup"
+          (click)="onClose()"
+          aria-label="Close dialog"
+        >
           <mat-icon>close</mat-icon>
         </button>
         <div class="align-new-contact-input">
           <div class="profil-icon">
             @if (config.type === 'edit' || config.type === 'account') {
-              <div class="avatar">
-                @if (profileImagePreview || formData.profilePicture) {
-                  <img
-                    [src]="profileImagePreview || formData.profilePicture"
-                    alt="Profile picture"
-                  />
-                }
-                @if (!profileImagePreview && !formData.profilePicture) {
-                  <span>
-                    {{
-                      config.type === "account"
-                        ? formData.initials
-                        : config.contact?.initials
-                    }}
-                  </span>
-                }
-              </div>
-            }
-            @if (config.type === 'add' && !profileImagePreview) {
-              <mat-icon>person</mat-icon>
-            }
-            @if (config.type === 'add' && profileImagePreview) {
+            <div class="avatar">
+              @if (profileImagePreview || formData.profilePicture) {
               <img
-                [src]="profileImagePreview"
-                class="avatar"
-                alt="Profile preview"
+                [src]="profileImagePreview || formData.profilePicture"
+                alt="Profile picture"
               />
-            }
-
-            @if (config.type !== 'account') {
-              <label class="upload-button">
-                <input
-                  type="file"
-                  accept=".jpg,.jpeg,.png"
-                  (change)="onFileSelected($event)"
-                />
-                <mat-icon>add_a_photo</mat-icon>
-              </label>
+              } @else {
+              <span>
+                {{
+                  config.type === "account"
+                    ? formData.initials
+                    : config.contact?.initials
+                }}
+              </span>
+              }
+            </div>
+            } @if (config.type === 'add' && !profileImagePreview) {
+            <mat-icon>person</mat-icon>
+            } @if (config.type === 'add' && profileImagePreview) {
+            <img
+              [src]="profileImagePreview"
+              class="avatar"
+              alt="Profile preview"
+            />
+            } @if (config.type !== 'account') {
+            <label class="upload-button">
+              <input
+                type="file"
+                accept=".jpg,.jpeg,.png"
+                (change)="onFileSelected($event)"
+              />
+              <mat-icon>add_a_photo</mat-icon>
+            </label>
             }
           </div>
           <form class="align-form" (ngSubmit)="onSubmit()" #form="ngForm">
@@ -115,7 +114,9 @@
                 "
               >
                 {{ getPrimaryButtonText() }}
-                <mat-icon *ngIf="config.type !== 'account'">close</mat-icon>
+                @if(config.type !== 'account'){
+                <mat-icon>close</mat-icon>
+                }
               </button>
               <button
                 class="primary-btn"
@@ -124,7 +125,7 @@
               >
                 {{ getSecondaryButtonText() }}
                 @if (config.type !== 'account') {
-                  <mat-icon>check</mat-icon>
+                <mat-icon>check</mat-icon>
                 }
               </button>
             </div>

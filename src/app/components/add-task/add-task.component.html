@@ -2,7 +2,11 @@
   @if (isDialog) {
   <header class="title-container">
     <h1 class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</h1>
-    <button class="close-button" (click)="closeDialog()" aria-label="Close dialog">
+    <button
+      class="close-button"
+      (click)="closeDialog()"
+      aria-label="Close dialog"
+    >
       <mat-icon>close</mat-icon>
     </button>
   </header>
@@ -24,7 +28,10 @@
           placeholder="Enter a title"
           [(ngModel)]="task.title"
         />
-        <div class="error-validation" [class.visible]="formSubmitted && errors.title">
+        <div
+          class="error-validation"
+          [class.visible]="formSubmitted && errors.title"
+        >
           This field is required
         </div>
       </div>
@@ -60,7 +67,10 @@
           ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
-        <div class="error-validation" [class.visible]="formSubmitted && errors.dueDate">
+        <div
+          class="error-validation"
+          [class.visible]="formSubmitted && errors.dueDate"
+        >
           This field is required
         </div>
       </div>
@@ -130,7 +140,10 @@
               }
             </div>
           </div>
-          <div class="error-validation" [class.visible]="formSubmitted && errors.category">
+          <div
+            class="error-validation"
+            [class.visible]="formSubmitted && errors.category"
+          >
             This field is required
           </div>
         </div>
@@ -233,7 +246,7 @@
                 <mat-icon>add</mat-icon>
               </span>
             </button>
-            } @if (isSubtaskInputActive) {
+            } @else{
             <button
               type="button"
               class="subtask-btn-checked"
@@ -317,7 +330,7 @@
               >
                 @if (contact.profilePicture) {
                 <img [src]="contact.profilePicture" [alt]="contact.name" />
-                } @if (!contact.profilePicture) {
+                } @else{
                 <span>{{ contact.initials }}</span>
                 }
               </div>
@@ -380,7 +393,7 @@
             >
               @if (contact.profilePicture) {
               <img [src]="contact.profilePicture" [alt]="contact.name" />
-              } @if (!contact.profilePicture) {
+              } @else{
               <span>{{ contact.initials }}</span>
               }
             </div>
@@ -397,7 +410,9 @@
 
   <footer class="footer-add-task">
     <div class="footer-add-task-left desktop-only">
-      <span class="required-desktop"><span class="required">*</span>This field is required</span>
+      <span class="required-desktop"
+        ><span class="required">*</span>This field is required</span
+      >
     </div>
     <div class="footer-add-task-right">
       @if (!isEditMode) {
@@ -407,7 +422,7 @@
       <button type="button" class="primary-btn" (click)="onSubmit($event)">
         Create Task <mat-icon>check</mat-icon>
       </button>
-      } @if (isEditMode) {
+      } @else {
       <button type="button" class="primary-btn" (click)="onSubmit($event)">
         Ok <mat-icon>check</mat-icon>
       </button>
