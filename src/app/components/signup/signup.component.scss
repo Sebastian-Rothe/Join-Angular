@@ -30,6 +30,7 @@
   transition: all 0.2s ease;
 
   &:hover {
+    color: $primary-blue;
     transform: scale(1.1);
   }
 }
@@ -220,7 +221,8 @@
 
     span {
       font-size: 16px;
-      color: $dark-navy;
+      font-weight: 500;
+      color: black;
     }
 
     a {
