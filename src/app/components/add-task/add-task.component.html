@@ -11,7 +11,7 @@
     <h1 class="title">{{ isEditMode ? "Edit Task" : "Add Task" }}</h1>
   </header>
   }
-  <form #taskForm="ngForm" (ngSubmit)="onSubmit($event)" id="taskForm" class="left-right-container">
+  <form #taskForm="ngForm" id="taskForm" class="left-right-container">
     <section class="left-side">
       <div class="form-group">
         <label for="title">Title<span class="required">*</span></label>
@@ -404,11 +404,11 @@
       <button type="button" class="secondary-btn" (click)="clearForm()">
         Clear <mat-icon>close</mat-icon>
       </button>
-      <button type="submit" class="primary-btn" form="taskForm">
+      <button type="button" class="primary-btn" (click)="onSubmit($event)">
         Create Task <mat-icon>check</mat-icon>
       </button>
       } @if (isEditMode) {
-      <button type="submit" class="primary-btn" form="taskForm">
+      <button type="button" class="primary-btn" (click)="onSubmit($event)">
         Ok <mat-icon>check</mat-icon>
       </button>
       }
