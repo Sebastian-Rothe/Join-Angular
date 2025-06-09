@@ -9,28 +9,31 @@
     /></span>
   </div>
   @if(user.uid !== '') {
-    <div class="header-right-content">
-      <a routerLink="/main/help" class="help-icon" title="Help" aria-label="Help">
-        <mat-icon>help_outline</mat-icon>
-      </a>
-  
-      <button class="profile-avatar" (click)="toggleDropdown()" [attr.aria-label]="'Profile menu for ' + user.initials">
-        <img
-          *ngIf="user?.profilePicture"
-          [src]="user.profilePicture"
-          alt="Profile picture"
-        />
-        <span *ngIf="!user?.profilePicture" class="initials">{{
-          user.initials
-        }}</span>
-      </button>
-  
-      <div class="dropdown-menu" [class.show]="isDropdownOpen">
-        <a (click)="openAccountDialog()">Account</a>
-        <a routerLink="/main/legal">Legal Notice</a>
-        <a routerLink="/main/privacy">Privacy Policy</a>
-        <a routerLink="/login" (click)="logoutUser()">Log out</a>
-      </div>
+  <div class="header-right-content">
+    <a routerLink="/main/help" class="help-icon" title="Help" aria-label="Help">
+      <mat-icon>help_outline</mat-icon>
+    </a>
+
+    <button
+      class="profile-avatar"
+      (click)="toggleDropdown()"
+      [attr.aria-label]="'Profile menu for ' + user.initials"
+    >
+      @if(user.profilePicture){
+
+      <img [src]="user.profilePicture" alt="Profile picture" />
+      }@else {
+
+      <span class="initials">{{ user.initials }}</span>
+      }
+    </button>
+
+    <div class="dropdown-menu" [class.show]="isDropdownOpen">
+      <a (click)="openAccountDialog()">Account</a>
+      <a routerLink="/main/legal">Legal Notice</a>
+      <a routerLink="/main/privacy">Privacy Policy</a>
+      <a routerLink="/login" (click)="logoutUser()">Log out</a>
     </div>
+  </div>
   }
 </header>
